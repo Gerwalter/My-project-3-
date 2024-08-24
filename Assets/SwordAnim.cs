@@ -1,31 +1,31 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SwordAnim : MonoBehaviour
 {
-    public Animator anim;
-
-    [SerializeField] private bool isFighting = false;
+    public GameObject sword;
+    public bool canAttack = true;
+    public float attackCooldown = 1.0f;
+    public bool isAttacking = false;
 
     private void Update()
     {
-        Fight();
-    }
-    public void Fight()
-    {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            isFighting = !isFighting;
-            anim.SetBool("Fight", isFighting);
-        }
-
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            anim.SetTrigger("Attack");
+            SwordAttack();
         }
-
     }
 
+    private void SwordAttack()
+    {
+        canAttack = false;
+    }
 
+    IEnumerator ResetAttackCooldown()
+    {
+        yield return new WaitForSeconds(attackCooldown);
+        canAttack = true;
+    }
 }

@@ -10,7 +10,14 @@ public class AnimationScript : MonoBehaviour
     public Animator anim;
     public LayerMask groundLayer;
 
+    public GameObject sword;
+
     public bool isGrounded;
+
+    public void Start()
+    {
+        sword.SetActive(false);
+    }
 
     private void Update()
     {
@@ -79,7 +86,13 @@ public class AnimationScript : MonoBehaviour
         anim.SetTrigger("Jump");
     }
 
-
+    public void SwordReveal() 
+    {
+        if (sword.active == false) 
+        { sword.SetActive(true); }
+        else { sword.SetActive(false); }
+        
+    }
 
     [SerializeField] private bool isFighting = false;
 
@@ -91,7 +104,7 @@ public class AnimationScript : MonoBehaviour
             anim.SetBool("Fight", isFighting);
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0)&& isFighting)
         {
             anim.SetTrigger("Attack");
         }
