@@ -1,10 +1,9 @@
-using System;
 using UnityEngine;
 
 public class AnimationScript : MonoBehaviour
 {
     public float velocity = 0.0f;
-    public float minusvelocity = 0.0f;
+    public float horizontalVelocity = 0.0f;
     public float acceleration = 0.0f;
     public float unacceleration = 0.0f;
     public Animator anim;
@@ -22,46 +21,46 @@ public class AnimationScript : MonoBehaviour
     private void Update()
     {
         Fight();
-        FowardMove();
-        BackwardsMove();
         HandleJump();
+        HandleMovement();
     }
 
-    public void FowardMove()
+    public void HandleMovement()
     {
         float verticalInput = Input.GetAxisRaw("Vertical");
-        bool pressedMove = verticalInput > 0.0f;
 
-        if (pressedMove && velocity < 1.0f)
+        if (verticalInput > 0.0f)
         {
-            velocity += Time.deltaTime * acceleration;
+            velocity = 1;
         }
-        else if (!pressedMove && velocity > 0.0f)
+        else if (verticalInput < 0.0f)
+        {
+            velocity = -1;
+        }
+        else
         {
             velocity = 0;
         }
 
-        velocity = Mathf.Clamp(velocity, 0.0f, 1.0f);
         anim.SetFloat("Velocidad", velocity);
-    }
+        velocity = Mathf.Clamp(velocity, -1.0f, 1.0f);
 
-    public void BackwardsMove()
-    {
-        float verticalInput = Input.GetAxisRaw("Vertical");
-        bool pressednegativeMove = verticalInput < 0.0f;
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
 
-        if (pressednegativeMove && minusvelocity < 1.0f)
+        if (horizontalInput > 0.0f)
         {
-            minusvelocity += Time.deltaTime * unacceleration;
+            horizontalVelocity = 1;
+        }
+        else if (horizontalInput < 0.0f)
+        {
+            horizontalVelocity = -1;
+        }
+        else
+        {
+            horizontalVelocity = 0;
         }
 
-        if (!pressednegativeMove && minusvelocity > 0.0f)
-        {
-            minusvelocity = 0;
-        }
-
-        minusvelocity = Mathf.Clamp(minusvelocity, 0.0f, 1.0f);
-        anim.SetFloat("-Velocidad", minusvelocity);
+        anim.SetFloat("-Velocidad", horizontalVelocity);
     }
 
     private void HandleJump()
@@ -86,12 +85,10 @@ public class AnimationScript : MonoBehaviour
         anim.SetTrigger("Jump");
     }
 
-    public void SwordReveal() 
+    public void SwordReveal()
     {
-        if (sword.active == false) 
-        { sword.SetActive(true); }
-        else { sword.SetActive(false); }
-        
+        sword.SetActive(!sword.activeSelf);
+
     }
 
     [SerializeField] private bool isFighting = false;
@@ -104,7 +101,7 @@ public class AnimationScript : MonoBehaviour
             anim.SetBool("Fight", isFighting);
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0)&& isFighting)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && isFighting)
         {
             anim.SetTrigger("Attack");
         }
