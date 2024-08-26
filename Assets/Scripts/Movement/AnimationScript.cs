@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class AnimationScript : MonoBehaviour
@@ -8,6 +9,7 @@ public class AnimationScript : MonoBehaviour
     public float unacceleration = 0.0f;
     public Animator anim;
     public LayerMask groundLayer;
+    [SerializeField] private bool NoAttack = false;
 
     public GameObject sword;
 
@@ -92,6 +94,8 @@ public class AnimationScript : MonoBehaviour
     }
 
     [SerializeField] private bool isFighting = false;
+    [SerializeField] private float attackTimeout = 2.0f;
+    private Coroutine attackCoroutine;
 
     public void Fight()
     {
@@ -99,12 +103,35 @@ public class AnimationScript : MonoBehaviour
         {
             isFighting = !isFighting;
             anim.SetBool("Fight", isFighting);
+
+            if (attackCoroutine != null)
+            {
+                StopCoroutine(attackCoroutine);
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse0) && isFighting)
         {
+            anim.SetBool("NoAttack", false);
             anim.SetTrigger("Attack");
-        }
 
+            // Reiniciar la corrutina cada vez que se ataca
+            if (attackCoroutine != null)
+            {
+                StopCoroutine(attackCoroutine);
+            }
+            attackCoroutine = StartCoroutine(AttackTimeout());
+        }
+    }
+    private IEnumerator AttackTimeout()
+    {
+        yield return new WaitForSeconds(attackTimeout);
+        AttackFinished();
+
+    }
+    public void AttackFinished()
+    {
+        NoAttack = !NoAttack;
+        anim.SetBool("NoAttack", NoAttack);
     }
 }
