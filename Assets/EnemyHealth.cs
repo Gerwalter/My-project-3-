@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     public GameObject sword;
+    public GameObject Enemy;
     public float health;
     public float maxHealth;
 
@@ -21,7 +22,7 @@ public class EnemyHealth : MonoBehaviour
             health -= 1;
 
             if (health <= 0)
-                Destroy(gameObject);
+                Destroy(Enemy);
         }
     }
 }
