@@ -6,7 +6,6 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody rb;
     public float walking_speed, rotate_speed;
     public Transform player_Transform;
-    public AnimationScript anim;
 
     [Header("Dash")]
     public float dashForce = 10.0f;
