@@ -25,6 +25,7 @@ public class AnimationScript : MonoBehaviour
         Fight();
         HandleJump();
         HandleMovement();
+        Cast();
     }
 
     public void HandleMovement()
@@ -77,14 +78,20 @@ public class AnimationScript : MonoBehaviour
         }
 
     }
-
-    public void OnAnimationJumpStart()
+    private void Cast()
     {
+        if (Input.GetKeyDown(KeyCode.E))
+            anim.SetTrigger("Cast");
+    }
 
+    public void CastEnd()
+    {
+        anim.SetTrigger("Cast");
     }
     public void OnJumpAnimationEnd()
     {
-        anim.SetTrigger("Jump");
+            anim.SetTrigger("Jump");
+
     }
 
     public void SwordReveal()
