@@ -11,10 +11,12 @@ public class VideoPlayerScript : MonoBehaviour
     public bool isPlaying = false;
     public bool playerdectected = false;
     public GameObject player;
+    public AnimationScript animator;
 
     private void Start()
     {
         videoPlayer.enabled = false;
+        videoPlayer.playOnAwake = false; // Asegurarse de que no se reproduzca automáticamente al iniciar
     }
 
     private void OnTriggerEnter(Collider other)
@@ -43,5 +45,20 @@ public class VideoPlayerScript : MonoBehaviour
     {
         // Seleccionar un video al azar
         int randomIndex = Random.Range(0, videoClips.Length);
+
+        // Asegurarse de que el VideoPlayer esté habilitado
+        videoPlayer.enabled = true;
+
+        // Asignar el clip de video al VideoPlayer
+        videoPlayer.clip = videoClips[randomIndex];
+
+        if (randomIndex == 0)
+        {
+            animator.anim.SetTrigger("BadApple");
+        }
+        
+
+        // Iniciar la reproducción del video
+        videoPlayer.Play();
     }
 }

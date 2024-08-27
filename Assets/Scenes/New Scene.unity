@@ -245,7 +245,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 100554993}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: d8ae6e8ac1d54044db6c19e5f21473bc, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: c4992a386006d274ea38b97a0d4c7a56, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -384,6 +384,7 @@ MonoBehaviour:
   isPlaying: 0
   playerdectected: 0
   player: {fileID: 3299659204418662383}
+  animator: {fileID: 9118646170872565629}
 --- !u!65 &100555000
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4074,7 +4075,7 @@ MonoBehaviour:
   walking_speed: 200
   rotate_speed: 400
   player_Transform: {fileID: 1581792308561467639}
-  dashForce: 10
+  dashForce: 20
   dashCooldown: 2
   dashDuration: 0.2
   dashCooldownUI: {fileID: 399115274}
@@ -4602,6 +4603,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   NoAttack: 0
+  particles: {fileID: 0}
   sword: {fileID: 1678131980023264711}
   isGrounded: 0
   isFighting: 0
@@ -4615,7 +4617,7 @@ Transform:
   m_GameObject: {fileID: 4819958163797872224}
   serializedVersion: 2
   m_LocalRotation: {x: -0.059741903, y: 0, z: 0, w: 0.9982139}
-  m_LocalPosition: {x: -0.49, y: 1.38, z: 0.93}
+  m_LocalPosition: {x: 0.73, y: 1.26, z: -0.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

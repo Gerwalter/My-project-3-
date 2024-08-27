@@ -10,6 +10,7 @@ public class AnimationScript : MonoBehaviour
     public Animator anim;
     public LayerMask groundLayer;
     [SerializeField] private bool NoAttack = false;
+    public GameObject particles;
 
     public GameObject sword;
 
@@ -110,6 +111,7 @@ public class AnimationScript : MonoBehaviour
         {
             isFighting = !isFighting;
             anim.SetBool("Fight", isFighting);
+            particles.SetActive(false);
 
             if (attackCoroutine != null)
             {
@@ -121,6 +123,7 @@ public class AnimationScript : MonoBehaviour
         {
             anim.SetBool("NoAttack", false);
             anim.SetTrigger("Attack");
+            particles.SetActive(true);
 
             // Reiniciar la corrutina cada vez que se ataca
             if (attackCoroutine != null)
@@ -134,11 +137,17 @@ public class AnimationScript : MonoBehaviour
     {
         yield return new WaitForSeconds(attackTimeout);
         AttackFinished();
-
+        yield return new WaitForSeconds(2f);
+        particles.SetActive(false);
     }
     public void AttackFinished()
     {
         NoAttack = !NoAttack;
         anim.SetBool("NoAttack", NoAttack);
+        Invoke ("killparticles", 4);
     }
+
+    void killparticles()
+
+    { particles.SetActive(false); }
 }
