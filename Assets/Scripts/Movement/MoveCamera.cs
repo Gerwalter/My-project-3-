@@ -1,58 +1,60 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveCamera : MonoBehaviour
+public class CameraFollow : MonoBehaviour
 {
-    public Transform target;
-    public Vector3 offset;
-    public float rotationSpeed = 5.0f;
-    public float smoothSpeed = 0.125f;
+    public Transform target;                // El objetivo que la cámara seguirá
+    public float smoothSpeed = 0.125f;      // La velocidad de suavizado del movimiento
+    public Vector3 OriginalOffset; // Offset original
+    public Vector3 alternateOffset = new Vector3(1.2f, 0.35f, 0.85f); // Offset alternativo
 
-    private float yaw = 0.0f;
-    private float pitch = 0.0f;
+    public float mouseSensitivity = 100f;  // Sensibilidad del ratón
+    public Transform playerBody;           // El cuerpo del jugador, para rotar junto con la cámara
+
+    private float xRotation = 0f;          // Rotación en el eje X (vertical)
+    private Vector3 currentOffset;         // Offset actual que se aplicará a la cámara
+    private bool usingAlternateOffset = false; // Estado para saber si se usa el offset alternativo
+
     void Start()
     {
-        if (target == null)
-        {
-            Debug.LogWarning("No se ha asignado un objetivo para la cámara.");
-        }
+        // Inicializar el offset actual con el offset original al iniciar el juego
+        currentOffset = OriginalOffset;
 
-        // Bloquear el cursor en el centro de la pantalla y ocultarlo
+        // Bloquear y ocultar el cursor al iniciar el juego
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
     void Update()
     {
-        // Liberar el cursor al presionar Escape (opcional)
-        if (Input.GetKeyDown(KeyCode.Escape))
+        // Cambiar entre offset original y alternativo al presionar la tecla F
+        if (Input.GetKeyDown(KeyCode.F))
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            usingAlternateOffset = !usingAlternateOffset; // Alternar el estado
+            currentOffset = usingAlternateOffset ? alternateOffset : OriginalOffset; // Cambiar el offset
         }
     }
 
     void LateUpdate()
     {
-        if (target != null)
+        if (target == null)
         {
-            // Movimiento con el ratón
-            yaw += Input.GetAxis("Mouse X") * rotationSpeed;
-            pitch -= Input.GetAxis("Mouse Y") * rotationSpeed;
-            pitch = Mathf.Clamp(pitch, -45f, 45f);  // Limitar la rotación vertical para evitar giros extraños
-
-            // Calcular la rotación
-            Quaternion rotation = Quaternion.Euler(pitch, yaw, 0);
-
-            // Aplicar el offset y la rotación
-            Vector3 desiredPosition = target.position + rotation * offset;
-           Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
-           transform.position = smoothedPosition;
-            //transform.position = desiredPosition;
-
-            // Mirar hacia el objetivo
-            transform.LookAt(target.position);
+            Debug.LogWarning("Target no asignado en el script CameraFollow.");
+            return;
         }
+
+        // Mover la cámara hacia la posición deseada suavemente
+        Vector3 desiredPosition = target.position + currentOffset;
+        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
+        transform.position = smoothedPosition;
+
+        // Rotación de la cámara basada en el movimiento del ratón
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+
+        xRotation -= mouseY;
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f); // Limitar la rotación vertical para evitar volcarse
+
+        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        playerBody.Rotate(Vector3.up * mouseX);
     }
 }
