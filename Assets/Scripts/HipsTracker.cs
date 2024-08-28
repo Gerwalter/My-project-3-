@@ -4,25 +4,18 @@ using UnityEngine;
 
 public class HipsTracker : MonoBehaviour
 {
-    public Transform hipsTransform;
-    public Transform playerTransform;
+    public GameObject player;
+    public GameObject player2;
+    public GameObject player3;
+    public PlayerReactivator reactivator;
+ // Referencia al segundo script
 
     public void TrackerHips()
     {
-        if (hipsTransform != null && playerTransform != null)
-        {
-            // Guardar la posición original de las animaciones
-            Vector3 originalAnimationPosition = hipsTransform.localPosition;
-
-            // Mover el objeto player a la posición de hipsTransform
-            playerTransform.position = hipsTransform.position;
-
-            // Restaurar la posición local de las animaciones
-            //hipsTransform.localPosition = originalAnimationPosition;
-        }
-        else
-        {
-            Debug.LogWarning("Hips Transform or Player Transform not assigned!");
-        }
+        reactivator.ReactivatePlayerAfterDelay();
+        player.SetActive(!player.activeSelf);
+        player2.SetActive(!player2.activeSelf);
+        player3.SetActive(!player3.activeSelf);
     }
 }
+//(-1.09, 0.88, 2.70)
