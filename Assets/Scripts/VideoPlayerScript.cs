@@ -43,22 +43,17 @@ public class VideoPlayerScript : MonoBehaviour
 
     void PlayRandomVideo()
     {
-        // Seleccionar un video al azar
         int randomIndex = Random.Range(0, videoClips.Length);
 
-        // Asegurarse de que el VideoPlayer esté habilitado
         videoPlayer.enabled = true;
 
-        // Asignar el clip de video al VideoPlayer
         videoPlayer.clip = videoClips[randomIndex];
 
         if (randomIndex == 0)
         {
             animator.anim.SetTrigger("BadApple");
         }
-        
 
-        // Iniciar la reproducción del video
         videoPlayer.Play();
     }
 }

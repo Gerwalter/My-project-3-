@@ -69,10 +69,8 @@ public class AnimationScript : MonoBehaviour
 
     private void HandleJump()
     {
-        // Comprueba si el jugador está en el suelo usando un Raycast hacia abajo
         isGrounded = Physics.Raycast(transform.position, Vector3.down, 1.1f, groundLayer);
 
-        // Si está en el suelo y se presiona la barra espaciadora, activa el trigger "Jump"
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
             anim.SetTrigger("Jump");
@@ -91,7 +89,7 @@ public class AnimationScript : MonoBehaviour
     }
     public void OnJumpAnimationEnd()
     {
-            anim.SetTrigger("Jump");
+        anim.SetTrigger("Jump");
 
     }
 
@@ -125,7 +123,6 @@ public class AnimationScript : MonoBehaviour
             anim.SetTrigger("Attack");
             particles.SetActive(true);
 
-            // Reiniciar la corrutina cada vez que se ataca
             if (attackCoroutine != null)
             {
                 StopCoroutine(attackCoroutine);
@@ -144,9 +141,8 @@ public class AnimationScript : MonoBehaviour
     {
         NoAttack = !NoAttack;
         anim.SetBool("NoAttack", NoAttack);
-        Invoke ("killparticles", 4);
+        Invoke("killparticles", 4);
     }
-
     void killparticles()
 
     { particles.SetActive(false); }

@@ -8,7 +8,6 @@ public class HipsTracker : MonoBehaviour
     public GameObject player2;
     public GameObject player3;
     public PlayerReactivator reactivator;
- // Referencia al segundo script
 
     public void TrackerHips()
     {
