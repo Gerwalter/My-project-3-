@@ -30,9 +30,16 @@ public class CameraFollow : MonoBehaviour
         {
             isLockedOnTarget = !isLockedOnTarget;
 
+            // Si se desactiva isLockedOnTarget, establecer lockedTarget a null
             if (!isLockedOnTarget)
             {
                 lockedTarget = null;
+            }
+
+            // Si se activa isLockedOnTarget pero no hay lockedTarget, desactivarlo al instante
+            if (isLockedOnTarget && lockedTarget == null)
+            {
+                isLockedOnTarget = false;
             }
         }
 
@@ -56,6 +63,7 @@ public class CameraFollow : MonoBehaviour
             playerBody.Rotate(Vector3.up * mouseX);
         }
     }
+
     public void LockOnTarget(Transform target)
     {
         lockedTarget = target;

@@ -74,6 +74,7 @@ public class AnimationScript : MonoBehaviour
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
             anim.SetTrigger("Jump");
+
         }
 
     }

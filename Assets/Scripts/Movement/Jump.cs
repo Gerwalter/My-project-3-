@@ -7,7 +7,7 @@ public class Jump : MonoBehaviour
     public int jump = 500;
     public Rigidbody rb;
     public bool isGrounded;
-    public AnimationScript anim;
+    public AnimationScript animat;
     public LayerMask groundLayer;
 
     private void Update()
@@ -20,25 +20,25 @@ public class Jump : MonoBehaviour
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
             rb.AddForce(new Vector3(0, jump, 0), ForceMode.Impulse);
-            isGrounded = false; // Para prevenir múltiples saltos en el aire
+            isGrounded = false;
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        // Comprueba si el objeto con el que colisionas pertenece a la capa "Ground"
         if ((groundLayer.value & (1 << collision.gameObject.layer)) > 0)
         {
             isGrounded = true;
+            animat.anim.SetBool("Ground", isGrounded);
         }
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        // Verifica si dejaste de tocar el suelo
         if ((groundLayer.value & (1 << collision.gameObject.layer)) > 0)
         {
             isGrounded = false;
+            animat.anim.SetBool("Ground", isGrounded);
         }
     }
 }
