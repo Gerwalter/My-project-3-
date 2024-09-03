@@ -7,10 +7,18 @@ public class PlayerMoveToTarget : MonoBehaviour
     public Transform target;
     public CameraFollow cameraFollow;
     private bool isMoving = false;
+    private bool fight = false;  // Booleano para activar el modo de combate
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T) && target != null)
+        // Activar o desactivar el modo de combate con la tecla F
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            fight = !fight;
+        }
+
+        // Usar la tecla Q en lugar de la T si está en modo combate
+        if ((Input.GetKeyDown(KeyCode.T) && !fight || Input.GetKeyDown(KeyCode.Q) && fight) && target != null)
         {
             isMoving = !isMoving;
 
@@ -31,6 +39,12 @@ public class PlayerMoveToTarget : MonoBehaviour
                 isMoving = false;
                 cameraFollow.isLockedOnTarget = false;
                 Invoke("resetTarget", 1f);
+
+                // Bloquear la cámara en el objetivo si está en modo combate
+                if (fight)
+                {
+                    cameraFollow.LockOnTarget(target);
+                }
             }
         }
     }
@@ -39,7 +53,7 @@ public class PlayerMoveToTarget : MonoBehaviour
     {
         target = newTarget;
 
-        // Reinicia el movimiento si se establece un nuevo objetivo y la tecla T se ha presionado.
+        // Reinicia el movimiento si se establece un nuevo objetivo y la tecla T o Q se ha presionado.
         if (isMoving && target != null)
         {
             isMoving = false; // Detén cualquier movimiento anterior
