@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_Example
-  m_Shader: {fileID: -6465566751694194690, guid: 8e6e564ad2bc82d40b095c0719a03b3b, type: 3}
+  m_Name: M_PixelDirrt
+  m_Shader: {fileID: -6465566751694194690, guid: 3db9b2d2564307b4c94b2d656f228271, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -23,12 +23,8 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _SampleTexture2D_e232261de167450e9d74defcc78ce48e_Texture_1_Texture2D:
-        m_Texture: {fileID: 2800000, guid: c93ada85e4b4416448f1cf7791395fce, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_faf7f4187bb149639250bea85f13b59b_Texture_1_Texture2D:
-        m_Texture: {fileID: 2800000, guid: 57032566de10af24c967563b0f5f565b, type: 3}
+    - _mainTex:
+        m_Texture: {fileID: 2800000, guid: 08ab41c84fb178244b7fb78a1bf48322, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -45,11 +41,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Pixels: 128
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _UsesFloor: 0
     m_Colors: []
   m_BuildTextureStacks: []
---- !u!114 &4402508109348753738
+--- !u!114 &2248979316292862915
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

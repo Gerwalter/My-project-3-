@@ -7,13 +7,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_WaterVariant
-  m_Shader: {fileID: -6465566751694194690, guid: 12eafab0af345014abfa82d3b3173da7, type: 3}
-  m_Parent: {fileID: 2100000, guid: 798875f0d63df8f4b9d2f511ffdb7a7e, type: 2}
+  m_Name: M_Grass
+  m_Shader: {fileID: -6465566751694194690, guid: bd2bbbc5ee784d248ba7971c9cb03937, type: 3}
+  m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
-  m_LightmapFlags: 4
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -23,17 +23,32 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _AlbedoTexture:
-        m_Texture: {fileID: 2800000, guid: 57032566de10af24c967563b0f5f565b, type: 3}
+    - _mainTex:
+        m_Texture: {fileID: 2800000, guid: 4ce12afde6bd50d42ac1ec8705e46feb, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
-    m_Floats: []
+    m_Floats:
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _VerIntensity: 0.125
     m_Colors:
-    - _Offset: {r: 0, g: 0.5, b: 0, a: 0}
-    - _Tiling: {r: 3, g: 3, b: 0, a: 0}
+    - _VerOffset: {r: 0.25, g: 0, b: 0, a: 0}
+    - _VerTiling: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
---- !u!114 &3761365055332616963
+--- !u!114 &875873915671578511
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
