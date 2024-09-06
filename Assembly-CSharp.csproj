@@ -59,35 +59,35 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Water.cs" />
-    <Compile Include="Assets\Scripts\Respawn.cs" />
-    <Compile Include="Assets\Scripts\AimDetector.cs" />
-    <Compile Include="Assets\Scripts\PlayerMoveToTarget.cs" />
     <Compile Include="Assets\Scripts\HipsTracker.cs" />
     <Compile Include="Assets\Scripts\Movement\ThirdPersonCam.cs" />
     <Compile Include="Assets\Scripts\Movement\PlayerCam.cs" />
-    <Compile Include="Assets\Scripts\ThrowChange.cs" />
-    <Compile Include="Assets\Scripts\SwordAnim.cs" />
-    <Compile Include="Assets\Scripts1\Enemy.cs" />
     <Compile Include="Assets\Scripts\Movement\AnimationScript.cs" />
     <Compile Include="Assets\Scripts\Throwing.cs" />
-    <Compile Include="Assets\Scripts\CameraFeedbackController.cs" />
-    <Compile Include="Assets\Scripts1\CameraController.cs" />
-    <Compile Include="Assets\Scripts\Movement\Jump.cs" />
     <Compile Include="Assets\Scripts\ProyectileAddon.cs" />
     <Compile Include="Assets\Scripts1\Player.cs" />
     <Compile Include="Assets\Scripts\Movement\MoveCamera.cs" />
     <Compile Include="Assets\Scripts\DashCooldownUI.cs" />
     <Compile Include="Assets\Scripts\VideoPlayerScript.cs" />
-    <Compile Include="Assets\Scripts\EnemyHealth.cs" />
     <Compile Include="Assets\Scripts\Movement\Movement.cs" />
-    <Compile Include="Assets\Scripts\Apple.cs" />
     <Compile Include="Assets\Scripts1\Entity.cs" />
+    <Compile Include="Assets\Scripts\ElementalType.cs" />
+    <Compile Include="Assets\Scripts\Respawn.cs" />
+    <Compile Include="Assets\Scripts\AimDetector.cs" />
+    <Compile Include="Assets\Scripts\PlayerMoveToTarget.cs" />
+    <Compile Include="Assets\Scripts\ThrowChange.cs" />
+    <Compile Include="Assets\Scripts\SwordAnim.cs" />
+    <Compile Include="Assets\Scripts1\Enemy.cs" />
+    <Compile Include="Assets\Scripts\CameraFeedbackController.cs" />
+    <Compile Include="Assets\Scripts1\CameraController.cs" />
+    <Compile Include="Assets\Scripts\Movement\Jump.cs" />
+    <Compile Include="Assets\Scripts\EnemyHealth.cs" />
+    <Compile Include="Assets\Scripts\Apple.cs" />
     <Compile Include="Assets\Scripts1\StructManager.cs" />
     <Compile Include="Assets\Scripts\PlayerReactivator.cs" />
     <Compile Include="Assets\Scripts\EnemyCollider.cs" />
     <Compile Include="Assets\Scripts1\GameManager.cs" />
     <Compile Include="Assets\Scripts\EnemyFollow.cs" />
-    <Compile Include="Assets\Scripts\ElementalType.cs" />
     <Compile Include="Assets\Scripts\SpecificScript.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -370,15 +370,6 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.9.1\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Android.Types">
-      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.5f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Types.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Android.Gradle">
-      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.5f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Gradle.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Android.GradleProject">
-      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.5f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.GradleProject.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.5f1\Editor\Data\NetStandard\ref\2.1.0\netstandard.dll</HintPath>
@@ -752,6 +743,9 @@
     <Reference Include="Unity.EditorCoroutines.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.EditorCoroutines.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.VisualEffectGraph.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualEffectGraph.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
     </Reference>
@@ -806,6 +800,9 @@
     <Reference Include="Unity.RenderPipelines.Core.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.VisualEffectGraph.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualEffectGraph.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.VisualScripting.Flow">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Flow.dll</HintPath>
     </Reference>
@@ -836,11 +833,11 @@
     <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.TestTools.CodeCoverage.Editor.OpenCover.Model">
-      <HintPath>Library\ScriptAssemblies\Unity.TestTools.CodeCoverage.Editor.OpenCover.Model.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.TestTools.CodeCoverage.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.TestTools.CodeCoverage.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TestTools.CodeCoverage.Editor.OpenCover.Model">
+      <HintPath>Library\ScriptAssemblies\Unity.TestTools.CodeCoverage.Editor.OpenCover.Model.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.State.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.State.Editor.dll</HintPath>
@@ -869,11 +866,11 @@
     <Reference Include="Unity.VisualScripting.State">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.State.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.VSCode.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Cinemachine">
       <HintPath>Library\ScriptAssemblies\Cinemachine.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VSCode.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
