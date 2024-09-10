@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerReactivator : MonoBehaviour
+public class PlayerReactivator : HipsTracker
 {
-    public GameObject player;
-    public GameObject player2;
-    public GameObject player3;
+
     [Range(0, 7)] public float Seconds;
 
     // Método que se llama desde el script HipsTracker

@@ -5,7 +5,7 @@ public class PlayerMoveToTarget : MonoBehaviour
     public float moveSpeed = 5f;
     public float stopDistance = 1f;
     public Transform target;
-    public CameraFollow cameraFollow;
+    public CameraLocker cameraFollow;
     private bool isMoving = false;
     private bool fight = false;  // Booleano para activar el modo de combate
 

@@ -1,78 +1,51 @@
 using UnityEngine;
 
-public class CameraFollow : MonoBehaviour
+public class MouseCameraControl : MonoBehaviour
 {
-    public Transform target;
-    public float smoothSpeed = 0.125f;
-    public Vector3 OriginalOffset;
-
-    public float mouseSensitivity = 100f;
-    public Transform playerBody;
+    public float mouseSensitivity = 100f;  // Sensibilidad del ratón
+    public Transform playerBody;  // Referencia al jugador
+    public Vector3 offset;  // Posición inicial de la cámara respecto al jugador
+    public float minDistance = 1.0f;  // Distancia mínima de la cámara al jugador
+    public LayerMask collisionMask;  // Máscara de capas para detectar colisiones (evitar objetos específicos si es necesario)
 
     private float xRotation = 0f;
-    public bool isLockedOnTarget = false;
-    public Transform lockedTarget;
 
     void Start()
     {
+        // Bloquear el cursor en el centro de la pantalla y ocultarlo
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 
     void Update()
     {
-        LockCamera();
-    }
+        // Obtener la entrada del ratón
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-    private void LockCamera()
-    {
-        if (Input.GetKeyDown(KeyCode.Q))
+        // Controlar la rotación vertical (cámara)
+        xRotation -= mouseY;
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f);  // Limitar la rotación vertical
+
+        // Aplicar la rotación vertical a la cámara (rotación en el eje X)
+        transform.localRotation = Quaternion.Euler(xRotation, transform.localRotation.eulerAngles.y, 0f);
+
+        // Rotar solo la cámara en el eje Y (horizontal)
+        transform.Rotate(Vector3.up * mouseX);
+
+        // Calcular la posición deseada de la cámara
+        Vector3 desiredPosition = playerBody.position + offset;
+
+        // Realizar un Raycast para detectar si hay objetos entre la cámara y el jugador
+        RaycastHit hit;
+        if (Physics.Raycast(playerBody.position, (desiredPosition - playerBody.position).normalized, out hit, offset.magnitude, collisionMask))
         {
-            isLockedOnTarget = !isLockedOnTarget;
-
-            // Si se desactiva isLockedOnTarget, establecer lockedTarget a null
-            if (!isLockedOnTarget)
-            {
-                lockedTarget = null;
-            }
-
-            // Si se activa isLockedOnTarget pero no hay lockedTarget, desactivarlo al instante
-            if (isLockedOnTarget && lockedTarget == null)
-            {
-                isLockedOnTarget = false;
-            }
+            // Si el Raycast detecta una colisión, mover la cámara a la posición del impacto, ajustándola para que no atraviese el objeto
+            transform.position = hit.point + hit.normal * minDistance;  // Mueve la cámara justo antes del objeto
         }
-
-        if (isLockedOnTarget && lockedTarget != null)
+        else
         {
-            LookAtTarget(lockedTarget);
+            // Si no hay colisión, coloca la cámara en su posición deseada
+            transform.position = desiredPosition;
         }
-    }
-
-    void LateUpdate()
-    {
-        if (!isLockedOnTarget)
-        {
-            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-            float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
-
-            xRotation -= mouseY;
-            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-
-            transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-            playerBody.Rotate(Vector3.up * mouseX);
-        }
-    }
-
-    public void LockOnTarget(Transform target)
-    {
-        lockedTarget = target;
-    }
-
-    void LookAtTarget(Transform target)
-    {
-        Vector3 direction = target.position - transform.position;
-        Quaternion lookRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, smoothSpeed);
     }
 }

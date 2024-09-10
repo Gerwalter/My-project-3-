@@ -7,7 +7,7 @@ public class CameraFeedbackController : MonoBehaviour
     public float rayDistance = 100f;
     public Color rayColor = Color.green;
     private Renderer targetRenderer;
-    public CameraFollow cameraFollow;
+    public CameraLocker cameraFollow;
     public PlayerMoveToTarget playerMove;
 
 

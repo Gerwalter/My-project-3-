@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Movement : MonoBehaviour
+public class Movement : Jump
 {
     [Header("References")]
-    public Rigidbody rb;
     public float walking_speed;
     public Transform player_Transform;
 
