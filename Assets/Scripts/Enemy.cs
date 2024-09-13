@@ -1,5 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,6 +11,11 @@ public class Enemy : Entity
     [SerializeField] private float _atkDist = 2.0f;
     [SerializeField] private float _changeNodeDist = 0.5f;
     [SerializeField] public float speed;
+    [SerializeField] private Player _player;
+
+    [SerializeField] private GameObject sword;
+    public float health;
+    public float maxHealth;
 
     public Transform _target, _actualNode;
     private List<Transform> _navMeshNodes = new();
@@ -27,6 +32,7 @@ public class Enemy : Entity
         _agent = GetComponent<NavMeshAgent>();
         _target = GameManager.Instance.Player.gameObject.transform;
         GameManager.Instance.Enemies.Add(this);
+        health = maxHealth;
     }
 
     public void Initialize()
@@ -51,6 +57,8 @@ public class Enemy : Entity
                 if (!_agent.isStopped) _agent.isStopped = true;
 
                 Debug.Log($"<color=red>{name}</color>: Japish.");
+                _player.Damage();
+                
             }
             else
             {
@@ -99,5 +107,21 @@ public class Enemy : Entity
         // Color para el change node distance
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, _changeNodeDist);
+    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // Verifica si el objeto que colisiona es la espada
+        if (other.gameObject == sword)
+        {
+            health -= 1;
+
+            if (health <= 0)
+            {
+                GameManager.Instance.Enemies.Remove(this);
+                Destroy(this.gameObject);
+            }
+        }
     }
 }

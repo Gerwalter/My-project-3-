@@ -1,18 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class Player : Movement
+public class Player : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] float _health;
+    [SerializeField] float _maxhealth;
+
+    private void Start()
     {
-        
+        _health = _maxhealth;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Damage()
     {
-        
+        if (_health <= 0)
+        {
+            _health = 0; // Aseguramos que la salud no sea negativa
+            ReloadCurrentScene();
+        }
+    }
+
+    private void ReloadCurrentScene()
+    {
+        string sceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(sceneName);
     }
 }

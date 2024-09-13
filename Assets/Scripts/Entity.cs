@@ -5,6 +5,5 @@ using static UnityEngine.GraphicsBuffer;
 
 public class Entity : MonoBehaviour
 {
-    [SerializeField] protected float life;
 
 }

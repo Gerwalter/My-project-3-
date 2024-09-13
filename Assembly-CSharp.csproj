@@ -59,9 +59,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Water.cs" />
-    <Compile Include="Assets\Scripts\HipsTracker.cs" />
-    <Compile Include="Assets\Scripts\Movement\ThirdPersonCam.cs" />
-    <Compile Include="Assets\Scripts\Movement\PlayerCam.cs" />
     <Compile Include="Assets\Scripts\Movement\AnimationScript.cs" />
     <Compile Include="Assets\Scripts\Movement\MoveCamera.cs" />
     <Compile Include="Assets\Scripts\DashCooldownUI.cs" />
@@ -70,23 +67,19 @@
     <Compile Include="Assets\Scripts\MeleeWeapon.cs" />
     <Compile Include="Assets\Scripts\Movement\Movement.cs" />
     <Compile Include="Assets\Scripts\ElementalType.cs" />
-    <Compile Include="Assets\Scripts\Movement\CameraLocker.cs" />
+    <Compile Include="Assets\Scripts\Movement\TargetMove.cs" />
     <Compile Include="Assets\Scripts\Entity.cs" />
     <Compile Include="Assets\Scripts\Respawn.cs" />
-    <Compile Include="Assets\Scripts\PlayerMoveToTarget.cs" />
     <Compile Include="Assets\Scripts\SurfaceReference.cs" />
     <Compile Include="Assets\Scripts\Enemy.cs" />
     <Compile Include="Assets\Scripts\SwordAnim.cs" />
-    <Compile Include="Assets\Scripts\CameraFeedbackController.cs" />
     <Compile Include="Assets\Scripts\IANodeManager.cs" />
     <Compile Include="Assets\Scripts\Movement\Jump.cs" />
-    <Compile Include="Assets\Scripts\EnemyHealth.cs" />
     <Compile Include="Assets\Scripts\FadingPlatform.cs" />
+    <Compile Include="Assets\Scripts\CameraLocker.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
-    <Compile Include="Assets\Scripts\PlayerReactivator.cs" />
     <Compile Include="Assets\Scripts\Weapon.cs" />
-    <Compile Include="Assets\Scripts\EnemyCollider.cs" />
-    <Compile Include="Assets\Scripts\EnemyFollow.cs" />
+    <Compile Include="Assets\Scripts\Movement\CameraPointer.cs" />
     <Compile Include="Assets\Scripts\SpecificScript.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -347,6 +340,15 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.9.1\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Android.Types">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.5f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Android.Gradle">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.5f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Gradle.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Android.GradleProject">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.5f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.GradleProject.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.5f1\Editor\Data\NetStandard\ref\2.1.0\netstandard.dll</HintPath>
