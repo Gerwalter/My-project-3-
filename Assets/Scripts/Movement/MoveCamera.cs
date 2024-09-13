@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class MouseCameraControl : MonoBehaviour
 {
+
     public float mouseSensitivity = 100f;  // Sensibilidad del ratón
     public Transform playerBody;  // Referencia al jugador
     public Vector3 offset;  // Posición inicial de la cámara respecto al jugador

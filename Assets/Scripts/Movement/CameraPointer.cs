@@ -1,15 +1,15 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraFeedbackController : MonoBehaviour
+public class CameraPointer : MonoBehaviour
 {
     public Color feedbackColor = Color.red;
     public Color defaultColor = Color.white;
     public float rayDistance = 100f;
     public Color rayColor = Color.green;
-    private Renderer targetRenderer;
-    public CameraLocker cameraFollow;
-    public PlayerMoveToTarget playerMove;
-
+    public Renderer targetRenderer;
+    public GameObject target; // Nueva variable para el GameObject
 
     void Update()
     {
@@ -35,17 +35,17 @@ public class CameraFeedbackController : MonoBehaviour
                 targetRenderer = hit.collider.GetComponent<Renderer>();
                 targetRenderer.material.color = feedbackColor;
 
-                if (Input.GetKeyDown(KeyCode.Q) && targetRenderer != null)
-                {
-                    cameraFollow.LockOnTarget(hit.transform);
-                    playerMove.SetTarget(hit.transform);
-                }
+                // Actualiza la variable target con el GameObject correspondiente
+                target = hit.collider.gameObject;
             }
         }
         else if (targetRenderer != null)
         {
             targetRenderer.material.color = defaultColor;
             targetRenderer = null;
+
+            // Reinicia target cuando no hay un objeto detectado
+            target = null;
         }
     }
 }
