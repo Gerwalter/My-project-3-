@@ -46,7 +46,7 @@ public class AnimationScript : MonoBehaviour
             velocity = 0;
         }
 
-        anim.SetFloat("Velocidad", velocity);
+        anim.SetFloat("xAxis", velocity);
         velocity = Mathf.Clamp(velocity, -1.0f, 1.0f);
 
         float horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -64,7 +64,7 @@ public class AnimationScript : MonoBehaviour
             horizontalVelocity = 0;
         }
 
-        anim.SetFloat("-Velocidad", horizontalVelocity);
+        anim.SetFloat("zAxis", horizontalVelocity);
     }
 
     private void HandleJump()

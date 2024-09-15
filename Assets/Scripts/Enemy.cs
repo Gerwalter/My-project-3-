@@ -57,7 +57,7 @@ public class Enemy : Entity
                 if (!_agent.isStopped) _agent.isStopped = true;
 
                 Debug.Log($"<color=red>{name}</color>: Japish.");
-                _player.Damage();
+                //_player.Damage();
                 
             }
             else

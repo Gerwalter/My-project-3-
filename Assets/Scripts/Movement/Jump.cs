@@ -29,7 +29,7 @@ public class Jump : MonoBehaviour
         if ((groundLayer.value & (1 << collision.gameObject.layer)) > 0)
         {
             isGrounded = true;
-            animat.anim.SetBool("Ground", isGrounded);
+            animat.anim.SetBool("isGrounded", isGrounded);
         }
     }
 
@@ -38,7 +38,7 @@ public class Jump : MonoBehaviour
         if ((groundLayer.value & (1 << collision.gameObject.layer)) > 0)
         {
             isGrounded = false;
-            animat.anim.SetBool("Ground", isGrounded);
+            animat.anim.SetBool("isGrounded", isGrounded);
         }
     }
 }
