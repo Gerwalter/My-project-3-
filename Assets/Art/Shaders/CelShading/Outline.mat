@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_TornadoShader02_simple 2
-  m_Shader: {fileID: -6465566751694194690, guid: 7b6f26ef7ef4e144b8bd04f209f4120b, type: 3}
+  m_Name: Outline
+  m_Shader: {fileID: -6465566751694194690, guid: 5f8c2602379c02149ba5eac4f865c76f, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -37,19 +37,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - Dissolve_: 0.63
-    - NoisePower_: 0.55
-    - NoiseScale_: 30
-    - TwirlAmount_: 3
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _Thickness: 0.0125
     m_Colors:
-    - Color_: {r: 589.2831, g: 403.99762, b: 48.180336, a: 0}
-    - NoiseSpeed_: {r: 0.25, g: 1, b: 0, a: 0}
-    - TwirlCenter_: {r: 0.5, g: 0.5, b: 0, a: 0}
-    - TwirlSpeed_: {r: 0, g: 0.5, b: 0, a: 0}
+    - _Color: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
---- !u!114 &1130733048707215992
+--- !u!114 &2681753933093212317
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
