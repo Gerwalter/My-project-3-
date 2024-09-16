@@ -1,6 +1,6 @@
 Using pre-set license
 Built from '2022.3/release' branch; Version is '2022.3.5f1 (9674261d40ee) revision 9860134'; Using compiler version '192829333'; Build Type 'Release'
-OS: 'Windows 10  (10.0.19045) 64bit Professional' Language: 'es' Physical Memory: 16194 MB
+OS: 'Windows 11  (10.0.22000) 64bit Professional' Language: 'es' Physical Memory: 16310 MB
 BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 1
 
 COMMAND LINE ARGUMENTS:
@@ -11,13 +11,13 @@ C:\Program Files\Unity\Hub\Editor\2022.3.5f1\Editor\Unity.exe
 -name
 AssetImportWorker0
 -projectPath
-C:/Users/Alumno/Desktop/Nueva carpeta/My-project-3-
+C:/Users/Usuario/Documents/GitHub/My-project-3-
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-21932
-Successfully changed project path to: C:/Users/Alumno/Desktop/Nueva carpeta/My-project-3-
-C:/Users/Alumno/Desktop/Nueva carpeta/My-project-3-
+53058
+Successfully changed project path to: C:/Users/Usuario/Documents/GitHub/My-project-3-
+C:/Users/Usuario/Documents/GitHub/My-project-3-
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
     "memorysetup-bucket-allocator-granularity=16"
     "memorysetup-bucket-allocator-bucket-count=8"
@@ -49,69 +49,82 @@ C:/Users/Alumno/Desktop/Nueva carpeta/My-project-3-
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [7296] Host "[IP] 192.168.213.1 [Port] 0 [Flags] 2 [Guid] 110727152 [EditorId] 110727152 [Version] 1048832 [Id] WindowsEditor(7,AL0588) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+Player connection [13872] Host "[IP] 192.168.1.29 [Port] 0 [Flags] 2 [Guid] 4004660425 [EditorId] 4004660425 [Version] 1048832 [Id] WindowsEditor(7,alexis-romero-desktop-gaming) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
 
-Player connection [7296] Host "[IP] 192.168.213.1 [Port] 0 [Flags] 2 [Guid] 110727152 [EditorId] 110727152 [Version] 1048832 [Id] WindowsEditor(7,AL0588) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [13872] Host "[IP] 192.168.1.29 [Port] 0 [Flags] 2 [Guid] 4004660425 [EditorId] 4004660425 [Version] 1048832 [Id] WindowsEditor(7,alexis-romero-desktop-gaming) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
 
-Refreshing native plugins compatible for Editor in 6.87 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 12.31 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2022.3.5f1 (9674261d40ee)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2022.3.5f1/Editor/Data/Resources/UnitySubsystems
-[Subsystems] Discovering subsystems at path C:/Users/Alumno/Desktop/Nueva carpeta/My-project-3-/Assets
+[Subsystems] Discovering subsystems at path C:/Users/Usuario/Documents/GitHub/My-project-3-/Assets
 GfxDevice: creating device client; threaded=0; jobified=0
 Direct3D:
     Version:  Direct3D 11.0 [level 11.1]
-    Renderer: NVIDIA GeForce RTX 4060 (ID=0x2882)
+    Renderer: NVIDIA GeForce GTX 1650 (ID=0x1f0a)
     Vendor:   NVIDIA
-    VRAM:     7971 MB
-    Driver:   31.0.15.4633
+    VRAM:     3935 MB
+    Driver:   32.0.15.6109
 Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2022.3.5f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2022.3.5f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2022.3.5f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56528
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56244
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
-Register platform support module: C:/Program Files/Unity/Hub/Editor/2022.3.5f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2022.3.5f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2022.3.5f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.005491 seconds.
-- Loaded All Assemblies, in  0.257 seconds
+Registered in 0.008672 seconds.
+- Loaded All Assemblies, in  0.352 seconds
 Native extension for WindowsStandalone target not found
 Native extension for Android target not found
-Android Extension - Scanning For ADB Devices 1699 ms
-Native extension for WebGL target not found
+Android SDK Build-tools component is not found. Make sure all tools are installed in the SDK manager.
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+UnityEditor.Android.AndroidSDKTools:UpdateToolsDirectories ()
+UnityEditor.Android.AndroidSDKTools:.ctor (string)
+UnityEditor.Android.AndroidSDKTools:CreateAndroidSDKTools (string)
+UnityEditor.Android.AndroidSDKTools:GetInstance<UnityEditor.Android.AndroidSDKTools> (UnityEditor.Android.AndroidSDKTools/InstanceCreator)
+UnityEditor.Android.AndroidSDKTools:GetInstance ()
+UnityEditor.Android.AndroidDeploymentTargetsExtension:GetMainThreadContext (bool)
+UnityEditor.Android.TargetExtension:OnUsbDevicesChanged (UnityEditor.Hardware.UsbDevice[])
+UnityEditor.Android.TargetExtension:OnLoad ()
+UnityEditor.Modules.ModuleManager:InitializePlatformSupportModules ()
+
+Android Extension - Scanning For ADB Devices 276 ms
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.983 seconds
-Domain Reload Profiling: 2240ms
-	BeginReloadAssembly (69ms)
+- Finished resetting the current domain, in  0.578 seconds
+Domain Reload Profiling: 930ms
+	BeginReloadAssembly (88ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
 		CreateAndSetChildDomain (1ms)
-	RebuildCommonClasses (25ms)
-	RebuildNativeTypeToScriptingClass (8ms)
-	initialDomainReloadingComplete (43ms)
-	LoadAllAssembliesAndSetupDomain (112ms)
-		LoadAssemblies (68ms)
+	RebuildCommonClasses (34ms)
+	RebuildNativeTypeToScriptingClass (12ms)
+	initialDomainReloadingComplete (67ms)
+	LoadAllAssembliesAndSetupDomain (150ms)
+		LoadAssemblies (87ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (108ms)
-			TypeCache.Refresh (107ms)
-				TypeCache.ScanAssembly (99ms)
+		AnalyzeDomain (143ms)
+			TypeCache.Refresh (142ms)
+				TypeCache.ScanAssembly (132ms)
 			ScanForSourceGeneratedMonoScriptInfo (0ms)
 			ResolveRequiredComponents (0ms)
-	FinalizeReload (1983ms)
+	FinalizeReload (579ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (1936ms)
+		SetupLoadedEditorAssemblies (523ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (1801ms)
-			SetLoadedEditorAssemblies (3ms)
+			InitializePlatformSupportModulesInManaged (382ms)
+			SetLoadedEditorAssemblies (4ms)
 			RefreshPlugins (0ms)
 			BeforeProcessingInitializeOnLoad (2ms)
-			ProcessInitializeOnLoadAttributes (87ms)
-			ProcessInitializeOnLoadMethodAttributes (42ms)
+			ProcessInitializeOnLoadAttributes (94ms)
+			ProcessInitializeOnLoadMethodAttributes (41ms)
 			AfterProcessingInitializeOnLoad (0ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
@@ -119,57 +132,56 @@ Domain Reload Profiling: 2240ms
 ========================================================================
 Worker process is ready to serve import requests
 Begin MonoManager ReloadAssembly
-- Loaded All Assemblies, in  0.642 seconds
-Refreshing native plugins compatible for Editor in 1.72 ms, found 3 plugins.
+- Loaded All Assemblies, in  0.978 seconds
+Refreshing native plugins compatible for Editor in 9.00 ms, found 3 plugins.
 Native extension for WindowsStandalone target not found
 Native extension for Android target not found
-Native extension for WebGL target not found
 Package Manager log level set to [2]
 [Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
 [Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
 [Package Manager] Cannot connect to Unity Package Manager local server
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  0.581 seconds
-Domain Reload Profiling: 1222ms
-	BeginReloadAssembly (92ms)
+- Finished resetting the current domain, in  0.780 seconds
+Domain Reload Profiling: 1755ms
+	BeginReloadAssembly (122ms)
 		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (4ms)
+		DisableScriptedObjects (5ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (16ms)
-	RebuildCommonClasses (24ms)
-	RebuildNativeTypeToScriptingClass (8ms)
-	initialDomainReloadingComplete (36ms)
-	LoadAllAssembliesAndSetupDomain (481ms)
-		LoadAssemblies (231ms)
+		CreateAndSetChildDomain (21ms)
+	RebuildCommonClasses (34ms)
+	RebuildNativeTypeToScriptingClass (11ms)
+	initialDomainReloadingComplete (42ms)
+	LoadAllAssembliesAndSetupDomain (766ms)
+		LoadAssemblies (324ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (293ms)
-			TypeCache.Refresh (265ms)
-				TypeCache.ScanAssembly (254ms)
-			ScanForSourceGeneratedMonoScriptInfo (20ms)
-			ResolveRequiredComponents (8ms)
-	FinalizeReload (582ms)
+		AnalyzeDomain (494ms)
+			TypeCache.Refresh (413ms)
+				TypeCache.ScanAssembly (398ms)
+			ScanForSourceGeneratedMonoScriptInfo (48ms)
+			ResolveRequiredComponents (33ms)
+	FinalizeReload (780ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (417ms)
+		SetupLoadedEditorAssemblies (539ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (21ms)
-			SetLoadedEditorAssemblies (5ms)
+			InitializePlatformSupportModulesInManaged (28ms)
+			SetLoadedEditorAssemblies (6ms)
 			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (73ms)
-			ProcessInitializeOnLoadAttributes (266ms)
-			ProcessInitializeOnLoadMethodAttributes (50ms)
-			AfterProcessingInitializeOnLoad (3ms)
+			BeforeProcessingInitializeOnLoad (96ms)
+			ProcessInitializeOnLoadAttributes (328ms)
+			ProcessInitializeOnLoadMethodAttributes (74ms)
+			AfterProcessingInitializeOnLoad (6ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (4ms)
+		AwakeInstancesAfterBackupRestoration (5ms)
 Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
-Refreshing native plugins compatible for Editor in 2.79 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 4.48 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 6230 Unused Serialized files (Serialized files now loaded: 0)
 Unloading 84 unused Assets / (1.2 MB). Loaded Objects now: 6691.
 Memory consumption went from 241.5 MB to 240.3 MB.
-Total: 4.627900 ms (FindLiveObjects: 0.432700 ms CreateObjectMapping: 0.393200 ms MarkObjects: 3.196100 ms  DeleteObjects: 0.604300 ms)
+Total: 3.834900 ms (FindLiveObjects: 0.558700 ms CreateObjectMapping: 0.184000 ms MarkObjects: 2.744100 ms  DeleteObjects: 0.347300 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
@@ -184,284 +196,93 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
-  Time since last request: 573.076790 seconds.
+  Time since last request: 177686.193462 seconds.
+  path: Assets/Scenes
+  artifactKey: Guid(ec032eeebb51bed4b9861969a6d28148) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes using Guid(ec032eeebb51bed4b9861969a6d28148) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '065379d8b1501cff4888b48e611828d5') in 0.002381 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.000037 seconds.
   path: Assets/Image.png
   artifactKey: Guid(fed9c3b5bc4cc53409069c9765e113c0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Image.png using Guid(fed9c3b5bc4cc53409069c9765e113c0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'aa926e2a1a9d7b49a9aac59dbcee35d6') in 0.014358 seconds
+Start importing Assets/Image.png using Guid(fed9c3b5bc4cc53409069c9765e113c0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '319797a0974212934ad62301ccff26df') in 0.002623 seconds
 Number of updated asset objects reloaded before import = 0
 Number of asset objects unloaded after import = 1
 ========================================================================
-Received Import Request.
-  Time since last request: 4.110382 seconds.
-  path: Assets/Scenes
-  artifactKey: Guid(ec032eeebb51bed4b9861969a6d28148) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scenes using Guid(ec032eeebb51bed4b9861969a6d28148) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '065379d8b1501cff4888b48e611828d5') in 0.000430 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 0
-========================================================================
-Received Import Request.
-  Time since last request: 1.806961 seconds.
-  path: Assets/Scenes/LevelOne 1.unity
-  artifactKey: Guid(9f6fc477e42e65342b20d466ba98f7d9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scenes/LevelOne 1.unity using Guid(9f6fc477e42e65342b20d466ba98f7d9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4cad3512a07ce562d524e648c0a01276') in 0.000400 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 0
-========================================================================
-Received Import Request.
-  Time since last request: 90.120553 seconds.
-  path: Assets/Models/Animation
-  artifactKey: Guid(a37a7d5e74641bc4c9fb7e09aa7a2051) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation using Guid(a37a7d5e74641bc4c9fb7e09aa7a2051) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6cb89e0ce02ea2af0d3a77d7b5a4ca84') in 0.000393 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 0
-========================================================================
-Received Import Request.
-  Time since last request: 0.099599 seconds.
-  path: Assets/Models/Animation/katana.FBX
-  artifactKey: Guid(0a39d1fbca43a1940b3551141db4b86c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/katana.FBX using Guid(0a39d1fbca43a1940b3551141db4b86c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b645b00f2c086d33b4e77cbbb6f51312') in 0.004514 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 38
-========================================================================
-Received Import Request.
-  Time since last request: 0.000011 seconds.
-  path: Assets/Models/Animation/X Bot45.fbx
-  artifactKey: Guid(fc1cf8ed3b322b04cbf694273a523431) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/X Bot45.fbx using Guid(fc1cf8ed3b322b04cbf694273a523431) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8adfedb11cb16838242d8727de895b75') in 0.005852 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 146
-========================================================================
-Received Import Request.
-  Time since last request: 0.606885 seconds.
-  path: Assets/Models/Animation/Combat
-  artifactKey: Guid(e114fefca770a8d4ab96c44829e61214) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat using Guid(e114fefca770a8d4ab96c44829e61214) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '286a1193b0d1928908e884a5492aa0da') in 0.000525 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 0
-========================================================================
-Received Import Request.
-  Time since last request: 0.664187 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack
-  artifactKey: Guid(de4976ef7d2709a46813b78085ac46a7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack using Guid(de4976ef7d2709a46813b78085ac46a7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd3c9c75a4aecd7957c1124799c5b75f0') in 0.000437 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 0
-========================================================================
-Received Import Request.
-  Time since last request: 0.078307 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/draw sword 1.fbx
-  artifactKey: Guid(65b54443d16ab7a4a8d7eef7d743a37d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/draw sword 1.fbx using Guid(65b54443d16ab7a4a8d7eef7d743a37d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '883e82de171fe4cf12956d35e8256cad') in 0.002321 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000012 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sheath sword 2.fbx
-  artifactKey: Guid(246752fdacf9c8e40b2cffa584ef153c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sheath sword 2.fbx using Guid(246752fdacf9c8e40b2cffa584ef153c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a7e90ee9e3c7fd786217f574afbb8a64') in 0.001760 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000012 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield strafe.fbx
-  artifactKey: Guid(3c8d83988a7ba854bbbaffc9fb2663c5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield strafe.fbx using Guid(3c8d83988a7ba854bbbaffc9fb2663c5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1a6cae2dc1484320e3431581d047b5cf') in 0.001757 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000010 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sheath sword 1.fbx
-  artifactKey: Guid(8ae9569eb45c3f54babc5582a5d3b0e1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sheath sword 1.fbx using Guid(8ae9569eb45c3f54babc5582a5d3b0e1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '73f73ff44fca523e9ea77d6f2b55b667') in 0.001960 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000013 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield kick.fbx
-  artifactKey: Guid(2fbd06e8f2b4e194c835adf4433368ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield kick.fbx using Guid(2fbd06e8f2b4e194c835adf4433368ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '098dafa3bef104d5cb541732d40459e0') in 0.002008 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000011 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield crouch block (2).fbx
-  artifactKey: Guid(acd963b40d22e4a43a4a2552ec81e6a7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield crouch block (2).fbx using Guid(acd963b40d22e4a43a4a2552ec81e6a7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '54b103b32f029a1d4c9883f53af040e7') in 0.001908 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000011 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield run (2).fbx
-  artifactKey: Guid(40861a7713ffb574eb25241e30751f0d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield run (2).fbx using Guid(40861a7713ffb574eb25241e30751f0d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b05b8f6ffb6fc37f441b559a9cc444d5') in 0.001896 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000014 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield idle (3).fbx
-  artifactKey: Guid(d313160709f191e4c9d4c04ed613f82d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield idle (3).fbx using Guid(d313160709f191e4c9d4c04ed613f82d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fed9e5cdaf0c0d0859b6a42e5bc3ec90') in 0.001943 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000015 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield block (2).fbx
-  artifactKey: Guid(1f109c23dfb4a33468de7c200d9a9de1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield block (2).fbx using Guid(1f109c23dfb4a33468de7c200d9a9de1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6c9177581ed84e4814b3c3a99c3326db') in 0.002111 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000016 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield slash.fbx
-  artifactKey: Guid(1bdb43a0fc687054ca6ebd94a5147141) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield slash.fbx using Guid(1bdb43a0fc687054ca6ebd94a5147141) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd5a925de2d830fe807b7998e4bc4a4d5') in 0.001684 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000019 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield attack (2).fbx
-  artifactKey: Guid(1168e358ae053af4688ca65a8530d580) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield attack (2).fbx using Guid(1168e358ae053af4688ca65a8530d580) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '416875090a937b18b8df294008d4b798') in 0.001845 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000014 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield crouch block idle.fbx
-  artifactKey: Guid(f4d357a659237e34cb8acf87d700cdae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield crouch block idle.fbx using Guid(f4d357a659237e34cb8acf87d700cdae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1de4bb2333a73aba63888c5986c492bf') in 0.001808 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000014 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield block idle.fbx
-  artifactKey: Guid(a27e979c7918e9b40b52d321b0e76d05) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield block idle.fbx using Guid(a27e979c7918e9b40b52d321b0e76d05) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3aa4edc66815bb0ab9c14ef10c1715c3') in 0.001723 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000020 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield impact.fbx
-  artifactKey: Guid(7feddae24e3108746a7df0e6dd53bb0c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield impact.fbx using Guid(7feddae24e3108746a7df0e6dd53bb0c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '97667bb99db1e935610e5bccceeb32a7') in 0.001666 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000012 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield slash (5).fbx
-  artifactKey: Guid(c03131181f26f9549954613888d21e9f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield slash (5).fbx using Guid(c03131181f26f9549954613888d21e9f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f758953b48e461391b8675c195646844') in 0.001701 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000013 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/X Bot.fbx
-  artifactKey: Guid(bfbfb59039ee80d4595519569b8e9291) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/X Bot.fbx using Guid(bfbfb59039ee80d4595519569b8e9291) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b99f7093a4f1a37ada588698b0d3f411') in 0.005960 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 144
-========================================================================
-Received Import Request.
-  Time since last request: 0.000011 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield power up.fbx
-  artifactKey: Guid(b21d25801cea03c4a973578d86506a19) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield power up.fbx using Guid(b21d25801cea03c4a973578d86506a19) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1f2e3acb9c9a05f7233b2a49b5267edc') in 0.001787 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000011 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield strafe (3).fbx
-  artifactKey: Guid(12cf7c2fef0b4df4fb3377f81dcfd579) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield strafe (3).fbx using Guid(12cf7c2fef0b4df4fb3377f81dcfd579) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f18efe34da5c78a8d76ebb2d2e92ee24') in 0.001685 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000014 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield casting (2).fbx
-  artifactKey: Guid(ab394e3c0e27d1746bc10863e2553c8e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield casting (2).fbx using Guid(ab394e3c0e27d1746bc10863e2553c8e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd38f15de8371b9d517d241ccb3cb473a') in 0.002162 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000012 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield death.fbx
-  artifactKey: Guid(eec4acffc440d464289a44db57243777) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield death.fbx using Guid(eec4acffc440d464289a44db57243777) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '71ad69c329941618fcb879d79deaaeeb') in 0.002161 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000012 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield impact (3).fbx
-  artifactKey: Guid(571834c1d5f74634f96cf666eda093ed) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield impact (3).fbx using Guid(571834c1d5f74634f96cf666eda093ed) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ff3df550d25dd6c5723eb3b92e8c96ba') in 0.001614 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000012 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield jump (2).fbx
-  artifactKey: Guid(9a45622ebb94ad04398288d0d9f08431) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield jump (2).fbx using Guid(9a45622ebb94ad04398288d0d9f08431) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fadd2e3fe51565834dc91033309dc198') in 0.002291 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000011 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield crouching (2).fbx
-  artifactKey: Guid(1418f2b37fddd1a40ac2c354c4e4ff73) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield crouching (2).fbx using Guid(1418f2b37fddd1a40ac2c354c4e4ff73) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b5959ced11299b539f6f2ef0be9c0d40') in 0.001600 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000017 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield crouching.fbx
-  artifactKey: Guid(9bb4390be970183448a18e23db31346d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield crouching.fbx using Guid(9bb4390be970183448a18e23db31346d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5542f82e77ad4562a02ea4a4f1722b38') in 0.001813 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000013 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield turn.fbx
-  artifactKey: Guid(fdd4193b3d2341c4595d531a6e28a66d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield turn.fbx using Guid(fdd4193b3d2341c4595d531a6e28a66d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a8341fda0c8024b0532cbfd1ba2605c8') in 0.001641 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000011 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield idle (2).fbx
-  artifactKey: Guid(3ccc542ae68f1f64687b226adf44a875) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield idle (2).fbx using Guid(3ccc542ae68f1f64687b226adf44a875) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '743e050c1da746c6833804d45862a37f') in 0.001706 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
 Received Prepare
-Refreshing native plugins compatible for Editor in 2.01 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 3.24 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
 Unloading 5 unused Assets / (1.2 MB). Loaded Objects now: 6692.
-Memory consumption went from 115.7 MB to 114.5 MB.
-Total: 3.550500 ms (FindLiveObjects: 0.306800 ms CreateObjectMapping: 0.226400 ms MarkObjects: 2.772700 ms  DeleteObjects: 0.243500 ms)
+Memory consumption went from 115.3 MB to 114.2 MB.
+Total: 3.392300 ms (FindLiveObjects: 0.482300 ms CreateObjectMapping: 0.173300 ms MarkObjects: 2.487300 ms  DeleteObjects: 0.248800 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:CustomObjectIndexerAttribute: a3ef5dd2817f97addfee359851a9dba5 -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.900 seconds
+Refreshing native plugins compatible for Editor in 3.29 ms, found 3 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.090 seconds
+Domain Reload Profiling: 1984ms
+	BeginReloadAssembly (165ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (5ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (40ms)
+	RebuildCommonClasses (79ms)
+	RebuildNativeTypeToScriptingClass (17ms)
+	initialDomainReloadingComplete (109ms)
+	LoadAllAssembliesAndSetupDomain (524ms)
+		LoadAssemblies (288ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (315ms)
+			TypeCache.Refresh (298ms)
+				TypeCache.ScanAssembly (286ms)
+			ScanForSourceGeneratedMonoScriptInfo (7ms)
+			ResolveRequiredComponents (10ms)
+	FinalizeReload (1091ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (410ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (19ms)
+			SetLoadedEditorAssemblies (3ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (71ms)
+			ProcessInitializeOnLoadAttributes (262ms)
+			ProcessInitializeOnLoadMethodAttributes (50ms)
+			AfterProcessingInitializeOnLoad (5ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (7ms)
+Refreshing native plugins compatible for Editor in 4.60 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 6091 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 45 unused Assets / (1.2 MB). Loaded Objects now: 6745.
+Memory consumption went from 210.7 MB to 209.4 MB.
+Total: 4.273500 ms (FindLiveObjects: 0.506400 ms CreateObjectMapping: 0.199500 ms MarkObjects: 3.197900 ms  DeleteObjects: 0.368700 ms)
 
 Prepare: number of updated asset objects reloaded= 0
 AssetImportParameters requested are different than current active one (requested -> active):
@@ -478,142 +299,74 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
-  Time since last request: 53.809253 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/draw sword 2.fbx
-  artifactKey: Guid(a86804e1c5468994ebfbede07b8a9fcc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/draw sword 2.fbx using Guid(a86804e1c5468994ebfbede07b8a9fcc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1c116adddee9fb338c4e8564ae4999fe') in 0.005808 seconds
+  Time since last request: 50.083116 seconds.
+  path: Assets/Scenes/MainMenu.unity
+  artifactKey: Guid(fb75c88204d06dd4c8d5f41103e413cf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/MainMenu.unity using Guid(fb75c88204d06dd4c8d5f41103e413cf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c56d971c8a95d4a26b22d163ef25943c') in 0.009864 seconds
 Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
+Number of asset objects unloaded after import = 0
 ========================================================================
-Received Import Request.
-  Time since last request: 0.000017 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sheath sword 2.fbx
-  artifactKey: Guid(246752fdacf9c8e40b2cffa584ef153c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sheath sword 2.fbx using Guid(246752fdacf9c8e40b2cffa584ef153c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '41d0babfc904c5e777dceb4f4ebb5ce8') in 0.001689 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000017 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield crouch idle.fbx
-  artifactKey: Guid(6a39d1de8bfe8d843a0078cd6025faea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield crouch idle.fbx using Guid(6a39d1de8bfe8d843a0078cd6025faea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1624281d5c1756c13fd9293066cf1b48') in 0.001580 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000011 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield attack (4).fbx
-  artifactKey: Guid(0c494d62a8be81042be06512c61cf8e1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield attack (4).fbx using Guid(0c494d62a8be81042be06512c61cf8e1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e018cf6a3cb80cd601ac450a424e5d75') in 0.001697 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000014 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield run (2).fbx
-  artifactKey: Guid(40861a7713ffb574eb25241e30751f0d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield run (2).fbx using Guid(40861a7713ffb574eb25241e30751f0d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '61a0973705f25e38339c19511e44c371') in 0.001542 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000011 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield idle (3).fbx
-  artifactKey: Guid(d313160709f191e4c9d4c04ed613f82d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield idle (3).fbx using Guid(d313160709f191e4c9d4c04ed613f82d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e8c185833b47b2bb1c08850141104057') in 0.002036 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000011 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield 180 turn.fbx
-  artifactKey: Guid(52c87789818b77a42aa1a8a58dfb25c1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield 180 turn.fbx using Guid(52c87789818b77a42aa1a8a58dfb25c1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '39921af117bf4126287acf673b2c9956') in 0.001577 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000010 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield attack (2).fbx
-  artifactKey: Guid(1168e358ae053af4688ca65a8530d580) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield attack (2).fbx using Guid(1168e358ae053af4688ca65a8530d580) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9001187a0e3f3d1b42b1f70cab5afab9') in 0.001968 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000016 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield death (2).fbx
-  artifactKey: Guid(7dc355aa779c0d14ea309227e9b92844) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield death (2).fbx using Guid(7dc355aa779c0d14ea309227e9b92844) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bbdb64daf06cdaf33333749544297f84') in 0.001724 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000017 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield idle (4).fbx
-  artifactKey: Guid(0587260ad717b7f41aab9ff775662800) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield idle (4).fbx using Guid(0587260ad717b7f41aab9ff775662800) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b10f715e1085a37b9e452d3133a2e41c') in 0.002237 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000015 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield casting.fbx
-  artifactKey: Guid(1eb0fc2a05ad7b94cb045b0406b83501) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield casting.fbx using Guid(1eb0fc2a05ad7b94cb045b0406b83501) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2abb7df968443951038a09297e279e6f') in 0.001696 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000012 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield crouch.fbx
-  artifactKey: Guid(06c33c05b56cc214db1608f1e23fd880) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield crouch.fbx using Guid(06c33c05b56cc214db1608f1e23fd880) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a42cbbd96b0465ed15c060336afd70eb') in 0.002122 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000016 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield casting (2).fbx
-  artifactKey: Guid(ab394e3c0e27d1746bc10863e2553c8e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield casting (2).fbx using Guid(ab394e3c0e27d1746bc10863e2553c8e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '553870d5ee0fc7a233e00c2866d6d3f4') in 0.001595 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000014 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield impact (2).fbx
-  artifactKey: Guid(9e84b77ff38fce44ebef8d1aac185d42) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield impact (2).fbx using Guid(9e84b77ff38fce44ebef8d1aac185d42) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '46a6aea75848ce9b4eca748537eb8aac') in 0.001544 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000010 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield jump (2).fbx
-  artifactKey: Guid(9a45622ebb94ad04398288d0d9f08431) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield jump (2).fbx using Guid(9a45622ebb94ad04398288d0d9f08431) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1ac712220be804368586c5f8b31056e8') in 0.002152 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000017 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield crouch block.fbx
-  artifactKey: Guid(2289d8310713eaa4f842ba93ce768a4f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield crouch block.fbx using Guid(2289d8310713eaa4f842ba93ce768a4f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ebc942dcd9edee7c20dd934ca7ec9693') in 0.001541 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-========================================================================
-Received Import Request.
-  Time since last request: 0.000011 seconds.
-  path: Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield turn.fbx
-  artifactKey: Guid(fdd4193b3d2341c4595d531a6e28a66d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models/Animation/Combat/Pro Sword and Shield Pack/sword and shield turn.fbx using Guid(fdd4193b3d2341c4595d531a6e28a66d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f7321354b61ec72a8a1e03bc99644d86') in 0.002188 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 134
-Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
-TcpMessagingSession - receive error: operation aborted. errorcode: 995, details: La operación de E/S se anuló por una salida de subproceso o por una solicitud de aplicación.
-AssetImportWorker is now disconnected from the server
-Process exiting
-Exiting without the bug reporter. Application will terminate with return code 0
+Received Prepare
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.754 seconds
+Refreshing native plugins compatible for Editor in 4.13 ms, found 3 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.223 seconds
+Domain Reload Profiling: 1974ms
+	BeginReloadAssembly (133ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (4ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (40ms)
+	RebuildCommonClasses (30ms)
+	RebuildNativeTypeToScriptingClass (11ms)
+	initialDomainReloadingComplete (27ms)
+	LoadAllAssembliesAndSetupDomain (550ms)
+		LoadAssemblies (247ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (352ms)
+			TypeCache.Refresh (337ms)
+				TypeCache.ScanAssembly (325ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (15ms)
+	FinalizeReload (1224ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (469ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (23ms)
+			SetLoadedEditorAssemblies (3ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (79ms)
+			ProcessInitializeOnLoadAttributes (299ms)
+			ProcessInitializeOnLoadMethodAttributes (58ms)
+			AfterProcessingInitializeOnLoad (7ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (8ms)
+Refreshing native plugins compatible for Editor in 3.91 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 6103 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 57 unused Assets / (1.9 MB). Loaded Objects now: 6761.
+Memory consumption went from 214.2 MB to 212.4 MB.
+Total: 4.375400 ms (FindLiveObjects: 0.549700 ms CreateObjectMapping: 0.207700 ms MarkObjects: 2.959000 ms  DeleteObjects: 0.657800 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:CustomObjectIndexerAttribute: a3ef5dd2817f97addfee359851a9dba5 -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
