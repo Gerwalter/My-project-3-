@@ -21,6 +21,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float _movRayDist = 0.75f;
     [SerializeField] private LayerMask _movMask;
     [SerializeField] private float _movSpeed = 3.5f;
+    [SerializeField] private Vector3 currentDirection;
+    public float rotationSpeed = 10f;
 
     private bool _isOnAir = false;
     private float _xAxis = 0f, _zAxis = 0f;
@@ -50,8 +52,8 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        _xAxis = Input.GetAxis("Horizontal");
-        _zAxis = Input.GetAxis("Vertical");
+        _xAxis = Input.GetAxisRaw("Horizontal");
+        _zAxis = Input.GetAxisRaw("Vertical");
 
         if (!IsBlocked(_xAxis, _zAxis))
         {
@@ -91,9 +93,25 @@ public class Player : MonoBehaviour
 
     private void Movement(float x, float z)
     {
-        _dir = (transform.right * x + transform.forward * z).normalized;
+        Vector3 targetDirection = new Vector3(_xAxis, 0f, _zAxis).normalized;
 
-        _rb.MovePosition(transform.position + _dir * _movSpeed * Time.fixedDeltaTime);
+        // Si hay input de movimiento
+        if (targetDirection != Vector3.zero)
+        {
+            // Interpolamos la dirección actual hacia la nueva dirección
+            currentDirection = Vector3.Slerp(currentDirection, targetDirection, rotationSpeed * Time.deltaTime);
+
+            // Hacer que el forward del objeto sea la dirección interpolada suavemente
+            transform.forward = currentDirection;
+
+            // Mover el objeto en la dirección suavizada con la velocidad definida
+            transform.position += currentDirection * _movSpeed * Time.deltaTime;
+        }
+        else
+        {
+            // Mantener la dirección actual si no hay input
+            currentDirection = Vector3.Slerp(currentDirection, Vector3.zero, rotationSpeed * Time.deltaTime);
+        }
     }
 
     private bool IsGrounded()

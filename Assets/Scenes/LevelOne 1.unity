@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -10628,6 +10628,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 808d048c23618a748b981610118f88bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1594531330 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1138763200837999765, guid: 8f31649f755d8ff488bd5334b0a3cd2c, type: 3}
+  m_PrefabInstance: {fileID: 7981804948779783847}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1596839506
 GameObject:
   m_ObjectHideFlags: 0
@@ -15853,6 +15858,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   _movSpeed: 5
+  currentDirection: {x: 0, y: 0, z: 0}
+  rotationSpeed: 10
 --- !u!1 &1122409819238862361
 GameObject:
   m_ObjectHideFlags: 0
@@ -22624,7 +22631,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &6496676505335219244
 GameObject:
   m_ObjectHideFlags: 0
@@ -22839,8 +22846,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSensitivity: 100
-  playerBody: {fileID: 7805307816793959700}
-  offset: {x: 1, y: 0.8, z: 0}
+  playerBody: {fileID: 1594531330}
+  offset: {x: 0, y: 1.07, z: 0}
   minDistance: 1
   collisionMask:
     serializedVersion: 2
@@ -23251,14 +23258,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4529991198884735529}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.059741903, y: -0, z: -0, w: 0.9982139}
-  m_LocalPosition: {x: 11.019, y: 10.46, z: 23.85}
+  m_LocalRotation: {x: -0, y: 0.042192668, z: -0, w: 0.9991095}
+  m_LocalPosition: {x: 0, y: 3.69, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 632066329957736944}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -6.85, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 4.836, z: 0}
 --- !u!114 &7455305242241442899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23664,6 +23671,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4207050283427435274, guid: 8f31649f755d8ff488bd5334b0a3cd2c, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4937935988233498866, guid: 8f31649f755d8ff488bd5334b0a3cd2c, type: 3}
+      propertyPath: m_Radius
+      value: 0.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 4937935988233498866, guid: 8f31649f755d8ff488bd5334b0a3cd2c, type: 3}
+      propertyPath: m_Center.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6583769249960175773, guid: 8f31649f755d8ff488bd5334b0a3cd2c, type: 3}
@@ -23677,6 +23692,10 @@ PrefabInstance:
     - target: {fileID: 7820170254265499701, guid: 8f31649f755d8ff488bd5334b0a3cd2c, type: 3}
       propertyPath: _jumpRayDist
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7820170254265499701, guid: 8f31649f755d8ff488bd5334b0a3cd2c, type: 3}
+      propertyPath: rotationSpeed
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8629148475222789570, guid: 8f31649f755d8ff488bd5334b0a3cd2c, type: 3}
       propertyPath: m_Materials.Array.size
