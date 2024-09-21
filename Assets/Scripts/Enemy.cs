@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class Enemy : Entity
+public class Enemy : HP
 {
     [Header("<color=red>AI</color>")]
     [SerializeField] private float _chaseDist = 6.0f;
@@ -14,8 +14,6 @@ public class Enemy : Entity
     [SerializeField] private Player _player;
 
     [SerializeField] private GameObject sword;
-    public float health;
-    public float maxHealth;
 
     public Transform _target, _actualNode;
     private List<Transform> _navMeshNodes = new();
@@ -27,10 +25,6 @@ public class Enemy : Entity
 
     private NavMeshAgent _agent;
 
-    private void Awake()
-    {
-        
-    }
 
     private void Start()
     {
@@ -38,7 +32,6 @@ public class Enemy : Entity
 
         _agent = GetComponent<NavMeshAgent>();
         _target = GameManager.Instance.Player.gameObject.transform;        
-        health = maxHealth;
     }
 
     public void Initialize()
@@ -63,8 +56,9 @@ public class Enemy : Entity
                 if (!_agent.isStopped) _agent.isStopped = true;
 
                 Debug.Log($"<color=red>{name}</color>: Japish.");
-                //_player.Damage();
-                
+                _player.ReciveDamage(2);
+
+
             }
             else
             {
@@ -102,15 +96,12 @@ public class Enemy : Entity
 
     private void OnDrawGizmos()
     {
-        // Color para el chase distance
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, _chaseDist);
 
-        // Color para el attack distance
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, _atkDist);
 
-        // Color para el change node distance
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, _changeNodeDist);
     }
@@ -118,16 +109,10 @@ public class Enemy : Entity
 
     private void OnTriggerEnter(Collider other)
     {
-        // Verifica si el objeto que colisiona es la espada
         if (other.gameObject == sword)
         {
-            health -= 1;
-
-            if (health <= 0)
-            {
-                GameManager.Instance.Enemies.Remove(this);
-                Destroy(this.gameObject);
-            }
+            ReciveDamage(5);
+            print("funca");
         }
     }
 }

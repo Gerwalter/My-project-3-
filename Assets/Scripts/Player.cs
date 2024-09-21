@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Player : MonoBehaviour
+public class Player : HP
 {
 
     [Header("<color=#6A89A7>Animation</color>")]
@@ -24,9 +24,8 @@ public class Player : MonoBehaviour
     [SerializeField] private Vector3 currentDirection;
     public float rotationSpeed = 10f;
 
-    private bool _isOnAir = false;
     private float _xAxis = 0f, _zAxis = 0f;
-    private Vector3 _dir = new(), _jumpOffset = new(), _movRayDir = new();
+    private Vector3 _jumpOffset = new(), _movRayDir = new();
 
     private Animator _anim;
     private Rigidbody _rb;
@@ -75,6 +74,7 @@ public class Player : MonoBehaviour
         {
             _anim.SetTrigger(_jumpName);
             Jump();
+
         }
     }
 
@@ -98,14 +98,20 @@ public class Player : MonoBehaviour
         // Si hay input de movimiento
         if (targetDirection != Vector3.zero)
         {
+            /*
             // Interpolamos la dirección actual hacia la nueva dirección
             currentDirection = Vector3.Slerp(currentDirection, targetDirection, rotationSpeed * Time.deltaTime);
 
             // Hacer que el forward del objeto sea la dirección interpolada suavemente
             transform.forward = currentDirection;
+            */
+            currentDirection = (transform.right * x + transform.forward * z).normalized;
 
+               transform.position += currentDirection * _movSpeed * Time.deltaTime;
+             
+            /*
             // Mover el objeto en la dirección suavizada con la velocidad definida
-            transform.position += currentDirection * _movSpeed * Time.deltaTime;
+            transform.position += currentDirection * _movSpeed * Time.deltaTime;*/
         }
         else
         {

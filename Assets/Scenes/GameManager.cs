@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -22,6 +23,13 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    private Cam Camera;
+    public Cam camera
+    {
+        get { return Camera; }
+         set { camera = value;  }
+    }
+
     public Player _player;
     public Player Player
     {
@@ -41,5 +49,9 @@ public class GameManager : MonoBehaviour
     {
         get { return _surface; }
         set { _surface = value; }
+    }
+    public static void LoadLevel(string newSceneName)
+    {
+        SceneManager.LoadScene(newSceneName);
     }
 }
