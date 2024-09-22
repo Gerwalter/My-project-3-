@@ -7,6 +7,8 @@ public class CamRotation : MonoBehaviour
     [Header("Sensibilidad")]
     [SerializeField] float _xSens;
     [SerializeField] float _ySens;
+    [SerializeField] float _y;
+    [SerializeField] float _z;
 
     //Inputs
     float _mouseX, _mouseY;
@@ -35,7 +37,7 @@ public class CamRotation : MonoBehaviour
         _xRotation -= _mouseY;
 
         //limita que no te pases de largo mirando arriba y abajo
-        _xRotation = Mathf.Clamp(_xRotation, -89f, 89f);
+        _xRotation = Mathf.Clamp(_xRotation, -_y, _z);
 
         // Rotar camara o centro en nuestro caso
         //transform.rotation = Quaternion.Euler(_xRotation, _yRotation, 0);
@@ -51,7 +53,7 @@ public class CamRotation : MonoBehaviour
     private void LateUpdate()
     {
         _playerOrientation.rotation = Quaternion.Euler(0, _yRotation, 0);
-        _meshOrientation.rotation = Quaternion.Euler(0, _yRotation, 0);
+        //_meshOrientation.rotation = Quaternion.Euler(0, _yRotation, 0);
     }
 
 

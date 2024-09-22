@@ -12,7 +12,7 @@ public class Cam : MonoBehaviour
 
     private void Start()
     {
-       GameManager.Instance.camera = this;
+       GameManager.Instance.Camera = this;
     }
 
     private void LateUpdate()
@@ -28,13 +28,5 @@ public class Cam : MonoBehaviour
         }
         
         transform.forward = _target.forward;
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            SceneManager.LoadScene("Menu");
-        }
     }
 }

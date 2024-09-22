@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Player : HP
 {
@@ -107,8 +106,8 @@ public class Player : HP
             */
             currentDirection = (transform.right * x + transform.forward * z).normalized;
 
-               transform.position += currentDirection * _movSpeed * Time.deltaTime;
-             
+            transform.position += currentDirection * _movSpeed * Time.deltaTime;
+
             /*
             // Mover el objeto en la dirección suavizada con la velocidad definida
             transform.position += currentDirection * _movSpeed * Time.deltaTime;*/

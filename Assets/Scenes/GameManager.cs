@@ -22,12 +22,11 @@ public class GameManager : MonoBehaviour
         }
     }
     #endregion
-
-    private Cam Camera;
-    public Cam camera
+    private Cam _camara;
+    public Cam Camera
     {
-        get { return Camera; }
-         set { camera = value;  }
+        get { return _camara; }
+        set { _camara = value; }
     }
 
     public Player _player;
