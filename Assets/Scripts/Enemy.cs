@@ -7,20 +7,18 @@ using UnityEngine.AI;
 public class Enemy : HP
 {
     [Header("<color=red>AI</color>")]
-
     [SerializeField] private float _chaseDist = 6.0f;
     [SerializeField] private float _atkDist = 2.0f;
-    [SerializeField] private float _healDist = 5.0f; // Distancia para curar a otros enemigos
-    [SerializeField] private float _shieldDist = 5.0f; // Distancia para proteger a otros enemigos
+    [SerializeField] private float _shieldDist = 5.0f;
+    [SerializeField] private float _healDist = 5.0f;
     [SerializeField] private float _changeNodeDist = 0.5f;
     [SerializeField] public float speed;
     [SerializeField] private Player _player;
     [SerializeField] private float _damageInterval = 1.0f; // Intervalo de tiempo para aplicar daño
-    [Header("<color=yellow>Type</color>")]
-    [SerializeField] private bool isHealer = false;
     [SerializeField] private bool isShielder = false;
+    [SerializeField] private bool isHealer = false;
     [SerializeField] private GameObject sword;
-    [SerializeField] private GameObject shieldPrefab;
+    [SerializeField] private GameObject shieldPrefab; // Prefab del escudo a instanciar
 
     public Transform _target, _actualNode;
     private List<Transform> _navMeshNodes = new();
@@ -32,7 +30,7 @@ public class Enemy : HP
 
     private NavMeshAgent _agent;
     private Coroutine _damageCoroutine;
-    private GameObject activeShield; // Escudo actualmente activo
+    private GameObject _shieldInstance;
 
     private void Start()
     {
@@ -53,11 +51,10 @@ public class Enemy : HP
     {
         if (!_target)
         {
-            Debug.LogError($"<color=red>NullReferenceException</color>: No asignaste un objetivo, boludo.");
+            Debug.LogError($"<color=red>NullReferenceException</color>: No asignaste un objetivo.");
             return;
         }
 
-        // Si es del tipo Healer, busca aliados cercanos con vida incompleta
         if (isHealer)
         {
             Enemy nearbyAlly = FindAllyToHeal();
@@ -68,14 +65,30 @@ public class Enemy : HP
             }
         }
 
-        // Si es del tipo Shielder, buscar a un aliado cercano y colocar escudo
-        if (isShielder && activeShield == null)
+        // Si el escudo está activo, detener el movimiento del NavMeshAgent
+        if (_shieldInstance != null && _shieldInstance.activeSelf)
         {
-            Enemy nearbyAlly = FindAllyToShield();
-            if (nearbyAlly != null)
+            if (!_agent.isStopped)
             {
-                ProtectAlly(nearbyAlly);
-                return; // No continuar con la lógica de persecución si está protegiendo a otro
+                _agent.isStopped = true;
+            }
+            return; // No continuar con la lógica de movimiento mientras el escudo esté activo
+        }
+        else
+        {
+            if (_agent.isStopped)
+            {
+                _agent.isStopped = false;
+            }
+        }
+
+        // Si es del tipo Shielder, detecta al jugador y activa el escudo
+        if (isShielder)
+        {
+            if (PlayerInShieldRange())
+            {
+                ActivateShield();
+                return; // No continuar con la lógica de persecución si está protegiéndose con el escudo
             }
         }
 
@@ -119,36 +132,6 @@ public class Enemy : HP
         _agent.speed = speed;
     }
 
-    // Detecta si hay un aliado cercano que necesite un escudo
-    private Enemy FindAllyToShield()
-    {
-        Collider[] hits = Physics.OverlapSphere(transform.position, _shieldDist);
-        foreach (var hit in hits)
-        {
-            Enemy enemy = hit.GetComponent<Enemy>();
-            if (enemy != null && enemy != this && enemy.GetLife < enemy.maxLife)
-            {
-                return enemy; // Retorna el primer enemigo que necesita ser protegido
-            }
-        }
-        return null;
-    }
-
-    // Proteger al aliado detectado con un escudo
-    private void ProtectAlly(Enemy ally)
-    {
-        _agent.SetDestination(ally.transform.position);
-        if (Vector3.Distance(transform.position, ally.transform.position) <= 1.0f) // Rango para proteger
-        {
-            if (activeShield == null)
-            {
-                activeShield = Instantiate(shieldPrefab, ally.transform.position, Quaternion.identity, ally.transform);
-            }
-            _agent.isStopped = true; // El Shielder se queda en su lugar
-        }
-    }
-
-    // Detecta si hay un aliado cercano que necesite curación
     private Enemy FindAllyToHeal()
     {
         Collider[] hits = Physics.OverlapSphere(transform.position, _healDist);
@@ -170,6 +153,22 @@ public class Enemy : HP
         if (Vector3.Distance(transform.position, ally.transform.position) <= 1.0f) // Rango para curar
         {
             ally.Health(10); // Curar 10 unidades de vida (puedes ajustar el valor)
+        }
+    }
+
+    // Detecta si el jugador está en el rango de activación del escudo
+    private bool PlayerInShieldRange()
+    {
+        return Vector3.Distance(transform.position, _target.position) <= _shieldDist;
+    }
+
+    // Activar el escudo cuando el jugador esté en rango
+    private void ActivateShield()
+    {
+        if (_shieldInstance == null)
+        {
+            _shieldInstance = Instantiate(shieldPrefab, transform.position, Quaternion.identity);
+            _shieldInstance.transform.SetParent(transform); // El escudo sigue al Shielder
         }
     }
 
@@ -210,6 +209,7 @@ public class Enemy : HP
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, _healDist);
 
+        // Visualización del área de activación del escudo
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, _shieldDist);
     }
