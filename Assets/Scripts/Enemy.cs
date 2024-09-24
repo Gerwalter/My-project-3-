@@ -12,8 +12,8 @@ public class Enemy : HP
     [SerializeField] private float _changeNodeDist = 0.5f;
     [SerializeField] public float speed;
     [SerializeField] private Player _player;
-    [SerializeField] private float _damageInterval = 1.0f;
-    [SerializeField] private GameObject sword;
+
+    [SerializeField] private Animator anim;
 
     [SerializeField] private float _healDist = 5.0f;
     [SerializeField] private float _shieldDist = 5.0f;
@@ -29,7 +29,6 @@ public class Enemy : HP
     }
 
     private NavMeshAgent _agent;
-    private Coroutine _damageCoroutine;
 
 
     public enum EnemyType
@@ -60,6 +59,9 @@ public class Enemy : HP
             entity._shootDist = _shootDist;
             entity._agent = _agent;
         }
+
+        if (_actualNode == null)
+            return;
     }
 
     public void Initialize()
@@ -67,14 +69,20 @@ public class Enemy : HP
         _actualNode = GetNewNode();
 
         _agent.SetDestination(_actualNode.position);
+
+        GameManager.Instance.Enemies.Add(this);
+
+        if (_actualNode == null)
+        {
+            _actualNode = _target.transform;
+        }
     }
 
     private void Update()
     {
-        if (!_target)
+        if (_actualNode == null)
         {
-            Debug.LogError($"<color=red>NullReferenceException</color>: No asignaste un objetivo.");
-            return;
+            _actualNode = _target.transform;
         }
 
         if (Vector3.SqrMagnitude(transform.position - _target.position) <= (_chaseDist * _chaseDist))
@@ -83,10 +91,7 @@ public class Enemy : HP
             {
                 if (!_agent.isStopped) _agent.isStopped = true;
 
-                if (_damageCoroutine == null)
-                {
-                    _damageCoroutine = StartCoroutine(ApplyDamageOverTime());
-                }
+                _player.ReciveDamage(.05f);
             }
             else
             {
@@ -94,39 +99,27 @@ public class Enemy : HP
 
                 _agent.SetDestination(_target.position);
 
-                if (_damageCoroutine != null)
-                {
-                    StopCoroutine(_damageCoroutine);
-                    _damageCoroutine = null;
-                }
             }
         }
         else
         {
             if (_agent.destination != _actualNode.position) _agent.SetDestination(_actualNode.position);
 
+
+
             if (Vector3.SqrMagnitude(transform.position - _actualNode.position) <= (_changeNodeDist * _changeNodeDist))
             {
                 _actualNode = GetNewNode(_actualNode);
 
                 _agent.SetDestination(_actualNode.position);
+
+
             }
         }
-
         _agent.speed = speed;
+        anim.SetBool("isMoving", true);
     }
 
-    
-    private IEnumerator ApplyDamageOverTime()
-    {
-        while (true)
-        {
-            Debug.Log($"<color=red>{name}</color>: Japish.");
-            _player.ReciveDamage(2);
-
-            yield return new WaitForSeconds(_damageInterval);
-        }
-    }
 
     public Transform GetNewNode(Transform lastNode = null)
     {
@@ -166,16 +159,17 @@ public class Enemy : HP
 
         if (_enemyType == EnemyType.Shooter)
         {
-            Gizmos.color = Color.blue;
+            Gizmos.color = Color.magenta;
             Gizmos.DrawWireSphere(transform.position, _shootDist);
         }
     }
-
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == sword)
+        
+        if (other.CompareTag("Sword")) 
         {
-            ReciveDamage(5);
+            ReciveDamage(10);
+            GameManager.Instance.Enemies.Remove(this);
         }
     }
 }

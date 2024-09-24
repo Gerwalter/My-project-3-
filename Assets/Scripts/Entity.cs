@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -15,7 +12,7 @@ public class Entity : MonoBehaviour
 
 
     [SerializeField] private bool isShielder = false;
-    private GameObject _shieldInstance;
+    [SerializeField] private GameObject _shieldInstance;
     [SerializeField] private GameObject shieldPrefab;
     [SerializeField] public float _shieldDist = 5.0f;
 
@@ -23,12 +20,23 @@ public class Entity : MonoBehaviour
     [SerializeField] private bool isShooter = false;
     [SerializeField] public float _shootDist = 5.0f;
 
+    [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private Transform shootPoint;
+    [SerializeField] private float shootCooldown = 2.0f;
+    private float lastShootTime;
+
+
     private void Awake()
     {
-        if (isShielder == true && _shieldInstance == null)
+        if (_shieldInstance == null)
         {
             _shieldInstance = Instantiate(shieldPrefab, transform.position, Quaternion.identity);
             _shieldInstance.transform.SetParent(transform);
+        }
+
+        if (isShielder != true)
+        {
+            _shieldInstance.SetActive(false);
         }
     }
     private void Update()
@@ -52,6 +60,18 @@ public class Entity : MonoBehaviour
             else
             {
                 DeactivateShield();
+            }
+        }
+
+        if (isShooter)
+        {
+            if (PlayerInShieldRange())
+            {
+                if (Time.time >= lastShootTime + shootCooldown)
+                {
+                    Shoot();
+                    lastShootTime = Time.time;
+                }
             }
         }
     }
@@ -93,9 +113,14 @@ public class Entity : MonoBehaviour
 
     private void ActivateShield()
     {
-        
-            _shieldInstance.SetActive(true);
-        
+
+        _shieldInstance.SetActive(true);
+
+    }
+
+    private bool PlayerInShootRange()
+    {
+        return Vector3.Distance(transform.position, _target.position) <= _shootDist;
     }
 
     public void SetEntityType(Enemy.EnemyType enemyType)
@@ -125,6 +150,15 @@ public class Entity : MonoBehaviour
                 isShooter = false;
                 break;
         }
+    }
+
+    void Shoot()
+    {
+        GameObject projectile = Instantiate(projectilePrefab, shootPoint.position, Quaternion.identity);
+        Vector3 direction = (_target.position - shootPoint.position).normalized;
+        projectile.GetComponent<Rigidbody>().velocity = direction * 20f;
+
+        Destroy(projectile, 3f);
     }
 }
 

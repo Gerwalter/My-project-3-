@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : HP
 {
@@ -23,6 +24,12 @@ public class Player : HP
     [SerializeField] private Vector3 currentDirection;
     public float rotationSpeed = 10f;
 
+
+
+    [Header("<color=#6A89A7>UI</color>")]
+    [SerializeField] private Image healthBar;
+
+
     private float _xAxis = 0f, _zAxis = 0f;
     private Vector3 _jumpOffset = new(), _movRayDir = new();
 
@@ -37,14 +44,12 @@ public class Player : HP
         _rb = GetComponent<Rigidbody>();
         _rb.constraints = RigidbodyConstraints.FreezeRotation;
 
-        //_rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-        //_rb.angularDrag = 1f;        
     }
 
     private void Start()
     {
         GameManager.Instance.Player = this;
-
+        UpdateHealthBar();
         _anim = GetComponentInChildren<Animator>();
     }
 
@@ -75,8 +80,17 @@ public class Player : HP
             Jump();
 
         }
-    }
 
+        UpdateHealthBar();
+    }
+    private void UpdateHealthBar()
+    {
+        float lifePercent = GetLife / maxLife;
+
+        healthBar.fillAmount = lifePercent;
+
+        healthBar.color = Color.Lerp(Color.red, Color.green, lifePercent);
+    }
     private void FixedUpdate()
     {
         if ((_xAxis != 0.0f || _zAxis != 0.0f) && !IsBlocked(_xAxis, _zAxis))
@@ -84,7 +98,6 @@ public class Player : HP
             Movement(_xAxis, _zAxis);
         }
     }
-
     private void Jump()
     {
         _rb.AddForce(transform.up * _jumpForce, ForceMode.Impulse);
@@ -94,7 +107,6 @@ public class Player : HP
     {
         Vector3 targetDirection = new Vector3(_xAxis, 0f, _zAxis).normalized;
 
-        // Si hay input de movimiento
         if (targetDirection != Vector3.zero)
         {
             /*
@@ -114,7 +126,6 @@ public class Player : HP
         }
         else
         {
-            // Mantener la dirección actual si no hay input
             currentDirection = Vector3.Slerp(currentDirection, Vector3.zero, rotationSpeed * Time.deltaTime);
         }
     }
