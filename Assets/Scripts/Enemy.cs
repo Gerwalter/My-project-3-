@@ -80,6 +80,12 @@ public class Enemy : HP
 
     private void Update()
     {
+
+        if (_player == null)
+        {
+            _player = GetComponent<Player>();
+        }
+
         if (_actualNode == null)
         {
             _actualNode = _target.transform;

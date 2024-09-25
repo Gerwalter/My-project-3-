@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class SecurityCamera : MonoBehaviour
 {
-    public Transform player; // Referencia al jugador
-    public float detectionRange = 10f; // Rango de detección de la cámara
-    public float fieldOfViewAngle = 45f; // Ángulo del cono de visión de la cámara
-    public LayerMask playerLayer; // Capa en la que está el jugador
-    public GameObject[] enemyPrefabs; // Prefabs de enemigos a invocar
-    public Transform[] spawnPoints; // Puntos donde se invocarán los enemigos
+    public Transform player;
+    public float detectionRange = 10f;
+    public float fieldOfViewAngle = 45f;
+    public LayerMask playerLayer;
+    public GameObject[] enemyPrefabs;
+    public Transform[] spawnPoints;
 
-    private bool playerDetected = false;
+    [SerializeField] private bool playerDetected = false;
 
     void Update()
     {
@@ -21,7 +21,6 @@ public class SecurityCamera : MonoBehaviour
         Vector3 directionToPlayer = player.position - transform.position;
         float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
 
-        // Verificar si el jugador está dentro del ángulo de visión y rango
         if (angleToPlayer < fieldOfViewAngle / 2f && directionToPlayer.magnitude <= detectionRange)
         {
             RaycastHit hit;
@@ -54,7 +53,6 @@ public class SecurityCamera : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        // Visualización del rango de detección y el cono de visión en la escena
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, detectionRange);
 

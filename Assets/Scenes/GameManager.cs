@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
         set { _camara = value; }
     }
 
-    public Player _player;
+    private Player _player;
     public Player Player
     {
         get { return _player; }

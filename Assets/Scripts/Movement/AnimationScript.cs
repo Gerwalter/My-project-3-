@@ -74,11 +74,11 @@ public class AnimationScript : MonoBehaviour
     {
         yield return new WaitForSeconds(attackTimeout);
         AttackFinished();
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
     }
     public void AttackFinished()
     {
         NoAttack = !NoAttack;
-        anim.SetBool("NoAttack", NoAttack);
+        anim.SetTrigger("NoAttack");
     }
 }

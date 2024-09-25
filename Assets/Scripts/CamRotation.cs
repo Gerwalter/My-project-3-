@@ -18,13 +18,10 @@ public class CamRotation : MonoBehaviour
     [SerializeField] Transform _playerOrientation;
     [SerializeField] Transform _meshOrientation;
 
-
-    // Referencia al CameraLocker
     [SerializeField] private CameraLocker cameraLocker;
 
     private void Start()
     {
-        // centra y oculta mouse
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -34,7 +31,6 @@ public class CamRotation : MonoBehaviour
     {
         if (cameraLocker.isLockedOnTarget && cameraLocker.cameraPointer.target != null)
         {
-            // Mirar al objetivo
             Transform targetTransform = cameraLocker.cameraPointer.target.transform;
             Vector3 directionToTarget = (targetTransform.position - transform.position).normalized;
             Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);

@@ -6,6 +6,8 @@ public class CamDistance : MonoBehaviour
 
     [SerializeField] private Transform _lookingAt;
 
+    [SerializeField] private LayerMask mask;
+
 
     [SerializeField] private float _rayDistance;
 
@@ -29,7 +31,7 @@ public class CamDistance : MonoBehaviour
         RaycastHit hit;
 
 
-        if (Physics.Raycast(_origin, _ray.normalized, out hit, _rayDistance, LayerMask.GetMask("Default")))
+        if (Physics.Raycast(_origin, _ray.normalized, out hit, _rayDistance, LayerMask.GetMask(mask.ToString())))
         {
             _point = hit.point;
             _cam.usePoint = true;

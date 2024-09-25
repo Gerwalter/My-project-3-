@@ -1,23 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Video;
 
 public class ElementalType : MonoBehaviour
 {
-    public string[] element;
-    
+    [SerializeField] private ElementType selectedElement;
+    private enum ElementType
+    {
+        Normal,
+        Fire,
+        Electric,
+        Ice,
+        Water,
+    }
+
     private void Update()
     {
         ElementalCast();
     }
     public void ElementalCast()
     {
-        if(Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            int randomIndex = Random.Range(0, element.Length);
-            print(element[randomIndex]);
+            selectedElement = (ElementType)Random.Range(0, System.Enum.GetValues(typeof(ElementType)).Length);
+            Debug.Log("Elemento seleccionado: " + selectedElement);
         }
     }
 }

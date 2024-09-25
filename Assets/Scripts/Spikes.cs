@@ -10,10 +10,4 @@ public class Spikes : MonoBehaviour
     {
         _player.ReciveDamage(4);
     }
-
-
-    private void OnTriggerExit(Collider other)
-    {
-        _player.Health(1);
-    }
 }
