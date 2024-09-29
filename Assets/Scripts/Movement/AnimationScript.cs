@@ -12,6 +12,16 @@ public class AnimationScript : MonoBehaviour
 
     public bool isGrounded;
 
+    [Header("<color=yellow>Attack</color>")]
+    [SerializeField] private Transform _atkOrigin;
+    [SerializeField] private float _atkRayDist = 1.0f;
+    [SerializeField] private LayerMask _atkMask;
+    [SerializeField] private int _atkDmg = 20; 
+    
+
+    private Ray _atkRay;
+    private RaycastHit _atkHit;
+
     public void Start()
     {
         sword.SetActive(false);
@@ -51,6 +61,7 @@ public class AnimationScript : MonoBehaviour
             anim.SetBool("Fight", isFighting);
 
 
+
             if (attackCoroutine != null)
             {
                 StopCoroutine(attackCoroutine);
@@ -70,6 +81,19 @@ public class AnimationScript : MonoBehaviour
             attackCoroutine = StartCoroutine(AttackTimeout());
         }
     }
+    public void Attack()
+    {
+        _atkRay = new Ray(_atkOrigin.position, transform.forward);
+
+        if (Physics.Raycast(_atkRay, out _atkHit, _atkRayDist, _atkMask))
+        {
+            if (_atkHit.collider.TryGetComponent<Enemy>(out Enemy enemy))
+            {
+                enemy.ReciveDamage(_atkDmg);
+            }
+        }
+    }
+
     private IEnumerator AttackTimeout()
     {
         yield return new WaitForSeconds(attackTimeout);
@@ -79,6 +103,12 @@ public class AnimationScript : MonoBehaviour
     public void AttackFinished()
     {
         NoAttack = !NoAttack;
-        anim.SetTrigger("NoAttack");
+        anim.SetBool("NoAttack", true);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawRay(_atkRay);
     }
 }

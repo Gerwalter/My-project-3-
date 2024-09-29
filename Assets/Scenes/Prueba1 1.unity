@@ -305,8 +305,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbeb9ff899020cf4bba0c367151844ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  feedbackColor: {r: 1, g: 0, b: 0, a: 1}
-  defaultColor: {r: 1, g: 1, b: 1, a: 1}
   rayDistance: 100
   rayColor: {r: 0, g: 1, b: 0, a: 1}
   targetRenderer: {fileID: 0}
@@ -875,68 +873,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 348255749}
   m_CullTransparentMesh: 1
---- !u!1001 &367541063
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -3356259274135699178, guid: fb8186c09d74b704ab46b83fcacb075c, type: 3}
-      propertyPath: playerCollider
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4086120586808264925, guid: fb8186c09d74b704ab46b83fcacb075c, type: 3}
-      propertyPath: m_Name
-      value: ObjectToThrow
-      objectReference: {fileID: 0}
-    - target: {fileID: 9055029086435031717, guid: fb8186c09d74b704ab46b83fcacb075c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -18.439148
-      objectReference: {fileID: 0}
-    - target: {fileID: 9055029086435031717, guid: fb8186c09d74b704ab46b83fcacb075c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -21.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 9055029086435031717, guid: fb8186c09d74b704ab46b83fcacb075c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -24.342968
-      objectReference: {fileID: 0}
-    - target: {fileID: 9055029086435031717, guid: fb8186c09d74b704ab46b83fcacb075c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9055029086435031717, guid: fb8186c09d74b704ab46b83fcacb075c, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9055029086435031717, guid: fb8186c09d74b704ab46b83fcacb075c, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9055029086435031717, guid: fb8186c09d74b704ab46b83fcacb075c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9055029086435031717, guid: fb8186c09d74b704ab46b83fcacb075c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9055029086435031717, guid: fb8186c09d74b704ab46b83fcacb075c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9055029086435031717, guid: fb8186c09d74b704ab46b83fcacb075c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: -3356259274135699178, guid: fb8186c09d74b704ab46b83fcacb075c, type: 3}
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: fb8186c09d74b704ab46b83fcacb075c, type: 3}
 --- !u!4 &929452570 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7863094358053554212, guid: 8f31649f755d8ff488bd5334b0a3cd2c, type: 3}
@@ -1747,6 +1683,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1782198685}
+  _enemies: []
+  _surface: {fileID: 0}
 --- !u!4 &1475811744
 Transform:
   m_ObjectHideFlags: 0
@@ -1988,7 +1926,6 @@ SceneRoots:
   - {fileID: 21667726}
   - {fileID: 1444700810}
   - {fileID: 1342906051}
-  - {fileID: 367541063}
   - {fileID: 4579589603499934062}
   - {fileID: 316242623}
   - {fileID: 1782198684}

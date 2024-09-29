@@ -1305,7 +1305,6 @@ GameObject:
   - component: {fileID: 4443837272724598439}
   - component: {fileID: 5938047540715218834}
   - component: {fileID: 6554123074376295307}
-  - component: {fileID: 2888876685157222185}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
@@ -1392,40 +1391,10 @@ MonoBehaviour:
   _chaseDist: 4.37
   _atkDist: 1
   _changeNodeDist: 2
-  speed: 6
-  _player: {fileID: 0}
-  anim: {fileID: 1327037911302927454}
-  _healDist: 5
-  _shieldDist: 3.5
-  _shootDist: 6
   _target: {fileID: 0}
   _actualNode: {fileID: 0}
-  _enemyType: 0
---- !u!114 &2888876685157222185
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4926451324437983365}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92be3723b6ab002439c6d7f8cfa8a79e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  _navMeshNodes: []
   _agent: {fileID: 0}
-  _target: {fileID: 0}
-  isHealer: 0
-  _healDist: 5
-  isShielder: 0
-  _shieldInstance: {fileID: 0}
-  shieldPrefab: {fileID: 2494072925433335905, guid: 9176725531e7ba94ca7ea5e3962bdf7b, type: 3}
-  _shieldDist: 5
-  isShooter: 0
-  _shootDist: 5
-  projectilePrefab: {fileID: 2503358670393280038, guid: bc8f782dc926b19448ee53f9939456a9, type: 3}
-  shootPoint: {fileID: 7948876675113293569}
-  shootCooldown: 2
 --- !u!1 &4969138126052944369
 GameObject:
   m_ObjectHideFlags: 0

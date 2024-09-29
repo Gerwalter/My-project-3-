@@ -114,6 +114,38 @@ MonoBehaviour:
   _z: 60
   _playerOrientation: {fileID: 1138763200837999765}
   _meshOrientation: {fileID: 4986560149398863349}
+  cameraLocker: {fileID: 0}
+--- !u!1 &407296111642639514
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1056659069195190188}
+  m_Layer: 3
+  m_Name: Intpoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1056659069195190188
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407296111642639514}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.481, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4986560149398863349}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &407888723168095778
 GameObject:
   m_ObjectHideFlags: 0
@@ -1444,13 +1476,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxLife: 20
-  currentLife: 20
+  currentLife: 0
   _isMovName: isMoving
   _isGroundName: isGrounded
   _jumpName: onJump
   _xName: xAxis
   _zName: zAxis
   _jumpKey: 32
+  _intKey: 113
   _jumpForce: 5
   _jumpRayDist: 1
   _jumpMask:
@@ -1463,6 +1496,11 @@ MonoBehaviour:
   _movSpeed: 5
   currentDirection: {x: 0, y: 0, z: 0}
   rotationSpeed: 20
+  _intOrigin: {fileID: 1056659069195190188}
+  _intRayDist: 1
+  _intMask:
+    serializedVersion: 2
+    m_Bits: 128
   healthBar: {fileID: 0}
 --- !u!114 &5051633576239632350
 MonoBehaviour:
@@ -1476,11 +1514,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 800095fc7edf799479acddbdad1dffe9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  element:
-  - Normal
-  - Fire
-  - Lightning
-  - Water
+  selectedElement: 0
 --- !u!114 &6583769249960175773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1495,8 +1529,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraPointer: {fileID: 0}
   cameraLocker: {fileID: 0}
-  moveSpeed: 10
+  moveSpeed: 100
   isMoving: 0
+  upwardOffset: 2
 --- !u!114 &6948827004151619373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1511,7 +1546,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cam: {fileID: 0}
   _lookingAt: {fileID: 7863094358053554212}
+  mask:
+    serializedVersion: 2
+    m_Bits: 0
   _rayDistance: 3
+  _origin: {x: 0, y: 0, z: 0}
+  _point: {x: 0, y: 0, z: 0}
 --- !u!1 &4245373824162281265
 GameObject:
   m_ObjectHideFlags: 0
@@ -1714,7 +1754,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7066288401339688782}
   m_Layer: 3
-  m_Name: GameObject
+  m_Name: ShootPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1898,6 +1938,7 @@ Transform:
   - {fileID: 2582476690385462664}
   - {fileID: 5248344770546040138}
   - {fileID: 676525955044859233}
+  - {fileID: 1056659069195190188}
   m_Father: {fileID: 1138763200837999765}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1428765734925002639
@@ -1940,6 +1981,12 @@ MonoBehaviour:
   NoAttack: 0
   sword: {fileID: 2293710449332166645}
   isGrounded: 0
+  _atkOrigin: {fileID: 2133273162745054613}
+  _atkRayDist: 1.5
+  _atkMask:
+    serializedVersion: 2
+    m_Bits: 64
+  _atkDmg: 20
   isFighting: 0
   attackTimeout: 2
 --- !u!1 &5777021231417503219

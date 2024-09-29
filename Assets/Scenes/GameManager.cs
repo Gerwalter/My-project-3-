@@ -29,21 +29,21 @@ public class GameManager : MonoBehaviour
         set { _camara = value; }
     }
 
-    private Player _player;
+[SerializeField]    private Player _player;
     public Player Player
     {
         get { return _player; }
         set { _player = value; }
     }
 
-    private List<Enemy> _enemies = new();
+    [SerializeField] private List<Enemy> _enemies = new();
     public List<Enemy> Enemies
     {
         get { return _enemies; }
         set { _enemies = value; }
     }
 
-    private NavMeshSurface _surface;
+    [SerializeField] private NavMeshSurface _surface;
     public NavMeshSurface Surface
     {
         get { return _surface; }

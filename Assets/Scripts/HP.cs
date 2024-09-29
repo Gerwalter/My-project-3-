@@ -13,6 +13,10 @@ public class HP : MonoBehaviour, IDamagable
         set { currentLife = Mathf.Clamp(value, 0, maxLife); }
     }
 
+    private void Start()
+    {
+        currentLife = maxLife;
+    }
 
     public void ReciveDamage(float damage)
     {

@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class CameraPointer : MonoBehaviour
 {
-    public Color feedbackColor = Color.red;
-    public Color defaultColor = Color.white;
     public float rayDistance = 100f;
     public Color rayColor = Color.green;
     public Renderer targetRenderer;
-    public GameObject target; // Nueva variable para el GameObject
+    public GameObject target;
 
     void Update()
     {
@@ -27,24 +25,11 @@ public class CameraPointer : MonoBehaviour
         {
             if (hit.collider.gameObject.GetComponent<SpecificScript>() != null)
             {
-                if (targetRenderer != null && targetRenderer != hit.collider.GetComponent<Renderer>())
-                {
-                    targetRenderer.material.color = defaultColor;
-                }
-
-                targetRenderer = hit.collider.GetComponent<Renderer>();
-                targetRenderer.material.color = feedbackColor;
-
-                // Actualiza la variable target con el GameObject correspondiente
                 target = hit.collider.gameObject;
             }
         }
-        else if (targetRenderer != null)
+        else if (target != null)
         {
-            targetRenderer.material.color = defaultColor;
-            targetRenderer = null;
-
-            // Reinicia target cuando no hay un objeto detectado
             target = null;
         }
     }
