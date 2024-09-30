@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CameraPointer : MonoBehaviour
 {
     public float rayDistance = 100f;
     public Color rayColor = Color.green;
-    public Renderer targetRenderer;
+    public Image CrossHair;
     public GameObject target;
 
     void Update()
@@ -25,11 +26,13 @@ public class CameraPointer : MonoBehaviour
         {
             if (hit.collider.gameObject.GetComponent<SpecificScript>() != null)
             {
+                CrossHair.color = Color.red;
                 target = hit.collider.gameObject;
             }
         }
         else if (target != null)
         {
+            CrossHair.color = Color.black;
             target = null;
         }
     }
