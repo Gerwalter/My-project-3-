@@ -17,6 +17,7 @@ public class CamRotation : MonoBehaviour
 
     [SerializeField] Transform _playerOrientation;
     [SerializeField] Transform _meshOrientation;
+    [SerializeField] bool player;
 
     [SerializeField] private CameraLocker cameraLocker;
 
@@ -55,7 +56,10 @@ public class CamRotation : MonoBehaviour
     {
         if (!cameraLocker.isLockedOnTarget)
         {
-            _playerOrientation.rotation = Quaternion.Euler(0, _yRotation, 0);
+            if (player == true)
+            {
+                _playerOrientation.rotation = Quaternion.Euler(0, _yRotation, 0);
+            }
         }
     }
 }

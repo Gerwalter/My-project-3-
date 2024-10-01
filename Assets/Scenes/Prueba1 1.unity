@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -227,7 +227,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 21667725}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3fc75af4734556749b849f47f7cd63d6, type: 3}
   m_Name: 
@@ -507,6 +507,7 @@ GameObject:
   - component: {fileID: 163301966}
   - component: {fileID: 163301965}
   - component: {fileID: 163301969}
+  - component: {fileID: 163301970}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -612,6 +613,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf415d6f630e5424f8a410d9a5ad761f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &163301970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 163301964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d40dee83d21f74d44991253c3bb40fd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textures:
+  - {fileID: 2800000, guid: ccb00b405d879f64590df5a606063226, type: 3}
+  - {fileID: 2800000, guid: cbe501f97c29db74e8cbb1868195d60b, type: 3}
+  - {fileID: 2800000, guid: a2705b60e303b8c46b873df34e40c1ae, type: 3}
+  - {fileID: 2800000, guid: 1f8303470c6a4014489a1640f13fa798, type: 3}
+  - {fileID: 2800000, guid: 2e82ac41bb03eca41bd33e174e929cce, type: 3}
+  - {fileID: 2800000, guid: fa7ca4b319dd19c45be63074897aebb7, type: 3}
+  - {fileID: 2800000, guid: bad0beb04f1c2b24b8cd6e4b935a169d, type: 3}
+  - {fileID: 2800000, guid: 8ce986425936e4d44a571a9afa582256, type: 3}
+  - {fileID: 2800000, guid: 859ad85c36aba734e8a42a3f9afcf2ed, type: 3}
+  - {fileID: 2800000, guid: 4287e03abd28fe443ac97553729fb01a, type: 3}
+  - {fileID: 2800000, guid: df96550080b60874a9d797fd4f376b31, type: 3}
+  - {fileID: 2800000, guid: 3e8a02b2977cc2f46b9796bb09d881aa, type: 3}
+  - {fileID: 2800000, guid: 2e82ac41bb03eca41bd33e174e929cce, type: 3}
+  - {fileID: 2800000, guid: fa7ca4b319dd19c45be63074897aebb7, type: 3}
+  - {fileID: 2800000, guid: bad0beb04f1c2b24b8cd6e4b935a169d, type: 3}
+  - {fileID: 2800000, guid: 8ce986425936e4d44a571a9afa582256, type: 3}
+  changeInterval: 0.05
+  objectRenderer: {fileID: 163301966}
+  currentTextureIndex: 0
+  timer: 0
 --- !u!1 &275919468
 GameObject:
   m_ObjectHideFlags: 0
