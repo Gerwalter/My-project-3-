@@ -10,7 +10,7 @@ public class Bridge : MonoBehaviour
     public NavMeshModifier _mod;
 
 
-    public void OnActivated()
+    public void Activated()
     {
         _col.enabled = true;
         _mod.enabled = true;
@@ -18,7 +18,7 @@ public class Bridge : MonoBehaviour
         GameManager.Instance.Surface.BuildNavMesh();
     }
 
-    public void OnDeactivated()
+    public void Deactivated()
     {
         _col.enabled = false;
         _mod.enabled = false;

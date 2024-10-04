@@ -6,7 +6,8 @@ public class VideoShader : MonoBehaviour
     public VideoClip videoClip;  // El VideoClip que se usará
     [SerializeField] private Renderer objectRenderer;  // Renderer del objeto
     [SerializeField] private VideoPlayer videoPlayer;  // Componente VideoPlayer para reproducir el VideoClip
-    public string shaderTexturePropertyName = "_MainTex";  // Nombre de la propiedad del Shader que controla la textura
+    public string shaderTexturePropertyName = "_MainTex";
+    [SerializeField] private Animator anim;// Nombre de la propiedad del Shader que controla la textura
 
     void Start()
     {
@@ -38,7 +39,11 @@ public class VideoShader : MonoBehaviour
     }
     public void VideoPlay()
     {
-        videoPlayer.Play();
+        anim.SetBool("appear", true);
     }
 
+    public void Player() 
+    {
+        videoPlayer.Play();
+    }
 }

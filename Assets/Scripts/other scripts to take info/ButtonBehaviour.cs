@@ -6,6 +6,7 @@ public class ButtonBehaviour : MonoBehaviour, IInteract
 {
     [SerializeField] private Renderer _renderer;
     [SerializeField] private VideoShader video;
+    [SerializeField] private Bridge _bridge;
 
     public void OnInteract()
     {
@@ -18,6 +19,11 @@ public class ButtonBehaviour : MonoBehaviour, IInteract
 
         // Aplica el color al material del objeto.
         _renderer.material.color = randomColor;
+
+        if (_bridge != null )
+        {
+            _bridge.Activated();
+        }
 
         video.VideoPlay();
 
