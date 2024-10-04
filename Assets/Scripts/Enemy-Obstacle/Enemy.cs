@@ -1,6 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : Entity
@@ -18,8 +20,9 @@ public class Enemy : Entity
     [SerializeField] public IANodeManager _nodeManager;
 
     [Header("<color=red>Behaviours</color>")]
-
+    [SerializeField] private Animator _animator;
     [SerializeField] private Transform _target, _actualNode;
+    [SerializeField] private Material mat;
 
     [SerializeField] private List<Transform> _navMeshNodes = new();
     public List<Transform> NavMeshNodes
@@ -32,13 +35,16 @@ public class Enemy : Entity
 
     [SerializeField] AudioClip[] clips;
 
+    [Header("<color=#6A89A7>UI</color>")]
+    [SerializeField] private Image healthBar;
+
 
     private void Start()
     {
         GetLife = maxLife;
         _agent = GetComponent<NavMeshAgent>();
 
-        _speed = Random.Range(3, 8);
+       // _speed = Random.Range(3, 8);
 
         _agent.speed = _speed;
 
@@ -54,14 +60,26 @@ public class Enemy : Entity
         _agent.SetDestination(_actualNode.position);
     }
 
+    private void UpdateHealthBar()
+    {
+        float lifePercent = GetLife / maxLife;
+
+        healthBar.fillAmount = lifePercent;
+
+        healthBar.color = Color.Lerp(Color.red, Color.green, lifePercent);
+    }
+
     private void FixedUpdate()
     {
+
+        UpdateHealthBar();
+
         if (!_target)
         {
             Debug.LogError($"<color=red>NullReferenceException</color>: No asignaste un objetivo, boludo.");
             return;
         }
-
+        _animator.SetBool("isMoving", true);
 
         if (Vector3.SqrMagnitude(transform.position - _target.position) <= (_chaseDist * _chaseDist))
         {
@@ -69,11 +87,17 @@ public class Enemy : Entity
             {
                 if (!_agent.isStopped) _agent.isStopped = true;
 
-                Debug.Log($"<color=red>{name}</color>: Japish.");
+                _animator.SetBool("isMoving", false);
+                _animator.SetBool("Punching", true);
+
+                //Debug.Log($"<color=red>{name}</color>: Japish.");
             }
             else
             {
                 if (_agent.isStopped) _agent.isStopped = false;
+
+                _animator.SetBool("isMoving", true);
+                _animator.SetBool("Punching", false);
 
                 _agent.SetDestination(_target.position);
             }
@@ -197,7 +221,7 @@ public class Enemy : Entity
         {
             _shieldLife -= dmg;
 
-            if (_shieldLife <= 0 )
+            if (_shieldLife <= 0)
             { _shieldInstance.SetActive(false); }
         }
         else
@@ -221,6 +245,8 @@ public class Enemy : Entity
             Debug.Log($"<color=red>{name}</color>: Comí <color=black>{dmg}</color> puntos de daño. Me quedan <color=green>{GetLife}</color> puntos.");
         }
     }
+
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

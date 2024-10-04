@@ -12,7 +12,20 @@ public class SFXManager : MonoBehaviour
     {
             if (instance == null) { instance = this; }
     }
+    public void PlaySFXClip(AudioClip clip, Transform spawnTransform, float volume)
+    {
+        AudioSource audioSource = Instantiate(soundSFXObject, spawnTransform.position, Quaternion.identity);
 
+        audioSource.clip = clip;
+
+        audioSource.volume = volume;
+
+        audioSource.Play();
+
+        float clipLength = audioSource.clip.length;
+
+        Destroy(audioSource.gameObject, clipLength);
+    }
     public void PlayRandSFXClip (AudioClip[] clip, Transform spawnTransform, float volume)
     {
         AudioSource audioSource = Instantiate(soundSFXObject, spawnTransform.position, Quaternion.identity);

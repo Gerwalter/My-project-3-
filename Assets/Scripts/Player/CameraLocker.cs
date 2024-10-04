@@ -10,17 +10,13 @@ public class CameraLocker : MonoBehaviour
 
     void Update()
     {
-        Locker();
-    }
-
-    private void Locker()
-    {
         if (Input.GetKeyDown(KeyCode.Q))
         {
             if (cameraPointer.target != null)
             {
                 isLockedOnTarget = !isLockedOnTarget;
             }
+            else return;
         }
 
         if (isLockedOnTarget && cameraPointer.target != null)

@@ -5,9 +5,8 @@ using UnityEngine;
 public class ButtonBehaviour : MonoBehaviour, IInteract
 {
     [SerializeField] private Renderer _renderer;
-    [SerializeField] private Bridge _bridge;
+    [SerializeField] private VideoShader video;
 
-    [SerializeField] AudioClip[] clips;
     public void OnInteract()
     {
         float r = Random.Range(0f, 1f);
@@ -20,14 +19,7 @@ public class ButtonBehaviour : MonoBehaviour, IInteract
         // Aplica el color al material del objeto.
         _renderer.material.color = randomColor;
 
-        if (_bridge != null)
-        {
-            _bridge.OnActivated();
-        }
-        else { print("no"); }
-
-        SFXManager.instance.PlayRandSFXClip(clips, transform, 1f);
-
+        video.VideoPlay();
 
     }
 }
