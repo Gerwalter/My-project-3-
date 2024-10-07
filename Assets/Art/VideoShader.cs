@@ -7,43 +7,54 @@ public class VideoShader : MonoBehaviour
     [SerializeField] private Renderer objectRenderer;  // Renderer del objeto
     [SerializeField] private VideoPlayer videoPlayer;  // Componente VideoPlayer para reproducir el VideoClip
     public string shaderTexturePropertyName = "_MainTex";
-    [SerializeField] private Animator anim;// Nombre de la propiedad del Shader que controla la textura
+    [SerializeField] private Animator anim; // Nombre de la propiedad del Shader que controla la textura
 
     void Start()
     {
         // Obtén el componente Renderer del objeto 3D
         objectRenderer = GetComponent<Renderer>();
 
-        // Añade el componente VideoPlayer si no está presente
+        // Si no se ha asignado, busca el VideoPlayer en otro GameObject
         if (videoPlayer == null)
         {
-            videoPlayer = gameObject.AddComponent<VideoPlayer>();
+            videoPlayer = FindObjectOfType<VideoPlayer>();
         }
 
         // Establece el VideoClip en el VideoPlayer
-        videoPlayer.clip = videoClip;
-
-        // Reproduce el video en modo renderizado en una textura
-        videoPlayer.renderMode = VideoRenderMode.APIOnly;
-
+        if (videoPlayer != null)
+        {
+            videoPlayer.clip = videoClip;
+            videoPlayer.renderMode = VideoRenderMode.APIOnly;
+        }
+        else
+        {
+            Debug.LogError("No se encontró un VideoPlayer en la escena.");
+        }
     }
 
     void Update()
     {
         // Espera a que el video tenga una textura disponible
-        if (videoPlayer.texture != null)
+        if (videoPlayer != null && videoPlayer.texture != null)
         {
             // Establece la textura del video en el Shader
             objectRenderer.material.SetTexture(shaderTexturePropertyName, videoPlayer.texture);
         }
     }
+
     public void VideoPlay()
     {
-        anim.SetBool("appear", true);
+        if (anim != null)
+        {
+            anim.SetBool("appear", true);
+        }
     }
 
-    public void Player() 
+    public void Player()
     {
-        videoPlayer.Play();
+        if (videoPlayer != null)
+        {
+            videoPlayer.Play();
+        }
     }
 }

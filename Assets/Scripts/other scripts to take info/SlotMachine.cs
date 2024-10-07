@@ -1,18 +1,20 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class SlotMachine : ButtonBehaviour
 {
     [SerializeField] private Renderer _renderer;
 
-    // Array de imágenes
-    public Sprite[] slotImages;
-    public Image[] slots; // Las tres imágenes de la máquina tragamonedas
+    // Array de texturas
+    public Texture[] slotTextures; // Cambia de Sprite a Texture
+    public Renderer[] slots; // Ahora son Renderers para acceder a los materiales
     public float spinDuration = 2.0f; // Duración total del giro por slot
     public float delayBetweenSlots = .5f;
     public AudioClip gambling, awwdangit, slotsound, winnin;
     private AudioSource audioSource;
+
+    // Mensajes para cada textura ganadora
+    [SerializeField] private string[] winMessages = { "Ganaste", "Bien", "Haha" };
 
     private void Start()
     {
@@ -73,13 +75,13 @@ public class SlotMachine : ButtonBehaviour
         CheckWin();
     }
 
-    IEnumerator SpinSlot(Image slot, float duration)
+    IEnumerator SpinSlot(Renderer slot, float duration)
     {
         float elapsedTime = 0f;
         while (elapsedTime < duration)
         {
-            int randomIndex = Random.Range(0, slotImages.Length);
-            slot.sprite = slotImages[randomIndex];
+            int randomIndex = Random.Range(0, slotTextures.Length);
+            slot.material.SetTexture("_MainTex", slotTextures[randomIndex]); // Cambia la textura del material
             elapsedTime += Time.deltaTime;
             yield return new WaitForSeconds(0.1f); // Ajustar la velocidad del giro
         }
@@ -90,16 +92,27 @@ public class SlotMachine : ButtonBehaviour
         // Detener el sonido de los slots
         audioSource.Stop();
 
-        int[] selectedIndexes = new int[3];
+        int[] selectedIndexes = new int[slots.Length];
         for (int i = 0; i < slots.Length; i++)
         {
-            selectedIndexes[i] = System.Array.IndexOf(slotImages, slots[i].sprite);
+            Texture currentTexture = slots[i].material.GetTexture("_MainTex");
+            selectedIndexes[i] = System.Array.IndexOf(slotTextures, currentTexture);
         }
 
+        // Verificar si todas las texturas coinciden
         if (selectedIndexes[0] == selectedIndexes[1] && selectedIndexes[1] == selectedIndexes[2])
         {
+            // Obtener el índice de la textura ganadora
+            int winningIndex = selectedIndexes[0];
+
+            // Reproducir el sonido de victoria
             SFXManager.instance.PlaySFXClip(winnin, transform, 1f);
-            Debug.Log("Ganaste");
+
+            // Enviar el mensaje correspondiente
+            if (winningIndex >= 0 && winningIndex < winMessages.Length)
+            {
+                Debug.Log(winMessages[winningIndex]);
+            }
         }
         else
         {
