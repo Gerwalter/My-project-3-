@@ -11,37 +11,38 @@ public class Player : HP
     [SerializeField] private string _xName = "xAxis";
     [SerializeField] private string _zName = "zAxis";
 
+    [Header("<color=#6A89A7>Camera</color>")]
+    [SerializeField] private Transform _camTarget;
+
+    public Transform GetCamTarget { get { return _camTarget; } }
+
     [Header("<color=#6A89A7>Inputs</color>")]
-    [SerializeField] private KeyCode _jumpKey = KeyCode.Space;
     [SerializeField] private KeyCode _intKey = KeyCode.F;
+    [SerializeField] private KeyCode _jumpKey = KeyCode.Space;
 
-
+    [Header("<color=#6A89A7>UI</color>")]
+    [SerializeField] private Image healthBar;
 
     [Header("<color=#6A89A7>Physics</color>")]
+    [SerializeField] private Transform _intOrigin;
+    [SerializeField] private float _intRayDist = 1.0f;
+    [SerializeField] private LayerMask _intMask;
     [SerializeField] private float _jumpForce = 5.0f;
     [SerializeField] private float _jumpRayDist = 0.75f;
     [SerializeField] private LayerMask _jumpMask;
     [SerializeField] private float _movRayDist = 0.75f;
     [SerializeField] private LayerMask _movMask;
     [SerializeField] private float _movSpeed = 3.5f;
-    [SerializeField] private Vector3 currentDirection;
-    public float rotationSpeed = 10f;
-    [SerializeField] private Transform _intOrigin;
-    [SerializeField] private float _intRayDist = 1.0f;
-    [SerializeField] private LayerMask _intMask;
 
-
-    [Header("<color=#6A89A7>UI</color>")]
-    [SerializeField] private Image healthBar;
-
-
-    private float _xAxis = 0f, _zAxis = 0f;
-    private Vector3 _jumpOffset = new(), _movRayDir = new();
+    public Vector3 _camForwardFix = new(), _camRightFix = new(), _dir = new(), _jumpOffset = new(), _movRayDir = new();
+    private Vector3 _dirFix = new();
 
     private Animator _anim;
     private Rigidbody _rb;
+    protected Transform _camTransform;
 
-    private Ray _jumpRay, _intRay, _movRay;
+
+    private Ray _intRay, _jumpRay, _movRay;
     private RaycastHit _intHit;
 
     private void Awake()
@@ -49,26 +50,29 @@ public class Player : HP
         _rb = GetComponent<Rigidbody>();
         _rb.constraints = RigidbodyConstraints.FreezeRotation;
 
+        GameManager.Instance.Player = this;
     }
 
     private void Start()
     {
-        GameManager.Instance.Player = this;
+        _camTransform = Camera.main.transform;
+
+        _anim = GetComponentInChildren<Animator>();
+
         GetLife = maxLife;
         UpdateHealthBar();
-        _anim = GetComponentInChildren<Animator>();
-    }
 
+    }
 
     private void Update()
     {
-        _xAxis = Input.GetAxisRaw("Horizontal");
-        _zAxis = Input.GetAxisRaw("Vertical");
+        _dir.x = Input.GetAxisRaw("Horizontal");
+        _dir.z = Input.GetAxisRaw("Vertical");
 
-        if (!IsBlocked(_xAxis, _zAxis))
+        if (!IsBlocked(_dir.x, _dir.z))
         {
-            _anim.SetFloat(_xName, _xAxis);
-            _anim.SetFloat(_zName, _zAxis);
+            _anim.SetFloat(_xName, _dir.x);
+            _anim.SetFloat(_zName, _dir.z);
         }
         else
         {
@@ -78,8 +82,12 @@ public class Player : HP
 
         _anim.SetBool(_isGroundName, IsGrounded());
 
-        _anim.SetBool(_isMovName, _xAxis != 0 || _zAxis != 0);
+        _anim.SetBool(_isMovName, _dir.x != 0 || _dir.z != 0);
 
+        if (Input.GetKeyDown(_intKey))
+        {
+            Interact();
+        }
 
         if (Input.GetKeyDown(_jumpKey) && IsGrounded())
         {
@@ -87,13 +95,17 @@ public class Player : HP
             Jump();
         }
 
-        if (Input.GetKeyDown(_intKey))
-        {
-            Interact();
-        }
-
         UpdateHealthBar();
     }
+
+    private void FixedUpdate()
+    {
+        if ((_dir.x != 0.0f || _dir.z != 0.0f) && !IsBlocked(_dir.x, _dir.z))
+        {
+            Movement(_dir);
+        }
+    }
+
     private void UpdateHealthBar()
     {
         float lifePercent = GetLife / maxLife;
@@ -101,44 +113,6 @@ public class Player : HP
         healthBar.fillAmount = lifePercent;
 
         healthBar.color = Color.Lerp(Color.red, Color.green, lifePercent);
-    }
-    private void FixedUpdate()
-    {
-        if ((_xAxis != 0.0f || _zAxis != 0.0f) && !IsBlocked(_xAxis, _zAxis))
-        {
-            Movement(_xAxis, _zAxis);
-        }
-    }
-    private void Jump()
-    {
-        _rb.AddForce(transform.up * _jumpForce, ForceMode.Impulse);
-    }
-
-    private void Movement(float x, float z)
-    {
-        Vector3 targetDirection = new Vector3(_xAxis, 0f, _zAxis).normalized;
-
-        if (targetDirection != Vector3.zero)
-        {
-            /*
-            // Interpolamos la dirección actual hacia la nueva dirección
-            currentDirection = Vector3.Slerp(currentDirection, targetDirection, rotationSpeed * Time.deltaTime);
-
-            // Hacer que el forward del objeto sea la dirección interpolada suavemente
-            transform.forward = currentDirection;
-            */
-            currentDirection = (transform.right * x + transform.forward * z).normalized;
-
-            transform.position += currentDirection * _movSpeed * Time.deltaTime;
-
-            /*
-            // Mover el objeto en la dirección suavizada con la velocidad definida
-            transform.position += currentDirection * _movSpeed * Time.deltaTime;*/
-        }
-        else
-        {
-            currentDirection = Vector3.Slerp(currentDirection, Vector3.zero, rotationSpeed * Time.deltaTime);
-        }
     }
 
     private void Interact()
@@ -152,6 +126,32 @@ public class Player : HP
                 intObj.OnInteract();
             }
         }
+    }
+
+    private void Jump()
+    {
+        _rb.AddForce(transform.up * _jumpForce, ForceMode.Impulse);
+    }
+
+    private void Movement(Vector3 dir)
+    {
+        _camForwardFix = _camTransform.forward;
+        _camRightFix = _camTransform.right;
+
+        _camForwardFix.y = 0.0f;
+        _camRightFix.y = 0.0f;
+
+        Rotate(_camForwardFix);
+
+        _dirFix = (_camRightFix * dir.x + _camForwardFix * dir.z);
+
+        _rb.MovePosition(transform.position + _dirFix * _movSpeed * Time.fixedDeltaTime);
+
+    }
+
+    private void Rotate(Vector3 dir)
+    {
+        transform.forward = dir;
     }
 
     private bool IsGrounded()

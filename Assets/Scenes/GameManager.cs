@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
@@ -22,14 +21,8 @@ public class GameManager : MonoBehaviour
         }
     }
     #endregion
-    private Cam _camara;
-    public Cam Camera
-    {
-        get { return _camara; }
-        set { _camara = value; }
-    }
 
-[SerializeField]    private Player _player;
+    [SerializeField] private Player _player;
     public Player Player
     {
         get { return _player; }

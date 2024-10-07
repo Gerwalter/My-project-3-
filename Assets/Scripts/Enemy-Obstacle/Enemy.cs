@@ -88,16 +88,16 @@ public class Enemy : Entity
                 if (!_agent.isStopped) _agent.isStopped = true;
 
                 _animator.SetBool("isMoving", false);
-                _animator.SetBool("Punching", true);
+                _animator.SetTrigger("Punch");
+                print(2);
 
-                //Debug.Log($"<color=red>{name}</color>: Japish.");
             }
             else
             {
                 if (_agent.isStopped) _agent.isStopped = false;
 
                 _animator.SetBool("isMoving", true);
-                _animator.SetBool("Punching", false);
+                _animator.ResetTrigger("Punch");
 
                 _agent.SetDestination(_target.position);
             }
@@ -174,6 +174,30 @@ public class Enemy : Entity
     }
 
 
+    [Header("<color=yellow>Attack</color>")]
+    [SerializeField] private Transform _atkOrigin;
+    [SerializeField] private Vector3 _atkBoxSize = new Vector3(1.0f, 1.0f, 1.0f); // Tamaño del cubo
+    [SerializeField] private LayerMask _atkMask;
+    [SerializeField] private int _atkDmg = 20;
+
+    public void Attack()
+    {
+        // Define el centro del cubo como la posición de origen
+        Vector3 boxCenter = _atkOrigin.position + transform.forward * (_atkBoxSize.z / 2);
+
+        // Detecta colisiones dentro del cubo
+        Collider[] hitColliders = Physics.OverlapBox(boxCenter, _atkBoxSize / 2, _atkOrigin.rotation, _atkMask);
+
+        foreach (Collider hitCollider in hitColliders)
+        {
+            if (hitCollider.TryGetComponent<Player>(out Player player))
+            {
+                Debug.Log("Japish");
+                // Aquí puedes aplicar el daño o cualquier otra lógica
+            }
+        }
+    }
+
     void DeactivateShield()
     {
         _shieldInstance.SetActive(false);
@@ -246,9 +270,17 @@ public class Enemy : Entity
         }
     }
 
-
+    public void FalseBool()
+    {
+        _animator.SetTrigger("Punch");
+    }
     private void OnDrawGizmos()
     {
+
+        Gizmos.color = Color.red;
+        Vector3 boxCenter = _atkOrigin.position + transform.forward * (_atkBoxSize.z / 2);
+        Gizmos.DrawWireCube(boxCenter, _atkBoxSize);
+
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, _chaseDist);
 
@@ -268,6 +300,7 @@ public class Enemy : Entity
         {
             Gizmos.color = Color.cyan;
             Gizmos.DrawWireSphere(transform.position, _shieldDist);
+
         }
 
         if (_enemyType == EnemyType.Shooter)
