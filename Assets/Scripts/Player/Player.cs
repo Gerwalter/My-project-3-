@@ -172,6 +172,7 @@ public class Player : HP
         return Physics.Raycast(_movRay, _movRayDist, _movMask);
     }
 
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;

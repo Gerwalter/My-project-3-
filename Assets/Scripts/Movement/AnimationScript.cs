@@ -6,6 +6,7 @@ public class AnimationScript : MonoBehaviour
     public Animator anim;
     public LayerMask groundLayer;
     [SerializeField] private bool NoAttack = false;
+    [SerializeField] Player _player;
     //public GameObject particles;
 
     public GameObject sword;
@@ -92,6 +93,11 @@ public class AnimationScript : MonoBehaviour
                 enemy.ReciveDamage(_atkDmg);
             }
         }
+    }
+
+    public void Die()
+    {
+        _player.Die();
     }
 
     private IEnumerator AttackTimeout()

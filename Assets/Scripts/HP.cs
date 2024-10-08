@@ -6,6 +6,7 @@ public class HP : MonoBehaviour, IDamagable
 {
     [SerializeField] public float maxLife;
     [SerializeField] private float currentLife;
+    [SerializeField] private Animator anim;
 
     public float GetLife
     {
@@ -25,7 +26,11 @@ public class HP : MonoBehaviour, IDamagable
 
         if (GetLife <= 0)
         {
-            Die();
+            if (anim != null) 
+            {
+                anim.SetTrigger("Die");
+            }
+
         }
     }
 
@@ -35,8 +40,8 @@ public class HP : MonoBehaviour, IDamagable
         GetLife += amount;
     }
 
-    private void Die()
+    public void Die()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }

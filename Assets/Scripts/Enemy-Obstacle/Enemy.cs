@@ -176,28 +176,24 @@ public class Enemy : Entity
 
     [Header("<color=yellow>Attack</color>")]
     [SerializeField] private Transform _atkOrigin;
-    [SerializeField] private Vector3 _atkBoxSize = new Vector3(1.0f, 1.0f, 1.0f); // Tamaño del cubo
+    [SerializeField] private float _atkRayDist = 1.0f;
     [SerializeField] private LayerMask _atkMask;
     [SerializeField] private int _atkDmg = 20;
 
+    private Ray _atkRay;
+    private RaycastHit _atkHit;
     public void Attack()
     {
-        // Define el centro del cubo como la posición de origen
-        Vector3 boxCenter = _atkOrigin.position + transform.forward * (_atkBoxSize.z / 2);
+        _atkRay = new Ray(_atkOrigin.position, transform.forward);
 
-        // Detecta colisiones dentro del cubo
-        Collider[] hitColliders = Physics.OverlapBox(boxCenter, _atkBoxSize / 2, _atkOrigin.rotation, _atkMask);
-
-        foreach (Collider hitCollider in hitColliders)
+        if (Physics.Raycast(_atkRay, out _atkHit, _atkRayDist, _atkMask))
         {
-            if (hitCollider.TryGetComponent<Player>(out Player player))
+            if (_atkHit.collider.TryGetComponent<Player>(out Player player))
             {
                 Debug.Log("Japish");
-                // Aquí puedes aplicar el daño o cualquier otra lógica
             }
         }
     }
-
     void DeactivateShield()
     {
         _shieldInstance.SetActive(false);
@@ -276,10 +272,6 @@ public class Enemy : Entity
     }
     private void OnDrawGizmos()
     {
-
-        Gizmos.color = Color.red;
-        Vector3 boxCenter = _atkOrigin.position + transform.forward * (_atkBoxSize.z / 2);
-        Gizmos.DrawWireCube(boxCenter, _atkBoxSize);
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, _chaseDist);

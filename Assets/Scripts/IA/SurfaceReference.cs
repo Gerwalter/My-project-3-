@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
 
+[RequireComponent(typeof(NavMeshSurface))]
+
 public class SurfaceReference : MonoBehaviour
 {
     private NavMeshSurface _surface;
