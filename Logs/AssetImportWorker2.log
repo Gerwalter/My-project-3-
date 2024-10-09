@@ -1,0 +1,507 @@
+Using pre-set license
+Built from '2022.3/release' branch; Version is '2022.3.5f1 (9674261d40ee) revision 9860134'; Using compiler version '192829333'; Build Type 'Release'
+OS: 'Windows 11  (10.0.22631) 64bit Professional' Language: 'es' Physical Memory: 16232 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 1
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\2022.3.5f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker2
+-projectPath
+C:/Users/Electro pc/Desktop/My project (3)
+-logFile
+Logs/AssetImportWorker2.log
+-srvPort
+8346
+Successfully changed project path to: C:/Users/Electro pc/Desktop/My project (3)
+C:/Users/Electro pc/Desktop/My project (3)
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Player connection [2948] Host "[IP] 192.168.0.9 [Port] 0 [Flags] 2 [Guid] 2171331269 [EditorId] 2171331269 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-78KVH17) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+
+Player connection [2948] Host "[IP] 192.168.0.9 [Port] 0 [Flags] 2 [Guid] 2171331269 [EditorId] 2171331269 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-78KVH17) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+
+Refreshing native plugins compatible for Editor in 11.38 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2022.3.5f1 (9674261d40ee)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2022.3.5f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/Electro pc/Desktop/My project (3)/Assets
+GfxDevice: creating device client; threaded=0; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 3060 Ti (ID=0x2489)
+    Vendor:   NVIDIA
+    VRAM:     8038 MB
+    Driver:   31.0.15.3623
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2022.3.5f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2022.3.5f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2022.3.5f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56812
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2022.3.5f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.007000 seconds.
+- Loaded All Assemblies, in  0.359 seconds
+Native extension for WindowsStandalone target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.260 seconds
+Domain Reload Profiling: 616ms
+	BeginReloadAssembly (99ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (0ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (1ms)
+	RebuildCommonClasses (36ms)
+	RebuildNativeTypeToScriptingClass (10ms)
+	initialDomainReloadingComplete (62ms)
+	LoadAllAssembliesAndSetupDomain (149ms)
+		LoadAssemblies (96ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (142ms)
+			TypeCache.Refresh (142ms)
+				TypeCache.ScanAssembly (128ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (0ms)
+	FinalizeReload (260ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (202ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (10ms)
+			SetLoadedEditorAssemblies (8ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (2ms)
+			ProcessInitializeOnLoadAttributes (140ms)
+			ProcessInitializeOnLoadMethodAttributes (43ms)
+			AfterProcessingInitializeOnLoad (0ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (0ms)
+========================================================================
+Worker process is ready to serve import requests
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.940 seconds
+Refreshing native plugins compatible for Editor in 5.35 ms, found 3 plugins.
+Native extension for WindowsStandalone target not found
+Package Manager log level set to [2]
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.669 seconds
+Domain Reload Profiling: 1606ms
+	BeginReloadAssembly (162ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (5ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (24ms)
+	RebuildCommonClasses (40ms)
+	RebuildNativeTypeToScriptingClass (10ms)
+	initialDomainReloadingComplete (41ms)
+	LoadAllAssembliesAndSetupDomain (684ms)
+		LoadAssemblies (387ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (384ms)
+			TypeCache.Refresh (342ms)
+				TypeCache.ScanAssembly (329ms)
+			ScanForSourceGeneratedMonoScriptInfo (29ms)
+			ResolveRequiredComponents (12ms)
+	FinalizeReload (669ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (478ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (5ms)
+			SetLoadedEditorAssemblies (4ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (83ms)
+			ProcessInitializeOnLoadAttributes (307ms)
+			ProcessInitializeOnLoadMethodAttributes (70ms)
+			AfterProcessingInitializeOnLoad (9ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (7ms)
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
+Refreshing native plugins compatible for Editor in 6.84 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 6325 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 84 unused Assets / (1.2 MB). Loaded Objects now: 6789.
+Memory consumption went from 250.6 MB to 249.3 MB.
+Total: 6.215000 ms (FindLiveObjects: 0.643700 ms CreateObjectMapping: 0.362200 ms MarkObjects: 4.686100 ms  DeleteObjects: 0.521500 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-codec-MediaFoundation-h265: 746d11721c4dcdbdad8f713fa42b33f4 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:CustomObjectIndexerAttribute: a3ef5dd2817f97addfee359851a9dba5 -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 829239.967368 seconds.
+  path: Assets/Art/Shaders/CelShading/New Folder/CelSHading 3.mat
+  artifactKey: Guid(fcca2abe110e1fd41b9d698d11aeab12) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Shaders/CelShading/New Folder/CelSHading 3.mat using Guid(fcca2abe110e1fd41b9d698d11aeab12) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f7420da3984eab67404a5b4f586dd93c') in 0.008642 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000044 seconds.
+  path: Assets/Art/Shaders/CelShading/New Folder/CelSHading 4.mat
+  artifactKey: Guid(a25747d588f086a4caa4dce399923545) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Shaders/CelShading/New Folder/CelSHading 4.mat using Guid(a25747d588f086a4caa4dce399923545) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '33a0c91f389cf385a58f9bf35cbe7a99') in 0.001416 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/Art/Shaders/CelShading/New Folder/CelSHading Enemy+.mat
+  artifactKey: Guid(7664a793ade56614aa83d074cd36a3d6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Shaders/CelShading/New Folder/CelSHading Enemy+.mat using Guid(7664a793ade56614aa83d074cd36a3d6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b2ded92ffafd59a9533720ef0ce1a2f6') in 0.001173 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/Art/Shaders/CelShading/New Folder/CelSHading 1.mat
+  artifactKey: Guid(045404f4c2a77d94a92a3cf281e7f63e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Shaders/CelShading/New Folder/CelSHading 1.mat using Guid(045404f4c2a77d94a92a3cf281e7f63e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '94b7a3de005f8257d22f97fb0e058bfd') in 0.001294 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/Art/Shaders/CelShading/New Folder/Inline.mat
+  artifactKey: Guid(af0838b534b394a4281ad656630605d3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Shaders/CelShading/New Folder/Inline.mat using Guid(af0838b534b394a4281ad656630605d3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '41770d09e398fa9cea6b4db82e304f18') in 0.001812 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 239.683684 seconds.
+  path: Assets/Art/Shaders/CelShading/New Folder/CelSHading.mat
+  artifactKey: Guid(8d6547519c447e545819beb6ad6f3629) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Shaders/CelShading/New Folder/CelSHading.mat using Guid(8d6547519c447e545819beb6ad6f3629) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd4443a1ef14917cd5261bb1d31fa855b') in 0.001202 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 1046.946153 seconds.
+  path: Assets/Art/Shaders/CelShading/New Folder/CelSHading 2.mat
+  artifactKey: Guid(a9c2e31267e3ebb48b75ebf266e1e647) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Shaders/CelShading/New Folder/CelSHading 2.mat using Guid(a9c2e31267e3ebb48b75ebf266e1e647) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f2964d0296a6dab2a93664174ee75300') in 0.001156 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 1342.001438 seconds.
+  path: Assets/Art/Shaders/CelShading/CelShadin.mat
+  artifactKey: Guid(c0f7db84c08184d459fc405ec146f87c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Shaders/CelShading/CelShadin.mat using Guid(c0f7db84c08184d459fc405ec146f87c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1b406daa891de37df09750e7171b6793') in 0.084464 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000025 seconds.
+  path: Assets/Art/Shaders/CelShading/RoomShading.mat
+  artifactKey: Guid(b3120b35bb873994c898c0a7d58e6e4d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Shaders/CelShading/RoomShading.mat using Guid(b3120b35bb873994c898c0a7d58e6e4d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f1d3aa9eea714645a559f1c61ccf8bf0') in 0.001711 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 48.731390 seconds.
+  path: Assets/Art/Shaders/CelShading/Celshading.shadergraph
+  artifactKey: Guid(b38143c42a0e9b142aa0c26f4c732dce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Shaders/CelShading/Celshading.shadergraph using Guid(b38143c42a0e9b142aa0c26f4c732dce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '014f85c25a340f3e3bb4b890b0a47e31') in 0.002070 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 95.167590 seconds.
+  path: Assets/Art/Shaders/Halftone/GetMainLight.shadersubgraph
+  artifactKey: Guid(6f463731e736f944b8202d02209eeca9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Shaders/Halftone/GetMainLight.shadersubgraph using Guid(6f463731e736f944b8202d02209eeca9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd5efe90cad3437d97128e4b4b5364b0e') in 0.124104 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 1.491240 seconds.
+  path: Assets/Art/Shaders/Halftone/Halftone.shadergraph
+  artifactKey: Guid(ef3afcf964a41b246becf8464757aab0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Shaders/Halftone/Halftone.shadergraph using Guid(ef3afcf964a41b246becf8464757aab0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '25095813ae30fe9075e742a0e3982e4e') in 0.020745 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 9.367130 seconds.
+  path: Assets/Art/Shaders/Halftone/Halftone.shadergraph
+  artifactKey: Guid(ef3afcf964a41b246becf8464757aab0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Shaders/Halftone/Halftone.shadergraph using Guid(ef3afcf964a41b246becf8464757aab0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b4eabdbf5f2fc933b0454e02420ca0c3') in 0.002434 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 85.053204 seconds.
+  path: Assets/Art/Shaders/Halftone/Halftone.shadergraph
+  artifactKey: Guid(ef3afcf964a41b246becf8464757aab0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Shaders/Halftone/Halftone.shadergraph using Guid(ef3afcf964a41b246becf8464757aab0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '760fb5efd58b53343dca1254a514be8d') in 0.002169 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 59.746864 seconds.
+  path: Assets/Art/Shaders/Halftone/Halftone.mat
+  artifactKey: Guid(17822545d1b76a24bbf60ace77897b9f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Shaders/Halftone/Halftone.mat using Guid(17822545d1b76a24bbf60ace77897b9f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c30ab58e1c5c2ce3f2b07ae78a8ce7d5') in 0.002123 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 136.914637 seconds.
+  path: Assets/Art/Shaders/Halftone/Halftone.mat
+  artifactKey: Guid(17822545d1b76a24bbf60ace77897b9f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Shaders/Halftone/Halftone.mat using Guid(17822545d1b76a24bbf60ace77897b9f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ad9eed0cafc7c34f129efe2afdcaea66') in 0.002346 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 98.100276 seconds.
+  path: Assets/Cositas/Smoke/360_F_541631242_Jc9kgzgUikfjKdPWpd0Fh4545crO4IHS.jpg
+  artifactKey: Guid(85af805a488921d40ae7c8c3ff5498ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Cositas/Smoke/360_F_541631242_Jc9kgzgUikfjKdPWpd0Fh4545crO4IHS.jpg using Guid(85af805a488921d40ae7c8c3ff5498ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ce5907f60a5ee1c9eebcaca6a42f9f08') in 0.535314 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/Scripts/other scripts to take info/Slots/Im1.png
+  artifactKey: Guid(1c6d87358ea21404d9ed520a56a982d1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/other scripts to take info/Slots/Im1.png using Guid(1c6d87358ea21404d9ed520a56a982d1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '483123909840ea4a86267bfec5c40349') in 0.208411 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/Art/Cuadro.png
+  artifactKey: Guid(99404c011904e9647b780a5bc4537328) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Cuadro.png using Guid(99404c011904e9647b780a5bc4537328) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ede290e118a6dd68a5b314123f3e7af4') in 0.100659 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/Art/Textures/GridBox.png
+  artifactKey: Guid(3959620981df84944bf6f585573fb944) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Textures/GridBox.png using Guid(3959620981df84944bf6f585573fb944) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a9fb7dadd768896cdf7931388ce2cbb9') in 0.040563 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/TextMesh Pro/Fonts/LiberationSans.ttf
+  artifactKey: Guid(e3265ab4bf004d28a9537516768c1c75) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/TextMesh Pro/Fonts/LiberationSans.ttf using Guid(e3265ab4bf004d28a9537516768c1c75) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ac4b4fbf7a31ec793f0fbca3889634bf') in 0.954093 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 12.259505 seconds.
+  path: Assets/Art/Shaders/Halftone/Halftone.mat
+  artifactKey: Guid(17822545d1b76a24bbf60ace77897b9f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Shaders/Halftone/Halftone.mat using Guid(17822545d1b76a24bbf60ace77897b9f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e488783830685fcfc07149e3a98626ac') in 0.002832 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 17.694284 seconds.
+  path: Assets/Art/Shaders/CelShading/New Folder
+  artifactKey: Guid(1f28f735793a05648a2a9cc2f27809bd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Shaders/CelShading/New Folder using Guid(1f28f735793a05648a2a9cc2f27809bd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '94b2e17be16b64379ed3d62a2360efb1') in 0.000653 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.066674 seconds.
+  path: Assets/Art/Shaders/CelShading/New Folder/CelSHading 2.mat
+  artifactKey: Guid(a9c2e31267e3ebb48b75ebf266e1e647) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Shaders/CelShading/New Folder/CelSHading 2.mat using Guid(a9c2e31267e3ebb48b75ebf266e1e647) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '43b582d6d25a34e6c1d50778e1b7ffaa') in 0.001359 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 60.918550 seconds.
+  path: Assets/Art/Shaders/Halftone/Halftone 1.mat
+  artifactKey: Guid(546dca6dd23f97b489fc858fb2567c31) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Shaders/Halftone/Halftone 1.mat using Guid(546dca6dd23f97b489fc858fb2567c31) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8909325abed8719e9071b0c4230c1678') in 0.009295 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 3.818656 seconds.
+  path: Assets/Art/Shaders/Halftone/Halftone 2.mat
+  artifactKey: Guid(5c9583166d151ad4bb7bb7bb05542c0c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Shaders/Halftone/Halftone 2.mat using Guid(5c9583166d151ad4bb7bb7bb05542c0c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '76701c8ca14433833dbc62f7ecac98fb') in 0.002377 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 17.077981 seconds.
+  path: Assets/Art/Shaders/Halftone/Halftone 2.mat
+  artifactKey: Guid(5c9583166d151ad4bb7bb7bb05542c0c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Shaders/Halftone/Halftone 2.mat using Guid(5c9583166d151ad4bb7bb7bb05542c0c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c395687c055a5be7aaa2c4842a1a23bb') in 0.001937 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 11.030311 seconds.
+  path: Assets/Art/Shaders/Halftone/Halftone 3.mat
+  artifactKey: Guid(bf9d49a2faeb8f74186e1bc8aa8d5f96) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Shaders/Halftone/Halftone 3.mat using Guid(bf9d49a2faeb8f74186e1bc8aa8d5f96) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f7b89ea52e1f5836f2e79e98eb038eaa') in 0.002414 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 6.452188 seconds.
+  path: Assets/Art/Shaders/Halftone/Halftone 4.mat
+  artifactKey: Guid(04e1ac9841ecaf24d8c85c270f2d6533) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Shaders/Halftone/Halftone 4.mat using Guid(04e1ac9841ecaf24d8c85c270f2d6533) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '477f7879c09de7077613fce106feb5e1') in 0.002567 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 20.675586 seconds.
+  path: Assets/Art/Shaders/Halftone/Halftone 4.mat
+  artifactKey: Guid(04e1ac9841ecaf24d8c85c270f2d6533) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Shaders/Halftone/Halftone 4.mat using Guid(04e1ac9841ecaf24d8c85c270f2d6533) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cb837a90224ae4963a1835530626504c') in 0.001900 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 852.105356 seconds.
+  path: Assets/Art/Shaders/Halftone/Halftone.shadergraph
+  artifactKey: Guid(ef3afcf964a41b246becf8464757aab0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Shaders/Halftone/Halftone.shadergraph using Guid(ef3afcf964a41b246becf8464757aab0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '88e710f7b3b39e707e4003ce7e412e49') in 0.002574 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 539.425154 seconds.
+  path: Assets/Art/Materials
+  artifactKey: Guid(945cbcf73e21e1b468e263037cfcb2e1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Materials using Guid(945cbcf73e21e1b468e263037cfcb2e1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3e670e1eda4d22df14c7412674ba4512') in 0.000637 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 8.647483 seconds.
+  path: Assets/Art/Materials/Fullscreen
+  artifactKey: Guid(319ed859750817c47a69a52afb48354a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Materials/Fullscreen using Guid(319ed859750817c47a69a52afb48354a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2ccf83e104ebff7e8a7af81b28d1e38b') in 0.000484 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 31.155889 seconds.
+  path: Assets/Art/Materials/Player
+  artifactKey: Guid(a76c89cf58f2add47a48e0dae1fbf804) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Materials/Player using Guid(a76c89cf58f2add47a48e0dae1fbf804) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f8d5021c868a0cd709dd15bcf5fd7412') in 0.011503 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 82.501116 seconds.
+  path: Assets/Art/Shaders/Halftone/Lit.mat
+  artifactKey: Guid(5377308360b2b1242bc6e9f1d90635e5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Shaders/Halftone/Lit.mat using Guid(5377308360b2b1242bc6e9f1d90635e5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3fc76a5c26bb7b8690f329d2804d5174') in 0.002078 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 519.093561 seconds.
+  path: Assets/Art/Shaders/Halftone/Lit.mat
+  artifactKey: Guid(5377308360b2b1242bc6e9f1d90635e5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Shaders/Halftone/Lit.mat using Guid(5377308360b2b1242bc6e9f1d90635e5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '16f8f84e716b9f47750be89727967668') in 0.002115 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 3635.581229 seconds.
+  path: Assets/Art/Shaders/Halftone/Halftone.shadergraph
+  artifactKey: Guid(ef3afcf964a41b246becf8464757aab0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Shaders/Halftone/Halftone.shadergraph using Guid(ef3afcf964a41b246becf8464757aab0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '00d2aea65d76e7be17558dff33949352') in 0.067259 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 22.316715 seconds.
+  path: Assets/Art/Shaders/Halftone/Halftone.shadergraph
+  artifactKey: Guid(ef3afcf964a41b246becf8464757aab0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Shaders/Halftone/Halftone.shadergraph using Guid(ef3afcf964a41b246becf8464757aab0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9629e4b5a41abb1a071dd31cca077d6e') in 0.001863 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 40.561968 seconds.
+  path: Assets/Art/Shaders/Halftone/Halftone.shadergraph
+  artifactKey: Guid(ef3afcf964a41b246becf8464757aab0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Shaders/Halftone/Halftone.shadergraph using Guid(ef3afcf964a41b246becf8464757aab0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd2aabb51853ed7bcfc8f54320b7a936a') in 0.049392 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 14.609419 seconds.
+  path: Assets/Art/Shaders/Halftone/Halftone.shadergraph
+  artifactKey: Guid(ef3afcf964a41b246becf8464757aab0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Shaders/Halftone/Halftone.shadergraph using Guid(ef3afcf964a41b246becf8464757aab0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b6676f1893a31236d6c070425d6290a2') in 0.072512 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 10.960465 seconds.
+  path: Assets/Art/Shaders/Halftone/Halftone.shadergraph
+  artifactKey: Guid(ef3afcf964a41b246becf8464757aab0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Art/Shaders/Halftone/Halftone.shadergraph using Guid(ef3afcf964a41b246becf8464757aab0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6c4d2229e97e1bffc6d088ed00dac7d1') in 0.026747 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
