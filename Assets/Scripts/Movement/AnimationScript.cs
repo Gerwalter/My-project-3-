@@ -100,6 +100,10 @@ public class AnimationScript : MonoBehaviour
         _player.Die();
     }
 
+    public void Interact()
+    {
+        _player.Interact();
+    }
     private IEnumerator AttackTimeout()
     {
         yield return new WaitForSeconds(attackTimeout);

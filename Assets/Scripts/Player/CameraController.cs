@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-
     [Header("<color=#6A89A7>Cursor</color>")]
     [SerializeField] private CursorLockMode _lockMode = CursorLockMode.Locked;
     [SerializeField] private bool _isCursorVisible = false;
+    [SerializeField] private bool _isCameraFixed = false; // Nuevo: estado de cámara fija o no
 
     [Header("<color=#6A89A7>Physics</color>")]
     [Range(.01f, 1f)][SerializeField] private float _detectionRadius = .1f;
@@ -38,13 +38,27 @@ public class CameraController : MonoBehaviour
         _target = GameManager.Instance.Player.GetCamTarget;
         _cam = Camera.main;
 
-        Cursor.lockState = _lockMode;
-        Cursor.visible = _isCursorVisible;
-
+        LockCursor();  // Usamos el nuevo método LockCursor para inicializar
         transform.forward = _target.forward;
 
         _mouseX = transform.eulerAngles.y;
         _mouseY = transform.eulerAngles.x;
+    }
+
+    private void Update()
+    {
+        // Alternar entre la cámara fija y la liberada al presionar Escape
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            _isCameraFixed = !_isCameraFixed;  // Cambia el estado de la cámara fija
+            ToggleCursorMode(_isCameraFixed);
+        }
+
+        // Solo actualizar la rotación de la cámara si no está fija
+        if (!_isCameraFixed)
+        {
+            UpdateCamRot(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+        }
     }
 
     private void FixedUpdate()
@@ -56,9 +70,20 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
-        UpdateCamRot(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+        if (!_isCameraFixed)
+        {
+            UpdateSpringArm();
+        }
+    }
 
-        UpdateSpringArm();
+    public bool IsCameraFixed
+    {
+        get { return _isCameraFixed; }
+        set
+        {
+            _isCameraFixed = value;
+            ToggleCursorMode(_isCameraFixed); // Ajustamos el estado del cursor
+        }
     }
 
     private void UpdateCamRot(float x, float y)
@@ -111,5 +136,25 @@ public class CameraController : MonoBehaviour
 
         _cam.transform.position = _camPos;
         _cam.transform.LookAt(transform.position);
+    }
+
+    // Método para alternar entre los modos de cursor
+    private void ToggleCursorMode(bool isFixed)
+    {
+        if (isFixed)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            LockCursor();
+        }
+    }
+
+    private void LockCursor()
+    {
+        Cursor.lockState = _lockMode;
+        Cursor.visible = _isCursorVisible;
     }
 }

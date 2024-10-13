@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 6363643865286259320}
   - component: {fileID: 4507614542695375958}
   - component: {fileID: 4628886677205217676}
+  - component: {fileID: 7433801652074301659}
   m_Layer: 0
   m_Name: SpringArm
   m_TagString: Untagged
@@ -185,6 +186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lockMode: 1
   _isCursorVisible: 0
+  _isCameraFixed: 0
   _detectionRadius: 0.14
   _hitOffset: 0.25
   _mouseSensitivity: 367
@@ -217,3 +219,16 @@ MonoBehaviour:
   CrossHair: {fileID: 0}
   target: {fileID: 0}
   isLockedOnTarget: 0
+--- !u!114 &7433801652074301659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7470847135926416861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6ad43497f093504baa6232bc1205215, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cameraController: {fileID: 4507614542695375958}

@@ -61,7 +61,6 @@ public class Player : HP
 
         GetLife = maxLife;
         UpdateHealthBar();
-
     }
 
     private void Update()
@@ -86,7 +85,8 @@ public class Player : HP
 
         if (Input.GetKeyDown(_intKey))
         {
-            Interact();
+            _anim.SetTrigger("Int");
+            //Interact();
         }
 
         if (Input.GetKeyDown(_jumpKey) && IsGrounded())
@@ -115,7 +115,7 @@ public class Player : HP
         healthBar.color = Color.Lerp(Color.red, Color.green, lifePercent);
     }
 
-    private void Interact()
+    public void Interact()
     {
         _intRay = new Ray(_intOrigin.position, transform.forward);
 
@@ -180,5 +180,17 @@ public class Player : HP
 
         Gizmos.color = Color.blue;
         Gizmos.DrawRay(_intRay);
+    }
+
+
+    [SerializeField] private GameObject gameObje;
+    [SerializeField] private GameObject menu;
+    [SerializeField] private Lock Handle;
+
+    public void Die()
+    { 
+        Handle.OnDie();
+        menu.SetActive(true);
+        gameObje.SetActive(false);
     }
 }

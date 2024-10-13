@@ -8,6 +8,7 @@ public class HP : MonoBehaviour, IDamagable
     [SerializeField] private float currentLife;
     [SerializeField] private Animator anim;
 
+
     public float GetLife
     {
         get { return currentLife; }
@@ -17,6 +18,7 @@ public class HP : MonoBehaviour, IDamagable
     private void Start()
     {
         currentLife = maxLife;
+
     }
 
     public void ReciveDamage(float damage)
@@ -40,8 +42,5 @@ public class HP : MonoBehaviour, IDamagable
         GetLife += amount;
     }
 
-    public void Die()
-    {
-        gameObject.SetActive(false);
-    }
+
 }
