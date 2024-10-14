@@ -12,9 +12,11 @@ public class BadApple : MonoBehaviour
     [SerializeField] private Slider vignetteSlider; // Referencia al Slider de la UI
     public string shaderTexturePropertyName = "_MainTex";
     public VideoClip videoClip;
+    public Material outline;
 
     private void Start()
     {
+        outline.EnableKeyword("_OVERLAY");
         // Configurar la viñeta inicialmente
         AppleController.Instance.VignettePostProcess.SetFloat(AppleController.Instance.VignetteAmountName, 5.0f);
 
@@ -52,13 +54,15 @@ public class BadApple : MonoBehaviour
             {
                 // Usar la textura del VideoPlayer en lugar de _mainTexture
                 AppleController.Instance.VignettePostProcess.SetTexture(shaderTexturePropertyName, videoPlayer.texture);
+                outline.DisableKeyword("_OVERLAY");
             }
         }
         else
         {
             if (videoPlayer != null && videoPlayer.isPlaying)
             {
-                videoPlayer.Pause(); // Pausa el video si la viñeta no es 1
+                videoPlayer.Pause();
+                outline.EnableKeyword("_OVERLAY");// Pausa el video si la viñeta no es 1
             }
 
             // Usa la textura _mainTexture como alternativa si el video está pausado

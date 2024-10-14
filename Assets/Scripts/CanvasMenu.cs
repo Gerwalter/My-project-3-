@@ -20,9 +20,6 @@ public class CanvasMenu : ButtonBehaviour
 
     private void Update()
     {
-        if (Lock != null && !menu.activeSelf) 
-        {
-            Lock.UnlockCamera();
-        }
+
     }
 }

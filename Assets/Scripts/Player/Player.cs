@@ -184,13 +184,14 @@ public class Player : HP
 
 
     [SerializeField] private GameObject gameObje;
-    [SerializeField] private GameObject menu;
+    [SerializeField] private Renderer Rend1;
+    [SerializeField] private Renderer Rend2;
     [SerializeField] private Lock Handle;
 
     public void Die()
     { 
         Handle.OnDie();
-        menu.SetActive(true);
         gameObje.SetActive(false);
+       // Rend1.enabled = false; Rend2.enabled = false;
     }
 }
