@@ -184,8 +184,6 @@ public class Player : HP
 
 
     [SerializeField] private GameObject gameObje;
-    [SerializeField] private Renderer Rend1;
-    [SerializeField] private Renderer Rend2;
     [SerializeField] private Lock Handle;
 
     public void Die()
