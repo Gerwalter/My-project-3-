@@ -2,12 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BridgeButton : ButtonBehaviour
+public class Portal : ButtonBehaviour
 {
-
+    public VideoShader videoShader;
     [SerializeField] private Renderer _renderer;
-    [SerializeField] private Bridge _bridge;
-
 
     public override void OnInteract()
     {
@@ -21,10 +19,8 @@ public class BridgeButton : ButtonBehaviour
         // Aplica el color al material del objeto.
         _renderer.material.color = randomColor;
 
-        if (_bridge != null)
-        {
-            _bridge.Activated();
-        }
+        videoShader.VideoPlay();
+
 
     }
 }

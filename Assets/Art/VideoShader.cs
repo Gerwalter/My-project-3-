@@ -40,6 +40,7 @@ public class VideoShader : MonoBehaviour
             // Establece la textura del video en el Shader
             objectRenderer.material.SetTexture(shaderTexturePropertyName, videoPlayer.texture);
         }
+        else return;
     }
 
     public void VideoPlay()
