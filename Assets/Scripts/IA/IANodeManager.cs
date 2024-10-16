@@ -4,29 +4,24 @@ using UnityEngine;
 
 public class IANodeManager : MonoBehaviour
 {
-    [SerializeField] private Transform[] _nodes;
+    [SerializeField] public Transform[] _nodes;
 
-    private IEnumerator Start()
+    private HashSet<Enemy> processedEnemies = new HashSet<Enemy>();
+
+    private void Start()
     {
-        yield return new WaitForEndOfFrame();
         _nodes = GetComponentsInChildren<Transform>();
-
-        foreach (Enemy enemy in GameManager.Instance.Enemies)
-        {
-            enemy.NavMeshNodes.AddRange(_nodes);
-            enemy.Initialize();
-        }
     }
 
-
-    public void NodesExtraConfirm()
+    private void Update()
     {
-        print("funca");
-        _nodes = GetComponentsInChildren<Transform>();
-
         foreach (Enemy enemy in GameManager.Instance.Enemies)
         {
-            enemy.NavMeshNodes.AddRange(_nodes);
+            if (!processedEnemies.Contains(enemy))
+            {
+                enemy.NavMeshNodes.AddRange(_nodes);
+                processedEnemies.Add(enemy);
+            }
         }
     }
 }

@@ -48,7 +48,11 @@ public class Enemy : Entity
     [Header("<color=#6A89A7>UI</color>")]
     [SerializeField] private Image healthBar;
 
-
+    private void Awake()
+    {
+        Initialize();
+        _nodeManager = GameManager.Instance.NodeManager;
+    }
     private void Start()
     {
         GetLife = maxLife;
@@ -59,12 +63,19 @@ public class Enemy : Entity
         _agent.speed = _speed;
 
         GameManager.Instance.Enemies.Add(this);
+
+
+        Finalizer();
     }
 
     public void Initialize()
     {
         _target = GameManager.Instance.Player.gameObject.transform;
+        
+    }
 
+    public void Finalizer()
+    {
         _actualNode = GetNewNode();
 
         _agent.SetDestination(_actualNode.position);
@@ -79,9 +90,8 @@ public class Enemy : Entity
         healthBar.color = Color.Lerp(Color.red, Color.green, lifePercent);
     }
 
-    private void FixedUpdate()
+  /*  private void FixedUpdate()
     {
-
         UpdateHealthBar();
 
         if (!_target)
@@ -99,8 +109,6 @@ public class Enemy : Entity
 
                 _animator.SetBool("isMoving", false);
                 _animator.SetTrigger("Punch");
-                print(2);
-
             }
             else
             {
@@ -118,7 +126,7 @@ public class Enemy : Entity
 
             if (Vector3.SqrMagnitude(transform.position - _actualNode.position) <= (_changeNodeDist * _changeNodeDist))
             {
-                _actualNode = GetNewNode(_actualNode);
+                _actualNode = GetNewNode();
 
                 _agent.SetDestination(_actualNode.position);
             }
@@ -162,7 +170,7 @@ public class Enemy : Entity
                 }
             }
         }
-    }
+    }*/
     private bool PlayerInShieldRange()
     {
         return Vector3.Distance(transform.position, _target.position) <= _shieldDist;
@@ -209,14 +217,9 @@ public class Enemy : Entity
         _shieldInstance.SetActive(false);
     }
 
-    private Transform GetNewNode(Transform lastNode = null)
+    private Transform GetNewNode()
     {
         Transform newNode = _navMeshNodes[Random.Range(0, _navMeshNodes.Count)];
-
-        while (lastNode == newNode)
-        {
-            newNode = _navMeshNodes[Random.Range(0, _navMeshNodes.Count)];
-        }
 
         return newNode;
     }

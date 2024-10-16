@@ -24,13 +24,17 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private EnemyWaveData ligthEnemyWave;
     [SerializeField] private EnemyWaveData bossEnemyWave;
 
+    [Header("Spawn Area Settings")]
+    [SerializeField] private Vector2 spawnAreaSize = new Vector2(10f, 10f);
+    [SerializeField] private float spawnYPosition = 0f;
+
     private Dictionary<EnemyType, LootData> _enemyLoot = new Dictionary<EnemyType, LootData>();
 
     public static WaveManager Instance;
 
     private Queue<EnemyWaveData> _spawnOrder = new Queue<EnemyWaveData>();
 
-    private float _timer;
+    public float _timer;
 
 
     void Awake()
@@ -57,13 +61,6 @@ public class WaveManager : MonoBehaviour
         _enemyLoot.Add(EnemyType.TANK, new LootData { gold = 25, xp = 40 });
         _enemyLoot.Add(EnemyType.BOSS, new LootData { gold = 100, xp = 100 });
 
-        //Manera de lectura del diccionario
-        if (_enemyLoot.TryGetValue(EnemyType.MELEE, out var lootData))
-        {
-            Debug.Log(lootData.gold);
-        }
-        Debug.Log(_enemyLoot[EnemyType.MELEE].xp);
-
         //Sobreescribir value
         _enemyLoot[EnemyType.MELEE] = new LootData { gold = 60, xp = 20 };
 
@@ -75,52 +72,37 @@ public class WaveManager : MonoBehaviour
 
 
         _spawnOrder.Enqueue(normalEnemyWave);
-        _spawnOrder.Enqueue(ligthEnemyWave);
-        _spawnOrder.Enqueue(normalEnemyWave);
-        _spawnOrder.Enqueue(heavyEnemyWave);
-        _spawnOrder.Enqueue(ligthEnemyWave);
-        _spawnOrder.Enqueue(bossEnemyWave);
+        //_spawnOrder.Enqueue(ligthEnemyWave);
+       // _spawnOrder.Enqueue(normalEnemyWave);
+        //_spawnOrder.Enqueue(heavyEnemyWave);
+        //_spawnOrder.Enqueue(ligthEnemyWave);
+        //_spawnOrder.Enqueue(bossEnemyWave);
     }
 
     private void Update()
     {
         _timer += Time.deltaTime;
 
-        if (_timer > 2)
+        if (_timer > 1)
         {
-            #region With try and catch
-            try
-            {
-                _timer = 0;
-                var spawnData = _spawnOrder.Dequeue();
-                foreach (var item in spawnData.enemyToSpawn)
-                {
-                    Instantiate(item);
-                }
 
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                Debug.Log("Final");
-            }
-            #endregion
+            _timer = 0;
+            var spawnData = _spawnOrder.Dequeue();
 
-            #region Without try and catch
-            //_timer = 0;
-            //var spawnData = _spawnOrder.Dequeue();
-
-            //foreach (var item in spawnData.enemyToSpawn)
-            //{
-            //    Instantiate(item).SetWaypoints(waypoints);
-            //}
-            //Debug.Log("Final");
-            #endregion
+            foreach (var item in spawnData.enemyToSpawn)
+            {
+                Instantiate(item);
+            }
         }
     }
+
+    private Vector3 GetRandomSpawnPosition()
+    {
+        float randomX = UnityEngine.Random.Range(-spawnAreaSize.x / 2, spawnAreaSize.x / 2);
+        float randomZ = UnityEngine.Random.Range(-spawnAreaSize.y / 2, spawnAreaSize.y / 2);
+        return new Vector3(randomX, spawnYPosition, randomZ);
+    }
+
     public LootData GetLoot(EnemyType enemyType)
     {
         if (_enemyLoot.TryGetValue(enemyType, out var lootData))

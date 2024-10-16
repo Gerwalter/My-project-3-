@@ -47,7 +47,7 @@ public class SecurityCamera : MonoBehaviour
 
     void NodesConfirm()
     {
-        iANode.NodesExtraConfirm();
+
     }
     void SpawnEnemies()
     {
