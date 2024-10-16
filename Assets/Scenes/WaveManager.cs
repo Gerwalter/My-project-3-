@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEditor.Progress;
 
 public struct LootData
 {
@@ -92,6 +93,10 @@ public class WaveManager : MonoBehaviour
             {
                 _timer = 0;
                 var spawnData = _spawnOrder.Dequeue();
+                foreach (var item in spawnData.enemyToSpawn)
+                {
+                    Instantiate(item);
+                }
 
             }
             catch (Exception ex)
