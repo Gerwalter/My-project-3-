@@ -4,9 +4,19 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
+public enum EnemyType
+{
+    MELEE,
+    RANGE,
+    TANK,
+    BOSS
+}
+
+
 [RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : Entity
 {
+    [SerializeField] public EnemyType _enemyType;
     [Header("<color=red>AI</color>")]
     [SerializeField] private float _chaseDist = 6.0f;
     [SerializeField] private float _atkDist = 2.0f;
@@ -16,7 +26,7 @@ public class Enemy : Entity
     [SerializeField] private float _shootDist = 6.0f;
     [SerializeField] private int _speed;
 
-    
+
     [SerializeField] public IANodeManager _nodeManager;
 
     [Header("<color=red>Behaviours</color>")]
@@ -282,20 +292,20 @@ public class Enemy : Entity
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, _changeNodeDist);
 
-        if (_enemyType == EnemyType.Healer)
+        if (_enemyClass == EnemyClass.Healer)
         {
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(transform.position, _healDist);
         }
 
-        if (_enemyType == EnemyType.Shielder)
+        if (_enemyClass == EnemyClass.Shielder)
         {
             Gizmos.color = Color.cyan;
             Gizmos.DrawWireSphere(transform.position, _shieldDist);
 
         }
 
-        if (_enemyType == EnemyType.Shooter)
+        if (_enemyClass == EnemyClass.Shooter)
         {
             Gizmos.color = Color.magenta;
             Gizmos.DrawWireSphere(transform.position, _shootDist);

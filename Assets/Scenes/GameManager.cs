@@ -42,8 +42,4 @@ public class GameManager : MonoBehaviour
         get { return _surface; }
         set { _surface = value; }
     }
-    public static void LoadLevel(string newSceneName)
-    {
-        SceneManager.LoadScene(newSceneName);
-    }
 }

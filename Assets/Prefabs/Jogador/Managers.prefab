@@ -90,6 +90,58 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f1bd1787ee79a143af17332a130c12c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &4433463149306203768
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1295041182706992699}
+  - component: {fileID: 2470284587963124843}
+  m_Layer: 0
+  m_Name: WaveManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1295041182706992699
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4433463149306203768}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6864792825799170854}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2470284587963124843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4433463149306203768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9450fbb41ad973143976bd52d6b30332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalEnemyWave:
+    enemyToSpawn: []
+  heavyEnemyWave:
+    enemyToSpawn: []
+  ligthEnemyWave:
+    enemyToSpawn: []
+  bossEnemyWave:
+    enemyToSpawn: []
 --- !u!1 &5295409349645580041
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,11 +236,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vignette: 0
-  _mainTexture: {fileID: 0}
+  _mainTexture: {fileID: 2800000, guid: 1c6d87358ea21404d9ed520a56a982d1, type: 3}
   videoPlayer: {fileID: 0}
   vignetteSlider: {fileID: 0}
   shaderTexturePropertyName: _MainTex
   videoClip: {fileID: 32900000, guid: d8ae6e8ac1d54044db6c19e5f21473bc, type: 3}
+  outline: {fileID: 2100000, guid: 9026aee468ea3e5418003dc011c7942b, type: 2}
 --- !u!114 &4893919080436448666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,7 +288,7 @@ VideoPlayer:
   m_EnabledAudioTracks: 01
   m_DirectAudioMutes: 00
   m_ControlledAudioTrackCount: 1
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_SkipOnDrop: 1
   m_Looping: 0
   m_WaitForFirstFrame: 1
@@ -320,5 +373,6 @@ Transform:
   - {fileID: 7021658810556185085}
   - {fileID: 569788588209047712}
   - {fileID: 8540424025121407957}
+  - {fileID: 1295041182706992699}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Entity : HP
 {
-    public enum EnemyType
+    public enum EnemyClass
     {
         Normal,
         Healer,
@@ -11,7 +11,7 @@ public class Entity : HP
         Shooter,
     }
 
-    [SerializeField] public EnemyType _enemyType;
+
     [SerializeField] private GameObject shieldPrefab;
     protected GameObject _shieldInstance;
     [SerializeField] protected int _shieldLife = 50;
@@ -27,6 +27,7 @@ public class Entity : HP
     [SerializeField] protected Transform shootPoint;
     [SerializeField] protected float shootCooldown = 2.0f;
     protected float lastShootTime;
+    [SerializeField] public EnemyClass _enemyClass;
 
 
     private void Awake()
@@ -43,10 +44,10 @@ public class Entity : HP
 
     private void SetEnemyTypeBooleans()
     {
-        _isNormal = _enemyType == EnemyType.Normal;
-        _isHealer = _enemyType == EnemyType.Healer;
-        _isShielder = _enemyType == EnemyType.Shielder;
-        _isShooter = _enemyType == EnemyType.Shooter;
+        _isNormal = _enemyClass == EnemyClass.Normal;
+        _isHealer = _enemyClass == EnemyClass.Healer;
+        _isShielder = _enemyClass == EnemyClass.Shielder;
+        _isShooter = _enemyClass == EnemyClass.Shooter;
     }
 
 }

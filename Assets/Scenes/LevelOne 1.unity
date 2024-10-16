@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44901615, g: 0.49908, b: 0.5757126, a: 1}
+  m_IndirectSpecularColor: {r: 0.4490351, g: 0.49910313, b: 0.5757124, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4739,7 +4739,6 @@ MonoBehaviour:
   maxLife: 100
   currentLife: 0
   anim: {fileID: 0}
-  _enemyType: 1
   shieldPrefab: {fileID: 0}
   _shieldLife: 0
   _isNormal: 0
@@ -4749,6 +4748,8 @@ MonoBehaviour:
   projectilePrefab: {fileID: 0}
   shootPoint: {fileID: 0}
   shootCooldown: 2
+  _enemyClass: 0
+  _enemyType: 1
   _chaseDist: 0
   _atkDist: 0
   _changeNodeDist: 2
@@ -9718,7 +9719,6 @@ MonoBehaviour:
   maxLife: 100
   currentLife: 0
   anim: {fileID: 0}
-  _enemyType: 3
   shieldPrefab: {fileID: 0}
   _shieldLife: 50
   _isNormal: 0
@@ -9728,6 +9728,8 @@ MonoBehaviour:
   projectilePrefab: {fileID: 8951607973867105544, guid: c2928fa2c9b9c9549966da44ada4a3c3, type: 3}
   shootPoint: {fileID: 77076439}
   shootCooldown: 2
+  _enemyClass: 0
+  _enemyType: 3
   _chaseDist: 4.5
   _atkDist: 1.5
   _changeNodeDist: 2
@@ -11681,7 +11683,6 @@ MonoBehaviour:
   maxLife: 100
   currentLife: 0
   anim: {fileID: 0}
-  _enemyType: 2
   shieldPrefab: {fileID: 2494072925433335905, guid: 9176725531e7ba94ca7ea5e3962bdf7b, type: 3}
   _shieldLife: 25
   _isNormal: 0
@@ -11691,6 +11692,8 @@ MonoBehaviour:
   projectilePrefab: {fileID: 0}
   shootPoint: {fileID: 0}
   shootCooldown: 2
+  _enemyClass: 0
+  _enemyType: 2
   _chaseDist: 4.5
   _atkDist: 1.5
   _changeNodeDist: 2
@@ -25413,29 +25416,13 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 296576206345902162, guid: 0487c03122a108e408343f783f7fa3e8, type: 3}
-      propertyPath: outline
-      value: 
-      objectReference: {fileID: 2100000, guid: 9026aee468ea3e5418003dc011c7942b, type: 2}
-    - target: {fileID: 296576206345902162, guid: 0487c03122a108e408343f783f7fa3e8, type: 3}
-      propertyPath: videoClip
-      value: 
-      objectReference: {fileID: 32900000, guid: d8ae6e8ac1d54044db6c19e5f21473bc, type: 3}
-    - target: {fileID: 296576206345902162, guid: 0487c03122a108e408343f783f7fa3e8, type: 3}
       propertyPath: videoPlayer
       value: 
       objectReference: {fileID: 513457964}
     - target: {fileID: 296576206345902162, guid: 0487c03122a108e408343f783f7fa3e8, type: 3}
-      propertyPath: _mainTexture
-      value: 
-      objectReference: {fileID: 2800000, guid: 1c6d87358ea21404d9ed520a56a982d1, type: 3}
-    - target: {fileID: 296576206345902162, guid: 0487c03122a108e408343f783f7fa3e8, type: 3}
       propertyPath: vignetteSlider
       value: 
       objectReference: {fileID: 1220098392}
-    - target: {fileID: 2929363658912932181, guid: 0487c03122a108e408343f783f7fa3e8, type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6864792825799170854, guid: 0487c03122a108e408343f783f7fa3e8, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.24029136
@@ -28371,7 +28358,6 @@ MonoBehaviour:
   maxLife: 20
   currentLife: 0
   anim: {fileID: 0}
-  _enemyType: 0
   shieldPrefab: {fileID: 0}
   _shieldLife: 50
   _isNormal: 0
@@ -28381,6 +28367,8 @@ MonoBehaviour:
   projectilePrefab: {fileID: 0}
   shootPoint: {fileID: 0}
   shootCooldown: 2
+  _enemyClass: 0
+  _enemyType: 0
   _chaseDist: 4.5
   _atkDist: 1.5
   _changeNodeDist: 2
