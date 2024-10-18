@@ -116,6 +116,11 @@ public class AnimationScript : MonoBehaviour
         anim.SetBool("NoAttack", true);
     }
 
+    public void triggerReset()
+    {
+        anim.ResetTrigger("Hit");
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;

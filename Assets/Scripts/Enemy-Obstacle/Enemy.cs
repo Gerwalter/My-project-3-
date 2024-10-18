@@ -26,7 +26,7 @@ public class Enemy : Entity
     [SerializeField] private float _shootDist = 6.0f;
     [SerializeField] private int _speed;
 
-
+    [SerializeField] private bool _canStart = false;
     [SerializeField] public IANodeManager _nodeManager;
 
     [Header("<color=red>Behaviours</color>")]
@@ -55,6 +55,7 @@ public class Enemy : Entity
     }
     private void Start()
     {
+
         GetLife = maxLife;
         _agent = GetComponent<NavMeshAgent>();
 
@@ -64,10 +65,18 @@ public class Enemy : Entity
 
         GameManager.Instance.Enemies.Add(this);
 
-
+        StartCoroutine(WaitOneFrame());
+       
+    }
+    private IEnumerator WaitOneFrame()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            yield return null; // Espera un frame
+        }
+        _canStart = true;
         Finalizer();
     }
-
     public void Initialize()
     {
         _target = GameManager.Instance.Player.gameObject.transform;
@@ -90,15 +99,18 @@ public class Enemy : Entity
         healthBar.color = Color.Lerp(Color.red, Color.green, lifePercent);
     }
 
-  /*  private void FixedUpdate()
+    private void FixedUpdate()
     {
         UpdateHealthBar();
+
+        if (!_canStart) return; // Espera hasta que se haya habilitado
 
         if (!_target)
         {
             Debug.LogError($"<color=red>NullReferenceException</color>: No asignaste un objetivo, boludo.");
             return;
         }
+
         _animator.SetBool("isMoving", true);
 
         if (Vector3.SqrMagnitude(transform.position - _target.position) <= (_chaseDist * _chaseDist))
@@ -170,7 +182,7 @@ public class Enemy : Entity
                 }
             }
         }
-    }*/
+    }
     private bool PlayerInShieldRange()
     {
         return Vector3.Distance(transform.position, _target.position) <= _shieldDist;
@@ -196,7 +208,7 @@ public class Enemy : Entity
     [SerializeField] private Transform _atkOrigin;
     [SerializeField] private float _atkRayDist = 1.0f;
     [SerializeField] private LayerMask _atkMask;
-    [SerializeField] private int _atkDmg = 20;
+    [SerializeField] private int _atkDmg = 2;
 
     private Ray _atkRay;
     private RaycastHit _atkHit;
@@ -209,6 +221,7 @@ public class Enemy : Entity
             if (_atkHit.collider.TryGetComponent<Player>(out Player player))
             {
                 Debug.Log("Japish");
+                player.ReciveDamage(_atkDmg);
             }
         }
     }
@@ -278,13 +291,18 @@ public class Enemy : Entity
             Debug.Log($"<color=red>{name}</color>: Comí <color=black>{dmg}</color> puntos de daño. Me quedan <color=green>{GetLife}</color> puntos.");
         }
     }
-
+    public void triggerReset()
+    {
+        _animator.ResetTrigger("Hit");
+    }
     public void FalseBool()
     {
-        _animator.SetTrigger("Punch");
+        _animator.ResetTrigger("Punch");
     }
     private void OnDrawGizmos()
     {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawRay(_atkRay);
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, _chaseDist);

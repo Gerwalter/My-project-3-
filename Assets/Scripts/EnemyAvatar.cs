@@ -18,4 +18,9 @@ public class EnemyAvatar : MonoBehaviour
     public void FalseBool()
         { _parent.FalseBool(); }
 
+    public void triggerReset()
+    {
+        _parent.triggerReset();
+    }
+
 }

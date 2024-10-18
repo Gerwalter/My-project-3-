@@ -28,12 +28,19 @@ public class HP : MonoBehaviour, IDamagable
 
         if (GetLife <= 0)
         {
-            if (anim != null) 
+            if (anim != null)
             {
                 anim.SetTrigger("Die");
             }
 
         }
+        else {
+            if (anim != null)
+            {
+                anim.SetTrigger("Hit");
+            }
+        }
+
     }
 
     public void Health(float amount)

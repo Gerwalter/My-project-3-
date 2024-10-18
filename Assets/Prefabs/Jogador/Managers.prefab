@@ -122,6 +122,8 @@ MonoBehaviour:
   _player: {fileID: 0}
   _enemies: []
   _surface: {fileID: 0}
+  _nodeManager: {fileID: 0}
+  _nodes: []
 --- !u!114 &4139764367681046122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -210,7 +212,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalEnemyWave:
     enemyToSpawn:
-    - {fileID: 0}
+    - {fileID: 7715154201322672574, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
   heavyEnemyWave:
     enemyToSpawn: []
   ligthEnemyWave:
@@ -219,3 +221,5 @@ MonoBehaviour:
     enemyToSpawn: []
   spawnAreaSize: {x: 10, y: 10}
   spawnYPosition: 0
+  _timer: 0
+  _spawn: 0

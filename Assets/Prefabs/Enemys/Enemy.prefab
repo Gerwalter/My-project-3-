@@ -949,11 +949,11 @@ Transform:
   m_GameObject: {fileID: 3117083160148259562}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.35, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6505251301138190515}
+  m_Father: {fileID: 7588592044656132356}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3146207705555273072
 GameObject:
@@ -1084,7 +1084,6 @@ Transform:
   - {fileID: 3523148778769796141}
   - {fileID: 1131512545145001101}
   - {fileID: 8274401716301354938}
-  - {fileID: 1085586048006099824}
   m_Father: {fileID: 5685370661888176606}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3647214608009099456
@@ -2352,6 +2351,7 @@ MonoBehaviour:
   _shieldDist: 5
   _shootDist: 5
   _speed: 2
+  _canStart: 0
   _nodeManager: {fileID: 0}
   _animator: {fileID: 9184416210414114211}
   _target: {fileID: 0}
@@ -2368,7 +2368,7 @@ MonoBehaviour:
   _atkMask:
     serializedVersion: 2
     m_Bits: 8
-  _atkDmg: 20
+  _atkDmg: 1
 --- !u!114 &3773987790442223228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2602,6 +2602,7 @@ Transform:
   m_Children:
   - {fileID: 6010482795845014980}
   - {fileID: 8002890479085984720}
+  - {fileID: 1085586048006099824}
   - {fileID: 4291082972392814866}
   m_Father: {fileID: 3026621932215622796}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

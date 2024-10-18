@@ -125,6 +125,10 @@ public class Player : HP
             {
                 intObj.OnInteract();
             }
+            else
+            {
+                return;
+            }
         }
     }
 
