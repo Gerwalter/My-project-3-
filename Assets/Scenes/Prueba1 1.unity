@@ -782,6 +782,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8630724509985047641, guid: 0487c03122a108e408343f783f7fa3e8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 857452296}
+    - targetCorrespondingSourceObject: {fileID: 8630724509985047641, guid: 0487c03122a108e408343f783f7fa3e8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 857452297}
   m_SourcePrefab: {fileID: 100100000, guid: 0487c03122a108e408343f783f7fa3e8, type: 3}
 --- !u!1 &755211673 stripped
 GameObject:
@@ -800,7 +803,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 857452286}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b5302109c1fe6d0458f9b1c2740666bb, type: 3}
   m_Name: 
@@ -811,6 +814,28 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5e4825562c775324ea0feb63eec05406, type: 2}
   - {fileID: 11400000, guid: be1bfded3a0a4ef40ab933515cfd6c21, type: 2}
   - {fileID: 11400000, guid: 9cf738ee54cadc848b193a08086e6e16, type: 2}
+--- !u!114 &857452297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 857452286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0db911059123094ab96cdae5c62a5ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comboSequences:
+  - sequence: 01000000010000000100000001000000010000000100000001000000
+    comboName: String1
+    waitTimeBeforeNextInput: 0
+  - sequence: 020000000300000001000000
+    comboName: String2
+    waitTimeBeforeNextInput: 0
+  inputWindowTime: 1
+  additionalTimePerInput: 0.5
+  inputDisplay: {fileID: 1255123341}
 --- !u!1 &881576544
 GameObject:
   m_ObjectHideFlags: 0
