@@ -11,7 +11,8 @@ Material:
   m_Shader: {fileID: -6465566751694194690, guid: f41a1adea6bbead4eacc89d1ece8896c, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _OVERLAY
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -37,9 +38,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DepthInt: 0
+    - _DepthInt: 0.95
     - _Fullscreen_DepthWrite: 0
-    - _NormalThr: 2.2
+    - _NormalThr: 1.9
+    - _OVERLAY: 1
     - _OutlineThc: 0
     m_Colors:
     - _OutlineClr: {r: 0, g: 0, b: 0, a: 0}

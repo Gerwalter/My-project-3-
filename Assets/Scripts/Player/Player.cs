@@ -147,7 +147,7 @@ public class Player : HP
 
         Rotate(_camForwardFix);
 
-        _dirFix = (_camRightFix * dir.x + _camForwardFix * dir.z);
+        _dirFix = (_camRightFix * dir.x + _camForwardFix * dir.z).normalized;
 
         _rb.MovePosition(transform.position + _dirFix * _movSpeed * Time.fixedDeltaTime);
 

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.4490351, g: 0.49910313, b: 0.5757124, a: 1}
+  m_IndirectSpecularColor: {r: 0.44901615, g: 0.49908, b: 0.5757126, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -24494,42 +24494,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2832780455359106178, guid: 0487c03122a108e408343f783f7fa3e8, type: 3}
-      propertyPath: _spawn
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2832780455359106178, guid: 0487c03122a108e408343f783f7fa3e8, type: 3}
-      propertyPath: spawnYPosition
-      value: 0.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 2832780455359106178, guid: 0487c03122a108e408343f783f7fa3e8, type: 3}
-      propertyPath: spawnAreaSize.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2832780455359106178, guid: 0487c03122a108e408343f783f7fa3e8, type: 3}
-      propertyPath: spawnAreaSize.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2832780455359106178, guid: 0487c03122a108e408343f783f7fa3e8, type: 3}
-      propertyPath: normalEnemyWave.enemyToSpawn.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2832780455359106178, guid: 0487c03122a108e408343f783f7fa3e8, type: 3}
-      propertyPath: normalEnemyWave.enemyToSpawn.Array.data[0]
-      value: 
-      objectReference: {fileID: 7715154201322672574, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
-    - target: {fileID: 2832780455359106178, guid: 0487c03122a108e408343f783f7fa3e8, type: 3}
-      propertyPath: normalEnemyWave.enemyToSpawn.Array.data[1]
-      value: 
-      objectReference: {fileID: 7715154201322672574, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
-    - target: {fileID: 2832780455359106178, guid: 0487c03122a108e408343f783f7fa3e8, type: 3}
-      propertyPath: normalEnemyWave.enemyToSpawn.Array.data[2]
-      value: 
-      objectReference: {fileID: 7715154201322672574, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
     - target: {fileID: 3740255682162777912, guid: 0487c03122a108e408343f783f7fa3e8, type: 3}
-      propertyPath: videoPlayer
+      propertyPath: outline
       value: 
-      objectReference: {fileID: 513457964}
+      objectReference: {fileID: 2100000, guid: 92abfbd8eee84494bbec71aecadfd098, type: 2}
+    - target: {fileID: 3740255682162777912, guid: 0487c03122a108e408343f783f7fa3e8, type: 3}
+      propertyPath: videoClip
+      value: 
+      objectReference: {fileID: 32900000, guid: d8ae6e8ac1d54044db6c19e5f21473bc, type: 3}
     - target: {fileID: 3740255682162777912, guid: 0487c03122a108e408343f783f7fa3e8, type: 3}
       propertyPath: vignetteSlider
       value: 
