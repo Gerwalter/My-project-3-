@@ -34,6 +34,15 @@ public class Player : HP
     [SerializeField] private LayerMask _movMask;
     [SerializeField] private float _movSpeed = 3.5f;
 
+
+    [Header("<color=yellow>Attack</color>")]
+    [SerializeField] private Transform _atkOrigin;
+    [SerializeField] private float _atkRayDist = 1.0f;
+    [SerializeField] private LayerMask _atkMask;
+    [SerializeField] private int _atkDmg = 20;
+    private Ray _atkRay;
+    private RaycastHit _atkHit;
+
     public Vector3 _camForwardFix = new(), _camRightFix = new(), _dir = new(), _jumpOffset = new(), _movRayDir = new();
     private Vector3 _dirFix = new();
 
@@ -132,6 +141,20 @@ public class Player : HP
         }
     }
 
+    public void Attack()
+    {
+
+        _atkRay = new Ray(_atkOrigin.position, transform.forward);
+
+        if (Physics.Raycast(_atkRay, out _atkHit, _atkRayDist, _atkMask))
+        {
+            if (_atkHit.collider.TryGetComponent<Enemy>(out Enemy enemy))
+            {
+                enemy.ReciveDamage(_atkDmg);
+            }
+        }
+    }
+
     private void Jump()
     {
         _rb.AddForce(transform.up * _jumpForce, ForceMode.Impulse);
@@ -184,8 +207,16 @@ public class Player : HP
 
         Gizmos.color = Color.blue;
         Gizmos.DrawRay(_intRay);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(_atkRay);
     }
 
+    public void Cast()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+            _anim.SetTrigger("Cast");
+    }
 
     [SerializeField] private GameObject gameObje;
     [SerializeField] private Lock Handle;

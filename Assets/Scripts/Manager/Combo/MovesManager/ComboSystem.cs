@@ -28,6 +28,9 @@ public class ComboSystem : MonoBehaviour
     // Referencia a TextMeshProUGUI para mostrar los inputs en pantalla
     public TextMeshProUGUI inputDisplay;
 
+    // Referencia al Animator
+    public Animator animator;
+
     void Start()
     {
         UpdateInputDisplay();
@@ -52,10 +55,12 @@ public class ComboSystem : MonoBehaviour
         if (Input.GetMouseButtonDown(0)) // Mouse0 para Light Attack
         {
             RegisterInput(ComboInput.LightAttack);
+            animator.SetTrigger("LightAttack");  // Disparar el trigger LightAttack en el Animator
         }
         if (Input.GetMouseButtonDown(1)) // Mouse1 para Heavy Attack
         {
             RegisterInput(ComboInput.HeavyAttack);
+            animator.SetTrigger("HeavyAttack"); // Disparar el trigger HeavyAttack en el Animator
         }
     }
 
@@ -130,9 +135,9 @@ public class ComboSystem : MonoBehaviour
     // Método para resetear el combo y la ventana de tiempo
     void ResetCombo()
     {
-        currentCombo.Clear();      
-        isWaitingForInput = false; 
-        inputWindowTimer = 0f;    
+        currentCombo.Clear();      // Limpiamos la lista de inputs
+        isWaitingForInput = false; // Detenemos la ventana de espera de inputs
+        inputWindowTimer = 0f;     // Reiniciamos el temporizador
         UpdateInputDisplay();
     }
 
