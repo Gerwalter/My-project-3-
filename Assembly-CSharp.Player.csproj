@@ -58,80 +58,106 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.5f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Water.cs" />
+    <Compile Include="Assets\Scripts\Enemy-Obstacle\Crate.cs" />
+    <Compile Include="Assets\Scripts\Manager\Combo\PlayerController.cs" />
+    <Compile Include="Assets\Portal.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
-    <Compile Include="Assets\Scripts\IDamagable.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
+    <Compile Include="Assets\Scripts\DamageController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\Scripts\HP.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\IInteract.cs" />
     <Compile Include="Assets\Scripts\Movement\AnimationScript.cs" />
+    <Compile Include="Assets\Scripts\Enemy-Obstacle\Water.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
     <Compile Include="Assets\Scripts\other scripts to take info\PlayerInputs.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
+    <Compile Include="Assets\Scripts\Enemy-Obstacle\SpecificScript.cs" />
+    <Compile Include="Assets\Scripts\AppleController.cs" />
+    <Compile Include="Assets\Scripts\Bridge.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
+    <Compile Include="Assets\Scripts\Player\CameraController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
-    <Compile Include="Assets\Scenes\Enemy2.cs" />
-    <Compile Include="Assets\Scripts\Movement\MoveCamera.cs" />
-    <Compile Include="Assets\Scripts\DashCooldownUI.cs" />
-    <Compile Include="Assets\Scripts\VideoPlayerScript.cs" />
-    <Compile Include="Assets\secretoConfidencias-tradeForShaders\CamDistance.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\IDamagable.cs" />
+    <Compile Include="Assets\Scripts\Enemy-Obstacle\Entity.cs" />
+    <Compile Include="Assets\Scripts\Bullet.cs" />
+    <Compile Include="Assets\Scripts\Player\ElementalType.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
+    <Compile Include="Assets\Scripts\Lock.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
-    <Compile Include="Assets\Scenes\GameManager.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
-    <Compile Include="Assets\Scripts\MeleeWeapon.cs" />
+    <Compile Include="Assets\Scripts\Manager\OutlineManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
-    <Compile Include="Assets\Scripts\Movement\Movement.cs" />
+    <Compile Include="Assets\Art\VideoShader.cs" />
+    <Compile Include="Assets\Scripts\MenuCameraLocker.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
+    <Compile Include="Assets\Scripts\Manager\Combo\MovesManager\MovesEnum.cs" />
+    <Compile Include="Assets\Texturee.cs" />
+    <Compile Include="Assets\Scripts\Player\DashCooldownUI.cs" />
+    <Compile Include="Assets\Scripts\Manager\LevelManager.cs" />
+    <Compile Include="Assets\Scripts\other scripts to take info\SlotMachine.cs" />
+    <Compile Include="Assets\Scripts\Manager\GameManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
+    <Compile Include="Assets\Scripts\other scripts to take info\ButtonBehaviour.cs" />
     <Compile Include="Assets\Scripts\other scripts to take info\PlayerMovement.cs" />
-    <Compile Include="Assets\Scripts\ElementalType.cs" />
+    <Compile Include="Assets\Scripts\Manager\IANodeManager.cs" />
     <Compile Include="Assets\Scripts\other scripts to take info\ThirdPersonCamera.cs" />
-    <Compile Include="Assets\Scripts\CanvasManager.cs" />
+    <Compile Include="Assets\Scripts\Player\Respawn.cs" />
+    <Compile Include="Assets\Scripts\Manager\Combo\MovesManager\Move.cs" />
     <Compile Include="Assets\Scripts\Movement\TargetMove.cs" />
-    <Compile Include="Assets\Scripts\Entity.cs" />
-    <Compile Include="Assets\Scripts\Respawn.cs" />
-    <Compile Include="Assets\Scripts\SurfaceReference.cs" />
+    <Compile Include="Assets\Scripts\Enemy-Obstacle\Spikes.cs" />
+    <Compile Include="Assets\Scripts\BadApple.cs" />
+    <Compile Include="Assets\Scripts\Enemy-Obstacle\SecurityCamera.cs" />
+    <Compile Include="Assets\Scripts\Manager\FullScreenManager.cs" />
+    <Compile Include="Assets\Scripts\Player\CameraPointer.cs" />
+    <Compile Include="Assets\Scripts\Manager\Combo\MovesManager\ComboSystem.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
-    <Compile Include="Assets\Scripts\Enemy.cs" />
+    <Compile Include="Assets\Scripts\Enemy-Obstacle\Enemy.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
-    <Compile Include="Assets\Scripts\SwordAnim.cs" />
-    <Compile Include="Assets\Scripts\IANodeManager.cs" />
+    <Compile Include="Assets\Scripts\PPMenu.cs" />
+    <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
-    <Compile Include="Assets\Scripts\Movement\Jump.cs" />
+    <Compile Include="Assets\Scripts\Manager\CanvasManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
-    <Compile Include="Assets\Scripts\FadingPlatform.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
+    <Compile Include="Assets\Scripts\Manager\Combo\ControlManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
-    <Compile Include="Assets\Scripts\CameraLocker.cs" />
-    <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
+    <Compile Include="Assets\Scripts\Apple.cs" />
+    <Compile Include="Assets\Scripts\CanvasMenu.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
-    <Compile Include="Assets\secretoConfidencias-tradeForShaders\CamRotation.cs" />
+    <Compile Include="Assets\Scripts\Manager\WaveManager.cs" />
+    <Compile Include="Assets\Scripts\other scripts to take info\BridgeButton.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
-    <Compile Include="Assets\Scripts\Weapon.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
-    <Compile Include="Assets\secretoConfidencias-tradeForShaders\Cam.cs" />
-    <Compile Include="Assets\Scripts\Movement\CameraPointer.cs" />
+    <Compile Include="Assets\Scripts\Enemy-Obstacle\Tornado.cs" />
+    <Compile Include="Assets\Scripts\EnemyAvatar.cs" />
+    <Compile Include="Assets\Scripts\Manager\TestManager.cs" />
+    <Compile Include="Assets\Scripts\IA\FadingPlatform.cs" />
+    <Compile Include="Assets\Scripts\Manager\SFXManager.cs" />
+    <Compile Include="Assets\Scripts\IA\SurfaceReference.cs" />
+    <Compile Include="Assets\Scripts\RotateObject.cs" />
+    <Compile Include="Assets\Scripts\Movement\Dash.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
-    <Compile Include="Assets\Scripts\SpecificScript.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
+    <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Oswald-Bold - OFL.txt" />
     <None Include="Assets\Cositas\Videos.txt" />
+    <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Anton OFL.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
@@ -144,12 +170,14 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+    <None Include="Assets\Art\Shaders\Halftone\Lighting.hlsl" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
+    <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Bangers - OFL.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -724,10 +752,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.Player.csproj">
-      <Project>{71278AE5-2B4E-61B4-F980-D82C28E4F71C}</Project>
-      <Name>Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.Player</Name>
-    </ProjectReference>
     <ProjectReference Include="Unity.VisualEffectGraph.Runtime.Player.csproj">
       <Project>{FFDE65AD-3B05-F295-8195-F0F96D62E359}</Project>
       <Name>Unity.VisualEffectGraph.Runtime.Player</Name>
@@ -736,13 +760,33 @@
       <Project>{E2014010-119A-41C7-4AD4-75A4FBE6354A}</Project>
       <Name>Unity.RenderPipelines.Core.Runtime.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.RenderPipelines.Universal.Runtime.Player.csproj">
-      <Project>{E18B0187-0C58-9AC2-75F7-439E8CF143E2}</Project>
-      <Name>Unity.RenderPipelines.Universal.Runtime.Player</Name>
-    </ProjectReference>
     <ProjectReference Include="Unity.AI.Navigation.Player.csproj">
       <Project>{E08BD408-40F9-F49A-55D8-7ED09560E907}</Project>
       <Name>Unity.AI.Navigation.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.VisualScripting.Flow.Player.csproj">
+      <Project>{ACCB82E1-1488-681B-2FA1-E2AD6EAA0018}</Project>
+      <Name>Unity.VisualScripting.Flow.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.RenderPipelines.Core.ShaderLibrary.Player.csproj">
+      <Project>{5D96F1BC-117C-DF83-CB0E-0BF8576E8C97}</Project>
+      <Name>Unity.RenderPipelines.Core.ShaderLibrary.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.TextMeshPro.Player.csproj">
+      <Project>{0BBFB437-6EAF-722C-7ADF-C4A6573143C4}</Project>
+      <Name>Unity.TextMeshPro.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="Polyperfect.Universal.Player.csproj">
+      <Project>{71CB3E9D-7DA5-B9BE-9C34-5BCDC0D6C845}</Project>
+      <Name>Polyperfect.Universal.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.Player.csproj">
+      <Project>{71278AE5-2B4E-61B4-F980-D82C28E4F71C}</Project>
+      <Name>Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.RenderPipelines.Universal.Runtime.Player.csproj">
+      <Project>{E18B0187-0C58-9AC2-75F7-439E8CF143E2}</Project>
+      <Name>Unity.RenderPipelines.Universal.Runtime.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.Burst.Player.csproj">
       <Project>{910210DE-5071-4C28-E071-D218A0EC9A1A}</Project>
@@ -764,25 +808,13 @@
       <Project>{F708583E-CD84-D215-12EE-1253DC8D3A10}</Project>
       <Name>Unity.RenderPipeline.Universal.ShaderLibrary.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.VisualScripting.Flow.Player.csproj">
-      <Project>{ACCB82E1-1488-681B-2FA1-E2AD6EAA0018}</Project>
-      <Name>Unity.VisualScripting.Flow.Player</Name>
-    </ProjectReference>
     <ProjectReference Include="Unity.Timeline.Player.csproj">
       <Project>{376F8526-696C-0CAE-016A-FDA1D040A658}</Project>
       <Name>Unity.Timeline.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.RenderPipelines.Core.ShaderLibrary.Player.csproj">
-      <Project>{5D96F1BC-117C-DF83-CB0E-0BF8576E8C97}</Project>
-      <Name>Unity.RenderPipelines.Core.ShaderLibrary.Player</Name>
-    </ProjectReference>
     <ProjectReference Include="Unity.Mathematics.Player.csproj">
       <Project>{DFE0FDC9-97C3-E089-8417-2EB5024C7590}</Project>
       <Name>Unity.Mathematics.Player</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.TextMeshPro.Player.csproj">
-      <Project>{0BBFB437-6EAF-722C-7ADF-C4A6573143C4}</Project>
-      <Name>Unity.TextMeshPro.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.RenderPipelines.Universal.Shaders.Player.csproj">
       <Project>{3477A341-2BAF-D3E6-F48F-19D56B9CF2DD}</Project>
