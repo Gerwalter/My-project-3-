@@ -16,12 +16,14 @@ public class AnimationScript : MonoBehaviour
 
     private void Cast()
     {
-        _player.Cast();
+        if (Input.GetKeyDown(KeyCode.E))
+            anim.SetTrigger("Cast");
     }
 
     public void CastEnd()
     {
-        anim.SetTrigger("Cast");
+
+        anim.ResetTrigger("Cast");
     }
 
     public void SwordReveal()

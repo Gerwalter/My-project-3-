@@ -31,13 +31,20 @@ public class ComboSystem : MonoBehaviour
     // Referencia al Animator
     public Animator animator;
 
+    // Referencia al script CameraController
+    public CameraController cameraController;
+
     void Start()
     {
+        // Inicializar el Animator
         UpdateInputDisplay();
     }
 
     void Update()
     {
+        // Verificar si la cámara está fija. Si está fija, no hacer nada
+        if (cameraController.IsCameraFixed) return;
+
         // Si hay inputs en progreso, inicia el temporizador
         if (isWaitingForInput)
         {
@@ -55,12 +62,12 @@ public class ComboSystem : MonoBehaviour
         if (Input.GetMouseButtonDown(0)) // Mouse0 para Light Attack
         {
             RegisterInput(ComboInput.LightAttack);
-            animator.SetTrigger("LightAttack");  // Disparar el trigger LightAttack en el Animator
+            TriggerAnimator("LightAttack");  // Disparar el trigger LightAttack en el Animator
         }
         if (Input.GetMouseButtonDown(1)) // Mouse1 para Heavy Attack
         {
             RegisterInput(ComboInput.HeavyAttack);
-            animator.SetTrigger("HeavyAttack"); // Disparar el trigger HeavyAttack en el Animator
+            TriggerAnimator("HeavyAttack"); // Disparar el trigger HeavyAttack en el Animator
         }
     }
 
@@ -158,6 +165,15 @@ public class ComboSystem : MonoBehaviour
                     inputDisplay.text += input.ToString() + " ";
                 }
             }
+        }
+    }
+
+    // Método para disparar triggers en el Animator
+    void TriggerAnimator(string triggerName)
+    {
+        if (animator != null)
+        {
+            animator.SetTrigger(triggerName); // Disparar el trigger
         }
     }
 }

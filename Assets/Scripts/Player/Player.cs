@@ -214,7 +214,6 @@ public class Player : HP
 
     public void Cast()
     {
-        if (Input.GetKeyDown(KeyCode.E))
             _anim.SetTrigger("Cast");
     }
 

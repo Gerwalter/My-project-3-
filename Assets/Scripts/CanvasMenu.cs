@@ -7,6 +7,7 @@ public class CanvasMenu : ButtonBehaviour
     public GameObject menu;
     public MenuCameraLocker Lock;
 
+
     public override void OnInteract()
     {
         menu.SetActive(true);
@@ -14,12 +15,6 @@ public class CanvasMenu : ButtonBehaviour
         {
             // Alternamos el estado de IsCameraFixed
             Lock.LockCamera();
-
         }
     }   
-
-    private void Update()
-    {
-
-    }
 }

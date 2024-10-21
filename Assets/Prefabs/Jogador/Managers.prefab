@@ -85,6 +85,7 @@ GameObject:
   - component: {fileID: 7295938850444405045}
   - component: {fileID: 2832780455359106178}
   - component: {fileID: 1995751719782077969}
+  - component: {fileID: 5732126571711882444}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -169,7 +170,7 @@ MonoBehaviour:
   videoPlayer: {fileID: 2929363658912932181}
   vignetteSlider: {fileID: 0}
   shaderTexturePropertyName: _MainTex
-  videoClip: {fileID: 32900000, guid: c4992a386006d274ea38b97a0d4c7a56, type: 3}
+  videoClip: {fileID: 32900000, guid: d8ae6e8ac1d54044db6c19e5f21473bc, type: 3}
   outline: {fileID: 2100000, guid: 92abfbd8eee84494bbec71aecadfd098, type: 2}
 --- !u!114 &4517212949649958928
 MonoBehaviour:
@@ -274,3 +275,19 @@ MonoBehaviour:
   maxInputs: 7
   inputDisplay: {fileID: 0}
   animator: {fileID: 0}
+  cameraController: {fileID: 0}
+--- !u!114 &5732126571711882444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8630724509985047641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c704902db1742e459c9ef9202029f8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material1: {fileID: 2100000, guid: 8e81909cefa8ad544a74a7ecc5ea00ab, type: 2}
+  material2: {fileID: 2100000, guid: 92abfbd8eee84494bbec71aecadfd098, type: 2}
+  material3: {fileID: 2100000, guid: 569a0e44fe2415b41ba1f38a6d7e42c9, type: 2}
