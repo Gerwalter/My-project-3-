@@ -84,6 +84,7 @@ GameObject:
   - component: {fileID: 4517212949649958928}
   - component: {fileID: 7295938850444405045}
   - component: {fileID: 2832780455359106178}
+  - component: {fileID: 1995751719782077969}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -169,7 +170,7 @@ MonoBehaviour:
   vignetteSlider: {fileID: 0}
   shaderTexturePropertyName: _MainTex
   videoClip: {fileID: 32900000, guid: c4992a386006d274ea38b97a0d4c7a56, type: 3}
-  outline: {fileID: 2100000, guid: 9026aee468ea3e5418003dc011c7942b, type: 2}
+  outline: {fileID: 2100000, guid: 92abfbd8eee84494bbec71aecadfd098, type: 2}
 --- !u!114 &4517212949649958928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,8 +212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   normalEnemyWave:
-    enemyToSpawn:
-    - {fileID: 7715154201322672574, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
+    enemyToSpawn: []
   heavyEnemyWave:
     enemyToSpawn: []
   ligthEnemyWave:
@@ -222,4 +222,55 @@ MonoBehaviour:
   spawnAreaSize: {x: 1, y: 1}
   spawnYPosition: 0.02
   _timer: 0
-  _spawn: 2
+  _spawn: 1
+--- !u!114 &1995751719782077969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8630724509985047641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0db911059123094ab96cdae5c62a5ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comboSequences:
+  - sequence: 01000000
+    comboName: LightAttack1
+    waitTimeBeforeNextInput: 0
+  - sequence: 0100000001000000
+    comboName: LightAttack2
+    waitTimeBeforeNextInput: 0
+  - sequence: 010000000100000001000000
+    comboName: LightAttack3
+    waitTimeBeforeNextInput: 0
+  - sequence: 01000000010000000100000001000000
+    comboName: LightAttack4
+    waitTimeBeforeNextInput: 0
+  - sequence: 0100000001000000010000000100000001000000
+    comboName: LightAttack5
+    waitTimeBeforeNextInput: 0
+  - sequence: 010000000100000001000000010000000100000001000000
+    comboName: LightAttack6
+    waitTimeBeforeNextInput: 0
+  - sequence: 01000000010000000100000001000000010000000100000001000000
+    comboName: LightAttack7
+    waitTimeBeforeNextInput: 0
+  - sequence: 02000000
+    comboName: HeavyAttack1
+    waitTimeBeforeNextInput: 0
+  - sequence: 0200000002000000
+    comboName: HeavyAttack2
+    waitTimeBeforeNextInput: 0
+  - sequence: 020000000200000002000000
+    comboName: HeavyAttack3
+    waitTimeBeforeNextInput: 0
+  - sequence: 02000000020000000200000002000000
+    comboName: HeavyAttack4
+    waitTimeBeforeNextInput: 0
+  inputWindowTime: 1
+  additionalTimePerInput: 0.5
+  maxInputs: 7
+  inputDisplay: {fileID: 0}
+  animator: {fileID: 0}

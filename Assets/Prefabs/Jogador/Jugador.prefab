@@ -1359,7 +1359,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6506995220590255095}
   m_Layer: 3
-  m_Name: GameObject
+  m_Name: AtkOrig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1526,6 +1526,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   _movSpeed: 8
+  _atkOrigin: {fileID: 6506995220590255095}
+  _atkRayDist: 2
+  _atkMask:
+    serializedVersion: 2
+    m_Bits: 64
+  _atkDmg: 20
   _camForwardFix: {x: 0, y: 0, z: 0}
   _camRightFix: {x: 0, y: 0, z: 0}
   _dir: {x: 0, y: 0, z: 0}
@@ -1981,21 +1987,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 1428765734925002639}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  NoAttack: 0
   _player: {fileID: 7820170254265499701}
   sword: {fileID: 2293710449332166645}
-  isGrounded: 0
-  _atkOrigin: {fileID: 6506995220590255095}
-  _atkRayDist: 1.5
-  _atkMask:
-    serializedVersion: 2
-    m_Bits: 64
-  _atkDmg: 2
   isFighting: 0
-  attackTimeout: 2
 --- !u!1 &5777021231417503219
 GameObject:
   m_ObjectHideFlags: 0
