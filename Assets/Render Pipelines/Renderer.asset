@@ -75,7 +75,8 @@ MonoBehaviour:
   - {fileID: -4723091298262373182}
   - {fileID: 7875373182173595589}
   - {fileID: 1825665956867524235}
-  m_RendererFeatureMap: 7664637779bddf0efaa2c061ba8b7a1155f1f7c9c55c16f9d73ed5388b47da1ac22c55fd7c3574bec54718052ff24a6d8bc69cd583115619
+  - {fileID: 8139962268953231008}
+  m_RendererFeatureMap: 7664637779bddf0efaa2c061ba8b7a1155f1f7c9c55c16f9d73ed5388b47da1ac22c55fd7c3574bec54718052ff24a6d8bc69cd583115619a03e0a668ef4f670
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -126,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d613f08f173d4dd895bb07b3230baa9, type: 3}
   m_Name: Green
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   passMaterial: {fileID: 2100000, guid: 8e81909cefa8ad544a74a7ecc5ea00ab, type: 2}
   injectionPoint: 600
   requirements: 4
@@ -196,6 +197,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Active: 0
   passMaterial: {fileID: 2100000, guid: fa36deefbf95a1f4db15c47492c4a4b5, type: 2}
+  injectionPoint: 600
+  requirements: 4
+  passIndex: 0
+--- !u!114 &8139962268953231008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d613f08f173d4dd895bb07b3230baa9, type: 3}
+  m_Name: FullScreenPassRendererFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  passMaterial: {fileID: 2100000, guid: 357c2bbdeaa3136438e5a9796d0fe3a2, type: 2}
   injectionPoint: 600
   requirements: 4
   passIndex: 0
