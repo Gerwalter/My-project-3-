@@ -28,9 +28,13 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Ray _camRay;
     [SerializeField] private RaycastHit _camRayHit;
 
+    [Header("<color=#6A89A7>Layer Settings</color>")]
+    [SerializeField] private LayerMask _ignoreLayerMask; // LayerMask to ignore specific layers
+
     private void Awake()
     {
-
+        // Set the LayerMask to ignore the Player layer
+        _ignoreLayerMask = LayerMask.GetMask("Player");
     }
 
     private void Start()
@@ -65,7 +69,8 @@ public class CameraController : MonoBehaviour
     {
         _camRay = new Ray(transform.position, _dir);
 
-        _isCamBlocked = Physics.SphereCast(_camRay, _detectionRadius, out _camRayHit, _maxDistance);
+        // Use the ignoreLayerMask to filter out the Player layer
+        _isCamBlocked = Physics.SphereCast(_camRay, _detectionRadius, out _camRayHit, _maxDistance, ~_ignoreLayerMask);
     }
 
     private void LateUpdate()

@@ -12,7 +12,6 @@ public enum EnemyType
     BOSS
 }
 
-
 [RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : Entity
 {
@@ -55,7 +54,10 @@ public class Enemy : Entity
     }
     private void Start()
     {
-
+        if (_target == null)
+        {
+            Initialize();
+        }
         GetLife = maxLife;
         _agent = GetComponent<NavMeshAgent>();
 
@@ -66,7 +68,7 @@ public class Enemy : Entity
         GameManager.Instance.Enemies.Add(this);
 
         StartCoroutine(WaitOneFrame());
-       
+
     }
     private IEnumerator WaitOneFrame()
     {
@@ -75,12 +77,14 @@ public class Enemy : Entity
             yield return null; // Espera un frame
         }
         _canStart = true;
-        Finalizer();
+        if (_enableRoam)
+        {
+            Finalizer();
+        }
     }
     public void Initialize()
     {
         _target = GameManager.Instance.Player.gameObject.transform;
-        
     }
 
     public void Finalizer()
@@ -99,48 +103,73 @@ public class Enemy : Entity
         healthBar.color = Color.Lerp(Color.red, Color.green, lifePercent);
     }
 
+    [SerializeField] private bool _enableRoam = true;
     private void FixedUpdate()
     {
         UpdateHealthBar();
 
         if (!_canStart) return; // Espera hasta que se haya habilitado
 
-        if (!_target)
+        if (_enableRoam) // Verifica si se debe ejecutar la lógica de Roam
         {
-            Debug.LogError($"<color=red>NullReferenceException</color>: No asignaste un objetivo, boludo.");
-            return;
-        }
-
-        _animator.SetBool("isMoving", true);
-
-        if (Vector3.SqrMagnitude(transform.position - _target.position) <= (_chaseDist * _chaseDist))
-        {
-            if (Vector3.SqrMagnitude(transform.position - _target.position) <= (_atkDist * _atkDist))
+            if (!_target)
             {
-                if (!_agent.isStopped) _agent.isStopped = true;
+                Debug.LogError($"<color=red>NullReferenceException</color>: No asignaste un objetivo, boludo.");
+                return;
+            }
 
-                _animator.SetBool("isMoving", false);
-                _animator.SetTrigger("Punch");
+            _animator.SetBool("isMoving", true);
+
+            if (Vector3.SqrMagnitude(transform.position - _target.position) <= (_chaseDist * _chaseDist))
+            {
+                if (Vector3.SqrMagnitude(transform.position - _target.position) <= (_atkDist * _atkDist))
+                {
+                    if (!_agent.isStopped) _agent.isStopped = true;
+
+                    _animator.SetBool("isMoving", false);
+                    _animator.SetTrigger("Punch");
+                }
+                else
+                {
+                    if (_agent.isStopped) _agent.isStopped = false;
+
+                    _animator.SetBool("isMoving", true);
+                    _animator.ResetTrigger("Punch");
+
+                    _agent.SetDestination(_target.position);
+                }
             }
             else
             {
-                if (_agent.isStopped) _agent.isStopped = false;
+                if (_agent.destination != _actualNode.position) _agent.SetDestination(_actualNode.position);
 
-                _animator.SetBool("isMoving", true);
-                _animator.ResetTrigger("Punch");
-
-                _agent.SetDestination(_target.position);
+                if (Vector3.SqrMagnitude(transform.position - _actualNode.position) <= (_changeNodeDist * _changeNodeDist))
+                {
+                    _actualNode = GetNewNode();
+                    _agent.SetDestination(_actualNode.position);
+                }
             }
         }
         else
         {
-            if (_agent.destination != _actualNode.position) _agent.SetDestination(_actualNode.position);
-
-            if (Vector3.SqrMagnitude(transform.position - _actualNode.position) <= (_changeNodeDist * _changeNodeDist))
+            if (Vector3.SqrMagnitude(transform.position - _target.position) <= (_chaseDist * _chaseDist))
             {
-                _actualNode = GetNewNode();
+                if (Vector3.SqrMagnitude(transform.position - _target.position) <= (_atkDist * _atkDist))
+                {
+                    if (!_agent.isStopped) _agent.isStopped = true;
 
-                _agent.SetDestination(_actualNode.position);
+                    _animator.SetBool("isMoving", false);
+                    _animator.SetTrigger("Punch");
+                }
+                else
+                {
+                    if (_agent.isStopped) _agent.isStopped = false;
+
+                    _animator.SetBool("isMoving", true);
+                    _animator.ResetTrigger("Punch");
+
+                    _agent.SetDestination(_target.position);
+                }
             }
         }
 
@@ -225,16 +254,18 @@ public class Enemy : Entity
             }
         }
     }
-    void DeactivateShield()
-    {
-        _shieldInstance.SetActive(false);
-    }
+
 
     private Transform GetNewNode()
     {
         Transform newNode = _navMeshNodes[Random.Range(0, _navMeshNodes.Count)];
 
         return newNode;
+    }
+    
+    void DeactivateShield()
+    {
+        _shieldInstance.SetActive(false);
     }
 
     private Enemy FindAllyToHeal()

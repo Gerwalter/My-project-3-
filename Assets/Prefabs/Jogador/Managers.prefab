@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3692490499772223759
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 977567382580314072}
+  m_Layer: 0
+  m_Name: Spawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &977567382580314072
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3692490499772223759}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -11.54, z: 10.89}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6864792825799170854}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5926788452949079018
 GameObject:
   m_ObjectHideFlags: 0
@@ -107,6 +138,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 569788588209047712}
+  - {fileID: 977567382580314072}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4281948245498954199
@@ -213,17 +245,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   normalEnemyWave:
-    enemyToSpawn: []
+    enemyToSpawn:
+    - {fileID: 7715154201322672574, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
+    - {fileID: 7715154201322672574, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
   heavyEnemyWave:
-    enemyToSpawn: []
+    enemyToSpawn:
+    - {fileID: 7715154201322672574, guid: 10b06914fdbd39f4e8e523e91b3e20f8, type: 3}
+    - {fileID: 7715154201322672574, guid: 10b06914fdbd39f4e8e523e91b3e20f8, type: 3}
   ligthEnemyWave:
-    enemyToSpawn: []
+    enemyToSpawn:
+    - {fileID: 7715154201322672574, guid: 66ed75e3d5a7a654a810a467873ebbf2, type: 3}
+    - {fileID: 7715154201322672574, guid: 66ed75e3d5a7a654a810a467873ebbf2, type: 3}
   bossEnemyWave:
     enemyToSpawn: []
-  spawnAreaSize: {x: 1, y: 1}
-  spawnYPosition: 0.02
+  spawnPoints:
+  - {fileID: 977567382580314072}
   _timer: 0
-  _spawn: 1
+  _spawn: 4
 --- !u!114 &1995751719782077969
 MonoBehaviour:
   m_ObjectHideFlags: 0

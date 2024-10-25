@@ -22,11 +22,9 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private EnemyWaveData bossEnemyWave;
 
     [Header("Spawn Area Settings")]
-    [SerializeField] private Vector2 spawnAreaSize = new Vector2(10f, 10f);
-    [SerializeField] private float spawnYPosition = 0f;
+    [SerializeField] private List<Transform> spawnPoints; // Lista de puntos de spawn
 
     private Dictionary<EnemyType, LootData> _enemyLoot = new Dictionary<EnemyType, LootData>();
-
     public static WaveManager Instance;
 
     private Queue<EnemyWaveData> _spawnOrder = new Queue<EnemyWaveData>();
@@ -46,29 +44,13 @@ public class WaveManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(this);
 
-        _enemyLoot.Add(EnemyType.MELEE, new LootData { gold = 30, xp = 10 });
-
-        //Manera de ver si no existe esta key
-        if (!_enemyLoot.ContainsKey(EnemyType.MELEE))
-            _enemyLoot.Add(EnemyType.MELEE, new LootData { gold = 30, xp = 10 });
-
-        //Opcion automatica
-        _enemyLoot.TryAdd(EnemyType.MELEE, new LootData { gold = 30, xp = 10 });
-
+        // Agrega valores al diccionario de loot
+        _enemyLoot.Add(EnemyType.MELEE, new LootData { gold = 60, xp = 20 });
         _enemyLoot.Add(EnemyType.RANGE, new LootData { gold = 45, xp = 10 });
         _enemyLoot.Add(EnemyType.TANK, new LootData { gold = 25, xp = 40 });
         _enemyLoot.Add(EnemyType.BOSS, new LootData { gold = 100, xp = 100 });
 
-        //Sobreescribir value
-        _enemyLoot[EnemyType.MELEE] = new LootData { gold = 60, xp = 20 };
-
-        //Remover valor
-        //_enemyLoot.Remove(EnemyType.MELEE);
-
-        //Manera de limpiar el diccionario
-        //_enemyLoot.Clear();
-
-
+        // Añadir oleadas al orden de spawn
         _spawnOrder.Enqueue(normalEnemyWave);
         _spawnOrder.Enqueue(ligthEnemyWave);
         _spawnOrder.Enqueue(normalEnemyWave);
@@ -93,33 +75,32 @@ public class WaveManager : MonoBehaviour
             _timer = 0;
             var spawnData = _spawnOrder.Dequeue();
 
-            foreach (var item in spawnData.enemyToSpawn)
+            foreach (var enemy in spawnData.enemyToSpawn)
             {
-                Vector3 spawnPosition = GetRandomSpawnPosition();
+                Transform spawnPoint = GetRandomSpawnPoint();
 
-                // Instanciar el enemigo en la posición aleatoria
-                Instantiate(item, spawnPosition, Quaternion.identity);
+                // Instanciar el enemigo en la posición del punto de spawn
+                Instantiate(enemy, spawnPoint.position, Quaternion.identity);
             }
         }
     }
 
-    private Vector3 GetRandomSpawnPosition()
+    // Devuelve un punto de spawn aleatorio de la lista
+    private Transform GetRandomSpawnPoint()
     {
-        float randomX = UnityEngine.Random.Range(-spawnAreaSize.x / 2, spawnAreaSize.x / 2);
-        float randomZ = UnityEngine.Random.Range(-spawnAreaSize.y / 2, spawnAreaSize.y / 2);
-        return new Vector3(randomX, spawnYPosition, randomZ);
+        int randomIndex = UnityEngine.Random.Range(0, spawnPoints.Count);
+        return spawnPoints[randomIndex];
     }
 
     private void OnDrawGizmos()
     {
-        // Establecer el color del Gizmo (puedes cambiarlo según lo que prefieras)
         Gizmos.color = Color.green;
 
-        // Posición central del área de spawn
-        Vector3 centerPosition = new Vector3(transform.position.x, spawnYPosition, transform.position.z);
-
-        // Dibujar el área de spawn como un rectángulo (usando WireCube para dibujar solo los bordes)
-        Gizmos.DrawWireCube(centerPosition, new Vector3(spawnAreaSize.x, 0, spawnAreaSize.y));
+        foreach (var spawnPoint in spawnPoints)
+        {
+            // Dibujar los puntos de spawn como esferas en la escena para visualizarlos mejor
+            Gizmos.DrawSphere(spawnPoint.position, 0.5f);
+        }
     }
 
     public LootData GetLoot(EnemyType enemyType)
