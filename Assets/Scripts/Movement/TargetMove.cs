@@ -8,8 +8,6 @@ public class TargetMove : MonoBehaviour
     public CameraPointer cameraPointer;
     public float moveSpeed = 5f; 
     public bool isMoving = false;
-    public float upwardOffset = 2f;
-    public float rightOffset = 2f;
 
 
 
@@ -36,7 +34,6 @@ public class TargetMove : MonoBehaviour
 
         if (Vector3.Distance(transform.position, targetPosition) < 0.5f)
         {
-            transform.position += (Vector3.up * upwardOffset);
             isMoving = false;
             cameraPointer.isLockedOnTarget = false;
             cameraPointer.TargetNull();

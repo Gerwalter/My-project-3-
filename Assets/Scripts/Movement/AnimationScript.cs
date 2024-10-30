@@ -31,7 +31,6 @@ public class AnimationScript : MonoBehaviour
         sword.SetActive(!sword.activeSelf);
     }
 
-    [SerializeField] private bool isFighting = false;
 
   //  public void Fight()
   //  {

@@ -29,7 +29,7 @@ public class CanvasMenuManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             // Verificar si no estamos en la escena 0
-            if (SceneManager.GetActiveScene().buildIndex != 0)
+            if (SceneManager.GetActiveScene().buildIndex != 1)
             {
                 // Cambiar el estado activo del panel
                 panel.SetActive(!panel.activeSelf);
