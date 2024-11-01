@@ -7,6 +7,8 @@ public class CameraPointer : MonoBehaviour
     public Color rayColor = Color.green;
     public Image CrossHair;
     public GameObject target;
+    public TargetMove targetMove; // Referencia al script TargetMove
+    public LayerMask layerMask; // Máscara de capas para ignorar la capa del jugador
 
     private void Start()
     {
@@ -15,18 +17,20 @@ public class CameraPointer : MonoBehaviour
 
     void Update()
     {
-        CheckObjectInCenter();
-
-
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKey(KeyCode.T))
         {
+            CheckObjectInCenter();
+        }
+        else if (Input.GetKeyUp(KeyCode.T))
+        {
+            // Solo inicia el movimiento cuando se suelta la tecla T y hay un objetivo válido
             if (target != null)
             {
-                isLockedOnTarget = true;
+                targetMove.MoveTowardsTarget();
             }
         }
     }
-    public bool isLockedOnTarget = false;
+
     void CheckObjectInCenter()
     {
         Ray ray = new Ray(transform.position, transform.forward);
@@ -34,29 +38,17 @@ public class CameraPointer : MonoBehaviour
 
         Debug.DrawRay(transform.position, transform.forward * rayDistance, rayColor);
 
-        if (Physics.Raycast(ray, out hit, rayDistance))
+        // Usar el layerMask para ignorar la capa del jugador
+        if (Physics.Raycast(ray, out hit, rayDistance, layerMask))
         {
-            if (hit.collider.gameObject.GetComponent<SpecificScript>() != null)
-            {
-                target = hit.collider.gameObject;
-                CrossHair.enabled = true;
-            }
-
-            else if (isLockedOnTarget == true) 
-            {
-                target = null;
-                CrossHair.enabled = false;
-                isLockedOnTarget = false;
-            }
-            else
-            {
-                CrossHair.enabled = false;
-            }
+            target = hit.collider.gameObject;
+            CrossHair.enabled = true;
+            CrossHair.color = Color.green;
         }
-        else if (target != null)
+        else
         {
+            CrossHair.color = Color.red;
             target = null;
-            CrossHair.enabled = false;
         }
     }
 
@@ -64,6 +56,5 @@ public class CameraPointer : MonoBehaviour
     {
         target = null;
         CrossHair.enabled = false;
-        isLockedOnTarget = false;
     }
 }

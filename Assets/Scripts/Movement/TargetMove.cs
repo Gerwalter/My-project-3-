@@ -1,26 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class TargetMove : MonoBehaviour
 {
     public CameraPointer cameraPointer;
-    public float moveSpeed = 5f; 
+    public float moveSpeed = 5f;
     public bool isMoving = false;
-
-
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            if (cameraPointer.target != null)
-            {
-                MoveTowardsTarget();
-            }
-        }
-
         if (isMoving && cameraPointer.target != null)
         {
             MoveTowards(cameraPointer.target.transform.position);
@@ -34,15 +21,13 @@ public class TargetMove : MonoBehaviour
 
         if (Vector3.Distance(transform.position, targetPosition) < 0.5f)
         {
-            isMoving = false;
-            cameraPointer.isLockedOnTarget = false;
             cameraPointer.TargetNull();
+            isMoving = false;
         }
     }
 
-    void MoveTowardsTarget()
+    public void MoveTowardsTarget()
     {
         isMoving = true;
     }
 }
-        
