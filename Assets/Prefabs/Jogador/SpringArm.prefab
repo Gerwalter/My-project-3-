@@ -202,6 +202,9 @@ MonoBehaviour:
   _camPos: {x: 0, y: 0, z: 0}
   _cam: {fileID: 0}
   _target: {fileID: 0}
+  _ignoreLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &4628886677205217676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,7 +221,10 @@ MonoBehaviour:
   rayColor: {r: 0, g: 1, b: 0, a: 1}
   CrossHair: {fileID: 0}
   target: {fileID: 0}
-  isLockedOnTarget: 0
+  targetMove: {fileID: 0}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 1279
 --- !u!114 &7433801652074301659
 MonoBehaviour:
   m_ObjectHideFlags: 0
