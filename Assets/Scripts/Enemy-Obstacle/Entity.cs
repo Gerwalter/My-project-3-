@@ -7,19 +7,13 @@ public class Entity : HP
     {
         Normal,
         Healer,
-        Shielder,
         Shooter,
     }
-
-
-    [SerializeField] private GameObject shieldPrefab;
-    protected GameObject _shieldInstance;
-    [SerializeField] protected int _shieldLife = 50;
 
     // Booleanos para cada tipo de enemigo
     [SerializeField] protected bool _isNormal;
     [SerializeField] protected bool _isHealer;
-    [SerializeField] protected bool _isShielder;
+
     [SerializeField] protected bool _isShooter;
 
 
@@ -33,22 +27,13 @@ public class Entity : HP
     private void Awake()
     {
         SetEnemyTypeBooleans();
-
-        if (_shieldInstance == null && _isShielder)
-        {
-            _shieldInstance = Instantiate(shieldPrefab, transform.position, Quaternion.identity);
-            _shieldInstance.transform.SetParent(transform);
-            _shieldInstance.layer = gameObject.layer;
-        }
     }
 
     private void SetEnemyTypeBooleans()
     {
         _isNormal = _enemyClass == EnemyClass.Normal;
         _isHealer = _enemyClass == EnemyClass.Healer;
-        _isShielder = _enemyClass == EnemyClass.Shielder;
         _isShooter = _enemyClass == EnemyClass.Shooter;
     }
-
 }
 

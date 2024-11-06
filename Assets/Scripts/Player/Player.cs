@@ -214,16 +214,16 @@ public class Player : HP
 
     public void Cast()
     {
-            _anim.SetTrigger("Cast");
+        _anim.SetTrigger("Cast");
     }
 
     [SerializeField] private GameObject gameObje;
     [SerializeField] private Lock Handle;
 
     public void Die()
-    { 
+    {
         Handle.OnDie();
         gameObje.SetActive(false);
-       // Rend1.enabled = false; Rend2.enabled = false;
+        // Rend1.enabled = false; Rend2.enabled = false;
     }
 }

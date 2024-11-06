@@ -21,8 +21,7 @@ public class Enemy : Entity
     [SerializeField] private float _atkDist = 2.0f;
     [SerializeField] private float _changeNodeDist = 0.5f;
     [SerializeField] private float _healDist = 5.0f;
-    [SerializeField] private float _shieldDist = 5.0f;
-    [SerializeField] private float _shootDist = 6.0f;
+    [SerializeField] private float _shootDist = 7.0f;
     [SerializeField] private int _speed;
 
     [SerializeField] private bool _canStart = false;
@@ -61,14 +60,11 @@ public class Enemy : Entity
         GetLife = maxLife;
         _agent = GetComponent<NavMeshAgent>();
 
-       // _speed = Random.Range(3, 8);
-
         _agent.speed = _speed;
 
         GameManager.Instance.Enemies.Add(this);
 
         StartCoroutine(WaitOneFrame());
-
     }
     private IEnumerator WaitOneFrame()
     {
@@ -108,9 +104,9 @@ public class Enemy : Entity
     {
         UpdateHealthBar();
 
-        if (!_canStart) return; // Espera hasta que se haya habilitado
+        if (!_canStart) return;
 
-        if (_enableRoam) // Verifica si se debe ejecutar la lógica de Roam
+        if (_enableRoam)
         {
             if (!_target)
             {
@@ -173,29 +169,12 @@ public class Enemy : Entity
             }
         }
 
-
         if (_isHealer)
         {
             Enemy nearbyAlly = FindAllyToHeal();
             if (nearbyAlly != null)
             {
                 HealAlly(nearbyAlly);
-                return;
-
-            }
-        }
-
-        if (_isShielder)
-        {
-
-            if (PlayerInShieldRange() && _shieldLife >= 0)
-            {
-                ActivateShield();
-                return;
-            }
-            else
-            {
-                DeactivateShield();
                 return;
             }
         }
@@ -212,26 +191,18 @@ public class Enemy : Entity
             }
         }
     }
-    private bool PlayerInShieldRange()
-    {
-        return Vector3.Distance(transform.position, _target.position) <= _shieldDist;
-    }
 
     private bool PlayerInShootRange()
     {
         return Vector3.Distance(transform.position, _target.position) <= _shootDist;
     }
+
     void Shoot()
     {
         GameObject projectile = Instantiate(projectilePrefab, shootPoint.position, Quaternion.identity);
         Vector3 direction = (_target.position - shootPoint.position).normalized;
         projectile.GetComponent<Rigidbody>().velocity = direction * 40f;
     }
-    void ActivateShield()
-    {
-        _shieldInstance.SetActive(true);
-    }
-
 
     [Header("<color=yellow>Attack</color>")]
     [SerializeField] private Transform _atkOrigin;
@@ -255,17 +226,11 @@ public class Enemy : Entity
         }
     }
 
-
     private Transform GetNewNode()
     {
         Transform newNode = _navMeshNodes[Random.Range(0, _navMeshNodes.Count)];
 
         return newNode;
-    }
-    
-    void DeactivateShield()
-    {
-        _shieldInstance.SetActive(false);
     }
 
     private Enemy FindAllyToHeal()
@@ -276,35 +241,24 @@ public class Enemy : Entity
             Enemy enemy = hit.GetComponent<Enemy>();
             if (enemy != null && enemy != this && enemy.GetLife < enemy.maxLife)
             {
-                return enemy; // Retorna el primer enemigo con vida incompleta
+                return enemy;
             }
         }
         return null;
     }
 
-    // Curar al aliado detectado
     private void HealAlly(Enemy ally)
     {
         _agent.SetDestination(ally.transform.position);
-        if (Vector3.Distance(transform.position, ally.transform.position) <= 1.0f) // Rango para curar
+        if (Vector3.Distance(transform.position, ally.transform.position) <= 1.0f)
         {
-            ally.Health(10); // Curar 10 unidades de vida (puedes ajustar el valor)
+            ally.Health(10);
         }
     }
 
     public void ReciveDamage(int dmg)
     {
-        if (_isShielder && _shieldLife >= 0)
-        {
-            _shieldLife -= dmg;
-
-            if (_shieldLife <= 0)
-            { _shieldInstance.SetActive(false); }
-        }
-        else
-        {
-            GetLife -= dmg;
-        }
+        GetLife -= dmg;
 
         if (GetLife <= 0)
         {
@@ -315,13 +269,13 @@ public class Enemy : Entity
             GameManager.Instance.Enemies.Remove(this);
 
             Destroy(gameObject);
-
         }
         else
         {
             Debug.Log($"<color=red>{name}</color>: Comí <color=black>{dmg}</color> puntos de daño. Me quedan <color=green>{GetLife}</color> puntos.");
         }
     }
+
     public void triggerReset()
     {
         _animator.ResetTrigger("Hit");
@@ -330,6 +284,7 @@ public class Enemy : Entity
     {
         _animator.ResetTrigger("Punch");
     }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
@@ -350,13 +305,6 @@ public class Enemy : Entity
             Gizmos.DrawWireSphere(transform.position, _healDist);
         }
 
-        if (_enemyClass == EnemyClass.Shielder)
-        {
-            Gizmos.color = Color.cyan;
-            Gizmos.DrawWireSphere(transform.position, _shieldDist);
-
-        }
-
         if (_enemyClass == EnemyClass.Shooter)
         {
             Gizmos.color = Color.magenta;
@@ -364,4 +312,3 @@ public class Enemy : Entity
         }
     }
 }
-
