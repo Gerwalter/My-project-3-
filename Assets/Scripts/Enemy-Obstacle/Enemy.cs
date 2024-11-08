@@ -21,7 +21,8 @@ public class Enemy : Entity
     [SerializeField] private float _atkDist = 2.0f;
     [SerializeField] private float _changeNodeDist = 0.5f;
     [SerializeField] private float _healDist = 5.0f;
-    [SerializeField] private float _shootDist = 7.0f;
+    [SerializeField] private float _shootDist = 6.0f;
+    [SerializeField] private float _shieldDist = 5.0f;
     [SerializeField] private int _speed;
 
     [SerializeField] private bool _canStart = false;
@@ -61,6 +62,9 @@ public class Enemy : Entity
         _agent = GetComponent<NavMeshAgent>();
 
         _agent.speed = _speed;
+
+        if (_isHealer)
+            _agent.speed = _speed * 1.5f;
 
         GameManager.Instance.Enemies.Add(this);
 
@@ -169,6 +173,21 @@ public class Enemy : Entity
             }
         }
 
+
+        if (_isShielder)
+        {
+
+            if (PlayerInShieldRange() && _shieldLife >= 0)
+            {
+                ActivateShield();
+                return;
+            }
+            else
+            {
+                DeactivateShield();
+                return;
+            }
+        }
         if (_isHealer)
         {
             Enemy nearbyAlly = FindAllyToHeal();
@@ -191,10 +210,38 @@ public class Enemy : Entity
             }
         }
     }
+    private bool PlayerInShieldRange()
+    {
+        return Vector3.Distance(transform.position, _target.position) <= _shieldDist;
+    }
 
+    void ActivateShield()
+    {
+        _shieldInstance.SetActive(true);
+    }
+
+    void DeactivateShield()
+    {
+        _shieldInstance.SetActive(false);
+    }
     private bool PlayerInShootRange()
     {
-        return Vector3.Distance(transform.position, _target.position) <= _shootDist;
+        // Verificar que la distancia esté dentro del rango de disparo
+        if (Vector3.Distance(transform.position, _target.position) <= _shootDist)
+        {
+            // Obtener la dirección hacia el objetivo
+            Vector3 directionToTarget = (_target.position - transform.position).normalized;
+
+            // Calcular el ángulo entre el forward del enemigo y la dirección hacia el objetivo
+            float angleToTarget = Vector3.Angle(transform.forward, directionToTarget);
+
+            // Asegurarse de que el enemigo esté mirando hacia el objetivo (por ejemplo, un ángulo de 30 grados)
+            if (angleToTarget <= 30.0f)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     void Shoot()
@@ -241,9 +288,11 @@ public class Enemy : Entity
             Enemy enemy = hit.GetComponent<Enemy>();
             if (enemy != null && enemy != this && enemy.GetLife < enemy.maxLife)
             {
+
                 return enemy;
             }
         }
+
         return null;
     }
 
@@ -262,7 +311,6 @@ public class Enemy : Entity
 
         if (GetLife <= 0)
         {
-            Debug.Log($"<color=red>{name}</color>: oh no *Explota*");
 
             SFXManager.instance.PlayRandSFXClip(clips, transform, 1f);
 

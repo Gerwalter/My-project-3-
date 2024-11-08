@@ -2333,23 +2333,23 @@ MonoBehaviour:
   maxLife: 20
   currentLife: 0
   anim: {fileID: 9184416210414114211}
-  shieldPrefab: {fileID: 2494072925433335905, guid: 9176725531e7ba94ca7ea5e3962bdf7b, type: 3}
-  _shieldLife: 50
   _isNormal: 0
   _isHealer: 0
-  _isShielder: 0
-  _isShooter: 1
+  _isShielder: 1
+  _isShooter: 0
   projectilePrefab: {fileID: 8951607973867105544, guid: c2928fa2c9b9c9549966da44ada4a3c3, type: 3}
+  _shieldInstance: {fileID: 2494072925433335905, guid: 9176725531e7ba94ca7ea5e3962bdf7b, type: 3}
   shootPoint: {fileID: 156520991036475152}
   shootCooldown: 2
-  _enemyClass: 0
+  _shieldLife: 2
+  _enemyClass: 3
   _enemyType: 0
   _chaseDist: 4.5
   _atkDist: 1.5
   _changeNodeDist: 2
   _healDist: 5
-  _shieldDist: 5
   _shootDist: 5
+  _shieldDist: 5
   _speed: 2
   _canStart: 0
   _nodeManager: {fileID: 0}
