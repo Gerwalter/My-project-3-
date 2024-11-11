@@ -3,7 +3,6 @@ using UnityEngine.UI;
 
 public class Player : HP
 {
-
     [Header("<color=#6A89A7>Animation</color>")]
     [SerializeField] private string _isMovName = "isMoving";
     [SerializeField] private string _isGroundName = "isGrounded";
@@ -33,7 +32,8 @@ public class Player : HP
     [SerializeField] private float _movRayDist = 0.75f;
     [SerializeField] private LayerMask _movMask;
     [SerializeField] private float _movSpeed = 3.5f;
-
+    [SerializeField] private Vector3 velocityToSet;
+    [SerializeField] private float velocity;
 
     [Header("<color=yellow>Attack</color>")]
     [SerializeField] private Transform _atkOrigin;
@@ -46,13 +46,18 @@ public class Player : HP
     public Vector3 _camForwardFix = new(), _camRightFix = new(), _dir = new(), _jumpOffset = new(), _movRayDir = new();
     private Vector3 _dirFix = new();
 
-    private Animator _anim;
+    public Animator _anim;
     private Rigidbody _rb;
     protected Transform _camTransform;
 
-
     private Ray _intRay, _jumpRay, _movRay;
     private RaycastHit _intHit;
+    public bool groundCheck;
+    public Grappling grapple;
+
+    // Nueva variable para desactivar el movimiento
+    [SerializeField] public bool freeze = false;
+    [SerializeField] public bool activeGrapple = false;
 
     private void Awake()
     {
@@ -74,6 +79,13 @@ public class Player : HP
 
     private void Update()
     {
+        if (freeze)
+        {
+            _anim.SetFloat(_xName, 0.0f);
+            _anim.SetFloat(_zName, 0.0f);
+
+            return;
+        }// Si el movimiento está desactivado, no hacer nada
         _dir.x = Input.GetAxisRaw("Horizontal");
         _dir.z = Input.GetAxisRaw("Vertical");
 
@@ -89,13 +101,11 @@ public class Player : HP
         }
 
         _anim.SetBool(_isGroundName, IsGrounded());
-
         _anim.SetBool(_isMovName, _dir.x != 0 || _dir.z != 0);
 
         if (Input.GetKeyDown(_intKey))
         {
             _anim.SetTrigger("Int");
-            //Interact();
         }
 
         if (Input.GetKeyDown(_jumpKey) && IsGrounded())
@@ -105,22 +115,33 @@ public class Player : HP
         }
 
         UpdateHealthBar();
+        groundCheck = IsGrounded();
     }
 
     private void FixedUpdate()
     {
+        if (freeze) return; // Si el movimiento está desactivado, no hacer nada
+
         if ((_dir.x != 0.0f || _dir.z != 0.0f) && !IsBlocked(_dir.x, _dir.z))
         {
             Movement(_dir);
         }
     }
 
+    public void DisableMovement()
+    {
+        freeze = true;
+    }
+
+    public void EnableMovement()
+    {
+        freeze = false;
+    }
+
     private void UpdateHealthBar()
     {
         float lifePercent = GetLife / maxLife;
-
         healthBar.fillAmount = lifePercent;
-
         healthBar.color = Color.Lerp(Color.red, Color.green, lifePercent);
     }
 
@@ -173,7 +194,6 @@ public class Player : HP
         _dirFix = (_camRightFix * dir.x + _camForwardFix * dir.z).normalized;
 
         _rb.MovePosition(transform.position + _dirFix * _movSpeed * Time.fixedDeltaTime);
-
     }
 
     private void Rotate(Vector3 dir)
@@ -181,7 +201,9 @@ public class Player : HP
         transform.forward = dir;
     }
 
-    private bool IsGrounded()
+    public bool EnableMovementAfterCollision = true;
+
+    public bool IsGrounded()
     {
         _jumpOffset = new Vector3(transform.position.x, transform.position.y + 0.125f, transform.position.z);
 
@@ -225,5 +247,46 @@ public class Player : HP
         Handle.OnDie();
         gameObje.SetActive(false);
         // Rend1.enabled = false; Rend2.enabled = false;
+    }
+
+    public Vector3 CalculateJumpVelocity(Vector3 startpoint, Vector3 endpoint, float trayectoryHeight)
+    {
+        float gravity = Physics.gravity.y;
+        float displacementY = endpoint.y - startpoint.y;
+        Vector3 displacementZX = new Vector3(endpoint.x - startpoint.x, 0f, endpoint.z - startpoint.z);
+
+        Vector3 velocity = Vector3.up * Mathf.Sqrt(-2 * gravity * trayectoryHeight);
+        Vector3 velocityZX = displacementZX / (Mathf.Sqrt(-2 * trayectoryHeight / gravity)
+            + Mathf.Sqrt(2 * (displacementY - trayectoryHeight) / gravity));
+
+        return velocity + velocityZX;
+    }
+
+    public void JumpToPosition(Vector3 targetposition, float trajectoryHeight)
+    {
+        activeGrapple = true;
+        velocityToSet = CalculateJumpVelocity(transform.position, targetposition, trajectoryHeight);
+        Invoke(nameof(Setvelocity), 0.1f);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (EnableMovementAfterCollision)
+        {
+            EnableMovementAfterCollision = false;
+            ResetRestrictions();
+
+            grapple.stopGrapple();
+        }
+    }
+    public void ResetRestrictions()
+    {
+        activeGrapple = false;
+    }
+        
+    private void Setvelocity()
+    {
+        EnableMovementAfterCollision = true;
+        _rb.velocity = velocityToSet * velocity;
     }
 }
