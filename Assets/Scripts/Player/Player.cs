@@ -58,13 +58,23 @@ public class Player : HP
     // Nueva variable para desactivar el movimiento
     [SerializeField] public bool freeze = false;
     [SerializeField] public bool activeGrapple = false;
-
+    public static Player Instance;
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
         _rb.constraints = RigidbodyConstraints.FreezeRotation;
 
         GameManager.Instance.Player = this;
+
+        if (!Instance)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Start()

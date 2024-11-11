@@ -430,6 +430,7 @@ GameObject:
   - component: {fileID: 2259463081846927527}
   - component: {fileID: 5500301760190601580}
   - component: {fileID: 6579176096191460171}
+  - component: {fileID: 4934797947777991565}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -539,7 +540,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 4934797947777991565}
         m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
         m_MethodName: RestartLevel
         m_Mode: 1
@@ -551,6 +552,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4934797947777991565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1201216015372265041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f1bd1787ee79a143af17332a130c12c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2845715136984158267
 GameObject:
   m_ObjectHideFlags: 0

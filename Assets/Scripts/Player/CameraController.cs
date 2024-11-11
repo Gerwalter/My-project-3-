@@ -4,8 +4,8 @@ public class CameraController : MonoBehaviour
 {
     [Header("<color=#6A89A7>Cursor</color>")]
     [SerializeField] private CursorLockMode _lockMode = CursorLockMode.Locked;
-    [SerializeField] private bool _isCursorVisible = false;
-    [SerializeField] private bool _isCameraFixed = false; // Nuevo: estado de cámara fija o no
+    [SerializeField] public bool _isCursorVisible = false;
+    [SerializeField] public bool _isCameraFixed = false; // Nuevo: estado de cámara fija o no
 
     [Header("<color=#6A89A7>Physics</color>")]
     [Range(.01f, 1f)][SerializeField] private float _detectionRadius = .1f;
@@ -30,10 +30,18 @@ public class CameraController : MonoBehaviour
 
     [Header("<color=#6A89A7>Layer Settings</color>")]
     [SerializeField] private LayerMask _ignoreLayerMask; // LayerMask to ignore specific layers
-
+    public static CameraController Instance;
     private void Awake()
     {
-        // Set the LayerMask to ignore the Player layer
+        if (!Instance)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }   
         _ignoreLayerMask = LayerMask.GetMask("Player");
     }
 
