@@ -31,6 +31,20 @@ public class AnimationScript : MonoBehaviour
         sword.SetActive(!sword.activeSelf);
     }
 
+    public void PrintNum()
+    {
+        _player.MovePlayer(1f); ;
+    }
+
+    public void JumpAttack()
+    {
+        _player.ApplyForwardJumpImpulse(6f, 3f);
+    }
+
+    public void EnemyLift()
+    {
+        _player.PerformLiftAttack();
+    }
 
   //  public void Fight()
   //  {

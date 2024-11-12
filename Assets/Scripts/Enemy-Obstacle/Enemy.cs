@@ -47,10 +47,16 @@ public class Enemy : Entity
     [Header("<color=#6A89A7>UI</color>")]
     [SerializeField] private Image healthBar;
 
+    [SerializeField] private Rigidbody rb;
+    [SerializeField] private float liftForce = 10.0f;
     private void Awake()
     {
         Initialize();
         _nodeManager = GameManager.Instance.NodeManager;
+
+        rb.isKinematic = true;
+        rb.useGravity = true;
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
     }
     private void Start()
     {
@@ -93,7 +99,27 @@ public class Enemy : Entity
 
         _agent.SetDestination(_actualNode.position);
     }
+    public bool air;
 
+    public void ApplyLiftImpulse()
+    {
+        _enableRoam = false;
+        _agent.enabled = false;
+        rb.isKinematic = false;
+        rb.AddForce(Vector3.up * liftForce, ForceMode.Impulse);
+        groundcheck();
+    }
+    [SerializeField] private float _groundCheckDistance = 1.1f;
+    private bool IsGrounded()
+    {
+        // Realiza un raycast hacia abajo desde la posición del enemigo para verificar el suelo
+        return Physics.Raycast(transform.position, Vector3.down, _groundCheckDistance);
+    }
+
+    void groundcheck()
+    {
+        if (IsGrounded()) print("a");
+    }
     private void UpdateHealthBar()
     {
         float lifePercent = GetLife / maxLife;
@@ -109,6 +135,13 @@ public class Enemy : Entity
         UpdateHealthBar();
 
         if (!_canStart) return;
+
+     //   if (IsGrounded() && !air)
+     //   {
+     //       _enableRoam = true;
+     //       _agent.enabled = true;
+     //       rb.isKinematic = true;
+     //   }
 
         if (_enableRoam)
         {
@@ -152,26 +185,9 @@ public class Enemy : Entity
         }
         else
         {
-            if (Vector3.SqrMagnitude(transform.position - _target.position) <= (_chaseDist * _chaseDist))
-            {
-                if (Vector3.SqrMagnitude(transform.position - _target.position) <= (_atkDist * _atkDist))
-                {
-                    if (!_agent.isStopped) _agent.isStopped = true;
-
-                    _animator.SetBool("isMoving", false);
-                    _animator.SetTrigger("Punch");
-                }
-                else
-                {
-                    if (_agent.isStopped) _agent.isStopped = false;
-
-                    _animator.SetBool("isMoving", true);
-                    _animator.ResetTrigger("Punch");
-
-                    _agent.SetDestination(_target.position);
-                }
-            }
+            return;
         }
+
 
 
         if (_isShielder)
@@ -358,5 +374,7 @@ public class Enemy : Entity
             Gizmos.color = Color.magenta;
             Gizmos.DrawWireSphere(transform.position, _shootDist);
         }
+
+
     }
 }

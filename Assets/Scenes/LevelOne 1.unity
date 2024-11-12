@@ -4578,8 +4578,10 @@ MonoBehaviour:
   _isShielder: 0
   _isShooter: 0
   projectilePrefab: {fileID: 0}
+  _shieldInstance: {fileID: 0}
   shootPoint: {fileID: 0}
   shootCooldown: 2
+  _shieldLife: 2
   _enemyClass: 0
   _enemyType: 1
   _chaseDist: 0
@@ -4587,11 +4589,10 @@ MonoBehaviour:
   _changeNodeDist: 2
   _healDist: 5
   _shootDist: 5
+  _shieldDist: 5
   _speed: 2
   _canStart: 0
   _nodeManager: {fileID: 0}
-  shieldPrefab: {fileID: 0}
-  shieldDetectionRadius: 3
   _animator: {fileID: 2044167832}
   _target: {fileID: 0}
   _actualNode: {fileID: 0}
@@ -4602,6 +4603,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 181a368a4a717f746804209787043db5, type: 3}
   - {fileID: 8300000, guid: 74eb157bcb4de64459a03c258921ae02, type: 3}
   healthBar: {fileID: 57915932}
+  rb: {fileID: 0}
+  liftForce: 10
+  _isInAir: 0
+  _groundCheckDistance: 0.1
   _enableRoam: 1
   _atkOrigin: {fileID: 0}
   _atkRayDist: 1
@@ -9918,8 +9923,10 @@ MonoBehaviour:
   _isShielder: 0
   _isShooter: 0
   projectilePrefab: {fileID: 8951607973867105544, guid: c2928fa2c9b9c9549966da44ada4a3c3, type: 3}
+  _shieldInstance: {fileID: 0}
   shootPoint: {fileID: 77076439}
   shootCooldown: 2
+  _shieldLife: 2
   _enemyClass: 0
   _enemyType: 3
   _chaseDist: 4.5
@@ -9927,11 +9934,10 @@ MonoBehaviour:
   _changeNodeDist: 2
   _healDist: 5
   _shootDist: 5
+  _shieldDist: 5
   _speed: 2
   _canStart: 0
   _nodeManager: {fileID: 0}
-  shieldPrefab: {fileID: 0}
-  shieldDetectionRadius: 3
   _animator: {fileID: 1586406746}
   _target: {fileID: 0}
   _actualNode: {fileID: 0}
@@ -9942,6 +9948,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 181a368a4a717f746804209787043db5, type: 3}
   - {fileID: 8300000, guid: 74eb157bcb4de64459a03c258921ae02, type: 3}
   healthBar: {fileID: 670341183}
+  rb: {fileID: 0}
+  liftForce: 10
+  _isInAir: 0
+  _groundCheckDistance: 0.1
   _enableRoam: 1
   _atkOrigin: {fileID: 0}
   _atkRayDist: 1
@@ -11935,8 +11945,10 @@ MonoBehaviour:
   _isShielder: 0
   _isShooter: 0
   projectilePrefab: {fileID: 0}
+  _shieldInstance: {fileID: 0}
   shootPoint: {fileID: 0}
   shootCooldown: 2
+  _shieldLife: 2
   _enemyClass: 0
   _enemyType: 2
   _chaseDist: 4.5
@@ -11944,11 +11956,10 @@ MonoBehaviour:
   _changeNodeDist: 2
   _healDist: 5
   _shootDist: 5
+  _shieldDist: 5
   _speed: 2
   _canStart: 0
   _nodeManager: {fileID: 0}
-  shieldPrefab: {fileID: 0}
-  shieldDetectionRadius: 3
   _animator: {fileID: 631484106}
   _target: {fileID: 0}
   _actualNode: {fileID: 0}
@@ -11959,6 +11970,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 181a368a4a717f746804209787043db5, type: 3}
   - {fileID: 8300000, guid: 74eb157bcb4de64459a03c258921ae02, type: 3}
   healthBar: {fileID: 246129315}
+  rb: {fileID: 0}
+  liftForce: 10
+  _isInAir: 0
+  _groundCheckDistance: 0.1
   _enableRoam: 1
   _atkOrigin: {fileID: 0}
   _atkRayDist: 1
@@ -25211,7 +25226,11 @@ PrefabInstance:
     - target: {fileID: 2832780455359106178, guid: 0487c03122a108e408343f783f7fa3e8, type: 3}
       propertyPath: normalEnemyWave.enemyToSpawn.Array.data[0]
       value: 
-      objectReference: {fileID: 7715154201322672574, guid: 1e67c28dc9ce3dd4dbf2bddd9c6e3d0c, type: 3}
+      objectReference: {fileID: 7715154201322672574, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
+    - target: {fileID: 2832780455359106178, guid: 0487c03122a108e408343f783f7fa3e8, type: 3}
+      propertyPath: normalEnemyWave.enemyToSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 7715154201322672574, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
     - target: {fileID: 3740255682162777912, guid: 0487c03122a108e408343f783f7fa3e8, type: 3}
       propertyPath: vignetteSlider
       value: 

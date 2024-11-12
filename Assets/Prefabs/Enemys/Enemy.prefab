@@ -2248,6 +2248,7 @@ GameObject:
   - component: {fileID: 8966580579443905447}
   - component: {fileID: 7715154201322672574}
   - component: {fileID: 3773987790442223228}
+  - component: {fileID: 6900142964974486969}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
@@ -2333,23 +2334,23 @@ MonoBehaviour:
   maxLife: 20
   currentLife: 0
   anim: {fileID: 9184416210414114211}
-  shieldPrefab: {fileID: 2494072925433335905, guid: 9176725531e7ba94ca7ea5e3962bdf7b, type: 3}
-  _shieldLife: 50
   _isNormal: 1
   _isHealer: 0
   _isShielder: 0
   _isShooter: 0
   projectilePrefab: {fileID: 8951607973867105544, guid: c2928fa2c9b9c9549966da44ada4a3c3, type: 3}
+  _shieldInstance: {fileID: 0}
   shootPoint: {fileID: 156520991036475152}
   shootCooldown: 2
+  _shieldLife: 50
   _enemyClass: 0
   _enemyType: 0
   _chaseDist: 4.5
   _atkDist: 1.5
   _changeNodeDist: 2
   _healDist: 5
-  _shieldDist: 5
   _shootDist: 5
+  _shieldDist: 5
   _speed: 2
   _canStart: 0
   _nodeManager: {fileID: 0}
@@ -2361,8 +2362,10 @@ MonoBehaviour:
   _agent: {fileID: 0}
   clips:
   - {fileID: 8300000, guid: 181a368a4a717f746804209787043db5, type: 3}
-  - {fileID: 8300000, guid: 74eb157bcb4de64459a03c258921ae02, type: 3}
   healthBar: {fileID: 3510542959025991487}
+  rb: {fileID: 6900142964974486969}
+  liftForce: 10
+  _groundCheckDistance: 1.1
   _enableRoam: 1
   _atkOrigin: {fileID: 1085586048006099824}
   _atkRayDist: 1
@@ -2382,6 +2385,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf415d6f630e5424f8a410d9a5ad761f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &6900142964974486969
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7326823367288068571}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &7354300413807863108
 GameObject:
   m_ObjectHideFlags: 0

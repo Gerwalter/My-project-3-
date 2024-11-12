@@ -58,23 +58,13 @@ public class Player : HP
     // Nueva variable para desactivar el movimiento
     [SerializeField] public bool freeze = false;
     [SerializeField] public bool activeGrapple = false;
-    public static Player Instance;
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
         _rb.constraints = RigidbodyConstraints.FreezeRotation;
 
         GameManager.Instance.Player = this;
-
-        if (!Instance)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
     }
 
     private void Start()
@@ -172,19 +162,7 @@ public class Player : HP
         }
     }
 
-    public void Attack()
-    {
 
-        _atkRay = new Ray(_atkOrigin.position, transform.forward);
-
-        if (Physics.Raycast(_atkRay, out _atkHit, _atkRayDist, _atkMask))
-        {
-            if (_atkHit.collider.TryGetComponent<Enemy>(out Enemy enemy))
-            {
-                enemy.ReciveDamage(_atkDmg);
-            }
-        }
-    }
 
     private void Jump()
     {
@@ -243,6 +221,32 @@ public class Player : HP
         Gizmos.color = Color.red;
         Gizmos.DrawRay(_atkRay);
     }
+    public void Attack()
+    {
+        _atkRay = new Ray(_atkOrigin.position, transform.forward);
+
+        if (Physics.Raycast(_atkRay, out _atkHit, _atkRayDist, _atkMask))
+        {
+            if (_atkHit.collider.TryGetComponent<Enemy>(out Enemy enemy))
+            {
+                enemy.ReciveDamage(_atkDmg);
+            }
+        }
+    }
+
+    public void PerformLiftAttack()
+    {
+        _atkRay = new Ray(_atkOrigin.position, transform.forward);
+
+        if (Physics.Raycast(_atkRay, out _atkHit, _atkRayDist, _atkMask))
+        {
+            if (_atkHit.collider.TryGetComponent<Enemy>(out Enemy enemy))
+            {
+                enemy.ReciveDamage(_atkDmg);
+                enemy.ApplyLiftImpulse();
+            }
+        }
+    }
 
     public void Cast()
     {
@@ -279,6 +283,40 @@ public class Player : HP
         Invoke(nameof(Setvelocity), 0.1f);
     }
 
+
+    public void ResetRestrictions()
+    {
+        activeGrapple = false;
+    }
+
+    private void Setvelocity()
+    {
+        EnableMovementAfterCollision = true;
+        _rb.velocity = velocityToSet * velocity;
+    }
+
+    public void PrintNum(float num)
+    {
+        print(num);
+    }
+
+    public void MovePlayer(float force)
+    {
+        Vector3 forwardDirection = transform.forward; // Dirección actual del jugador
+        _rb.AddForce(forwardDirection * force, ForceMode.Impulse);
+    }
+
+    public void ApplyForwardJumpImpulse(float forwardForce, float jumpForce)
+    {
+        // Dirección hacia adelante basada en la orientación actual del jugador
+        Vector3 forwardDirection = transform.forward * forwardForce;
+
+        // Impulso en el eje Y para el salto
+        Vector3 upwardImpulse = Vector3.up * jumpForce;
+
+        // Aplica ambas fuerzas al Rigidbody
+        _rb.AddForce(forwardDirection + upwardImpulse, ForceMode.Impulse);
+    }
     private void OnCollisionEnter(Collision collision)
     {
         if (EnableMovementAfterCollision)
@@ -288,15 +326,5 @@ public class Player : HP
 
             grapple.stopGrapple();
         }
-    }
-    public void ResetRestrictions()
-    {
-        activeGrapple = false;
-    }
-        
-    private void Setvelocity()
-    {
-        EnableMovementAfterCollision = true;
-        _rb.velocity = velocityToSet * velocity;
     }
 }
