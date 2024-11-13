@@ -103,22 +103,35 @@ public class Enemy : Entity
 
     public void ApplyLiftImpulse()
     {
+        Debug.Log("Applying lift impulse");
         _enableRoam = false;
         _agent.enabled = false;
         rb.isKinematic = false;
         rb.AddForce(Vector3.up * liftForce, ForceMode.Impulse);
-        groundcheck();
     }
+
     [SerializeField] private float _groundCheckDistance = 1.1f;
+
     private bool IsGrounded()
     {
-        // Realiza un raycast hacia abajo desde la posición del enemigo para verificar el suelo
         return Physics.Raycast(transform.position, Vector3.down, _groundCheckDistance);
     }
 
-    void groundcheck()
+    private void groundcheck()
     {
-        if (IsGrounded()) print("a");
+        if (IsGrounded())
+        {
+            print("Grounded");
+            _enableRoam = true;
+            _agent.enabled = true;
+            rb.isKinematic = true;
+        }
+    }
+
+    // Llama a groundcheck en Update o FixedUpdate
+    void Update()
+    {
+        groundcheck();
     }
     private void UpdateHealthBar()
     {
@@ -283,7 +296,6 @@ public class Enemy : Entity
         {
             if (_atkHit.collider.TryGetComponent<Player>(out Player player))
             {
-                Debug.Log("Japish");
                 player.ReciveDamage(_atkDmg);
             }
         }
@@ -328,15 +340,11 @@ public class Enemy : Entity
         if (GetLife <= 0)
         {
 
-            SFXManager.instance.PlayRandSFXClip(clips, transform, 1f);
+            //SFXManager.instance.PlayRandSFXClip(clips, transform, 1f);
 
             GameManager.Instance.Enemies.Remove(this);
 
             Destroy(gameObject);
-        }
-        else
-        {
-            Debug.Log($"<color=red>{name}</color>: Comí <color=black>{dmg}</color> puntos de daño. Me quedan <color=green>{GetLife}</color> puntos.");
         }
     }
 

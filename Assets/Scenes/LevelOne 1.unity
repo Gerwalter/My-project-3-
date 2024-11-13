@@ -4605,7 +4605,7 @@ MonoBehaviour:
   healthBar: {fileID: 57915932}
   rb: {fileID: 0}
   liftForce: 10
-  _isInAir: 0
+  air: 0
   _groundCheckDistance: 0.1
   _enableRoam: 1
   _atkOrigin: {fileID: 0}
@@ -9950,7 +9950,7 @@ MonoBehaviour:
   healthBar: {fileID: 670341183}
   rb: {fileID: 0}
   liftForce: 10
-  _isInAir: 0
+  air: 0
   _groundCheckDistance: 0.1
   _enableRoam: 1
   _atkOrigin: {fileID: 0}
@@ -11972,7 +11972,7 @@ MonoBehaviour:
   healthBar: {fileID: 246129315}
   rb: {fileID: 0}
   liftForce: 10
-  _isInAir: 0
+  air: 0
   _groundCheckDistance: 0.1
   _enableRoam: 1
   _atkOrigin: {fileID: 0}
@@ -26521,6 +26521,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e090c8c418bbd654baf8a96bd8966188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &4307601419390952410 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6363643865286259320, guid: 1c30b45c35c68f540bbfd0d4a2531cca, type: 3}
+  m_PrefabInstance: {fileID: 4307601419390952407}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4311849771859935179
 Transform:
   m_ObjectHideFlags: 0
@@ -27237,6 +27242,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 141912759179054621, guid: 8f31649f755d8ff488bd5334b0a3cd2c, type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 4307601419390952410}
     - target: {fileID: 1138763200837999765, guid: 8f31649f755d8ff488bd5334b0a3cd2c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.76
