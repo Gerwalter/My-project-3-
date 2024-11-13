@@ -104,10 +104,18 @@ public class Enemy : Entity
     public void ApplyLiftImpulse()
     {
         Debug.Log("Applying lift impulse");
+        _groundCheckDistance = 0;
         _enableRoam = false;
         _agent.enabled = false;
         rb.isKinematic = false;
         rb.AddForce(Vector3.up * liftForce, ForceMode.Impulse);
+        StartCoroutine(CheckDistance());
+    }
+
+    IEnumerator CheckDistance()
+    {
+        yield return new WaitForSeconds(1);
+        _groundCheckDistance = 1.1f;
     }
 
     [SerializeField] private float _groundCheckDistance = 1.1f;
@@ -131,7 +139,7 @@ public class Enemy : Entity
     // Llama a groundcheck en Update o FixedUpdate
     void Update()
     {
-        groundcheck();
+
     }
     private void UpdateHealthBar()
     {
@@ -145,7 +153,8 @@ public class Enemy : Entity
     [SerializeField] private bool _enableRoam = true;
     private void FixedUpdate()
     {
-        UpdateHealthBar();
+        UpdateHealthBar(); 
+        groundcheck();
 
         if (!_canStart) return;
 
