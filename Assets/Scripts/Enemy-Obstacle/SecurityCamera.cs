@@ -38,7 +38,6 @@ public class SecurityCamera : MonoBehaviour
                 if (hit.transform == player && !playerDetected)
                 {
                     playerDetected = true;
-                    SpawnEnemies();
                 }
             }
         }
@@ -49,20 +48,7 @@ public class SecurityCamera : MonoBehaviour
     {
 
     }
-    void SpawnEnemies()
-    {
-        foreach (Transform spawnPoint in spawnPoints)
-        {
-            int randomIndex = Random.Range(0, enemyPrefabs.Length);
-            GameObject enemyInstance = Instantiate(enemyPrefabs[randomIndex], spawnPoint.position, spawnPoint.rotation);
 
-            Enemy enemyScript = enemyInstance.GetComponent<Enemy>();
-            enemyScript._nodeManager = iANode;
-
-            enemyScript.Initialize();
-           // iANode.NodesExtraConfirm();
-        }
-    }
 
     void OnDrawGizmos()
     {

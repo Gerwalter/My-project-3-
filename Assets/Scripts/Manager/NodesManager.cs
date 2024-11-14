@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Crate : HP
+public class NodesManager : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
     {
-      //  GetLife = maxLife;
+        
     }
 
     // Update is called once per frame
