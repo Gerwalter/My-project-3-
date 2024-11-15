@@ -1169,9 +1169,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 855272650}
     - target: {fileID: 7715154201322672574, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
+      propertyPath: _animator
+      value: 
+      objectReference: {fileID: 855272650}
+    - target: {fileID: 7715154201322672574, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 1353521741}
+    - target: {fileID: 7715154201322672574, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
+      propertyPath: _atkOrigin
+      value: 
+      objectReference: {fileID: 1498640457}
     - target: {fileID: 7715154201322672574, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
       propertyPath: enemyClass
       value: 0
@@ -2514,11 +2522,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27c2e75128bc3bb4b8df0a7e4c408892, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _crate: {fileID: 0}
   _player: {fileID: 0}
   _enemies: []
   _surface: {fileID: 0}
-  _nodeManager: {fileID: 0}
-  _nodes: []
 --- !u!4 &1475811744
 Transform:
   m_ObjectHideFlags: 0
@@ -2534,6 +2541,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1498640457 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1085586048006099824, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
+  m_PrefabInstance: {fileID: 855272649}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1565255668
 GameObject:
   m_ObjectHideFlags: 0
@@ -3022,7 +3034,7 @@ Transform:
   m_GameObject: {fileID: 1770517606}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13.270004, y: -4.5216103, z: 17.849998}
+  m_LocalPosition: {x: 13.270004, y: -4.5216103, z: 9.55}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []

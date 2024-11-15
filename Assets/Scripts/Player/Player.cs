@@ -116,6 +116,7 @@ public class Player : HP
 
         UpdateHealthBar();
         groundCheck = IsGrounded();
+        ElementalCast();
     }
 
     private void FixedUpdate()
@@ -325,6 +326,25 @@ public class Player : HP
             ResetRestrictions();
 
             grapple.stopGrapple();
+        }
+    }
+
+    [SerializeField] private ElementType selectedElement;
+    private enum ElementType
+    {
+        Normal,
+        Fire,
+        Electric,
+        Ice,
+        Water,
+    }
+    public void ElementalCast()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            _anim.SetTrigger("Cast");
+            selectedElement = (ElementType)Random.Range(0, System.Enum.GetValues(typeof(ElementType)).Length);
+            Debug.Log("Elemento seleccionado: " + selectedElement);
         }
     }
 }
