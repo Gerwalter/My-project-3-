@@ -12,15 +12,16 @@ public class EnemyAvatar : MonoBehaviour
     }
     public void Attack()
     {
-        _parent.Attack();
+       // _parent.Attack();
     }
 
     public void FalseBool()
-        { _parent.FalseBool(); }
+        {// _parent.FalseBool();
+         }
 
     public void triggerReset()
     {
-        _parent.triggerReset();
+      //  _parent.triggerReset();
     }
 
 }

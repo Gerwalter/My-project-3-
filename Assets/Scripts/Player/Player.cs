@@ -243,7 +243,7 @@ public class Player : HP
             if (_atkHit.collider.TryGetComponent<Enemy>(out Enemy enemy))
             {
                 enemy.ReciveDamage(_atkDmg);
-                enemy.ApplyLiftImpulse();
+                //enemy.ApplyLiftImpulse();
             }
         }
     }

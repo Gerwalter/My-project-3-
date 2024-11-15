@@ -2249,6 +2249,7 @@ GameObject:
   - component: {fileID: 7715154201322672574}
   - component: {fileID: 3773987790442223228}
   - component: {fileID: 6900142964974486969}
+  - component: {fileID: 1192229773341605196}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
@@ -2334,45 +2335,8 @@ MonoBehaviour:
   maxLife: 20
   currentLife: 0
   anim: {fileID: 9184416210414114211}
-  _isNormal: 1
-  _isHealer: 0
-  _isShielder: 0
-  _isShooter: 0
-  projectilePrefab: {fileID: 8951607973867105544, guid: c2928fa2c9b9c9549966da44ada4a3c3, type: 3}
-  _shieldInstance: {fileID: 0}
-  shootPoint: {fileID: 156520991036475152}
-  shootCooldown: 2
-  _shieldLife: 50
-  _enemyClass: 0
-  _enemyType: 0
-  _chaseDist: 4.5
-  _atkDist: 1.5
-  _changeNodeDist: 2
-  _healDist: 5
-  _shootDist: 5
-  _shieldDist: 5
-  _speed: 2
-  _canStart: 0
-  _nodeManager: {fileID: 0}
-  _animator: {fileID: 9184416210414114211}
-  _target: {fileID: 0}
-  _actualNode: {fileID: 0}
-  mat: {fileID: 2100000, guid: c0f7db84c08184d459fc405ec146f87c, type: 2}
-  _navMeshNodes: []
-  _agent: {fileID: 0}
-  clips:
-  - {fileID: 8300000, guid: 181a368a4a717f746804209787043db5, type: 3}
-  healthBar: {fileID: 3510542959025991487}
-  rb: {fileID: 6900142964974486969}
-  liftForce: 10
-  _groundCheckDistance: 1.1
-  _enableRoam: 1
-  _atkOrigin: {fileID: 1085586048006099824}
-  _atkRayDist: 1
-  _atkMask:
-    serializedVersion: 2
-    m_Bits: 8
-  _atkDmg: 1
+  animator: {fileID: 0}
+  agent: {fileID: 0}
 --- !u!114 &3773987790442223228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2412,6 +2376,26 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &1192229773341605196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7326823367288068571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cf6e8c4b260d44439c93b0028b7a580, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 2503358670393280038, guid: bc8f782dc926b19448ee53f9939456a9, type: 3}
+  shootPoint: {fileID: 156520991036475152}
+  shootCooldown: 2
+  lastShootTime: 0
+  enemyClass: 0
+  isNormal: 0
+  isHealer: 0
+  isShooter: 0
 --- !u!1 &7354300413807863108
 GameObject:
   m_ObjectHideFlags: 0

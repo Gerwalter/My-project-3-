@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviour
         }
     }
     #endregion
+    [SerializeField] private IANodeManager _crate;
+
+
 
     [SerializeField] private Player _player;
     public Player Player
@@ -41,27 +44,4 @@ public class GameManager : MonoBehaviour
         get { return _surface; }
         set { _surface = value; }
     }
-
-    [SerializeField] private IANodeManager _nodeManager;
-    [SerializeField] private List<Transform> _nodes;
-
-    public List<Transform> Nodes
-    {
-        get
-        {
-            if (NodeManager != null)
-            {
-                return new List<Transform>(NodeManager._nodes); // Devolvemos una copia
-            }
-            return new List<Transform>(); // Retornamos una lista vacía si no hay NodeManager
-        }
-    }
-
-    public IANodeManager NodeManager
-    {
-        get { return _nodeManager; }
-        set { _nodeManager = value; }
-    }
-
-
 }
