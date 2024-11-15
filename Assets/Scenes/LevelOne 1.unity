@@ -318,8 +318,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e381212d5e99a85429b63ded448ff96d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLife: 0
-  currentLife: 0
 --- !u!114 &103241011 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7295938850444405045, guid: 0487c03122a108e408343f783f7fa3e8, type: 3}
@@ -1987,6 +1985,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 471976695}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &486655987 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1085586048006099824, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
+  m_PrefabInstance: {fileID: 1432562662}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &513457962
 GameObject:
   m_ObjectHideFlags: 0
@@ -3149,8 +3152,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e381212d5e99a85429b63ded448ff96d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLife: 20
-  currentLife: 0
 --- !u!114 &664337053
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3221,8 +3222,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e381212d5e99a85429b63ded448ff96d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLife: 20
-  currentLife: 0
 --- !u!114 &672418965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3721,8 +3720,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e381212d5e99a85429b63ded448ff96d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLife: 20
-  currentLife: 0
 --- !u!114 &696556078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6154,7 +6151,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1312728046518551862, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.250019
+      value: 1.06
       objectReference: {fileID: 0}
     - target: {fileID: 1312728046518551862, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6200,6 +6197,18 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 1432562663}
+    - target: {fileID: 7715154201322672574, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
+      propertyPath: _atkOrigin
+      value: 
+      objectReference: {fileID: 486655987}
+    - target: {fileID: 7715154201322672574, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
+      propertyPath: _enableRoam
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7715154201322672574, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
+      propertyPath: _atkMask.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1192229773341605196, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
     m_RemovedGameObjects: []
@@ -18507,8 +18516,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e381212d5e99a85429b63ded448ff96d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLife: 20
-  currentLife: 0
 --- !u!114 &6596602979585286033
 MonoBehaviour:
   m_ObjectHideFlags: 0

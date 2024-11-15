@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
         }
     }
     #endregion
-    [SerializeField] private Crate _crate;
+    [SerializeField] private IANodeManager _crate;
 
 
 
@@ -44,11 +44,4 @@ public class GameManager : MonoBehaviour
         get { return _surface; }
         set { _surface = value; }
     }
-
-    public Crate Crate
-    {
-        get { return _crate; }
-        set { _crate = value; }
-    }
-
 }

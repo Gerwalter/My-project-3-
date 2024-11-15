@@ -9,21 +9,27 @@ public class IANodeManager : MonoBehaviour
 
     private HashSet<Enemy> processedEnemies = new HashSet<Enemy>();
 
-    private void Start()
+    private IEnumerator Start()
     {
         _nodes = GetComponentsInChildren<Transform>();
-    }
-/*
-    private void Update()
-    {
+        yield return new WaitForSeconds(1f);
         foreach (Enemy enemy in GameManager.Instance.Enemies)
         {
-            if (!processedEnemies.Contains(enemy))
-            {
-                //enemy.NavMeshNodes.AddRange(_nodes);
-                processedEnemies.Add(enemy);
-            }
+            enemy.NavMeshNodes.AddRange(_nodes);
+            enemy.Initialize();
         }
     }
-*/
+    /*
+        private void Update()
+        {
+            foreach (Enemy enemy in GameManager.Instance.Enemies)
+            {
+                if (!processedEnemies.Contains(enemy))
+                {
+                    //enemy.NavMeshNodes.AddRange(_nodes);
+                    processedEnemies.Add(enemy);
+                }
+            }
+        }
+    */
 }
