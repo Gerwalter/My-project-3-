@@ -2979,6 +2979,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 570d0f03edb90b54f80a9fcbc2c3b733, type: 3}
+--- !u!1 &650700527 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7326823367288068571, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
+  m_PrefabInstance: {fileID: 1432562662}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &656304951
 GameObject:
   m_ObjectHideFlags: 0
@@ -6202,18 +6207,33 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 486655987}
     - target: {fileID: 7715154201322672574, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
+      propertyPath: _chaseDist
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7715154201322672574, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
       propertyPath: _enableRoam
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7715154201322672574, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
+      propertyPath: _enemyBehavior
+      value: 
+      objectReference: {fileID: 1432562673}
+    - target: {fileID: 7715154201322672574, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
       propertyPath: _atkMask.m_Bits
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7715154201322672574, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
+      propertyPath: _changeNodeDist
+      value: 1.09
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1192229773341605196, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7326823367288068571, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
+      insertIndex: 5
+      addedObject: {fileID: 1432562673}
   m_SourcePrefab: {fileID: 100100000, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
 --- !u!114 &1432562663 stripped
 MonoBehaviour:
@@ -6236,6 +6256,22 @@ NavMeshAgent:
   m_CorrespondingSourceObject: {fileID: 8966580579443905447, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
   m_PrefabInstance: {fileID: 1432562662}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1432562673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650700527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3933a6690aaaef94bafaeb651b3d4174, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyClass: 2
+  _healDist: 5
+  _healAmount: 10
+  _healCooldown: 3
 --- !u!1 &1444456058
 GameObject:
   m_ObjectHideFlags: 0

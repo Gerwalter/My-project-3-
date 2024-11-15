@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using static IEnemyTypeBehavior;
 
 public class Enemy : Entity
 {
@@ -17,7 +18,8 @@ public class Enemy : Entity
     [SerializeField] private float _atkDist = 2.0f;
     [SerializeField] private float _changeNodeDist = 0.5f;
     [SerializeField] private bool _enableRoam;
-
+    [SerializeField] private NavMeshAgent _agent;
+    [SerializeField] private EnemyBehavior<EnemyClass> _enemyBehavior;
 
     protected override void Awake()
     {
@@ -36,10 +38,6 @@ public class Enemy : Entity
         get { return _navMeshNodes; }
         set { _navMeshNodes = value; }
     }
-
-    private NavMeshAgent _agent;
-
-
 
     public void Initialize()
     {
@@ -99,26 +97,25 @@ public class Enemy : Entity
 
         if (_enableRoam)
         {
+            _animator.SetBool("isMoving", true);
+
             if (Vector3.SqrMagnitude(transform.position - _target.position) <= (_chaseDist * _chaseDist))
             {
                 if (Vector3.SqrMagnitude(transform.position - _target.position) <= (_atkDist * _atkDist))
                 {
-                    if (!_agent.isStopped)
-                    { // _agent.isStopped = true;}
-                        print("non");
-                    }
+                    if (!_agent.isStopped) _agent.isStopped = true;
+
                     _animator.SetBool("isMoving", false);
                     _animator.SetTrigger("Punch");
                 }
                 else
                 {
-                    if (_agent.isStopped)
-                    {
-                        print("oal");
-                    }// _agent.isStopped = false;
+                    if (_agent.isStopped) _agent.isStopped = false;
 
                     _animator.SetBool("isMoving", true);
                     _animator.ResetTrigger("Punch");
+
+                    _agent.SetDestination(_target.position);
                 }
             }
             else
@@ -184,4 +181,4 @@ public class Enemy : Entity
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, _changeNodeDist);
     }
-    }
+}

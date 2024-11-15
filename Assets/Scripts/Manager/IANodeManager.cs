@@ -9,10 +9,9 @@ public class IANodeManager : MonoBehaviour
 
     private HashSet<Enemy> processedEnemies = new HashSet<Enemy>();
 
-    private IEnumerator Start()
+    private void Start()
     {
         _nodes = GetComponentsInChildren<Transform>();
-        yield return new WaitForSeconds(1f);
         foreach (Enemy enemy in GameManager.Instance.Enemies)
         {
             enemy.NavMeshNodes.AddRange(_nodes);
