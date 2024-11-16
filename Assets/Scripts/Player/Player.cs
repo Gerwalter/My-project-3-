@@ -231,6 +231,10 @@ public class Player : HP
             {
                 enemy.ReciveDamage(_atkDmg);
             }
+            else if (_atkHit.collider.TryGetComponent<HealthSystem>(out HealthSystem enemyHealth))
+            {
+                enemyHealth.ReceiveDamage(_atkDmg);
+            }
         }
     }
 

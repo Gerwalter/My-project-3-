@@ -72,6 +72,8 @@ public class Enemy : Entity
 
         _agent.SetDestination(_actualNode.position);
 
+        GetLife = maxLife;
+
     }
     private Transform GetNewNode(Transform lastNode = null)
     {
