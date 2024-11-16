@@ -1,14 +1,13 @@
-using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class HP : MonoBehaviour, IDamagable
 {
     [SerializeField] public float maxLife;
     [SerializeField] private float currentLife;
+    [SerializeField] private Animator anim;
 
-    public event Action<float> OnDamageReceived;
-    public event Action<float> OnHeal;
-    public event Action OnDeath;
 
     public float GetLife
     {
@@ -19,22 +18,36 @@ public class HP : MonoBehaviour, IDamagable
     private void Start()
     {
         currentLife = maxLife;
+
     }
 
     public void ReciveDamage(float damage)
     {
         GetLife -= damage;
-        OnDamageReceived?.Invoke(damage);
+
 
         if (GetLife <= 0)
         {
-            OnDeath?.Invoke();
+            if (anim != null)
+            {
+                anim.SetTrigger("Die");
+            }
+
         }
+        else {
+            if (anim != null)
+            {
+                anim.SetTrigger("Hit");
+            }
+        }
+
     }
 
     public void Health(float amount)
     {
+
         GetLife += amount;
-        OnHeal?.Invoke(amount);
     }
+
+
 }

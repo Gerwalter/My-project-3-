@@ -1,36 +1,45 @@
+
 using UnityEngine;
 
 public class Entity : HP
 {
-  
-    protected virtual void Awake()
+    public enum EnemyClass
     {
-        SubscribeToHpEvents();
+        Normal,
+        Healer,
+        Shooter,
+        Shielder,
     }
 
-   
-    private void SubscribeToHpEvents()
+    // Booleanos para cada tipo de enemigo
+    [SerializeField] protected bool _isNormal;
+    [SerializeField] protected bool _isHealer;
+    [SerializeField] protected bool _isShielder;
+    [SerializeField] protected bool _isShooter;
+
+
+    [SerializeField] protected GameObject projectilePrefab;
+    [SerializeField] protected GameObject _shieldInstance;
+    [SerializeField] protected Transform shootPoint;
+    [SerializeField] protected float shootCooldown = 2.0f;
+    [SerializeField] protected float _shieldLife = 2.0f;
+    protected float lastShootTime;
+    [SerializeField] public EnemyClass _enemyClass;
+
+    
+
+
+    private void Awake()
     {
-        OnDamageReceived += HandleDamage;
-        OnDeath += HandleDeath;
-        OnHeal += HandleHeal;
+        SetEnemyTypeBooleans();
     }
 
-    protected virtual void HandleDamage(float damage)
+    private void SetEnemyTypeBooleans()
     {
-        // Lógica adicional al recibir daño para los enemigos
-        Debug.Log("Entity recibió daño: " + damage);
-    }
-
-    protected virtual void HandleDeath()
-    {
-        // Lógica de muerte específica para enemigos
-        Debug.Log("Entity ha muerto");
-        Destroy(gameObject, 2.0f); // Se destruye después de la animación de muerte
-    }
-
-    protected virtual void HandleHeal(float amount)
-    {
-        // Lógica adicional al curarse
+        _isNormal = _enemyClass == EnemyClass.Normal;
+        _isHealer = _enemyClass == EnemyClass.Healer;
+        _isShooter = _enemyClass == EnemyClass.Shooter;
+        _isShielder = _enemyClass == EnemyClass.Shielder;
     }
 }
+

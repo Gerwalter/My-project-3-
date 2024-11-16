@@ -24,7 +24,7 @@ public class WaveManager : MonoBehaviour
     [Header("Spawn Area Settings")]
     [SerializeField] private List<Transform> spawnPoints; // Lista de puntos de spawn
 
-  //  private Dictionary<EnemyType, LootData> _enemyLoot = new Dictionary<EnemyType, LootData>();
+    private Dictionary<EnemyType, LootData> _enemyLoot = new Dictionary<EnemyType, LootData>();
     public static WaveManager Instance;
 
     private Queue<EnemyWaveData> _spawnOrder = new Queue<EnemyWaveData>();
@@ -45,10 +45,10 @@ public class WaveManager : MonoBehaviour
         DontDestroyOnLoad(this);
 
         // Agrega valores al diccionario de loot
-     //   _enemyLoot.Add(EnemyType.MELEE, new LootData { gold = 60, xp = 20 });
-     //   _enemyLoot.Add(EnemyType.RANGE, new LootData { gold = 45, xp = 10 });
-     //   _enemyLoot.Add(EnemyType.TANK, new LootData { gold = 25, xp = 40 });
-     //   _enemyLoot.Add(EnemyType.BOSS, new LootData { gold = 100, xp = 100 });
+        _enemyLoot.Add(EnemyType.MELEE, new LootData { gold = 60, xp = 20 });
+        _enemyLoot.Add(EnemyType.RANGE, new LootData { gold = 45, xp = 10 });
+        _enemyLoot.Add(EnemyType.TANK, new LootData { gold = 25, xp = 40 });
+        _enemyLoot.Add(EnemyType.BOSS, new LootData { gold = 100, xp = 100 });
 
         // Añadir oleadas al orden de spawn
         _spawnOrder.Enqueue(normalEnemyWave);
@@ -103,13 +103,13 @@ public class WaveManager : MonoBehaviour
         }
     }
 
-  //  public LootData GetLoot(EnemyType enemyType)
-  //  {
-  //      if (_enemyLoot.TryGetValue(enemyType, out var lootData))
-  //      {
-  //          return lootData;
-  //      }
-  //
-  //      return new LootData { gold = 0, xp = 0 };
-  //  }
+    public LootData GetLoot(EnemyType enemyType)
+    {
+        if (_enemyLoot.TryGetValue(enemyType, out var lootData))
+        {
+            return lootData;
+        }
+
+        return new LootData { gold = 0, xp = 0 };
+    }
 }

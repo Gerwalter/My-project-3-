@@ -20,9 +20,6 @@ public class GameManager : MonoBehaviour
         }
     }
     #endregion
-    [SerializeField] private IANodeManager _crate;
-
-
 
     [SerializeField] private Player _player;
     public Player Player
