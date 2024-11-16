@@ -57,9 +57,8 @@ public class SecurityCamera : MonoBehaviour
             GameObject enemyInstance = Instantiate(enemyPrefabs[randomIndex], spawnPoint.position, spawnPoint.rotation);
 
             Enemy enemyScript = enemyInstance.GetComponent<Enemy>();
-            enemyScript._nodeManager = iANode;
 
-            enemyScript.Initialize();
+            //enemyScript.Initialize();
            // iANode.NodesExtraConfirm();
         }
     }

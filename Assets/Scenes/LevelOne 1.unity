@@ -4591,13 +4591,8 @@ MonoBehaviour:
   _shootDist: 5
   _shieldDist: 5
   _speed: 2
-  _canStart: 0
-  _nodeManager: {fileID: 0}
   _animator: {fileID: 2044167832}
-  _target: {fileID: 0}
-  _actualNode: {fileID: 0}
   mat: {fileID: 2100000, guid: c0f7db84c08184d459fc405ec146f87c, type: 2}
-  _navMeshNodes: []
   _agent: {fileID: 0}
   clips:
   - {fileID: 8300000, guid: 181a368a4a717f746804209787043db5, type: 3}
@@ -4605,6 +4600,9 @@ MonoBehaviour:
   healthBar: {fileID: 57915932}
   rb: {fileID: 0}
   liftForce: 10
+  _target: {fileID: 0}
+  _actualNode: {fileID: 0}
+  _navMeshNodes: []
   air: 0
   _groundCheckDistance: 0.1
   _enableRoam: 1
@@ -9799,13 +9797,8 @@ MonoBehaviour:
   _shootDist: 5
   _shieldDist: 5
   _speed: 2
-  _canStart: 0
-  _nodeManager: {fileID: 0}
   _animator: {fileID: 1586406746}
-  _target: {fileID: 0}
-  _actualNode: {fileID: 0}
   mat: {fileID: 2100000, guid: c0f7db84c08184d459fc405ec146f87c, type: 2}
-  _navMeshNodes: []
   _agent: {fileID: 0}
   clips:
   - {fileID: 8300000, guid: 181a368a4a717f746804209787043db5, type: 3}
@@ -9813,6 +9806,9 @@ MonoBehaviour:
   healthBar: {fileID: 670341183}
   rb: {fileID: 0}
   liftForce: 10
+  _target: {fileID: 0}
+  _actualNode: {fileID: 0}
+  _navMeshNodes: []
   air: 0
   _groundCheckDistance: 0.1
   _enableRoam: 1
@@ -11821,13 +11817,8 @@ MonoBehaviour:
   _shootDist: 5
   _shieldDist: 5
   _speed: 2
-  _canStart: 0
-  _nodeManager: {fileID: 0}
   _animator: {fileID: 631484106}
-  _target: {fileID: 0}
-  _actualNode: {fileID: 0}
   mat: {fileID: 2100000, guid: c0f7db84c08184d459fc405ec146f87c, type: 2}
-  _navMeshNodes: []
   _agent: {fileID: 0}
   clips:
   - {fileID: 8300000, guid: 181a368a4a717f746804209787043db5, type: 3}
@@ -11835,6 +11826,9 @@ MonoBehaviour:
   healthBar: {fileID: 246129315}
   rb: {fileID: 0}
   liftForce: 10
+  _target: {fileID: 0}
+  _actualNode: {fileID: 0}
+  _navMeshNodes: []
   air: 0
   _groundCheckDistance: 0.1
   _enableRoam: 1
@@ -25088,6 +25082,10 @@ PrefabInstance:
       propertyPath: cameraController
       value: 
       objectReference: {fileID: 4307601419390952409}
+    - target: {fileID: 2832780455359106178, guid: 0487c03122a108e408343f783f7fa3e8, type: 3}
+      propertyPath: spawnPoints.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2832780455359106178, guid: 0487c03122a108e408343f783f7fa3e8, type: 3}
       propertyPath: normalEnemyWave.enemyToSpawn.Array.size
       value: 1

@@ -25,20 +25,11 @@ public class Enemy : Entity
     [SerializeField] private float _shieldDist = 5.0f;
     [SerializeField] private int _speed;
 
-    [SerializeField] private bool _canStart = false;
-    [SerializeField] public IANodeManager _nodeManager;
-
     [Header("<color=red>Behaviours</color>")]
     [SerializeField] private Animator _animator;
-    [SerializeField] private Transform _target, _actualNode;
+
     [SerializeField] private Material mat;
 
-    [SerializeField] private List<Transform> _navMeshNodes = new();
-    public List<Transform> NavMeshNodes
-    {
-        get { return _navMeshNodes; }
-        set { _navMeshNodes = value; }
-    }
 
     [SerializeField] private NavMeshAgent _agent;
 
@@ -51,53 +42,47 @@ public class Enemy : Entity
     [SerializeField] private float liftForce = 10.0f;
     private void Awake()
     {
-        Initialize();
-        _nodeManager = GameManager.Instance.NodeManager;
+        GameManager.Instance.Enemies.Add(this);
 
+        rb = GetComponent<Rigidbody>();
         rb.isKinematic = true;
         rb.useGravity = true;
         rb.constraints = RigidbodyConstraints.FreezeRotation;
     }
+    [SerializeField] private Transform _target, _actualNode;
+    [SerializeField] private List<Transform> _navMeshNodes = new();
+    public List<Transform> NavMeshNodes
+    {
+        get { return _navMeshNodes; }
+        set { _navMeshNodes = value; }
+    }
+
     private void Start()
     {
-        if (_target == null)
-        {
-            Initialize();
-        }
-        GetLife = maxLife;
-        _agent = GetComponent<NavMeshAgent>();
-
-        _agent.speed = _speed;
-
-        if (_isHealer)
-            _agent.speed = _speed * 1.5f;
-
-        GameManager.Instance.Enemies.Add(this);
-
-        StartCoroutine(WaitOneFrame());
+        Initialize();
     }
-    private IEnumerator WaitOneFrame()
-    {
-        for (int i = 0; i < 3; i++)
-        {
-            yield return null; // Espera un frame
-        }
-        _canStart = true;
-        if (_enableRoam)
-        {
-            Finalizer();
-        }
-    }
+
     public void Initialize()
     {
         _target = GameManager.Instance.Player.gameObject.transform;
-    }
 
-    public void Finalizer()
-    {
+        _agent = GetComponent<NavMeshAgent>();
+
         _actualNode = GetNewNode();
 
         _agent.SetDestination(_actualNode.position);
+
+    }
+    private Transform GetNewNode(Transform lastNode = null)
+    {
+        Transform newNode = _navMeshNodes[Random.Range(0, _navMeshNodes.Count)];
+
+        while (lastNode == newNode)
+        {
+            newNode = _navMeshNodes[Random.Range(0, _navMeshNodes.Count)];
+        }
+
+        return newNode;
     }
     public bool air;
 
@@ -129,7 +114,6 @@ public class Enemy : Entity
     {
         if (IsGrounded())
         {
-            print("Grounded");
             _enableRoam = true;
             _agent.enabled = true;
             rb.isKinematic = true;
@@ -155,8 +139,6 @@ public class Enemy : Entity
     {
         UpdateHealthBar(); 
         groundcheck();
-
-        if (!_canStart) return;
 
      //   if (IsGrounded() && !air)
      //   {
