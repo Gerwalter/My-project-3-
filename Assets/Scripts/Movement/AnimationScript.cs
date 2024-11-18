@@ -12,18 +12,13 @@ public class AnimationScript : MonoBehaviour
     private void Update()
     {
         //Fight();
+        Cast();
     }
 
     private void Cast()
     {
         if (Input.GetKeyDown(KeyCode.E))
-            anim.SetTrigger("Cast");
-    }
-
-    public void CastEnd()
-    {
-
-        anim.ResetTrigger("Cast");
+            anim.SetTrigger("Element");
     }
 
     public void SwordReveal()
@@ -46,14 +41,6 @@ public class AnimationScript : MonoBehaviour
         _player.PerformLiftAttack();
     }
 
-  //  public void Fight()
-  //  {
-  //      if (Input.GetKeyDown(KeyCode.F))
-  //      {
-  //          isFighting = !isFighting;
-  //          anim.SetBool("Fight", isFighting);        
-  //      }
-  //  }
     public void Attack()
     {
         _player.Attack();
@@ -62,6 +49,11 @@ public class AnimationScript : MonoBehaviour
     public void Die()
     {
         _player.Die();
+    }
+
+    public void DisableMovement()
+    {
+        _player.DisableMovement();
     }
 
     public void Interact()

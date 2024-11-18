@@ -21,7 +21,11 @@ public class CanvasMenuManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        panel.SetActive(false);
     }
+
+
 
     void Update()
     {

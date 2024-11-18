@@ -129,4 +129,6 @@ public class Enemigo : MonoBehaviour
         agent.isStopped = true;
         // Aquí puedes deshabilitar el enemigo o iniciar su destrucción
     }
+
+    
 }

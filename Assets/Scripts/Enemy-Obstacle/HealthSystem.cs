@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class HealthSystem : MonoBehaviour, IDamaga
 {
     [SerializeField] private float maxLife = 100;
-    private float currentLife;
+    [SerializeField] private float currentLife;
 
     [Header("UI Settings")]
     [SerializeField] private Image healthBar;
@@ -57,6 +57,31 @@ public class HealthSystem : MonoBehaviour, IDamaga
         healthBar.color = Color.Lerp(Color.red, Color.green, lifePercent);
     }
 
+    private bool isTakingContinuousDamage = false;
+    public void ApplyContinuousDamageFromPlayer(float totalDamage, float duration)
+    {
+        if (isTakingContinuousDamage) return;
+
+        isTakingContinuousDamage = true;
+        StartCoroutine(ContinuousDamageRoutine(totalDamage, duration));
+    }
+
+    private IEnumerator ContinuousDamageRoutine(float totalDamage, float duration)
+    {
+        float damagePerTick = totalDamage / duration;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            ReceiveDamage(damagePerTick * Time.deltaTime);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        isTakingContinuousDamage = false;
+    }
+
+ 
     private void DestroyOnDeath()
     {
         // Mensaje opcional para depuración

@@ -79,6 +79,7 @@ public class Player : HP
 
     private void Update()
     {
+        ElementalCast();
         if (freeze)
         {
             _anim.SetFloat(_xName, 0.0f);
@@ -233,7 +234,14 @@ public class Player : HP
             }
             else if (_atkHit.collider.TryGetComponent<HealthSystem>(out HealthSystem enemyHealth))
             {
-                enemyHealth.ReceiveDamage(_atkDmg);
+                if (selectedElement == ElementType.Fire)
+                {
+                    enemyHealth.ApplyContinuousDamageFromPlayer(50f, 5f);
+                }
+                else
+                {
+                    enemyHealth.ReceiveDamage(_atkDmg);
+                }
             }
         }
     }
@@ -263,7 +271,9 @@ public class Player : HP
     public void Die()
     {
         Handle.OnDie();
+        freeze = true;
         gameObje.SetActive(false);
+
         // Rend1.enabled = false; Rend2.enabled = false;
     }
 
@@ -329,6 +339,21 @@ public class Player : HP
             ResetRestrictions();
 
             grapple.stopGrapple();
+        }
+    }
+
+    [SerializeField] private ElementType selectedElement;
+    private enum ElementType
+    {
+        Normal,
+        Fire,
+    }
+    public void ElementalCast()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            selectedElement = (ElementType)Random.Range(0, System.Enum.GetValues(typeof(ElementType)).Length);
+            Debug.Log("Elemento seleccionado: " + selectedElement);
         }
     }
 }

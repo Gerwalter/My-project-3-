@@ -1,11 +1,12 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CameraController : MonoBehaviour
 {
     [Header("<color=#6A89A7>Cursor</color>")]
     [SerializeField] private CursorLockMode _lockMode = CursorLockMode.Locked;
     [SerializeField] public bool _isCursorVisible = false;
-    [SerializeField] public bool _isCameraFixed = false; // Nuevo: estado de cámara fija o no
+    [SerializeField] public bool _isCameraFixed = false;
 
     [Header("<color=#6A89A7>Physics</color>")]
     [Range(.01f, 1f)][SerializeField] private float _detectionRadius = .1f;
@@ -28,9 +29,13 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Ray _camRay;
     [SerializeField] private RaycastHit _camRayHit;
 
+    [Header("<color=#6A89A7>UI Settings</color>")]
+    [SerializeField] private GameObject menu; // Referencia al menú que debe desactivarse
+
     [Header("<color=#6A89A7>Layer Settings</color>")]
-    [SerializeField] private LayerMask _ignoreLayerMask; // LayerMask to ignore specific layers
+    [SerializeField] private LayerMask _ignoreLayerMask;
     public static CameraController Instance;
+
     private void Awake()
     {
         if (!Instance)
@@ -41,32 +46,37 @@ public class CameraController : MonoBehaviour
         else
         {
             Destroy(gameObject);
-        }   
+        }
+
         _ignoreLayerMask = LayerMask.GetMask("Player");
+    }
+
+    private void OnEnable()
+    {
+        // Suscribe el método para cuando se cargue una nueva escena
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        // Desuscribe el método al desactivar el script
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void Start()
     {
-        _target = GameManager.Instance.Player.GetCamTarget;
-        _cam = Camera.main;
-
-        LockCursor();  // Usamos el nuevo método LockCursor para inicializar
-        transform.forward = _target.forward;
-
-        _mouseX = transform.eulerAngles.y;
-        _mouseY = transform.eulerAngles.x;
+        InitializeCamera();
+        DisableMenu(); // Asegurarse de desactivar el menú en el inicio
     }
 
     private void Update()
     {
-        // Alternar entre la cámara fija y la liberada al presionar Escape
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            _isCameraFixed = !_isCameraFixed;  // Cambia el estado de la cámara fija
+            _isCameraFixed = !_isCameraFixed;
             ToggleCursorMode(_isCameraFixed);
         }
 
-        // Solo actualizar la rotación de la cámara si no está fija
         if (!_isCameraFixed)
         {
             UpdateCamRot(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
@@ -77,7 +87,6 @@ public class CameraController : MonoBehaviour
     {
         _camRay = new Ray(transform.position, _dir);
 
-        // Use the ignoreLayerMask to filter out the Player layer
         _isCamBlocked = Physics.SphereCast(_camRay, _detectionRadius, out _camRayHit, _maxDistance, ~_ignoreLayerMask);
     }
 
@@ -95,7 +104,7 @@ public class CameraController : MonoBehaviour
         set
         {
             _isCameraFixed = value;
-            ToggleCursorMode(_isCameraFixed); // Ajustamos el estado del cursor
+            ToggleCursorMode(_isCameraFixed);
         }
     }
 
@@ -151,7 +160,6 @@ public class CameraController : MonoBehaviour
         _cam.transform.LookAt(transform.position);
     }
 
-    // Método para alternar entre los modos de cursor
     private void ToggleCursorMode(bool isFixed)
     {
         if (isFixed)
@@ -169,5 +177,31 @@ public class CameraController : MonoBehaviour
     {
         Cursor.lockState = _lockMode;
         Cursor.visible = _isCursorVisible;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        InitializeCamera();
+        DisableMenu(); // Desactivar el menú cuando se cargue una nueva escena
+    }
+
+    private void InitializeCamera()
+    {
+        _target = GameManager.Instance.Player.GetCamTarget;
+        _cam = Camera.main;
+
+        LockCursor();
+        transform.forward = _target.forward;
+
+        _mouseX = transform.eulerAngles.y;
+        _mouseY = transform.eulerAngles.x;
+    }
+
+    private void DisableMenu()
+    {
+        if (menu != null)
+        {
+            menu.SetActive(false); // Desactiva el menú si no está ya desactivado
+        }
     }
 }

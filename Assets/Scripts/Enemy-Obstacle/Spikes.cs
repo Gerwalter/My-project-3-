@@ -8,6 +8,11 @@ public class Spikes : MonoBehaviour
     [SerializeField] private int damage = 1;
     [SerializeField] private LayerMask playerLayerMask;
 
+    private void Awake()
+    {
+        _player = GameManager.Instance.Player;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
 

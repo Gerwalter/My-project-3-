@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour
 {
     public CameraController controller;
-    public GameObject panel;
     // Reinicia la escena actual
 
     private void Start()
@@ -16,7 +15,6 @@ public class LevelManager : MonoBehaviour
         // Obtener la escena actual y reiniciarla
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         controller.IsCameraFixed = false;
-        panel.SetActive(false);
 
     }
 
