@@ -329,17 +329,26 @@ public class Enemy : Entity
 
     public void ReciveDamage(int dmg)
     {
-        GetLife -= dmg;
 
+        GetLife -= dmg;
         if (GetLife <= 0)
         {
-
-            //SFXManager.instance.PlayRandSFXClip(clips, transform, 1f);
-
             GameManager.Instance.Enemies.Remove(this);
 
             Destroy(gameObject);
+            
         }
+        else
+        {
+
+                _bloodVFX.SendEvent("OnTakeDamage");
+            
+        }
+
+        //SFXManager.instance.PlayRandSFXClip(clips, transform, 1f);
+
+        
+        
     }
 
     public void triggerReset()

@@ -232,7 +232,7 @@ public class Player : HP
             if (_atkHit.collider.TryGetComponent<Enemy>(out Enemy enemy))
             {
                 enemy.ReciveDamage(_atkDmg);
-                enemy.PlayVFX();
+                //enemy.PlayVFX();
             }
             else if (_atkHit.collider.TryGetComponent<HealthSystem>(out HealthSystem enemyHealth))
             {
@@ -244,7 +244,7 @@ public class Player : HP
                 {
                     enemyHealth.ReceiveDamage(_atkDmg);
                 }
-                enemyHealth.PlayVFX();
+
             }
         }
     }
@@ -262,6 +262,9 @@ public class Player : HP
             }
         }
     }
+
+
+    [SerializeField] private VisualEffect _fire;
 
     public void Cast()
     {
@@ -367,25 +370,6 @@ public class Player : HP
 
     public void PlayVFX()
     {
-        foreach (var vfx in vfxArray)
-        {
-            if (vfx != null)
-            {
-                // Si el VFX Graph tiene un parámetro booleano para activar
-
-
-                vfx.SetBool(vfxParameter, true);
-
-
-                // Reiniciar el VFX para que las partículas comiencen de nuevo
-                vfx.Reinit();
-            }
-            else
-            {
-                Debug.LogWarning("Un VisualEffect no está asignado en el array.");
-            }
-        }
+        _fire.SendEvent("OnFire");
     }
-
-
 }

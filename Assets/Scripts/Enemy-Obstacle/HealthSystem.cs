@@ -12,6 +12,8 @@ public class HealthSystem : MonoBehaviour, IDamaga
     [Header("UI Settings")]
     [SerializeField] private Image healthBar;
 
+    [SerializeField] private VisualEffect _bloodVFX;
+
     public event System.Action OnTakeDamage;
     public event System.Action OnHeal;
     public event System.Action OnDie;
@@ -30,6 +32,7 @@ public class HealthSystem : MonoBehaviour, IDamaga
 
     private void Start()
     {
+
         currentLife = maxLife;
         UpdateHealthBar();
 
@@ -40,6 +43,7 @@ public class HealthSystem : MonoBehaviour, IDamaga
     public void ReceiveDamage(float damage)
     {
         GetLife -= damage;
+        _bloodVFX.SendEvent("OnTakeDamage");
         OnTakeDamage?.Invoke();
     }
 

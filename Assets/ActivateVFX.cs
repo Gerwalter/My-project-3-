@@ -11,17 +11,11 @@ public class ActivateVFX : MonoBehaviour
 
     private void PlayVFX()
     {
-       foreach (var vfx in vfxArray)
+        foreach (var vfx in vfxArray)
         {
             if (vfx != null)
             {
-                // Si el VFX Graph tiene un parámetro booleano para activar
-
-                
-                    vfx.SetBool(vfxParameter, true);
-                
-
-                // Reiniciar el VFX para que las partículas comiencen de nuevo
+                vfx.SetBool(vfxParameter, true);
                 vfx.Reinit();
             }
             else
