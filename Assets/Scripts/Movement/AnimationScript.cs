@@ -61,6 +61,10 @@ public class AnimationScript : MonoBehaviour
         _player.Interact();
     }
 
+    public void PlayVFX()
+    {
+        _player.PlayVFX();
+    }
 
     public void triggerReset()
     {

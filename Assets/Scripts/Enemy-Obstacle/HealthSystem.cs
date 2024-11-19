@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.VFX;
 
 public class HealthSystem : MonoBehaviour, IDamaga
 {
@@ -87,5 +88,33 @@ public class HealthSystem : MonoBehaviour, IDamaga
         // Mensaje opcional para depuración
         Debug.Log($"{gameObject.name} has died and will be destroyed.");
         Destroy(gameObject);
+    }
+
+
+    [SerializeField] private VisualEffect[] vfxArray;
+
+    // Nombre del parámetro booleano en el VFX Graph, si es necesario
+    [SerializeField] private string vfxParameter = "PlayVFX";
+
+    public void PlayVFX()
+    {
+        foreach (var vfx in vfxArray)
+        {
+            if (vfx != null)
+            {
+                // Si el VFX Graph tiene un parámetro booleano para activar
+
+
+                vfx.SetBool(vfxParameter, true);
+
+
+                // Reiniciar el VFX para que las partículas comiencen de nuevo
+                vfx.Reinit();
+            }
+            else
+            {
+                Debug.LogWarning("Un VisualEffect no está asignado en el array.");
+            }
+        }
     }
 }

@@ -20,11 +20,12 @@ public class HP : MonoBehaviour, IDamagable
         currentLife = maxLife;
 
     }
-
+    private bool isDead = false;
     public void ReciveDamage(float damage)
     {
         GetLife -= damage;
 
+        if (isDead) return; // Si ya está muerto, no hacer nada
 
         if (GetLife <= 0)
         {
@@ -32,7 +33,7 @@ public class HP : MonoBehaviour, IDamagable
             {
                 anim.SetTrigger("Die");
             }
-
+            isDead = true; // Marcar como muerto
         }
         else {
             if (anim != null)
