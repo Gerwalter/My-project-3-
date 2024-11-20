@@ -58,11 +58,6 @@ public class Enemy : Entity
         set { _navMeshNodes = value; }
     }
 
-    private void Start()
-    {
-        Initialize();
-    }
-
     public void Initialize()
     {
         _target = GameManager.Instance.Player.gameObject.transform;
