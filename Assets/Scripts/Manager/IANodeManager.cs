@@ -14,10 +14,5 @@ public class IANodeManager : MonoBehaviour
     private void Start()
     {
         _nodes = GetComponentsInChildren<Transform>();
-        foreach (Enemy enemy in GameManager.Instance.Enemies)
-        {
-            enemy.NavMeshNodes.AddRange(_nodes);
-            enemy.Initialize();
-        }
     }
 }

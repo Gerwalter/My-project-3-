@@ -188,8 +188,7 @@ MonoBehaviour:
   _player: {fileID: 0}
   _enemies: []
   _surface: {fileID: 0}
-  _nodeManager: {fileID: 0}
-  _nodes: []
+  _nodes: {fileID: 0}
 --- !u!114 &4139764367681046122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,7 +233,7 @@ MonoBehaviour:
   videoPlayer: {fileID: 2929363658912932181}
   vignetteSlider: {fileID: 0}
   shaderTexturePropertyName: _MainTex
-  videoClip: {fileID: 32900000, guid: d8ae6e8ac1d54044db6c19e5f21473bc, type: 3}
+  videoClip: {fileID: 32900000, guid: c4992a386006d274ea38b97a0d4c7a56, type: 3}
   outline: {fileID: 2100000, guid: 92abfbd8eee84494bbec71aecadfd098, type: 2}
 --- !u!114 &4517212949649958928
 MonoBehaviour:
@@ -264,6 +263,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f1bd1787ee79a143af17332a130c12c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controller: {fileID: 0}
 --- !u!114 &2832780455359106178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,7 +278,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalEnemyWave:
     enemyToSpawn:
-    - {fileID: 7715154201322672574, guid: 66ed75e3d5a7a654a810a467873ebbf2, type: 3}
+    - {fileID: 7715154201322672574, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
+    - {fileID: 7715154201322672574, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
   heavyEnemyWave:
     enemyToSpawn: []
   ligthEnemyWave:
@@ -287,7 +288,6 @@ MonoBehaviour:
     enemyToSpawn: []
   spawnPoints:
   - {fileID: 977567382580314072}
-  - {fileID: 1390599749750297413}
   _timer: 0
   _spawn: 0.2
 --- !u!114 &1995751719782077969

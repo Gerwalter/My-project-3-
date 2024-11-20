@@ -228,7 +228,7 @@ public class Player : HP
             else if (_atkHit.collider.TryGetComponent<HealthSystem>(out HealthSystem enemyHealth))
             {
                 int randomValue = Random.Range(0, 101); // Incluye 0 y 100
-                if (randomValue >= 20)
+                if (randomValue >= 90)
                 {
                     enemyHealth.ApplyContinuousDamageFromPlayer(10f, 2.5f, selectedElement);
                 }
