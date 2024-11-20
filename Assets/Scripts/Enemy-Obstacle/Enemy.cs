@@ -44,6 +44,7 @@ public class Enemy : Entity
     private void Awake()
     {
         GameManager.Instance.Enemies.Add(this);
+        _iaNodeManager = GameManager.Instance.Nodes;
 
         rb = GetComponent<Rigidbody>();
         rb.isKinematic = true;
@@ -52,14 +53,26 @@ public class Enemy : Entity
     }
     [SerializeField] private Transform _target, _actualNode;
     [SerializeField] private List<Transform> _navMeshNodes = new();
+
     public List<Transform> NavMeshNodes
     {
         get { return _navMeshNodes; }
         set { _navMeshNodes = value; }
     }
 
+    [SerializeField] private IANodeManager _iaNodeManager;
+
+    private void Start()
+    {
+        Initialize();
+    }
+
     public void Initialize()
     {
+        print("funca");
+
+        NavMeshNodes.AddRange(_iaNodeManager._nodes);
+
         _target = GameManager.Instance.Player.gameObject.transform;
 
         _agent = GetComponent<NavMeshAgent>();
