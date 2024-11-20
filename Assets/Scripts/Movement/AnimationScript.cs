@@ -66,6 +66,11 @@ public class AnimationScript : MonoBehaviour
         _player.PlayVFX();
     }
 
+    public void PlayVFXAttack()
+    {
+        _player.PlayVFXAttack();
+    }
+
     public void triggerReset()
     {
         anim.ResetTrigger("Hit");

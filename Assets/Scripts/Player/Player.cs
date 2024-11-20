@@ -372,4 +372,9 @@ public class Player : HP
     {
         _fire.SendEvent("OnFire");
     }
+
+    public void PlayVFXAttack()
+    {
+        _fire.SendEvent("Attack");
+    }
 }
