@@ -77,7 +77,6 @@ public class Player : HP
         GetLife = maxLife;
         UpdateHealthBar();
     }
-
     private void Update()
     {
         ElementalCast();
@@ -129,7 +128,6 @@ public class Player : HP
             Movement(_dir);
         }
     }
-
     public void DisableMovement()
     {
         freeze = true;
@@ -139,7 +137,6 @@ public class Player : HP
     {
         freeze = false;
     }
-
     private void UpdateHealthBar()
     {
         float lifePercent = GetLife / maxLife;
@@ -163,9 +160,6 @@ public class Player : HP
             }
         }
     }
-
-
-
     private void Jump()
     {
         _rb.AddForce(transform.up * _jumpForce, ForceMode.Impulse);
@@ -210,8 +204,6 @@ public class Player : HP
 
         return Physics.Raycast(_movRay, _movRayDist, _movMask);
     }
-
-
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
@@ -232,17 +224,17 @@ public class Player : HP
             if (_atkHit.collider.TryGetComponent<Enemy>(out Enemy enemy))
             {
                 enemy.ReciveDamage(_atkDmg);
-                //enemy.PlayVFX();
             }
             else if (_atkHit.collider.TryGetComponent<HealthSystem>(out HealthSystem enemyHealth))
             {
-                if (selectedElement == ElementType.Fire)
+                int randomValue = Random.Range(0, 101); // Incluye 0 y 100
+                if (randomValue >= 20)
                 {
-                    enemyHealth.ApplyContinuousDamageFromPlayer(50f, 5f);
+                    enemyHealth.ApplyContinuousDamageFromPlayer(10f, 2.5f, selectedElement);
                 }
                 else
                 {
-                    enemyHealth.ReceiveDamage(_atkDmg);
+                    enemyHealth.ReceiveDamage(_atkDmg, selectedElement);
                 }
 
             }
@@ -260,9 +252,21 @@ public class Player : HP
                 enemy.ReciveDamage(_atkDmg);
                 enemy.ApplyLiftImpulse();
             }
+            else if (_atkHit.collider.TryGetComponent<HealthSystem>(out HealthSystem enemyHealth))
+            {
+                int randomValue = Random.Range(0, 101); // Incluye 0 y 100
+                if (randomValue >= 20)
+                {
+                    enemyHealth.ApplyContinuousDamageFromPlayer(10f, 2.5f, selectedElement);
+                }
+                else
+                {
+                    enemyHealth.ReceiveDamage(_atkDmg, selectedElement);
+                }
+
+            }
         }
     }
-
 
     [SerializeField] private VisualEffect _fire;
 
@@ -349,25 +353,20 @@ public class Player : HP
     }
 
     [SerializeField] private ElementType selectedElement;
-    private enum ElementType
+    public enum ElementType
     {
         Normal,
         Fire,
+        Electric,
     }
     public void ElementalCast()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            selectedElement = (ElementType)Random.Range(0, System.Enum.GetValues(typeof(ElementType)).Length);
+            selectedElement = (ElementType)(((int)selectedElement + 1) % System.Enum.GetValues(typeof(ElementType)).Length);
             Debug.Log("Elemento seleccionado: " + selectedElement);
         }
     }
-
-    [SerializeField] private VisualEffect[] vfxArray;
-
-    // Nombre del parámetro booleano en el VFX Graph, si es necesario
-    [SerializeField] private string vfxParameter = "PlayVFX";
-
     public void PlayVFX()
     {
         _fire.SendEvent("OnFire");

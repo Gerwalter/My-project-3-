@@ -22,7 +22,7 @@ public class HP : MonoBehaviour, IDamagable
 
     }
     private bool isDead = false;
-    [SerializeField] public VisualEffect _bloodVFX;
+   [SerializeField] public VisualEffect _bloodVFX;
     public void ReciveDamage(float damage)
     {
         GetLife -= damage;
@@ -41,7 +41,7 @@ public class HP : MonoBehaviour, IDamagable
             if (anim != null)
             {
                 anim.SetTrigger("Hit");
-                _bloodVFX.SendEvent("OnTakeDamage");
+               // _bloodVFX.SendEvent("OnTakeDamage");
             }
         }
 

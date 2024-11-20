@@ -87,6 +87,7 @@ public class Enemy : Entity
 
         return newNode;
     }
+
     public bool air;
 
     public void ApplyLiftImpulse()
@@ -142,13 +143,6 @@ public class Enemy : Entity
     {
         UpdateHealthBar(); 
         groundcheck();
-
-     //   if (IsGrounded() && !air)
-     //   {
-     //       _enableRoam = true;
-     //       _agent.enabled = true;
-     //       rb.isKinematic = true;
-     //   }
 
         if (_enableRoam)
         {
@@ -340,15 +334,10 @@ public class Enemy : Entity
         }
         else
         {
-
-                _bloodVFX.SendEvent("OnTakeDamage");
-            
+            _bloodVFX.SendEvent("OnTakeDamage");
         }
 
         //SFXManager.instance.PlayRandSFXClip(clips, transform, 1f);
-
-        
-        
     }
 
     public void triggerReset()

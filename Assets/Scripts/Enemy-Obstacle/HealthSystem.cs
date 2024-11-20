@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.VFX;
+using static Player;
 
 public class HealthSystem : MonoBehaviour, IDamaga
 {
@@ -26,7 +27,8 @@ public class HealthSystem : MonoBehaviour, IDamaga
             currentLife = Mathf.Clamp(value, 0, maxLife);
             UpdateHealthBar();
             if (currentLife == 0)
-                OnDie?.Invoke();
+                // OnDie?.Invoke();
+                currentLife = maxLife;
         }
     }
 
@@ -38,13 +40,6 @@ public class HealthSystem : MonoBehaviour, IDamaga
 
         // Suscribirse al evento OnDie para destruir el objeto
         OnDie += DestroyOnDeath;
-    }
-
-    public void ReceiveDamage(float damage)
-    {
-        GetLife -= damage;
-        _bloodVFX.SendEvent("OnTakeDamage");
-        OnTakeDamage?.Invoke();
     }
 
     public void Heal(float amount)
@@ -61,24 +56,44 @@ public class HealthSystem : MonoBehaviour, IDamaga
         healthBar.fillAmount = lifePercent;
         healthBar.color = Color.Lerp(Color.red, Color.green, lifePercent);
     }
+    [SerializeField] private ElementType weakness; // Tipo de debilidad del enemigo
+    [SerializeField] private float elementalMultiplier = 2.0f;
+    public void ReceiveDamage(float damage, ElementType damageType)
+    {
+        if (damageType == weakness)
+        {
+            damage *= elementalMultiplier; // Aumenta el daño si coincide con la debilidad
+        }
+
+        GetLife -= damage;
+        _bloodVFX.SendEvent("OnTakeDamage");
+        OnTakeDamage?.Invoke();
+    }
 
     private bool isTakingContinuousDamage = false;
-    public void ApplyContinuousDamageFromPlayer(float totalDamage, float duration)
+    public void ApplyContinuousDamageFromPlayer(float totalDamage, float duration, ElementType damageType)
     {
         if (isTakingContinuousDamage) return;
 
         isTakingContinuousDamage = true;
-        StartCoroutine(ContinuousDamageRoutine(totalDamage, duration));
+        StartCoroutine(ContinuousDamageRoutine(totalDamage, duration, damageType));
     }
 
-    private IEnumerator ContinuousDamageRoutine(float totalDamage, float duration)
+    private IEnumerator ContinuousDamageRoutine(float totalDamage, float duration, ElementType damageType)
     {
         float damagePerTick = totalDamage / duration;
         float elapsed = 0f;
 
         while (elapsed < duration)
         {
-            ReceiveDamage(damagePerTick * Time.deltaTime);
+            // Verifica si el tipo de daño coincide con la debilidad
+            float actualDamage = (damageType == weakness) ? damagePerTick * 2 : damagePerTick;
+
+
+            int roundedDamage = Mathf.RoundToInt(actualDamage * Time.deltaTime);
+            // Aplica el daño calculado
+            ReceiveDamage(roundedDamage, damageType);
+
             elapsed += Time.deltaTime;
             yield return null;
         }
@@ -86,39 +101,11 @@ public class HealthSystem : MonoBehaviour, IDamaga
         isTakingContinuousDamage = false;
     }
 
- 
+
     private void DestroyOnDeath()
     {
         // Mensaje opcional para depuración
         Debug.Log($"{gameObject.name} has died and will be destroyed.");
         Destroy(gameObject);
-    }
-
-
-    [SerializeField] private VisualEffect[] vfxArray;
-
-    // Nombre del parámetro booleano en el VFX Graph, si es necesario
-    [SerializeField] private string vfxParameter = "PlayVFX";
-
-    public void PlayVFX()
-    {
-        foreach (var vfx in vfxArray)
-        {
-            if (vfx != null)
-            {
-                // Si el VFX Graph tiene un parámetro booleano para activar
-
-
-                vfx.SetBool(vfxParameter, true);
-
-
-                // Reiniciar el VFX para que las partículas comiencen de nuevo
-                vfx.Reinit();
-            }
-            else
-            {
-                Debug.LogWarning("Un VisualEffect no está asignado en el array.");
-            }
-        }
     }
 }
