@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.VFX;
@@ -32,7 +33,7 @@ public class Player : HP
     [SerializeField] private LayerMask _jumpMask;
     [SerializeField] private float _movRayDist = 0.75f;
     [SerializeField] private LayerMask _movMask;
-    [SerializeField] private float _movSpeed = 3.5f;
+    [SerializeField] public float _movSpeed = 3.5f;
     [SerializeField] private Vector3 velocityToSet;
     [SerializeField] private float velocity;
 
@@ -156,6 +157,23 @@ public class Player : HP
             }
         }
     }
+    [SerializeField] private float originalSpeed;
+    [SerializeField] private float speedMultiplier = 2.0f; // Multiplicador de velocidad
+    [SerializeField] private float duration = 5.0f; // Duración del aumento en segundos
+
+    private IEnumerator ApplySpeedBoost()
+    {
+        originalSpeed = _movSpeed; // Guarda la velocidad original
+        _movSpeed *= speedMultiplier; // Aplica el multiplicador
+
+        yield return new WaitForSeconds(duration); // Espera el tiempo de duración
+
+        _movSpeed = originalSpeed; // Restaura la velocidad original
+    }
+    public void SpeedBooster()
+    {
+        StartCoroutine(ApplySpeedBoost());
+    }
     private void Jump()
     {
         _rb.AddForce(transform.up * _jumpForce, ForceMode.Impulse);
@@ -211,6 +229,24 @@ public class Player : HP
         Gizmos.color = Color.red;
         Gizmos.DrawRay(_atkRay);
     }
+
+    [SerializeField] private float originaldmg;
+    [SerializeField] private int dmgMultiplier = 2; // Multiplicador de velocidad
+
+
+    private IEnumerator ApplyDMGBoost()
+    {
+        originaldmg = _atkDmg; // Guarda la velocidad original
+        _atkDmg *= dmgMultiplier; // Aplica el multiplicador
+
+        yield return new WaitForSeconds(duration); // Espera el tiempo de duración
+
+        _atkDmg = dmgMultiplier; // Restaura la velocidad original
+    }
+    public void DMGBooster()
+    {
+        StartCoroutine(ApplyDMGBoost());
+    }
     public void Attack()
     {
         _atkRay = new Ray(_atkOrigin.position, transform.forward);
@@ -233,6 +269,10 @@ public class Player : HP
                     enemyHealth.ReceiveDamage(_atkDmg, selectedElement);
                 }
 
+            }
+            else if (_atkHit.collider.TryGetComponent<Boss>(out Boss BossHealth))
+            {
+                BossHealth.ReciveDamage(_atkDmg);
             }
         }
     }
@@ -260,6 +300,11 @@ public class Player : HP
                     enemyHealth.ReceiveDamage(_atkDmg, selectedElement);
                 }
 
+            }
+            else if (_atkHit.collider.TryGetComponent<Boss>(out Boss BossHealth))
+            {
+                BossHealth.ReciveDamage(_atkDmg);
+                BossHealth.ApplyLiftImpulse();
             }
         }
     }

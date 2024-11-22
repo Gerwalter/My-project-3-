@@ -23,7 +23,7 @@ public class Enemy : Entity
     [SerializeField] private float _changeNodeDist = 0.5f;
     [SerializeField] private float _healDist = 5.0f;
     [SerializeField] private float _shootDist = 6.0f;
-    [SerializeField] private int _speed;
+    [SerializeField] public int _speed;
     [SerializeField] public EnemyType enemyType;
 
     [Header("<color=red>Behaviours</color>")]
@@ -69,8 +69,6 @@ public class Enemy : Entity
 
     public void Initialize()
     {
-        print("funca");
-
         NavMeshNodes.AddRange(_iaNodeManager._nodes);
 
         _target = GameManager.Instance.Player.gameObject.transform;
@@ -140,12 +138,14 @@ public class Enemy : Entity
         healthBar.color = Color.Lerp(Color.red, Color.green, lifePercent);
     }
 
-    [SerializeField] private bool _enableRoam = true;
+    [SerializeField] public bool _enableRoam = true;
+
+
     private void FixedUpdate()
     {
         UpdateHealthBar();
         groundcheck();
-
+        _agent.speed = _speed;
         if (_enableRoam)
         {
             if (!_target)

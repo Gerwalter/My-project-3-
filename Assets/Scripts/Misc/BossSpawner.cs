@@ -8,6 +8,13 @@ public class BossSpawner : MonoBehaviour
     [SerializeField] private Player _player;
     [SerializeField] private LayerMask playerLayerMask;
     [SerializeField] private PlayableDirector director; // Referencia al PlayableDirector
+    public AudioClip Theme;
+
+
+    [Header("Spawn Area Settings")]
+    [SerializeField] private Transform spawnPoint; // Lista de puntos de spawn
+    [SerializeField] private Boss enemy;
+
 
     private void Awake()
     {
@@ -35,6 +42,12 @@ public class BossSpawner : MonoBehaviour
         }
     }
 
+    public void SpawnBoss()
+    {
+        Instantiate(enemy, spawnPoint.position, Quaternion.identity);
+
+    }
+
     private void OnTimelineFinished(PlayableDirector finishedDirector)
     {
         if (finishedDirector == director)
@@ -42,6 +55,8 @@ public class BossSpawner : MonoBehaviour
             Debug.Log("Timeline finalizada. Liberando al jugador.");
             _player.freeze = false; // Libera al jugador
             director.stopped -= OnTimelineFinished; // Desuscribirse del evento
+
+            SFXManager.instance.PlaySFXClip(Theme, transform, 1f);
             Destroy(gameObject);
         }
     }

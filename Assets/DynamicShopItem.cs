@@ -1,22 +1,27 @@
 using UnityEngine;
 
+
 [System.Serializable]
 public struct ItemDetails
 {
     public int cost;
     public string name;
+    public GameObject item;
 
-    public ItemDetails(int cost, string name)
+    public ItemDetails(int cost, string name, GameObject item)
     {
         this.cost = cost;
         this.name = name;
+        this.item = item;
     }
 }
 
 public class DynamicShopItem : MonoBehaviour
 {
-    [SerializeField] private ItemDetails itemDetails; // Detalles del ítem
-    private GoldManager _goldManager;
+    [SerializeField] private ItemDetails[] itemDetails; // Detalles del ítem
+    [SerializeField] private GoldManager _goldManager;
+    public Transform spawn;
+    public PPMenu menu;
 
     private void Start()
     {
@@ -29,30 +34,30 @@ public class DynamicShopItem : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Configura dinámicamente los detalles del ítem desde el menú.
-    /// </summary>
-    /// <param name="details">Estructura con los detalles del ítem.</param>
-    public void SetItemDetails(ItemDetails details)
+    public void SetItemDetails(ItemDetails[] details)
     {
         itemDetails = details;
     }
 
-    /// <summary>
-    /// Llamado al hacer clic en el botón de este ítem.
-    /// </summary>
-    /// <returns>El nombre del ítem si la compra fue exitosa, o una cadena vacía si falló.</returns>
-    public string PurchaseItem()
+    public void PurchaseItem(string itemName)
     {
-        if (_goldManager == null) return "";
-
-        if (_goldManager.SpendGold(itemDetails.cost))
+        ItemDetails? selectedItem = null;
+        foreach (var item in itemDetails)
         {
-            Debug.Log($"Compra realizada: {itemDetails.name} por {itemDetails.cost} de oro.");
-            return itemDetails.name;
+            if (item.name == itemName)
+            {
+                selectedItem = item;
+                break;
+            }
         }
 
-        Debug.Log("No tienes suficiente oro para comprar este objeto.");
-        return "";
+        if (_goldManager.SpendGold(selectedItem.Value.cost))
+        {
+            Vector3 spawnPosition = spawn.transform.position;
+            Quaternion spawnRotation = Quaternion.identity;
+
+            Instantiate(selectedItem.Value.item, spawnPosition, spawnRotation);
+            menu.Menudisable();
+        }
     }
 }
