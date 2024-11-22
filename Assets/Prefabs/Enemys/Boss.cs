@@ -25,6 +25,16 @@ public class Boss : HP
     private void Start()
     {
         _target = GameManager.Instance.Player.gameObject.transform;
+
+        if (!_target)
+        {
+            Debug.LogError("No hay target.");
+        }
+        else
+        {
+            Debug.Log($"Target : {_target.gameObject.name}.");
+        }
+
         GetLife = maxLife;
     }
 
@@ -58,12 +68,14 @@ public class Boss : HP
         }
     }
 
+    float distanceToPlayer = 0.0f;
+
     private void Update()
     {
         UpdateHealthBar();
         groundcheck();
 
-        float distanceToPlayer = Vector3.Distance(transform.position, _target.position);
+        distanceToPlayer = Vector3.Distance(transform.position, _target.position);
     }
 
     private void UpdateHealthBar()
