@@ -5,10 +5,17 @@ using UnityEngine;
 public class Cure : MonoBehaviour
 {
     [SerializeField] private Player _player;
-    [SerializeField] private int damage = 1;
+    [SerializeField] private int cure = 1;
+
+
+    private void Start()
+    {
+        _player = GameManager.Instance.Player;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        _player.Health(damage);
+        _player.Health(cure);
+        Destroy(gameObject);
     }
 }

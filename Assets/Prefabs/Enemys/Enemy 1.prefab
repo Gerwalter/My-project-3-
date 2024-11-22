@@ -529,7 +529,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7664a793ade56614aa83d074cd36a3d6, type: 2}
+  - {fileID: 2100000, guid: a25747d588f086a4caa4dce399923545, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1552,7 +1552,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7664a793ade56614aa83d074cd36a3d6, type: 2}
+  - {fileID: 2100000, guid: a25747d588f086a4caa4dce399923545, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2250,7 +2250,7 @@ GameObject:
   - component: {fileID: 7715154201322672574}
   - component: {fileID: 6900142964974486969}
   m_Layer: 6
-  m_Name: Enemy
+  m_Name: Enemy 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2335,23 +2335,21 @@ MonoBehaviour:
   currentLife: 0
   anim: {fileID: 9184416210414114211}
   _bloodVFX: {fileID: 8050358303301125689}
-  _isNormal: 1
-  _isHealer: 0
-  _isShielder: 0
+  _isNormal: 0
+  _isHealer: 1
   _isShooter: 0
   projectilePrefab: {fileID: 8951607973867105544, guid: c2928fa2c9b9c9549966da44ada4a3c3, type: 3}
   _shieldInstance: {fileID: 0}
   shootPoint: {fileID: 156520991036475152}
   shootCooldown: 2
-  _shieldLife: 50
-  _enemyClass: 0
+  _enemyClass: 1
   _chaseDist: 4.5
   _atkDist: 1.5
   _changeNodeDist: 2
   _healDist: 5
   _shootDist: 5
   _speed: 2
-  enemyType: 0
+  enemyType: 2
   _animator: {fileID: 9184416210414114211}
   mat: {fileID: 2100000, guid: c0f7db84c08184d459fc405ec146f87c, type: 2}
   _agent: {fileID: 0}
@@ -2373,6 +2371,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   _atkDmg: 1
+  healCooldown: 7
   vfxArray:
   - {fileID: 8050358303301125689}
   vfxParameter: PlayVFX

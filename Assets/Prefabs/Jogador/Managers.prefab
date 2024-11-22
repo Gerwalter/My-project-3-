@@ -141,6 +141,7 @@ GameObject:
   - component: {fileID: 6864792825799170854}
   - component: {fileID: 4281948245498954199}
   - component: {fileID: 4139764367681046122}
+  - component: {fileID: 2372050120881644880}
   - component: {fileID: 1335479480660468796}
   - component: {fileID: 3740255682162777912}
   - component: {fileID: 4517212949649958928}
@@ -202,6 +203,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundSFXObject: {fileID: 3082623153927528285, guid: f7f35ebe7d84fa54aae894637a439d96, type: 3}
+--- !u!114 &2372050120881644880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8630724509985047641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2809ece63e0c60440b8dfc778bfcbca4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1335479480660468796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,7 +292,7 @@ MonoBehaviour:
   normalEnemyWave:
     enemyToSpawn:
     - {fileID: 7715154201322672574, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
-    - {fileID: 7715154201322672574, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
+    - {fileID: 7715154201322672574, guid: 18536a461cff6054b81c88c2b4d744c7, type: 3}
   heavyEnemyWave:
     enemyToSpawn: []
   ligthEnemyWave:

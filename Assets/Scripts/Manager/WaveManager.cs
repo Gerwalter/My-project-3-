@@ -5,7 +5,6 @@ using UnityEngine;
 public struct LootData
 {
     public int gold;
-    public int xp;
 }
 
 [Serializable]
@@ -45,10 +44,10 @@ public class WaveManager : MonoBehaviour
         DontDestroyOnLoad(this);
 
         // Agrega valores al diccionario de loot
-        _enemyLoot.Add(EnemyType.MELEE, new LootData { gold = 60, xp = 20 });
-        _enemyLoot.Add(EnemyType.RANGE, new LootData { gold = 45, xp = 10 });
-        _enemyLoot.Add(EnemyType.TANK, new LootData { gold = 25, xp = 40 });
-        _enemyLoot.Add(EnemyType.BOSS, new LootData { gold = 100, xp = 100 });
+        _enemyLoot.Add(EnemyType.MELEE, new LootData { gold = 60});
+        _enemyLoot.Add(EnemyType.RANGE, new LootData { gold = 45 });
+        _enemyLoot.Add(EnemyType.TANK, new LootData { gold = 25 });
+        _enemyLoot.Add(EnemyType.BOSS, new LootData { gold = 100 });
 
         // Añadir oleadas al orden de spawn
         _spawnOrder.Enqueue(normalEnemyWave);
@@ -110,6 +109,6 @@ public class WaveManager : MonoBehaviour
             return lootData;
         }
 
-        return new LootData { gold = 0, xp = 0 };
+        return new LootData { gold = 0 };
     }
 }

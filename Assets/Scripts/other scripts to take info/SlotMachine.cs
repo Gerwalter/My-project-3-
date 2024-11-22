@@ -5,26 +5,16 @@ public class SlotMachine : ButtonBehaviour
 {
     [SerializeField] private Renderer _renderer;
 
-    // Array de texturas
-    public Texture[] slotTextures; // Cambia de Sprite a Texture
-    public Renderer[] slots; // Ahora son Renderers para acceder a los materiales
-    public float spinDuration = 2.0f; // Duración total del giro por slot
+    public Texture[] slotTextures;
+    public Renderer[] slots;
+    public float spinDuration = 2.0f;
     public float delayBetweenSlots = .5f;
     public AudioClip gambling, awwdangit, slotsound, winnin;
-    private AudioSource audioSource;
 
-    // Mensajes para cada textura ganadora
     [SerializeField] private string[] winMessages = { "Ganaste", "Bien", "Haha" };
 
-    private void Start()
-    {
-        // Asegurarse de que haya un AudioSource en el objeto
-        audioSource = GetComponent<AudioSource>();
-        if (audioSource == null)
-        {
-            audioSource = gameObject.AddComponent<AudioSource>();
-        }
-    }
+    [SerializeField] private int itemCost = 10; // Costo del objeto en oro
+    [SerializeField] private GoldManager _goldManager;
 
     public override void OnInteract()
     {
@@ -35,33 +25,25 @@ public class SlotMachine : ButtonBehaviour
         // Crea un nuevo color con los valores generados.
         Color randomColor = new Color(r, g, b);
 
-        // Aplica el color al material del objeto.
+
+
         _renderer.material.color = randomColor;
+        if (_goldManager.SpendGold(itemCost/2))
+        {
+            SFXManager.instance.PlaySFXClip(gambling, transform, 1f);
+            StartCoroutine(SpinSlots());
+        }
+        else
+        {
+            SFXManager.instance.PlaySFXClip(awwdangit, transform, 1f);
+        }
 
-        // Reproduce el sonido de gambling
-        audioSource.PlayOneShot(gambling);
 
-        // Iniciar la corrutina una vez que termine el sonido de gambling
-        StartCoroutine(WaitForGamblingSound());
-    }
-
-    IEnumerator WaitForGamblingSound()
-    {
-        // Esperar hasta que el clip "gambling" termine de reproducirse
-        yield return new WaitWhile(() => audioSource.isPlaying);
-
-        // Reproducir el sonido de los slots en loop mientras giran
-        audioSource.clip = slotsound;
-        audioSource.loop = true;
-        audioSource.Play();
-
-        // Iniciar el giro de los slots
-        StartCoroutine(SpinSlots());
     }
 
     IEnumerator SpinSlots()
     {
-        yield return new WaitForSeconds(.6f);
+        yield return new WaitForSeconds(1.5f);
         for (int i = 0; i < slots.Length; i++)
         {
             // Iniciar el giro del slot
@@ -89,8 +71,6 @@ public class SlotMachine : ButtonBehaviour
 
     void CheckWin()
     {
-        // Detener el sonido de los slots
-        audioSource.Stop();
 
         int[] selectedIndexes = new int[slots.Length];
         for (int i = 0; i < slots.Length; i++)
@@ -112,6 +92,7 @@ public class SlotMachine : ButtonBehaviour
             if (winningIndex >= 0 && winningIndex < winMessages.Length)
             {
                 Debug.Log(winMessages[winningIndex]);
+                _goldManager.AddGold(itemCost * 3);
             }
         }
         else

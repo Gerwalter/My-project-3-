@@ -20,7 +20,5 @@ public class Portal : ButtonBehaviour
         _renderer.material.color = randomColor;
 
         videoShader.VideoPlay();
-
-
     }
 }

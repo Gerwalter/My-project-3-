@@ -154,10 +154,6 @@ public class Player : HP
             {
                 intObj.OnInteract();
             }
-            else
-            {
-                return;
-            }
         }
     }
     private void Jump()

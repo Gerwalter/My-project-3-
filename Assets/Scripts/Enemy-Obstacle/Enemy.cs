@@ -13,18 +13,18 @@ public enum EnemyType
     BOSS
 }
 
+
 [RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : Entity
 {
-    [SerializeField] public EnemyType _enemyType;
     [Header("<color=red>AI</color>")]
     [SerializeField] private float _chaseDist = 6.0f;
     [SerializeField] private float _atkDist = 2.0f;
     [SerializeField] private float _changeNodeDist = 0.5f;
     [SerializeField] private float _healDist = 5.0f;
     [SerializeField] private float _shootDist = 6.0f;
-    [SerializeField] private float _shieldDist = 5.0f;
     [SerializeField] private int _speed;
+    [SerializeField] public EnemyType enemyType;
 
     [Header("<color=red>Behaviours</color>")]
     [SerializeField] private Animator _animator;
@@ -100,7 +100,6 @@ public class Enemy : Entity
 
     public void ApplyLiftImpulse()
     {
-        Debug.Log("Applying lift impulse");
         _groundCheckDistance = 0;
         _enableRoam = false;
         _agent.enabled = false;
@@ -132,11 +131,6 @@ public class Enemy : Entity
         }
     }
 
-    // Llama a groundcheck en Update o FixedUpdate
-    void Update()
-    {
-
-    }
     private void UpdateHealthBar()
     {
         float lifePercent = GetLife / maxLife;
@@ -149,7 +143,7 @@ public class Enemy : Entity
     [SerializeField] private bool _enableRoam = true;
     private void FixedUpdate()
     {
-        UpdateHealthBar(); 
+        UpdateHealthBar();
         groundcheck();
 
         if (_enableRoam)
@@ -197,22 +191,6 @@ public class Enemy : Entity
             return;
         }
 
-
-
-        if (_isShielder)
-        {
-
-            if (PlayerInShieldRange() && _shieldLife >= 0)
-            {
-                ActivateShield();
-                return;
-            }
-            else
-            {
-                DeactivateShield();
-                return;
-            }
-        }
         if (_isHealer)
         {
             Enemy nearbyAlly = FindAllyToHeal();
@@ -234,20 +212,6 @@ public class Enemy : Entity
                 }
             }
         }
-    }
-    private bool PlayerInShieldRange()
-    {
-        return Vector3.Distance(transform.position, _target.position) <= _shieldDist;
-    }
-
-    void ActivateShield()
-    {
-        _shieldInstance.SetActive(true);
-    }
-
-    void DeactivateShield()
-    {
-        _shieldInstance.SetActive(false);
     }
     private bool PlayerInShootRange()
     {
@@ -320,12 +284,22 @@ public class Enemy : Entity
         return null;
     }
 
-    private void HealAlly(Enemy ally)
+    [SerializeField] private float healCooldown = 7.0f; // Tiempo en segundos entre curaciones
+    private float lastHealTime = -Mathf.Infinity; // Tiempo de la última curación
+
+    public void HealAlly(Enemy ally)
     {
+        // Comprobar si ha pasado suficiente tiempo desde la última curación
+        if (Time.time - lastHealTime < healCooldown)
+            return;
+
         _agent.SetDestination(ally.transform.position);
+
+        // Verificar la distancia al aliado
         if (Vector3.Distance(transform.position, ally.transform.position) <= 1.0f)
         {
-            ally.Health(10);
+            ally.Health(8); // Aplicar curación
+            lastHealTime = Time.time; // Registrar el tiempo de la curación
         }
     }
 
@@ -335,10 +309,7 @@ public class Enemy : Entity
         GetLife -= dmg;
         if (GetLife <= 0)
         {
-            GameManager.Instance.Enemies.Remove(this);
-
-            Destroy(gameObject);
-            
+            Die();
         }
         else
         {
@@ -346,6 +317,20 @@ public class Enemy : Entity
         }
 
         //SFXManager.instance.PlayRandSFXClip(clips, transform, 1f);
+    }
+
+    private void Die()
+    {
+        GameManager.Instance.Enemies.Remove(this);
+
+        LootData loot = WaveManager.Instance.GetLoot(enemyType);
+
+        if (FindObjectOfType<PlayerStats>() is PlayerStats playerStats)
+        {
+            playerStats.AddLoot(loot);
+        }
+
+        Destroy(gameObject);
     }
 
     public void triggerReset()
