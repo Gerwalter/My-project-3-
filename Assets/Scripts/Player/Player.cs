@@ -67,6 +67,8 @@ public class Player : HP
         _rb.constraints = RigidbodyConstraints.FreezeRotation;
 
         GameManager.Instance.Player = this;
+
+        healthBar = CanvasReferencesManager.Instance.Healthbar; 
     }
 
     private void Start()
@@ -145,11 +147,13 @@ public class Player : HP
         healthBar.color = Color.Lerp(Color.red, Color.green, lifePercent);
     }
 
+    public float _sphereIntRadius = 0.5f; // Radio de la esfera
+
     public void Interact()
     {
         _intRay = new Ray(_intOrigin.position, transform.forward);
 
-        if (Physics.SphereCast(_intRay, .25f, out _intHit, _intRayDist, _intMask))
+        if (Physics.SphereCast(_intRay, _sphereIntRadius, out _intHit, _intRayDist, _intMask))
         {
             if (_intHit.collider.TryGetComponent<ButtonBehaviour>(out ButtonBehaviour intObj))
             {
@@ -223,15 +227,26 @@ public class Player : HP
         Gizmos.color = Color.blue;
         Gizmos.DrawRay(_jumpRay);
 
-        Gizmos.color = Color.blue;
-        Gizmos.DrawRay(_intRay);
+        // Dibuja la línea del SphereCast
+        Gizmos.color = Color.red; // Color del gizmo
+        Gizmos.DrawLine(_intOrigin.position, _intOrigin.position + transform.forward * _intRayDist);
 
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(_atkRay);
+        // Dibuja la esfera al final del SphereCast
+        Gizmos.color = Color.yellow; // Color de la esfera
+        Gizmos.DrawWireSphere(_intRay.origin + _intRay.direction * _intRayDist, _sphereIntRadius);
+
+        // Dibuja la línea del SphereCast
+        Gizmos.color = Color.white; // Color del gizmo
+        Gizmos.DrawLine(_atkOrigin.position, _atkOrigin.position + transform.forward * _atkRayDist);
+
+        // Dibuja la esfera al final del SphereCast
+        Gizmos.color = Color.green  ; // Color de la esfera
+        Gizmos.DrawWireSphere(_atkRay.origin + _atkRay.direction * _atkRayDist, _sphereAtkRadius);
     }
 
     [SerializeField] private float originaldmg;
     [SerializeField] private int dmgMultiplier = 2; // Multiplicador de velocidad
+    public float _sphereAtkRadius = 0.5f;
 
 
     private IEnumerator ApplyDMGBoost()
@@ -251,28 +266,35 @@ public class Player : HP
     {
         _atkRay = new Ray(_atkOrigin.position, transform.forward);
 
-        if (Physics.Raycast(_atkRay, out _atkHit, _atkRayDist, _atkMask))
+        if (Physics.SphereCast(_atkRay, _sphereAtkRadius, out _atkHit, _atkRayDist, _atkMask))
         {
             if (_atkHit.collider.TryGetComponent<Enemy>(out Enemy enemy))
             {
-                enemy.ReciveDamage(_atkDmg);
+                    enemy.ReciveDamage(_atkDmg, selectedElement);
             }
             else if (_atkHit.collider.TryGetComponent<HealthSystem>(out HealthSystem enemyHealth))
             {
-                int randomValue = Random.Range(0, 101); // Incluye 0 y 100
-                if (randomValue >= 90)
-                {
-                    enemyHealth.ApplyContinuousDamageFromPlayer(10f, 2.5f, selectedElement);
-                }
-                else
-                {
-                    enemyHealth.ReceiveDamage(_atkDmg, selectedElement);
-                }
-
+                enemyHealth.ReceiveDamage(_atkDmg, selectedElement);
             }
             else if (_atkHit.collider.TryGetComponent<Boss>(out Boss BossHealth))
             {
-                BossHealth.ReciveDamage(_atkDmg);
+                BossHealth.ReciveDamage(_atkDmg, selectedElement);
+            }
+        }
+
+        else if (Physics.Raycast(_atkRay, out _atkHit, _atkRayDist, _atkMask))
+        {
+            if (_atkHit.collider.TryGetComponent<Enemy>(out Enemy enemy))
+            {
+                enemy.ReciveDamage(_atkDmg, selectedElement);
+            }
+            else if (_atkHit.collider.TryGetComponent<HealthSystem>(out HealthSystem enemyHealth))
+            {
+                enemyHealth.ReceiveDamage(_atkDmg, selectedElement);
+            }
+            else if (_atkHit.collider.TryGetComponent<Boss>(out Boss BossHealth))
+            {
+                BossHealth.ReciveDamage(_atkDmg, selectedElement);
             }
         }
     }

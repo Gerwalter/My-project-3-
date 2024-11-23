@@ -1,5 +1,6 @@
-using System.Collections;
+using TMPro.Examples;
 using UnityEngine;
+using static ComboSystem;
 
 public class AnimationScript : MonoBehaviour
 {
@@ -7,11 +8,9 @@ public class AnimationScript : MonoBehaviour
     [SerializeField] Player _player;
     public GameObject sword;
 
-
-
     private void Update()
     {
-        //Fight();
+        Fight();
         Cast();
     }
 
@@ -20,10 +19,31 @@ public class AnimationScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
             anim.SetTrigger("Element");
     }
-
+    void TriggerAnimator(string triggerName)
+    {
+        if (anim != null)
+        {
+            anim.SetTrigger(triggerName); // Disparar el trigger
+        }
+    }
     public void SwordReveal()
     {
         sword.SetActive(!sword.activeSelf);
+    }
+
+    public CameraController cameraController;
+
+    void Fight()
+    {
+        if (cameraController.IsCameraFixed) return;
+        if (Input.GetMouseButtonDown(0)) // Mouse0 para Light Attack
+        {
+            TriggerAnimator("LightAttack");  // Disparar el trigger LightAttack en el Animator
+        }
+        if (Input.GetMouseButtonDown(1)) // Mouse1 para Heavy Attack
+        {
+            TriggerAnimator("HeavyAttack"); // Disparar el trigger HeavyAttack en el Animator
+        }
     }
 
     public void PrintNum()

@@ -8,7 +8,6 @@ public class EnemyBehavior : MonoBehaviour
     [Header("Shooting Configuration")]
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Transform shootPoint;
-    [SerializeField] private float shootCooldown = 2.0f;
     [SerializeField] private float shootRange = 10.0f;
     [SerializeField] private float projectileSpeed = 20.0f;
     [SerializeField] private bool shooting;

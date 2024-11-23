@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 using UnityEngine.VFX;
+using static Player;
 
 public enum EnemyType
 {
@@ -302,10 +303,15 @@ public class Enemy : Entity
             lastHealTime = Time.time; // Registrar el tiempo de la curación
         }
     }
+    [SerializeField] private ElementType weakness; // Tipo de debilidad del enemigo
+    [SerializeField] private float elementalMultiplier = 2.0f;
 
-    public void ReciveDamage(int dmg)
+    public void ReciveDamage(float dmg, ElementType damageType)
     {
-
+        if (damageType == weakness)
+        {
+            dmg *= elementalMultiplier; // Aumenta el daño si coincide con la debilidad
+        }
         GetLife -= dmg;
         if (GetLife <= 0)
         {
@@ -317,6 +323,37 @@ public class Enemy : Entity
         }
 
         //SFXManager.instance.PlayRandSFXClip(clips, transform, 1f);
+    }
+
+    private bool isTakingContinuousDamage = false;
+    public void ApplyContinuousDamageFromPlayer(float totalDamage, float duration, ElementType damageType)
+    {
+        if (isTakingContinuousDamage) return;
+
+        isTakingContinuousDamage = true;
+        StartCoroutine(ContinuousDamageRoutine(totalDamage, duration, damageType));
+    }
+
+    private IEnumerator ContinuousDamageRoutine(float totalDamage, float duration, ElementType damageType)
+    {
+        float damagePerTick = totalDamage / duration;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            // Verifica si el tipo de daño coincide con la debilidad
+            float actualDamage = (damageType == weakness) ? damagePerTick * 2 : damagePerTick;
+
+
+            int roundedDamage = Mathf.RoundToInt(actualDamage * Time.deltaTime);
+            // Aplica el daño calculado
+            ReciveDamage(roundedDamage, damageType);
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        isTakingContinuousDamage = false;
     }
 
     private void Die()

@@ -27,8 +27,7 @@ public class HealthSystem : MonoBehaviour, IDamaga
             currentLife = Mathf.Clamp(value, 0, maxLife);
             UpdateHealthBar();
             if (currentLife == 0)
-                // OnDie?.Invoke();
-                currentLife = maxLife;
+                 OnDie?.Invoke();
         }
     }
 

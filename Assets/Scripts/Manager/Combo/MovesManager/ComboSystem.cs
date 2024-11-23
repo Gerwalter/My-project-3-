@@ -28,19 +28,11 @@ public class ComboSystem : MonoBehaviour
     // Referencia a TextMeshProUGUI para mostrar los inputs en pantalla
     public TextMeshProUGUI inputDisplay;
 
-    // Referencia al Animator
-    public Animator animator;
 
     // Referencia al script CameraController
     public CameraController cameraController;
 
-    void Start()
-    {
-        // Inicializar el Animator
-        UpdateInputDisplay();
-    }
-
-    void Update()
+        void Update()
     {
         // Verificar si la cámara está fija. Si está fija, no hacer nada
         if (cameraController.IsCameraFixed) return;
@@ -62,12 +54,12 @@ public class ComboSystem : MonoBehaviour
         if (Input.GetMouseButtonDown(0)) // Mouse0 para Light Attack
         {
             RegisterInput(ComboInput.LightAttack);
-            TriggerAnimator("LightAttack");  // Disparar el trigger LightAttack en el Animator
+           // TriggerAnimator("LightAttack");  // Disparar el trigger LightAttack en el Animator
         }
         if (Input.GetMouseButtonDown(1)) // Mouse1 para Heavy Attack
         {
             RegisterInput(ComboInput.HeavyAttack);
-            TriggerAnimator("HeavyAttack"); // Disparar el trigger HeavyAttack en el Animator
+            //TriggerAnimator("HeavyAttack"); // Disparar el trigger HeavyAttack en el Animator
         }
     }
 
@@ -109,8 +101,6 @@ public class ComboSystem : MonoBehaviour
             }
         }
 
-        // Si no se encuentra ningún combo, solo limpiamos la secuencia
-        Debug.Log("No combo found for this sequence");
     }
 
     bool ComboMatches(ComboInput[] sequence)
@@ -132,7 +122,7 @@ public class ComboSystem : MonoBehaviour
     IEnumerator PerformCombo(string comboName)
     {
         isAttacking = true;
-        Debug.Log("Combo ejecutado: " + comboName); // Imprimimos el nombre del combo en la consola
+        
         yield return new WaitForSeconds(0.5f);      // Simulación de tiempo de ataque
         ResetCombo();                               // Limpiamos el combo después de ejecutar
         UpdateInputDisplay();                       // Actualizamos el texto en la UI
@@ -169,11 +159,11 @@ public class ComboSystem : MonoBehaviour
     }
 
     // Método para disparar triggers en el Animator
-    void TriggerAnimator(string triggerName)
-    {
-        if (animator != null)
-        {
-            animator.SetTrigger(triggerName); // Disparar el trigger
-        }
-    }
+ //  void TriggerAnimator(string triggerName)
+ //  {
+ //      if (animator != null)
+ //      {
+ //          animator.SetTrigger(triggerName); // Disparar el trigger
+ //      }
+ //  }
 }

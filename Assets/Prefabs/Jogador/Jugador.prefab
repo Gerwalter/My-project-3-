@@ -1696,7 +1696,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 808d048c23618a748b981610118f88bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLife: 20
+  maxLife: 1
   currentLife: 0
   anim: {fileID: 1428765734925002639}
   _bloodVFX: {fileID: 4281938223232902032}
@@ -1742,7 +1742,12 @@ MonoBehaviour:
   grapple: {fileID: 141912759179054621}
   freeze: 0
   activeGrapple: 0
+  originalSpeed: 0
+  speedMultiplier: 2
+  duration: 5
   EnableMovementAfterCollision: 1
+  originaldmg: 0
+  dmgMultiplier: 2
   _fire: {fileID: 7550840054543553890}
   gameObje: {fileID: 5654272242787936079}
   Handle: {fileID: 0}

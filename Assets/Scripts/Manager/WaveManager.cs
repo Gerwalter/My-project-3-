@@ -26,7 +26,7 @@ public class WaveManager : MonoBehaviour
     private Dictionary<EnemyType, LootData> _enemyLoot = new Dictionary<EnemyType, LootData>();
     public static WaveManager Instance;
 
-    private Queue<EnemyWaveData> _spawnOrder = new Queue<EnemyWaveData>();
+    [SerializeField] private Queue<EnemyWaveData> _spawnOrder = new Queue<EnemyWaveData>();
 
     public float _timer;
     public float _spawn;
@@ -34,22 +34,30 @@ public class WaveManager : MonoBehaviour
 
     void Awake()
     {
-        if (Instance != null)
+        _timer = 0;
+
+        if (_spawnOrder.Count == 0)
         {
-            Destroy(gameObject);
-            return;
+            QueueEnemy();
         }
 
-        Instance = this;
-        DontDestroyOnLoad(this);
-
         // Agrega valores al diccionario de loot
-        _enemyLoot.Add(EnemyType.MELEE, new LootData { gold = 60});
+        _enemyLoot.Add(EnemyType.MELEE, new LootData { gold = 50});
         _enemyLoot.Add(EnemyType.RANGE, new LootData { gold = 45 });
         _enemyLoot.Add(EnemyType.TANK, new LootData { gold = 25 });
         _enemyLoot.Add(EnemyType.BOSS, new LootData { gold = 100 });
 
         // Añadir oleadas al orden de spawn
+        _spawnOrder.Enqueue(normalEnemyWave);
+        _spawnOrder.Enqueue(ligthEnemyWave);
+        _spawnOrder.Enqueue(normalEnemyWave);
+        _spawnOrder.Enqueue(heavyEnemyWave);
+        _spawnOrder.Enqueue(ligthEnemyWave);
+        _spawnOrder.Enqueue(bossEnemyWave);
+    }
+
+    private void QueueEnemy()
+    {
         _spawnOrder.Enqueue(normalEnemyWave);
         _spawnOrder.Enqueue(ligthEnemyWave);
         _spawnOrder.Enqueue(normalEnemyWave);
@@ -65,7 +73,7 @@ public class WaveManager : MonoBehaviour
         // Verifica si hay elementos en la cola
         if (_spawnOrder.Count == 0)
         {
-            // Si no hay más oleadas que spawnar, detén la ejecución
+            _timer = 0;
             return;
         }
 

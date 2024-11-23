@@ -30,7 +30,8 @@ public class Grappling : MonoBehaviour
 
     private void Start()
     {
-        controller = GetComponent<Player>();
+        controller = GameManager.Instance.Player;
+        grappleCDImage = CanvasReferencesManager.Instance.HookTimer;
     }
 
     private void LateUpdate()

@@ -28,6 +28,13 @@ public class GameManager : MonoBehaviour
         set { _player = value; }
     }
 
+    [SerializeField] private Animator _playeranim;
+    public Animator PlayerAnim
+    {
+        get { return _playeranim; }
+        set { _playeranim = value; }
+    }
+
     [SerializeField] private List<Enemy> _enemies = new();
     public List<Enemy> Enemies
     {

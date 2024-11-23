@@ -1,18 +1,19 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static Player;
 
 public class Boss : HP
 {
     [Header("<color=red>AI</color>")]
     [SerializeField] private float _chaseDist = 6.0f;
     [SerializeField] private float _atkDist = 2.0f;
-    [SerializeField] public int _speed;
+    [SerializeField] public float _speed = 3.0f; // Velocidad del enemigo
     [SerializeField] public EnemyType enemyType;
 
     [Header("<color=red>Behaviours</color>")]
     [SerializeField] private Animator _animator;
+
     [Header("<color=#6A89A7>UI</color>")]
     [SerializeField] private Image healthBar;
 
@@ -41,7 +42,6 @@ public class Boss : HP
     public void ApplyLiftImpulse()
     {
         _groundCheckDistance = 0;
-        rb.isKinematic = false;
         rb.AddForce(Vector3.up * liftForce, ForceMode.Impulse);
         StartCoroutine(CheckDistance());
     }
@@ -59,23 +59,33 @@ public class Boss : HP
         return Physics.Raycast(transform.position, Vector3.down, _groundCheckDistance);
     }
 
-    private void groundcheck()
-    {
-        if (IsGrounded())
-        {
-
-            rb.isKinematic = true;
-        }
-    }
-
     float distanceToPlayer = 0.0f;
-
     private void Update()
     {
         UpdateHealthBar();
-        groundcheck();
 
         distanceToPlayer = Vector3.Distance(transform.position, _target.position);
+
+        if (distanceToPlayer <= _chaseDist && distanceToPlayer > _atkDist)
+        {
+            MoveTowardsTarget();
+        }
+        else if (distanceToPlayer <= _atkDist)
+        {
+            Attack();
+        }
+    }
+
+    private void MoveTowardsTarget()
+    {
+        Vector3 direction = (_target.position - transform.position).normalized;
+        direction.y = 0; // Evitar que el enemigo intente moverse en el eje Y
+
+        transform.Translate(direction * _speed * Time.deltaTime, Space.World);
+
+        // Actualizar la rotación para que mire al jugador
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * _speed);
     }
 
     private void UpdateHealthBar()
@@ -86,6 +96,7 @@ public class Boss : HP
 
         healthBar.color = Color.Lerp(Color.red, Color.green, lifePercent);
     }
+
     [Header("<color=yellow>Attack</color>")]
     [SerializeField] private Transform _atkOrigin;
     [SerializeField] private float _atkRayDist = 1.0f;
@@ -107,10 +118,17 @@ public class Boss : HP
         }
     }
 
-    public void ReciveDamage(int dmg)
-    {
+    [SerializeField] private ElementType weakness; // Tipo de debilidad del enemigo
+    [SerializeField] private float elementalMultiplier = 2.0f;
 
+    public void ReciveDamage(float dmg, ElementType damageType)
+    {
+        if (damageType == weakness)
+        {
+            dmg *= elementalMultiplier; // Aumenta el daño si coincide con la debilidad
+        }
         GetLife -= dmg;
+        _animator.SetTrigger("Hit");
         if (GetLife <= 0)
         {
             Die();
@@ -118,20 +136,31 @@ public class Boss : HP
         else
         {
             _bloodVFX.SendEvent("OnTakeDamage");
+            //_animator.ResetTrigger("Hit");
         }
-
-        //SFXManager.instance.PlayRandSFXClip(clips, transform, 1f);
     }
 
     private void Die()
     {
         LootData loot = WaveManager.Instance.GetLoot(enemyType);
-
+       
         if (FindObjectOfType<PlayerStats>() is PlayerStats playerStats)
         {
             playerStats.AddLoot(loot);
         }
 
         Destroy(gameObject);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawRay(_atkRay);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, _chaseDist);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, _atkDist);
     }
 }

@@ -12,6 +12,8 @@ public class GoldUI : MonoBehaviour
     {
         _goldManager = FindObjectOfType<GoldManager>();
 
+        goldText = CanvasReferencesManager.Instance.GoldText;
+
         if (_goldManager == null)
         {
             Debug.LogError("No se encontró GoldManager en la escena.");
