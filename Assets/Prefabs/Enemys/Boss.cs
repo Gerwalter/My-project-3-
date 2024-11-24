@@ -1,7 +1,25 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using static Player;
+
+[System.Serializable]
+public struct Attack
+{
+    public string Name;                  // Nombre del ataque
+    public float Cooldown;               // Tiempo de reutilización del ataque
+    public BossAttacks AttackLogic;      // Referencia a la lógica del ataque
+    public GameObject AttackPrefab;      // Prefab del ataque para instanciarlo
+
+    public Attack(string name, float cooldown, BossAttacks attackLogic, GameObject attackPrefab)
+    {
+        Name = name;
+        Cooldown = cooldown;
+        AttackLogic = attackLogic;
+        AttackPrefab = attackPrefab;
+    }
+}
 
 public class Boss : HP
 {
@@ -24,6 +42,8 @@ public class Boss : HP
     [SerializeField]
     private Transform _target;
 
+    [SerializeField] private Attack[] attacks;
+
     private void Start()
     {
         _target = GameManager.Instance.Player.gameObject.transform;
@@ -38,6 +58,56 @@ public class Boss : HP
         }
 
         GetLife = maxLife;
+    }
+
+    private bool canAttack = true;
+    [SerializeField] private List<Transform> spawnPoints;
+    private void PerformRandomAttack()
+    {
+        if (canAttack)
+        {
+            // Selecciona un ataque aleatorio del arreglo
+            int randomIndex = Random.Range(0, attacks.Length);
+            Attack selectedAttack = attacks[randomIndex];
+            Transform spawnPoint = GetRandomSpawnPoint();
+            Quaternion spawnRotation = Quaternion.identity;
+            // Instancia el prefab del ataque (si existe)
+            if (selectedAttack.AttackPrefab != null)
+            {
+                Instantiate(selectedAttack.AttackPrefab, spawnPoint.position, spawnRotation);
+
+                // Asegúrate de que el prefab tenga el script de lógica de ataque
+                BossAttacks attackLogic = selectedAttack.AttackLogic;
+                if (attackLogic != null)
+                {
+                    attackLogic.ExecuteAttacks(/* Aquí puedes pasar el objetivo */ transform);
+                }
+                else
+                {
+                    Debug.LogWarning("El prefab del ataque no tiene un script BossAttacks.");
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"El ataque {selectedAttack.Name} no tiene un prefab asignado.");
+            }
+
+            // Inicia el cooldown basado en el ataque seleccionado
+            StartCoroutine(AttackCooldownRoutine(selectedAttack.Cooldown));
+            canAttack = false;
+        }
+
+    }
+    private Transform GetRandomSpawnPoint()
+    {
+        int randomIndex = UnityEngine.Random.Range(0, spawnPoints.Count);
+        return spawnPoints[randomIndex];
+    }
+    private IEnumerator AttackCooldownRoutine(float cooldown)
+    {
+        yield return new WaitForSeconds(cooldown);
+
+        canAttack = true;
     }
 
     public void ApplyLiftImpulse()
@@ -73,7 +143,7 @@ public class Boss : HP
         }
         else if (distanceToPlayer <= _atkDist)
         {
-            Attack();
+            PerformRandomAttack();
         }
     }
 
@@ -100,24 +170,8 @@ public class Boss : HP
 
     [Header("<color=yellow>Attack</color>")]
     [SerializeField] private Transform _atkOrigin;
-    [SerializeField] private float _atkRayDist = 1.0f;
     [SerializeField] private LayerMask _atkMask;
-    [SerializeField] private int _atkDmg = 2;
 
-    private Ray _atkRay;
-    private RaycastHit _atkHit;
-    public void Attack()
-    {
-        _atkRay = new Ray(_atkOrigin.position, transform.forward);
-
-        if (Physics.Raycast(_atkRay, out _atkHit, _atkRayDist, _atkMask))
-        {
-            if (_atkHit.collider.TryGetComponent<Player>(out Player player))
-            {
-                player.ReciveDamage(_atkDmg);
-            }
-        }
-    }
 
     [SerializeField] private ElementType weakness; // Tipo de debilidad del enemigo
     [SerializeField] private float elementalMultiplier = 2.0f;
@@ -160,18 +214,14 @@ public class Boss : HP
             }
         }
         isdead = true;
-        Destroy(gameObject, 1.5f);
+        Destroy(gameObject, 2.5f);
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawRay(_atkRay);
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, _chaseDist);
-
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, _atkDist);
     }
 }
+

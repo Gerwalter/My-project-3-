@@ -15,7 +15,7 @@ public class CameraController : MonoBehaviour
     [Header("<color=#6A89A7>Settings</color>")]
     [Range(1f, 1000f)][SerializeField] private float _mouseSensitivity = 500f;
     [Range(.125f, 1f)][SerializeField] private float _minDistance = .25f;
-    [Range(1f, 10f)][SerializeField] private float _maxDistance = 5f;
+    [Range(1f, 10f)][SerializeField] public float _maxDistance = 5f;
     [Range(-90f, 0f)][SerializeField] private float _minRotation = -45f;
     [Range(0f, 90f)][SerializeField] private float _maxRotation = 80f;
 
@@ -31,7 +31,7 @@ public class CameraController : MonoBehaviour
 
     [Header("<color=#6A89A7>UI Settings</color>")]
     [SerializeField] private GameObject menu; // Referencia al menú que debe desactivarse
-
+    [SerializeField] private float scroll;
     [Header("<color=#6A89A7>Layer Settings</color>")]
     [SerializeField] private LayerMask _ignoreLayerMask;
     public static CameraController Instance;
@@ -76,11 +76,20 @@ public class CameraController : MonoBehaviour
             _isCameraFixed = !_isCameraFixed;
             ToggleCursorMode(_isCameraFixed);
         }
+        scroll = Input.GetAxisRaw("Mouse ScrollWheel");
 
         if (!_isCameraFixed)
         {
             UpdateCamRot(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+            if (scroll != 0f)
+            {
+                _maxDistance = Mathf.Clamp(_maxDistance - scroll , _minDistance + 2, 10f); // Ajusta el 10f al valor máximo deseado
+            }
         }
+
+        // Ajustar la distancia máxima con la rueda del ratón
+
+
     }
 
     private void FixedUpdate()

@@ -38,7 +38,7 @@ public class LootManager : MonoBehaviour
         _enemyLoot.Add(EnemyType.MELEE, new LootData { gold = 50 });
         _enemyLoot.Add(EnemyType.RANGE, new LootData { gold = 45 });
         _enemyLoot.Add(EnemyType.TANK, new LootData { gold = 25 });
-        _enemyLoot.Add(EnemyType.BOSS, new LootData { gold = 100 });
+        _enemyLoot.Add(EnemyType.BOSS, new LootData { gold = 300 });
     }
 
     public LootData GetLoot(EnemyType enemyType)

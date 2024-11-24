@@ -39,6 +39,13 @@ public class CanvasReferencesManager : MonoBehaviour
         set { hookTimer = value; }
     }
 
+    [SerializeField] private Image crossHair;
+    public Image CrossHair
+    {
+        get { return crossHair; }
+        set { crossHair = value; }
+    }
+
     [SerializeField] private TextMeshProUGUI goldText;
 
     public TextMeshProUGUI GoldText

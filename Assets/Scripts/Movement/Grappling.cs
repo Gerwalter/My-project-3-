@@ -27,11 +27,19 @@ public class Grappling : MonoBehaviour
 
     [Header("UI")]
     public Image grappleCDImage; // Referencia al objeto de UI que mostrará el progreso de cooldown
+    public Image CrossHair; // Referencia al objeto de UI que mostrará el progreso de cooldown
+
+    public CameraController Cameracontroller;
+    public float originaldistance;
+    public int Newdistance;
 
     private void Start()
     {
         controller = GameManager.Instance.Player;
         grappleCDImage = CanvasReferencesManager.Instance.HookTimer;
+        CrossHair = CanvasReferencesManager.Instance.CrossHair;
+        originaldistance = Cameracontroller._maxDistance;
+        CrossHair.enabled = false;
     }
 
     private void LateUpdate()
@@ -51,20 +59,23 @@ public class Grappling : MonoBehaviour
         if (Input.GetKeyDown(grappleKey))
         {
             if (grappleCDTimer > 0) return;
-            grappleHoldTime = 0f; // Reinicia el temporizador de presión
-            controller.freeze = true; // Congela al personaje
+            grappleHoldTime = 0f;
+            controller.freeze = true;
         }
 
         // Aumentar el tiempo que se mantiene presionada la tecla
         if (Input.GetKey(grappleKey))
         {
             grappleHoldTime = Mathf.Min(grappleHoldTime + Time.deltaTime, requiredHoldTime);
-
+            Cameracontroller._maxDistance = Newdistance;
+            CrossHair.enabled = true;
         }
 
         // Detectar si se suelta la tecla
         if (Input.GetKeyUp(grappleKey))
         {
+            Cameracontroller._maxDistance = originaldistance;
+            CrossHair.enabled = false;
             if (grappleHoldTime >= requiredHoldTime) // Solo activa si el tiempo de presión es suficiente
             {
                 startGrapple();
