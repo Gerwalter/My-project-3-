@@ -38,7 +38,8 @@ public class Grappling : MonoBehaviour
     {
         if (grappling) lineRenderer.SetPosition(0, graplletip.position);
     }
-
+   [SerializeField] private float requiredHoldTime = 0.2f;
+   [SerializeField] private float grappleHoldTime = 0f; // Tiempo que se mantiene presionada la tecla
     private void Update()
     {
         // Actualizar la barra de cooldown en la UI
@@ -50,17 +51,34 @@ public class Grappling : MonoBehaviour
         if (Input.GetKeyDown(grappleKey))
         {
             if (grappleCDTimer > 0) return;
-            controller.freeze = true;
+            grappleHoldTime = 0f; // Reinicia el temporizador de presión
+            controller.freeze = true; // Congela al personaje
         }
 
+        // Aumentar el tiempo que se mantiene presionada la tecla
+        if (Input.GetKey(grappleKey))
+        {
+            grappleHoldTime = Mathf.Min(grappleHoldTime + Time.deltaTime, requiredHoldTime);
+
+        }
+
+        // Detectar si se suelta la tecla
         if (Input.GetKeyUp(grappleKey))
         {
-            startGrapple();
+            if (grappleHoldTime >= requiredHoldTime) // Solo activa si el tiempo de presión es suficiente
+            {
+                startGrapple();
+            }
+            else
+            {
+                controller.freeze = false; // Libera al personaje si no se activó el gancho
+            }
         }
 
         if (grappleCDTimer > 0)
         {
-            grappleCDTimer -= Time.deltaTime;
+            grappleCDTimer = Mathf.Min(grappleCDTimer - Time.deltaTime, grappleCD);
+            //grappleCDTimer -= Time.deltaTime;
         }
     }
 

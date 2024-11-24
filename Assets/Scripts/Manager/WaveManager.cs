@@ -1,11 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-
-public struct LootData
-{
-    public int gold;
-}
+using UnityEngine.UI;
 
 [Serializable]
 public struct EnemyWaveData
@@ -23,29 +19,25 @@ public class WaveManager : MonoBehaviour
     [Header("Spawn Area Settings")]
     [SerializeField] private List<Transform> spawnPoints; // Lista de puntos de spawn
 
-    private Dictionary<EnemyType, LootData> _enemyLoot = new Dictionary<EnemyType, LootData>();
-    public static WaveManager Instance;
-
     [SerializeField] private Queue<EnemyWaveData> _spawnOrder = new Queue<EnemyWaveData>();
-
     public float _timer;
     public float _spawn;
 
+    private LootManager _enemyLootManager;
+
+    public static WaveManager Instance;
 
     void Awake()
     {
         _timer = 0;
 
+        // Obtiene referencia al EnemyLootManager
+        _enemyLootManager = FindObjectOfType<LootManager>();
+
         if (_spawnOrder.Count == 0)
         {
             QueueEnemy();
         }
-
-        // Agrega valores al diccionario de loot
-        _enemyLoot.Add(EnemyType.MELEE, new LootData { gold = 50});
-        _enemyLoot.Add(EnemyType.RANGE, new LootData { gold = 45 });
-        _enemyLoot.Add(EnemyType.TANK, new LootData { gold = 25 });
-        _enemyLoot.Add(EnemyType.BOSS, new LootData { gold = 100 });
 
         // Añadir oleadas al orden de spawn
         _spawnOrder.Enqueue(normalEnemyWave);
@@ -112,11 +104,7 @@ public class WaveManager : MonoBehaviour
 
     public LootData GetLoot(EnemyType enemyType)
     {
-        if (_enemyLoot.TryGetValue(enemyType, out var lootData))
-        {
-            return lootData;
-        }
-
-        return new LootData { gold = 0 };
+        // Llama al EnemyLootManager para obtener los datos de loot
+        return _enemyLootManager != null ? _enemyLootManager.GetLoot(enemyType) : new LootData { gold = 0 };
     }
 }

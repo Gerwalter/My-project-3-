@@ -10,12 +10,15 @@ public class Player : HP
     [SerializeField] private string _isGroundName = "isGrounded";
     [SerializeField] private string _jumpName = "onJump";
     [SerializeField] private string _xName = "xAxis";
-    [SerializeField] private string _zName = "zAxis";
+    [SerializeField] private string _zName = "zAxis";  
+    public Animator _anim;
 
     [Header("<color=#6A89A7>Camera</color>")]
     [SerializeField] private Transform _camTarget;
 
-    public Transform GetCamTarget { get { return _camTarget; } }
+    public Transform GetCamTarget { get { return _camTarget; } } 
+    public Vector3 _camForwardFix = new(), _camRightFix = new();  
+    protected Transform _camTransform;
 
     [Header("<color=#6A89A7>Inputs</color>")]
     [SerializeField] private KeyCode _intKey = KeyCode.F;
@@ -24,18 +27,28 @@ public class Player : HP
     [Header("<color=#6A89A7>UI</color>")]
     [SerializeField] private Image healthBar;
 
-    [Header("<color=#6A89A7>Physics</color>")]
+    [Header("<color=#6A89A7>Physics - Interaction</color>")]
     [SerializeField] private Transform _intOrigin;
     [SerializeField] private float _intRayDist = 1.0f;
     [SerializeField] private LayerMask _intMask;
+    [SerializeField] private Ray _intRay;  
+    private RaycastHit _intHit;    
+    public float _sphereIntRadius = 0.5f; // Radio de la esfera
+
+    [Header("<color=#6A89A7>Physics - Jumping</color>")]
     [SerializeField] private float _jumpForce = 5.0f;
     [SerializeField] private float _jumpRayDist = 0.75f;
     [SerializeField] private LayerMask _jumpMask;
+    public Vector3 _jumpOffset = new(); 
+    [SerializeField] private Ray _jumpRay;
+
+    [Header("<color=#6A89A7>Physics - Movement</color>")]
     [SerializeField] private float _movRayDist = 0.75f;
     [SerializeField] private LayerMask _movMask;
-    [SerializeField] public float _movSpeed = 3.5f;
-    [SerializeField] private Vector3 velocityToSet;
-    [SerializeField] private float velocity;
+    [SerializeField] private float _movSpeed = 3.5f;
+    public Vector3 _dir = new(), _movRayDir = new();
+    private Vector3 _dirFix = new();
+    [SerializeField] private Ray _movRay;
 
     [Header("<color=yellow>Attack</color>")]
     [SerializeField] private Transform _atkOrigin;
@@ -44,22 +57,38 @@ public class Player : HP
     [SerializeField] private int _atkDmg = 20;
     private Ray _atkRay;
     private RaycastHit _atkHit;
+    [SerializeField] private float originaldmg;
+    [SerializeField] private int dmgMultiplier = 2; // Multiplicador de velocidad
+    public float _sphereAtkRadius = 0.5f;
+    [SerializeField] private ElementType selectedElement;
 
-    public Vector3 _camForwardFix = new(), _camRightFix = new(), _dir = new(), _jumpOffset = new(), _movRayDir = new();
-    private Vector3 _dirFix = new();
 
-    public Animator _anim;
+    [Header("<color=#6A89A6>Physics - Speed</color>")]
+    [SerializeField] private float originalSpeed;
+    [SerializeField] private float speedMultiplier = 2.0f;
+    [SerializeField] private float duration = 5.0f;
+
+
+
+
     private Rigidbody _rb;
-    protected Transform _camTransform;
 
-    private Ray _intRay, _jumpRay, _movRay;
-    private RaycastHit _intHit;
+    [Header("<color=red>Misc</color>")]
+    [SerializeField] private VisualEffect _fire;
+    [SerializeField] private GameObject gameObje;
+    [SerializeField] private Lock Handle;
+
+
+    [Header("<color=blue>Grapple</color>")]
     public bool groundCheck;
     public Grappling grapple;
-
-    // Nueva variable para desactivar el movimiento
     [SerializeField] public bool freeze = false;
     [SerializeField] public bool activeGrapple = false;
+    [SerializeField] private Vector3 velocityToSet;
+    [SerializeField] private float velocity;
+
+    // Nueva variable para desactivar el movimiento
+
 
     private void Awake()
     {
@@ -147,7 +176,7 @@ public class Player : HP
         healthBar.color = Color.Lerp(Color.red, Color.green, lifePercent);
     }
 
-    public float _sphereIntRadius = 0.5f; // Radio de la esfera
+
 
     public void Interact()
     {
@@ -161,9 +190,6 @@ public class Player : HP
             }
         }
     }
-    [SerializeField] private float originalSpeed;
-    [SerializeField] private float speedMultiplier = 2.0f; // Multiplicador de velocidad
-    [SerializeField] private float duration = 5.0f; // Duración del aumento en segundos
 
     private IEnumerator ApplySpeedBoost()
     {
@@ -243,10 +269,6 @@ public class Player : HP
         Gizmos.color = Color.green  ; // Color de la esfera
         Gizmos.DrawWireSphere(_atkRay.origin + _atkRay.direction * _atkRayDist, _sphereAtkRadius);
     }
-
-    [SerializeField] private float originaldmg;
-    [SerializeField] private int dmgMultiplier = 2; // Multiplicador de velocidad
-    public float _sphereAtkRadius = 0.5f;
 
 
     private IEnumerator ApplyDMGBoost()
@@ -331,15 +353,13 @@ public class Player : HP
         }
     }
 
-    [SerializeField] private VisualEffect _fire;
 
     public void Cast()
     {
         _anim.SetTrigger("Cast");
     }
 
-    [SerializeField] private GameObject gameObje;
-    [SerializeField] private Lock Handle;
+
 
     public void Die()
     {
@@ -370,23 +390,52 @@ public class Player : HP
         Invoke(nameof(Setvelocity), 0.1f);
     }
 
+   
 
     public void ResetRestrictions()
     {
         activeGrapple = false;
     }
 
+    [SerializeField] private float maxGrappleVelocity = 20f;
+
     private void Setvelocity()
     {
         EnableMovementAfterCollision = true;
+
+        // Limitar la magnitud de la velocidad al máximo permitido
+        if (velocityToSet.magnitude > maxGrappleVelocity)
+        {
+            velocityToSet = velocityToSet.normalized * maxGrappleVelocity;
+        }
+
         _rb.velocity = velocityToSet * velocity;
     }
 
-    public void PrintNum(float num)
+ private bool isDead = false;
+    public override void ReciveDamage(float damage)
     {
-        print(num);
-    }
+        GetLife -= damage;
 
+        if (isDead) return; // Si ya está muerto, no hacer nada
+
+        if (GetLife <= 0)
+        {
+            if (_anim != null)
+            {
+                _anim.SetTrigger("Die");
+            }
+            isDead = true; // Marcar como muerto
+        }
+        else
+        {
+            if (_anim != null)
+            {
+                _anim.SetTrigger("Hit");
+                // _bloodVFX.SendEvent("OnTakeDamage");
+            }
+        }
+    }
     public void MovePlayer(float force)
     {
         Vector3 forwardDirection = transform.forward; // Dirección actual del jugador
@@ -403,7 +452,12 @@ public class Player : HP
 
         // Aplica ambas fuerzas al Rigidbody
         _rb.AddForce(forwardDirection + upwardImpulse, ForceMode.Impulse);
+    }   
+    public override void Health(float amount)
+    {
+        GetLife += amount;
     }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (EnableMovementAfterCollision)
@@ -415,7 +469,7 @@ public class Player : HP
         }
     }
 
-    [SerializeField] private ElementType selectedElement;
+
     public enum ElementType
     {
         Normal,

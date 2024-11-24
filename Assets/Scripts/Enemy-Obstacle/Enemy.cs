@@ -26,22 +26,26 @@ public class Enemy : Entity
     [SerializeField] private float _shootDist = 6.0f;
     [SerializeField] public int _speed;
     [SerializeField] public EnemyType enemyType;
+    [SerializeField] private NavMeshAgent _agent;
+    [SerializeField] private Transform _target, _actualNode;
+    [SerializeField] private List<Transform> _navMeshNodes = new();
+    [SerializeField] private IANodeManager _iaNodeManager;
+    [SerializeField] public bool _enableRoam = true;
+
 
     [Header("<color=red>Behaviours</color>")]
     [SerializeField] private Animator _animator;
-
-    [SerializeField] private Material mat;
-
-
-    [SerializeField] private NavMeshAgent _agent;
-
     [SerializeField] AudioClip[] clips;
+    [SerializeField] private Rigidbody rb;
+    [SerializeField] private float liftForce = 10.0f;
+    [SerializeField] private bool isdead;
+
+
 
     [Header("<color=#6A89A7>UI</color>")]
     [SerializeField] private Image healthBar;
 
-    [SerializeField] private Rigidbody rb;
-    [SerializeField] private float liftForce = 10.0f;
+
     private void Awake()
     {
         GameManager.Instance.Enemies.Add(this);
@@ -52,8 +56,7 @@ public class Enemy : Entity
         rb.useGravity = true;
         rb.constraints = RigidbodyConstraints.FreezeRotation;
     }
-    [SerializeField] private Transform _target, _actualNode;
-    [SerializeField] private List<Transform> _navMeshNodes = new();
+
 
     public List<Transform> NavMeshNodes
     {
@@ -61,7 +64,7 @@ public class Enemy : Entity
         set { _navMeshNodes = value; }
     }
 
-    [SerializeField] private IANodeManager _iaNodeManager;
+
 
     private void Start()
     {
@@ -139,7 +142,7 @@ public class Enemy : Entity
         healthBar.color = Color.Lerp(Color.red, Color.green, lifePercent);
     }
 
-    [SerializeField] public bool _enableRoam = true;
+
 
 
     private void FixedUpdate()
@@ -147,69 +150,73 @@ public class Enemy : Entity
         UpdateHealthBar();
         groundcheck();
         _agent.speed = _speed;
-        if (_enableRoam)
+
+        if (!isdead)
         {
-            if (!_target)
+            if (_enableRoam)
             {
-                Debug.LogError($"<color=red>NullReferenceException</color>: No asignaste un objetivo, boludo.");
-                return;
-            }
-
-            _animator.SetBool("isMoving", true);
-
-            if (Vector3.SqrMagnitude(transform.position - _target.position) <= (_chaseDist * _chaseDist))
-            {
-                if (Vector3.SqrMagnitude(transform.position - _target.position) <= (_atkDist * _atkDist))
+                if (!_target)
                 {
-                    if (!_agent.isStopped) _agent.isStopped = true;
+                    Debug.LogError($"<color=red>NullReferenceException</color>: No asignaste un objetivo, boludo.");
+                    return;
+                }
 
-                    _animator.SetBool("isMoving", false);
-                    _animator.SetTrigger("Punch");
+                _animator.SetBool("isMoving", true);
+
+                if (Vector3.SqrMagnitude(transform.position - _target.position) <= (_chaseDist * _chaseDist))
+                {
+                    if (Vector3.SqrMagnitude(transform.position - _target.position) <= (_atkDist * _atkDist))
+                    {
+                        if (!_agent.isStopped) _agent.isStopped = true;
+
+                        _animator.SetBool("isMoving", false);
+                        _animator.SetTrigger("Punch");
+                    }
+                    else
+                    {
+                        if (_agent.isStopped) _agent.isStopped = false;
+
+                        _animator.SetBool("isMoving", true);
+                        _animator.ResetTrigger("Punch");
+
+                        _agent.SetDestination(_target.position);
+                    }
                 }
                 else
                 {
-                    if (_agent.isStopped) _agent.isStopped = false;
+                    if (_agent.destination != _actualNode.position) _agent.SetDestination(_actualNode.position);
 
-                    _animator.SetBool("isMoving", true);
-                    _animator.ResetTrigger("Punch");
-
-                    _agent.SetDestination(_target.position);
+                    if (Vector3.SqrMagnitude(transform.position - _actualNode.position) <= (_changeNodeDist * _changeNodeDist))
+                    {
+                        _actualNode = GetNewNode();
+                        _agent.SetDestination(_actualNode.position);
+                    }
                 }
             }
             else
             {
-                if (_agent.destination != _actualNode.position) _agent.SetDestination(_actualNode.position);
-
-                if (Vector3.SqrMagnitude(transform.position - _actualNode.position) <= (_changeNodeDist * _changeNodeDist))
-                {
-                    _actualNode = GetNewNode();
-                    _agent.SetDestination(_actualNode.position);
-                }
-            }
-        }
-        else
-        {
-            return;
-        }
-
-        if (_isHealer)
-        {
-            Enemy nearbyAlly = FindAllyToHeal();
-            if (nearbyAlly != null)
-            {
-                HealAlly(nearbyAlly);
                 return;
             }
-        }
 
-        if (_isShooter)
-        {
-            if (PlayerInShootRange())
+            if (_isHealer)
             {
-                if (Time.time >= lastShootTime + shootCooldown)
+                Enemy nearbyAlly = FindAllyToHeal();
+                if (nearbyAlly != null)
                 {
-                    Shoot();
-                    lastShootTime = Time.time;
+                    HealAlly(nearbyAlly);
+                    return;
+                }
+            }
+
+            if (_isShooter)
+            {
+                if (PlayerInShootRange())
+                {
+                    if (Time.time >= lastShootTime + shootCooldown)
+                    {
+                        Shoot();
+                        lastShootTime = Time.time;
+                    }
                 }
             }
         }
@@ -245,7 +252,8 @@ public class Enemy : Entity
     [SerializeField] private Transform _atkOrigin;
     [SerializeField] private float _atkRayDist = 1.0f;
     [SerializeField] private LayerMask _atkMask;
-    [SerializeField] private int _atkDmg = 2;
+    [SerializeField] private int _atkDmg = 2;    
+    private bool isTakingContinuousDamage = false;
 
     private Ray _atkRay;
     private RaycastHit _atkHit;
@@ -284,7 +292,7 @@ public class Enemy : Entity
 
         return null;
     }
-
+    [Header("<color=yellow>Heal</color>")]
     [SerializeField] private float healCooldown = 7.0f; // Tiempo en segundos entre curaciones
     private float lastHealTime = -Mathf.Infinity; // Tiempo de la última curación
 
@@ -325,7 +333,7 @@ public class Enemy : Entity
         //SFXManager.instance.PlayRandSFXClip(clips, transform, 1f);
     }
 
-    private bool isTakingContinuousDamage = false;
+
     public void ApplyContinuousDamageFromPlayer(float totalDamage, float duration, ElementType damageType)
     {
         if (isTakingContinuousDamage) return;
@@ -356,18 +364,30 @@ public class Enemy : Entity
         isTakingContinuousDamage = false;
     }
 
+
     private void Die()
     {
+        _animator.SetBool("isMoving", false);
+        _animator.ResetTrigger("Punch");
+        _agent.speed = 0;
         GameManager.Instance.Enemies.Remove(this);
 
-        LootData loot = WaveManager.Instance.GetLoot(enemyType);
+        
 
-        if (FindObjectOfType<PlayerStats>() is PlayerStats playerStats)
+        _animator.SetTrigger("Die");
+
+        if (!isdead)
         {
-            playerStats.AddLoot(loot);
-        }
 
-        Destroy(gameObject);
+            LootData loot = LootManager.Instance.GetLoot(enemyType);
+
+            if (FindObjectOfType<PlayerStats>() is PlayerStats playerStats)
+            {
+                playerStats.AddLoot(loot);
+            }
+        }
+        isdead = true;
+        Destroy(gameObject, 1.5f);
     }
 
     public void triggerReset()
@@ -403,33 +423,6 @@ public class Enemy : Entity
         {
             Gizmos.color = Color.magenta;
             Gizmos.DrawWireSphere(transform.position, _shootDist);
-        }
-    }
-
-    [SerializeField] private VisualEffect[] vfxArray;
-
-    // Nombre del parámetro booleano en el VFX Graph, si es necesario
-    [SerializeField] private string vfxParameter = "PlayVFX";
-
-    public void PlayVFX()
-    {
-        foreach (var vfx in vfxArray)
-        {
-            if (vfx != null)
-            {
-                // Si el VFX Graph tiene un parámetro booleano para activar
-
-
-                vfx.SetBool(vfxParameter, true);
-
-
-                // Reiniciar el VFX para que las partículas comiencen de nuevo
-                vfx.Reinit();
-            }
-            else
-            {
-                Debug.LogWarning("Un VisualEffect no está asignado en el array.");
-            }
         }
     }
 }

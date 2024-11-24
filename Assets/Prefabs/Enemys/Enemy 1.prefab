@@ -529,7 +529,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a25747d588f086a4caa4dce399923545, type: 2}
+  - {fileID: 2100000, guid: 55ecf4c1de587144e92b3982573ef558, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1552,7 +1552,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a25747d588f086a4caa4dce399923545, type: 2}
+  - {fileID: 2100000, guid: 55ecf4c1de587144e92b3982573ef558, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2331,9 +2331,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0ad9e2fcf32de5428a4d6b851038e1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLife: 20
+  maxLife: 1
   currentLife: 0
-  anim: {fileID: 9184416210414114211}
   _bloodVFX: {fileID: 8050358303301125689}
   _isNormal: 0
   _isHealer: 1
@@ -2351,7 +2350,7 @@ MonoBehaviour:
   _speed: 2
   enemyType: 2
   _animator: {fileID: 9184416210414114211}
-  mat: {fileID: 2100000, guid: c0f7db84c08184d459fc405ec146f87c, type: 2}
+  mat: {fileID: 2100000, guid: 55ecf4c1de587144e92b3982573ef558, type: 2}
   _agent: {fileID: 0}
   clips:
   - {fileID: 8300000, guid: 181a368a4a717f746804209787043db5, type: 3}
@@ -2372,6 +2371,8 @@ MonoBehaviour:
     m_Bits: 8
   _atkDmg: 1
   healCooldown: 7
+  weakness: 0
+  elementalMultiplier: 2
   vfxArray:
   - {fileID: 8050358303301125689}
   vfxParameter: PlayVFX
