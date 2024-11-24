@@ -13,6 +13,7 @@ public class Boss : HP
 
     [Header("<color=red>Behaviours</color>")]
     [SerializeField] private Animator _animator;
+    [SerializeField] private bool isdead;
 
     [Header("<color=#6A89A7>UI</color>")]
     [SerializeField] private Image healthBar;
@@ -142,14 +143,24 @@ public class Boss : HP
 
     private void Die()
     {
-        LootData loot = WaveManager.Instance.GetLoot(enemyType);
-       
-        if (FindObjectOfType<PlayerStats>() is PlayerStats playerStats)
-        {
-            playerStats.AddLoot(loot);
-        }
+        _animator.SetBool("isMoving", false);
+        _animator.ResetTrigger("Punch");
 
-        Destroy(gameObject);
+
+        _animator.SetTrigger("Die");
+
+        if (!isdead)
+        {
+
+            LootData loot = LootManager.Instance.GetLoot(enemyType);
+
+            if (FindObjectOfType<PlayerStats>() is PlayerStats playerStats)
+            {
+                playerStats.AddLoot(loot);
+            }
+        }
+        isdead = true;
+        Destroy(gameObject, 1.5f);
     }
 
     private void OnDrawGizmos()
