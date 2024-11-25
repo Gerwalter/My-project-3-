@@ -4,16 +4,26 @@ using UnityEngine;
 
 public class FireBall : BossAttacks
 {
-    public float speed = 5f;
+    public Player _target;
+    public float speed = 10f; // Velocidad del movimiento
+    private bool shouldMove = false; // Controla si el FireBall debe moverse
 
-    private void Update()
-    {
-        //prueba();
-    }
+
     private void Awake()
     {
+        _target = GameManager.Instance.Player;
+
         ExecuteAttack();
     }
+    private void Update()
+    {
+        if (shouldMove)
+        {
+            // Mueve el FireBall hacia adelante en la dirección que está enfrentando
+            transform.Translate(direction * speed * Time.deltaTime, Space.World);
+        }
+    }
+
     public override void ExecuteAttack()
     {
         StartCoroutine(Charge());
@@ -21,7 +31,10 @@ public class FireBall : BossAttacks
 
     IEnumerator Charge()
     {
-        yield return new WaitForSeconds(.5f);
-        print("A");
+        yield return new WaitForSeconds(.2f);
+        // Activa el movimiento después de cargar
+        shouldMove = true;
+
+        Destroy(gameObject, 1f);
     }
 }

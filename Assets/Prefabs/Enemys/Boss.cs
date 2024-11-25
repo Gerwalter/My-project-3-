@@ -50,6 +50,7 @@ public class Boss : HP
 
     private bool canAttack = true;
     [SerializeField] private List<Transform> spawnPoints;
+    [SerializeField] private float yAxis;
     private void PerformRandomAttack()
     {
         if (canAttack)
@@ -58,29 +59,38 @@ public class Boss : HP
             int randomIndex = Random.Range(0, attacks.Length);
             Attack selectedAttack = attacks[randomIndex];
             Transform spawnPoint = GetRandomSpawnPoint();
-            Quaternion spawnRotation = Quaternion.identity;
+            Vector3 FireSpawn = new Vector3(spawnPoint.position.x, yAxis, spawnPoint.position.z);
             // Instancia el prefab del ataque (si existe)
             if (selectedAttack.AttackPrefab != null)
             {
-                Instantiate(selectedAttack.AttackPrefab, spawnPoint.position, spawnRotation);
-                Vector3 direction = (_target.position - spawnPoint.position).normalized;
-                selectedAttack.AttackPrefab.GetComponent<Rigidbody>().velocity = direction * 40f;
-            }
-            else
-            {
-                Debug.LogWarning($"El ataque {selectedAttack.Name} no tiene un prefab asignado.");
+                if (selectedAttack.Name == "Fireball")
+                {
+                    print("Funciona");
+                    // Ajusta la posición en y del spawnPoint a un valor fijo
+                    spawnPoint.position = FireSpawn;
+                }
+                // Instancia el prefab y alinea su rotación con el forward del invocador
+                GameObject attackInstance = Instantiate(selectedAttack.AttackPrefab,spawnPoint.position,Quaternion.LookRotation(transform.forward));
+
+                // Si el prefab tiene un script que necesita configuración, lo hacemos aquí
+                var attackComponent = attackInstance.GetComponent<BossAttacks>();
+                if (attackComponent != null)
+                {
+                    attackComponent.SetDirection(transform.forward);
+                }
+
+               
+
             }
 
-            // Inicia el cooldown basado en el ataque seleccionado
             StartCoroutine(AttackCooldownRoutine(selectedAttack.Cooldown));
             canAttack = false;
         }
-
     }
 
     private Transform GetRandomSpawnPoint()
     {
-        int randomIndex = UnityEngine.Random.Range(0, spawnPoints.Count);
+        int randomIndex = Random.Range(0, spawnPoints.Count);
         return spawnPoints[randomIndex];
     }
     private IEnumerator AttackCooldownRoutine(float cooldown)
