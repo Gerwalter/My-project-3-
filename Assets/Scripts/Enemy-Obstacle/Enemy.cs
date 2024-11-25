@@ -86,17 +86,6 @@ public class Enemy : Entity
         GetLife = maxLife;
 
     }
-    private Transform GetNewNode(Transform lastNode = null)
-    {
-        Transform newNode = _navMeshNodes[Random.Range(0, _navMeshNodes.Count)];
-
-        while (lastNode == newNode)
-        {
-            newNode = _navMeshNodes[Random.Range(0, _navMeshNodes.Count)];
-        }
-
-        return newNode;
-    }
 
     public bool air;
 

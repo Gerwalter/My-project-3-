@@ -10,23 +10,18 @@ public class FireBall : BossAttacks
     {
         //prueba();
     }
-
-    public override IEnumerator ExecuteAttacks(Transform target)
+    private void Awake()
     {
-        //transform.Translate(Vector3.forward * speed * Time.deltaTime);
-        yield return new WaitForSeconds(.2f);
-        print("a");
+        ExecuteAttack();
+    }
+    public override void ExecuteAttack()
+    {
+        StartCoroutine(Charge());
     }
 
-    void prueba()
+    IEnumerator Charge()
     {
-      // StartCoroutine(Prueba());
-        print("a");
-    }
-
-    IEnumerator Prueba()
-    {
-        yield return new WaitForSeconds(1);
-
+        yield return new WaitForSeconds(.5f);
+        print("A");
     }
 }

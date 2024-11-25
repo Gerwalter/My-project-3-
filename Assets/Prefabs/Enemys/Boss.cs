@@ -9,14 +9,12 @@ public struct Attack
 {
     public string Name;                  // Nombre del ataque
     public float Cooldown;               // Tiempo de reutilización del ataque
-    public BossAttacks AttackLogic;      // Referencia a la lógica del ataque
     public GameObject AttackPrefab;      // Prefab del ataque para instanciarlo
 
-    public Attack(string name, float cooldown, BossAttacks attackLogic, GameObject attackPrefab)
+    public Attack(string name, float cooldown, GameObject attackPrefab)
     {
         Name = name;
         Cooldown = cooldown;
-        AttackLogic = attackLogic;
         AttackPrefab = attackPrefab;
     }
 }
@@ -47,16 +45,6 @@ public class Boss : HP
     private void Start()
     {
         _target = GameManager.Instance.Player.gameObject.transform;
-
-        if (!_target)
-        {
-            Debug.LogError("No hay target.");
-        }
-        else
-        {
-            Debug.Log($"Target : {_target.gameObject.name}.");
-        }
-
         GetLife = maxLife;
     }
 
@@ -75,17 +63,8 @@ public class Boss : HP
             if (selectedAttack.AttackPrefab != null)
             {
                 Instantiate(selectedAttack.AttackPrefab, spawnPoint.position, spawnRotation);
-
-                // Asegúrate de que el prefab tenga el script de lógica de ataque
-                BossAttacks attackLogic = selectedAttack.AttackLogic;
-                if (attackLogic != null)
-                {
-                    attackLogic.ExecuteAttacks(/* Aquí puedes pasar el objetivo */ transform);
-                }
-                else
-                {
-                    Debug.LogWarning("El prefab del ataque no tiene un script BossAttacks.");
-                }
+                Vector3 direction = (_target.position - spawnPoint.position).normalized;
+                selectedAttack.AttackPrefab.GetComponent<Rigidbody>().velocity = direction * 40f;
             }
             else
             {
@@ -98,6 +77,7 @@ public class Boss : HP
         }
 
     }
+
     private Transform GetRandomSpawnPoint()
     {
         int randomIndex = UnityEngine.Random.Range(0, spawnPoints.Count);

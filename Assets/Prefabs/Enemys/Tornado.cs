@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Tornado : BossAttacks
 {
-    public override void ExecuteAttack(Transform target)
+    public override void ExecuteAttack()
     {
-        Debug.Log("Casting a Tornado at " + target.name +  "Damage");
+        Debug.Log("Casting a Tornado at Damage");
         // Lógica específica del ataque Fireball
     }
 }
