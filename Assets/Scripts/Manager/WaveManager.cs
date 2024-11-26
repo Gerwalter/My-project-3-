@@ -25,30 +25,23 @@ public class WaveManager : MonoBehaviour
 
     [SerializeField] private LootManager _enemyLootManager;
 
-    public static WaveManager Instance;
 
     void Awake()
     {
         _timer = 0;
-
+        _spawnOrder.Clear();
         // Obtiene referencia al EnemyLootManager
         _enemyLootManager = LootManager.Instance;
+    }
 
+    private void Start()
+    {
         if (_spawnOrder.Count == 0)
         {
             print("a");
             QueueEnemy();
         }
-
-        // Añadir oleadas al orden de spawn
-        _spawnOrder.Enqueue(normalEnemyWave);
-        _spawnOrder.Enqueue(ligthEnemyWave);
-        _spawnOrder.Enqueue(normalEnemyWave);
-        _spawnOrder.Enqueue(heavyEnemyWave);
-        _spawnOrder.Enqueue(ligthEnemyWave);
-        _spawnOrder.Enqueue(bossEnemyWave);
     }
-
     private void QueueEnemy()
     {
         _spawnOrder.Enqueue(normalEnemyWave);
@@ -56,7 +49,6 @@ public class WaveManager : MonoBehaviour
         _spawnOrder.Enqueue(normalEnemyWave);
         _spawnOrder.Enqueue(heavyEnemyWave);
         _spawnOrder.Enqueue(ligthEnemyWave);
-        _spawnOrder.Enqueue(bossEnemyWave);
     }
 
     private void Update()
