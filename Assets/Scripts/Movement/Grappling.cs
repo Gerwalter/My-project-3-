@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -40,6 +41,7 @@ public class Grappling : MonoBehaviour
         CrossHair = CanvasReferencesManager.Instance.CrossHair;
         originaldistance = Cameracontroller._maxDistance;
         CrossHair.enabled = false;
+        cam = CameraController.Instance.transform;
     }
 
     private void LateUpdate()

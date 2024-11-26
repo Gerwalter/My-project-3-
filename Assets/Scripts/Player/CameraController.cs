@@ -36,6 +36,14 @@ public class CameraController : MonoBehaviour
     [SerializeField] private LayerMask _ignoreLayerMask;
     public static CameraController Instance;
 
+    [SerializeField] private Transform camTransform;
+
+    public Transform CamTransform
+    {
+        get { return camTransform; }
+        set { camTransform = value; }
+    }
+
     private void Awake()
     {
         if (!Instance)
@@ -47,8 +55,9 @@ public class CameraController : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
+                CamTransform = transform;
         _ignoreLayerMask = LayerMask.GetMask("Player");
+  
     }
 
     private void OnEnable()
@@ -64,7 +73,8 @@ public class CameraController : MonoBehaviour
     }
 
     private void Start()
-    {
+    {   
+
         InitializeCamera();
         DisableMenu(); // Asegurarse de desactivar el menú en el inicio
     }
@@ -83,7 +93,7 @@ public class CameraController : MonoBehaviour
             UpdateCamRot(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
             if (scroll != 0f)
             {
-                _maxDistance = Mathf.Clamp(_maxDistance - scroll , _minDistance + 2, 10f); // Ajusta el 10f al valor máximo deseado
+                _maxDistance = Mathf.Clamp(_maxDistance - scroll, _minDistance + 2, 10f); // Ajusta el 10f al valor máximo deseado
             }
         }
 

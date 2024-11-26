@@ -26,20 +26,19 @@ public class BossSpawner : MonoBehaviour
         // Verificamos si el objeto que colisiona está en la capa del jugador
         if (((1 << other.gameObject.layer) & playerLayerMask) != 0)
         {
-            //  print("Jugador detectado.");
-            //  if (director != null)
-            //  {
-            //      _player.freeze = true; // Congela al jugador
-            //      director.Play(); // Inicia la reproducción del PlayableDirector
-            //
-            //      // Subscribirse al evento "stopped"
-            //      director.stopped += OnTimelineFinished;
-            //  }
-            //  else
-            //  {
-            //      Debug.LogWarning("No se asignó un PlayableDirector en el inspector.");
-            //  }
-            SpawnBoss();
+            print("Jugador detectado.");
+            if (director != null)
+            {
+                _player.freeze = true; // Congela al jugador
+                director.Play(); // Inicia la reproducción del PlayableDirector
+          
+                // Subscribirse al evento "stopped"
+                director.stopped += OnTimelineFinished;
+            }
+            else
+            {
+                Debug.LogWarning("No se asignó un PlayableDirector en el inspector.");
+            }
         }
     }
 

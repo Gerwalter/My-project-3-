@@ -53,7 +53,13 @@ public class CanvasReferencesManager : MonoBehaviour
         get { return goldText; }
         set { goldText = value; }
     }
+    [SerializeField] private Lock handle;
 
+    public Lock Handle
+    {
+        get { return handle; }
+        set { handle = value; }
+    }
 }
 
 

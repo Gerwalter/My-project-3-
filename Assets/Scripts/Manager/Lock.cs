@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Lock : MonoBehaviour
@@ -9,6 +10,7 @@ public class Lock : MonoBehaviour
     private void Start()
     {
         menu.SetActive(false);
+        CanvasReferencesManager.Instance.Handle = this;
     }
 
     public void OnDie()

@@ -97,13 +97,14 @@ public class Player : HP
 
         GameManager.Instance.Player = this;
 
-        healthBar = CanvasReferencesManager.Instance.Healthbar; 
+
     }
 
     private void Start()
     {
         _camTransform = Camera.main.transform;
-
+        healthBar = CanvasReferencesManager.Instance.Healthbar;
+        Handle = CanvasReferencesManager.Instance.Handle;
         _anim = GetComponentInChildren<Animator>();
 
         GetLife = maxLife;
