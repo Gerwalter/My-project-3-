@@ -9,7 +9,6 @@ public class CanvasManager : MonoBehaviour
     [SerializeField] private Canvas[] _mainMenuScreens;
 
     private Canvas _activeScene;
-    public GameObject[] Scene;
 
     public enum Menu
     {
@@ -44,6 +43,10 @@ public class CanvasManager : MonoBehaviour
         _activeScene = _mainMenuScreens[(int)menu];
         _activeScene.enabled = true;
     }
+    public void LoadSceneAsync(string scene)
+    {
+        SceneLoaderManager.Instance.LoadSecenAsync(scene);
+    }
 
     // Método para cambiar canvas usando un int
     public void ChangeCanvas(int index)
@@ -56,11 +59,6 @@ public class CanvasManager : MonoBehaviour
         _activeScene.enabled = false;
         _activeScene = _mainMenuScreens[index];
         _activeScene.enabled = true;
-    }
-
-    public void ChangeScene(string sceneName)
-    {
-        SceneManager.LoadScene(sceneName);
     }
 
     public void CloseUp()
