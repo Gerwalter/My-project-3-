@@ -2,19 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class GoldManager : MonoBehaviour
 {
-    private PlayerStats _playerStats;
+    [SerializeField] private PlayerStats _playerStats;
 
+
+    public static GoldManager Instance;
+
+    private void Awake()
+    {
+        if (!Instance)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     void Start()
     {
         // Busca el componente PlayerStats en el jugador
-        _playerStats = FindObjectOfType<PlayerStats>();
+        _playerStats = GameManager.Instance.Stats;
 
-        if (_playerStats == null)
-        {
-            Debug.LogError("No se encontró PlayerStats en la escena.");
-        }
     }
     public int GetGold()
     {

@@ -367,7 +367,6 @@ public class Enemy : Entity
 
         if (!isdead)
         {
-
             LootData loot = LootManager.Instance.GetLoot(enemyType);
 
             if (FindObjectOfType<PlayerStats>() is PlayerStats playerStats)

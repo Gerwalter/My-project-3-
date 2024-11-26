@@ -39,5 +39,14 @@ public class CanvasMenuManager : MonoBehaviour
                 panel.SetActive(!panel.activeSelf);
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            if (SceneManager.GetActiveScene().buildIndex == 1)
+            {
+                // Cambiar el estado activo del panel
+                panel.SetActive(!panel.activeSelf);
+            }
+        }
     }
 }

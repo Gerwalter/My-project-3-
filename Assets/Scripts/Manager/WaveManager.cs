@@ -23,7 +23,7 @@ public class WaveManager : MonoBehaviour
     public float _timer;
     public float _spawn;
 
-    private LootManager _enemyLootManager;
+    [SerializeField] private LootManager _enemyLootManager;
 
     public static WaveManager Instance;
 
@@ -32,10 +32,11 @@ public class WaveManager : MonoBehaviour
         _timer = 0;
 
         // Obtiene referencia al EnemyLootManager
-        _enemyLootManager = FindObjectOfType<LootManager>();
+        _enemyLootManager = LootManager.Instance;
 
         if (_spawnOrder.Count == 0)
         {
+            print("a");
             QueueEnemy();
         }
 
@@ -100,11 +101,5 @@ public class WaveManager : MonoBehaviour
             // Dibujar los puntos de spawn como esferas en la escena para visualizarlos mejor
             Gizmos.DrawSphere(spawnPoint.position, 0.5f);
         }
-    }
-
-    public LootData GetLoot(EnemyType enemyType)
-    {
-        // Llama al EnemyLootManager para obtener los datos de loot
-        return _enemyLootManager != null ? _enemyLootManager.GetLoot(enemyType) : new LootData { gold = 0 };
     }
 }

@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 1995751719782077969}
   - component: {fileID: 1153973766275239518}
   - component: {fileID: 383256922455601560}
+  - component: {fileID: 2356771727668389393}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -186,7 +187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 0}
-  _playeranim: {fileID: 0}
+  _stats: {fileID: 0}
   _enemies: []
   _surface: {fileID: 0}
   _nodes: {fileID: 0}
@@ -215,6 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2809ece63e0c60440b8dfc778bfcbca4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerStats: {fileID: 0}
 --- !u!114 &1335479480660468796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,6 +271,7 @@ MonoBehaviour:
   - {fileID: 977567382580314072}
   _timer: 0
   _spawn: 3
+  _enemyLootManager: {fileID: 0}
 --- !u!114 &1995751719782077969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,7 +337,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthbar: {fileID: 0}
   hookTimer: {fileID: 0}
+  crossHair: {fileID: 0}
   goldText: {fileID: 0}
+  handle: {fileID: 0}
 --- !u!114 &383256922455601560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -347,3 +352,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7c725de59b69be4ca51d8322f831a20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2356771727668389393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8630724509985047641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1f284a2805cca2419fe60b3b8e73a3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gold: 0

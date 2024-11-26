@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
         }
     }
     #endregion
@@ -28,11 +29,11 @@ public class GameManager : MonoBehaviour
         set { _player = value; }
     }
 
-    [SerializeField] private Animator _playeranim;
-    public Animator PlayerAnim
+    [SerializeField] private PlayerStats _stats;
+    public PlayerStats Stats
     {
-        get { return _playeranim; }
-        set { _playeranim = value; }
+        get { return _stats; }
+        set { _stats = value; }
     }
 
     [SerializeField] private List<Enemy> _enemies = new();

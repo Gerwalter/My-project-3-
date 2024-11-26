@@ -2331,7 +2331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0ad9e2fcf32de5428a4d6b851038e1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLife: 1
+  maxLife: 20
   currentLife: 0
   _bloodVFX: {fileID: 8050358303301125689}
   _isNormal: 0
@@ -2349,21 +2349,21 @@ MonoBehaviour:
   _shootDist: 5
   _speed: 2
   enemyType: 2
-  _animator: {fileID: 9184416210414114211}
-  mat: {fileID: 2100000, guid: 55ecf4c1de587144e92b3982573ef558, type: 2}
   _agent: {fileID: 0}
-  clips:
-  - {fileID: 8300000, guid: 181a368a4a717f746804209787043db5, type: 3}
-  healthBar: {fileID: 3510542959025991487}
-  rb: {fileID: 6900142964974486969}
-  liftForce: 10
   _target: {fileID: 0}
   _actualNode: {fileID: 0}
   _navMeshNodes: []
   _iaNodeManager: {fileID: 0}
+  _enableRoam: 1
+  _animator: {fileID: 9184416210414114211}
+  clips:
+  - {fileID: 8300000, guid: 181a368a4a717f746804209787043db5, type: 3}
+  rb: {fileID: 6900142964974486969}
+  liftForce: 10
+  isdead: 0
+  healthBar: {fileID: 3510542959025991487}
   air: 0
   _groundCheckDistance: 1.1
-  _enableRoam: 1
   _atkOrigin: {fileID: 1085586048006099824}
   _atkRayDist: 1
   _atkMask:
@@ -2373,9 +2373,6 @@ MonoBehaviour:
   healCooldown: 7
   weakness: 0
   elementalMultiplier: 2
-  vfxArray:
-  - {fileID: 8050358303301125689}
-  vfxParameter: PlayVFX
 --- !u!54 &6900142964974486969
 Rigidbody:
   m_ObjectHideFlags: 0
