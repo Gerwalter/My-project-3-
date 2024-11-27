@@ -144,7 +144,6 @@ GameObject:
   - component: {fileID: 2372050120881644880}
   - component: {fileID: 1335479480660468796}
   - component: {fileID: 7295938850444405045}
-  - component: {fileID: 2832780455359106178}
   - component: {fileID: 1995751719782077969}
   - component: {fileID: 1153973766275239518}
   - component: {fileID: 383256922455601560}
@@ -244,34 +243,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 0}
---- !u!114 &2832780455359106178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8630724509985047641}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9450fbb41ad973143976bd52d6b30332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  normalEnemyWave:
-    enemyToSpawn:
-    - {fileID: 7715154201322672574, guid: e82e62fd9d6ac8b4e9fd93ea5b5145fe, type: 3}
-    - {fileID: 7715154201322672574, guid: 18536a461cff6054b81c88c2b4d744c7, type: 3}
-    - {fileID: 7715154201322672574, guid: ef1a08953e353374bad2a110feddc586, type: 3}
-  heavyEnemyWave:
-    enemyToSpawn: []
-  ligthEnemyWave:
-    enemyToSpawn: []
-  bossEnemyWave:
-    enemyToSpawn: []
-  spawnPoints:
-  - {fileID: 977567382580314072}
-  _timer: 0
-  _spawn: 3
-  _enemyLootManager: {fileID: 0}
 --- !u!114 &1995751719782077969
 MonoBehaviour:
   m_ObjectHideFlags: 0
