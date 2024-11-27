@@ -56,7 +56,7 @@ public class BossSpawner : MonoBehaviour
             _player.freeze = false; // Libera al jugador
             director.stopped -= OnTimelineFinished; // Desuscribirse del evento
 
-            //SFXManager.instance.PlaySFXClip(Theme, transform, 1f);
+            SFXManager.instance.PlaySFXClip(Theme, transform, 1f);
             Destroy(gameObject);
         }
     }
