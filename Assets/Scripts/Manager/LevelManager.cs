@@ -15,7 +15,6 @@ public class LevelManager : MonoBehaviour
         // Obtener la escena actual y reiniciarla
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         controller.IsCameraFixed = false;
-
     }
 
     // Cambiar a una escena específica por nombre
