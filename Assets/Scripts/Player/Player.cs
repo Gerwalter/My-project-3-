@@ -439,48 +439,55 @@ public class Player : HP
     [SerializeField] private float maxUltimate;
     [SerializeField] private float maxOvercharge;
 
+    [SerializeField] UltimateAbilities[] _ultimateAbilities;
+    [SerializeField] private int selectedAbilityIndex = 0;
+
     public void Ultimate(bool isOvercharged = false)
     {
         maxUltimate = 10f;
         maxOvercharge = maxUltimate * 2f;
-        // Valores máximos normales y de sobrecarga
 
-        // Determina el valor límite según si está sobrecargado
         float currentMax = isOvercharged ? maxOvercharge : maxUltimate;
 
-        // Asegúrate de que el valor actual no exceda el límite permitido
         _ultimateCharge = Mathf.Clamp(_ultimateCharge, 0, currentMax);
 
-        // Calcula el porcentaje de llenado para el rango normal
         float normalFillPercentage = Mathf.Clamp01(_ultimateCharge / maxUltimate);
 
-        // Calcula el porcentaje de llenado para la sobrecarga (si aplica)
         float overchargeFillPercentage = isOvercharged ? Mathf.Clamp01((_ultimateCharge - maxUltimate) / maxUltimate) : 0;
 
-        // Actualiza el llenado y el color de la barra normal
         ultimateBar.fillAmount = normalFillPercentage;
         ultimateBar.color = Color.Lerp(Color.black, Color.green, normalFillPercentage);
 
-        // Actualiza el llenado y el color de la barra de sobrecarga
         overchardedBar.fillAmount = overchargeFillPercentage;
         overchardedBar.color = Color.Lerp(Color.green, Color.yellow, overchargeFillPercentage);
     }
 
     public void UseUltimate()
     {
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            if (_ultimateCharge >= maxUltimate)
-            {
-                // Resta solo el valor de maxUltimate de la carga actual
-                _ultimateCharge -= maxUltimate;
+        UltimateAbilities selectedAbility = _ultimateAbilities[selectedAbilityIndex];
 
-                // Asegúrate de mantener los valores dentro de los límites permitidos
-                _ultimateCharge = Mathf.Clamp(_ultimateCharge, 0, maxOvercharge);
+        // Verifica si hay suficiente carga para usar la habilidad
+        if (_ultimateCharge >= selectedAbility.Cost)
+        {
+            // Consume la carga necesaria
+            _ultimateCharge -= selectedAbility.Cost;
+
+            // Asegúrate de mantener la carga dentro de los límites
+            _ultimateCharge = Mathf.Clamp(_ultimateCharge, 0, maxOvercharge);
+
+            // Instancia el prefab de la habilidad si está asignado
+            if (selectedAbility.Ability != null)
+            {
+                Instantiate(selectedAbility.Ability, transform.position, transform.rotation);
             }
+
+            Debug.Log($"Used ability: {selectedAbility.Name}, remaining charge: {_ultimateCharge}");
+        }
+        else
+        {
+            Debug.Log("Not enough charge to use the selected ability!");
         }
     }
-
     public void Cast()
     {
         _anim.SetTrigger("Cast");
