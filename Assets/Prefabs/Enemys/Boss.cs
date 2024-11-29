@@ -65,7 +65,7 @@ public class Boss : HP
             {
                 if (selectedAttack.Name == "Fireball")
                 {
-                    print("Funciona");
+
                     // Ajusta la posición en y del spawnPoint a un valor fijo
                     spawnPoint.position = FireSpawn;
                 }

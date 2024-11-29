@@ -18,7 +18,10 @@ public class FireShader : MonoBehaviour
     {
         StartCoroutine(AnimateNoisePower());
     }
-
+    public void DeactivateFire()
+    {
+        material.SetFloat(noisePowerProperty, 0);
+    }
     IEnumerator AnimateNoisePower()
     {
         isAnimating = true;

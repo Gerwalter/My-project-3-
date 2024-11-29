@@ -39,6 +39,18 @@ public class CanvasReferencesManager : MonoBehaviour
         set { hookTimer = value; }
     }
 
+    [SerializeField] private Image ultimate;
+    public Image Ultimate
+    {
+        get { return ultimate; }
+        set { ultimate = value; }
+    }
+    [SerializeField] private Image overcharge;
+    public Image Overcharge
+    {
+        get { return overcharge; }
+        set { overcharge = value; }
+    }
     [SerializeField] private Image crossHair;
     public Image CrossHair
     {

@@ -28,7 +28,7 @@ public class BossSpawner : MonoBehaviour
         // Verificamos si el objeto que colisiona está en la capa del jugador
         if (((1 << other.gameObject.layer) & playerLayerMask) != 0)
         {
-            FireShader.ActivateFire();
+            //FireShader.ActivateFire();
             print("Jugador detectado.");
             if (director != null)
             {
@@ -37,7 +37,7 @@ public class BossSpawner : MonoBehaviour
           
                 // Subscribirse al evento "stopped"
                 director.stopped += OnTimelineFinished;
-                FireShader.ActivateFire();
+                //FireShader.ActivateFire();
             }
             else
             {
@@ -64,8 +64,8 @@ public class BossSpawner : MonoBehaviour
             Debug.Log("Timeline finalizada. Liberando al jugador.");
             _player.freeze = false; // Libera al jugador
             director.stopped -= OnTimelineFinished; // Desuscribirse del evento
-            //FireShader.ActivateFire();
-            SFXManager.instance.PlaySFXClip(Theme, transform, 1f);
+            FireShader.ActivateFire();
+            //SFXManager.instance.PlaySFXClip(Theme, transform, 1f);
             //Destroy(gameObject);
             collider.enabled = false;
         }

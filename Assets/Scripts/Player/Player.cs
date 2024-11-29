@@ -10,14 +10,15 @@ public class Player : HP
     [SerializeField] private string _isGroundName = "isGrounded";
     [SerializeField] private string _jumpName = "onJump";
     [SerializeField] private string _xName = "xAxis";
-    [SerializeField] private string _zName = "zAxis";  
+    [SerializeField] private string _zName = "zAxis";
     public Animator _anim;
 
     [Header("<color=#6A89A7>Camera</color>")]
     [SerializeField] private Transform _camTarget;
+    [SerializeField] private FireShader FireShader;
 
-    public Transform GetCamTarget { get { return _camTarget; } } 
-    public Vector3 _camForwardFix = new(), _camRightFix = new();  
+    public Transform GetCamTarget { get { return _camTarget; } }
+    public Vector3 _camForwardFix = new(), _camRightFix = new();
     protected Transform _camTransform;
 
     [Header("<color=#6A89A7>Inputs</color>")]
@@ -26,20 +27,22 @@ public class Player : HP
 
     [Header("<color=#6A89A7>UI</color>")]
     [SerializeField] private Image healthBar;
+    [SerializeField] private Image ultimateBar;
+    [SerializeField] private Image overchardedBar;
 
     [Header("<color=#6A89A7>Physics - Interaction</color>")]
     [SerializeField] private Transform _intOrigin;
     [SerializeField] private float _intRayDist = 1.0f;
     [SerializeField] private LayerMask _intMask;
-    [SerializeField] private Ray _intRay;  
-    private RaycastHit _intHit;    
+    [SerializeField] private Ray _intRay;
+    private RaycastHit _intHit;
     public float _sphereIntRadius = 0.5f; // Radio de la esfera
 
     [Header("<color=#6A89A7>Physics - Jumping</color>")]
     [SerializeField] private float _jumpForce = 5.0f;
     [SerializeField] private float _jumpRayDist = 0.75f;
     [SerializeField] private LayerMask _jumpMask;
-    public Vector3 _jumpOffset = new(); 
+    public Vector3 _jumpOffset = new();
     [SerializeField] private Ray _jumpRay;
 
     [Header("<color=#6A89A7>Physics - Movement</color>")]
@@ -61,6 +64,7 @@ public class Player : HP
     [SerializeField] private int dmgMultiplier = 2; // Multiplicador de velocidad
     public float _sphereAtkRadius = 0.5f;
     [SerializeField] private ElementType selectedElement;
+    [SerializeField] private float _ultimateCharge;
 
 
     [Header("<color=#6A89A6>Physics - Speed</color>")]
@@ -82,10 +86,12 @@ public class Player : HP
     [Header("<color=blue>Grapple</color>")]
     public bool groundCheck;
     public Grappling grapple;
+    public bool EnableMovementAfterCollision = true;
     [SerializeField] public bool freeze = false;
     [SerializeField] public bool activeGrapple = false;
     [SerializeField] private Vector3 velocityToSet;
     [SerializeField] private float velocity;
+    [SerializeField] private float maxGrappleVelocity = 20f;
 
     // Nueva variable para desactivar el movimiento
 
@@ -104,11 +110,14 @@ public class Player : HP
     {
         _camTransform = Camera.main.transform;
         healthBar = CanvasReferencesManager.Instance.Healthbar;
+        ultimateBar = CanvasReferencesManager.Instance.Ultimate;
+        overchardedBar = CanvasReferencesManager.Instance.Overcharge;
         Handle = CanvasReferencesManager.Instance.Handle;
         _anim = GetComponentInChildren<Animator>();
 
         GetLife = maxLife;
         UpdateHealthBar();
+        FireShader.DeactivateFire();
     }
     private void Update()
     {
@@ -119,7 +128,7 @@ public class Player : HP
             _anim.SetFloat(_zName, 0.0f);
 
             return;
-        }// Si el movimiento está desactivado, no hacer nada
+        }
         _dir.x = Input.GetAxisRaw("Horizontal");
         _dir.z = Input.GetAxisRaw("Vertical");
 
@@ -151,42 +160,74 @@ public class Player : HP
         UpdateHealthBar();
         groundCheck = IsGrounded();
         Dash();
+        Ultimate(true);
+        UseUltimate();
     }
 
     void Dash()
     {
         if (Input.GetKeyDown(KeyCode.LeftShift) && _canDash)
+        {
+            if (_dashResetCoroutine != null)
+            {
+                StopCoroutine(_dashResetCoroutine); // Detenemos el reset si hay un nuevo dash
+            }
             StartCoroutine(Dashing());
+        }
     }
+
+    [Header("<color=red>Dash</color>")]
     [SerializeField] private float _dashForce = 10f; // Fuerza del dash
-    [SerializeField] private float _dashCooldown = 1f; // Tiempo entre dashes
-    [SerializeField] private float _dashDuration = 0.2f; // Duración del dash
-    private bool _canDash = true;
+    [SerializeField] private float _dashCooldown = 0.2f; // Cooldown entre dashes consecutivos
+    [SerializeField] private float _dashResetTime = 0.5f; // Tiempo máximo entre dashes consecutivos
+    [SerializeField] private float _dashFinalCooldown = 1f; // Cooldown después del tercer dash
+    [SerializeField] private float _dashDuration = 0.2f; // Duración de cada dash
+
+    private int _dashCount = 0; // Contador de dashes consecutivos
+    private bool _canDash = true; // Indica si el jugador puede iniciar un dash
     private bool _isDashing = false;
     private Vector3 _dashDirection;
+    private Coroutine _dashResetCoroutine;
 
     IEnumerator Dashing()
     {
-        _canDash = false;
         _isDashing = true;
+        _canDash = false;
 
-        // Guardamos la dirección del dash
+        // Guardar la dirección del dash
         _dashDirection = _dirFix;
 
         float dashTime = 0f;
         while (dashTime < _dashDuration)
         {
-            // Mover al personaje durante el dash
             _rb.MovePosition(transform.position + _dashDirection * _dashForce * Time.deltaTime);
             dashTime += Time.deltaTime;
             yield return null;
         }
 
         _isDashing = false;
+        print(_dashCount);
+        _dashCount++;
 
-        // Esperamos el cooldown
-        yield return new WaitForSeconds(_dashCooldown);
-        _canDash = true;
+        // Comprobamos si es el tercer dash
+        if (_dashCount >= 3)
+        {
+            _dashCount = 0; // Reset del contador
+            yield return new WaitForSeconds(_dashFinalCooldown); // Espera el cooldown largo
+        }
+        else
+        {
+            _dashResetCoroutine = StartCoroutine(DashResetTimer()); // Inicia el temporizador de reset
+            yield return new WaitForSeconds(_dashCooldown); // Cooldown entre dashes
+        }
+
+        _canDash = true; // Permitir realizar un nuevo dash
+    }
+
+    private IEnumerator DashResetTimer()
+    {
+        yield return new WaitForSeconds(_dashResetTime);
+        _dashCount = 0; // Reset del contador de dashes
     }
 
     private void FixedUpdate()
@@ -268,7 +309,6 @@ public class Player : HP
         transform.forward = dir;
     }
 
-    public bool EnableMovementAfterCollision = true;
 
     public bool IsGrounded()
     {
@@ -305,7 +345,7 @@ public class Player : HP
         Gizmos.DrawLine(_atkOrigin.position, _atkOrigin.position + transform.forward * _atkRayDist);
 
         // Dibuja la esfera al final del SphereCast
-        Gizmos.color = Color.green  ; // Color de la esfera
+        Gizmos.color = Color.green; // Color de la esfera
         Gizmos.DrawWireSphere(_atkRay.origin + _atkRay.direction * _atkRayDist, _sphereAtkRadius);
     }
 
@@ -331,7 +371,7 @@ public class Player : HP
         {
             if (_atkHit.collider.TryGetComponent<Enemy>(out Enemy enemy))
             {
-                    enemy.ReciveDamage(_atkDmg, selectedElement);
+                enemy.ReciveDamage(_atkDmg, selectedElement);
             }
             else if (_atkHit.collider.TryGetComponent<HealthSystem>(out HealthSystem enemyHealth))
             {
@@ -341,6 +381,7 @@ public class Player : HP
             {
                 BossHealth.ReciveDamage(_atkDmg, selectedElement);
             }
+            _ultimateCharge++;
         }
 
         else if (Physics.Raycast(_atkRay, out _atkHit, _atkRayDist, _atkMask))
@@ -357,6 +398,7 @@ public class Player : HP
             {
                 BossHealth.ReciveDamage(_atkDmg, selectedElement);
             }
+            _ultimateCharge++;
         }
     }
 
@@ -389,9 +431,55 @@ public class Player : HP
                 BossHealth.ReciveDamage(_atkDmg);
                 BossHealth.ApplyLiftImpulse();
             }
+
+            _ultimateCharge++;
         }
     }
 
+    [SerializeField] private float maxUltimate;
+    [SerializeField] private float maxOvercharge;
+
+    public void Ultimate(bool isOvercharged = false)
+    {
+        maxUltimate = 10f;
+        maxOvercharge = maxUltimate * 2f;
+        // Valores máximos normales y de sobrecarga
+
+        // Determina el valor límite según si está sobrecargado
+        float currentMax = isOvercharged ? maxOvercharge : maxUltimate;
+
+        // Asegúrate de que el valor actual no exceda el límite permitido
+        _ultimateCharge = Mathf.Clamp(_ultimateCharge, 0, currentMax);
+
+        // Calcula el porcentaje de llenado para el rango normal
+        float normalFillPercentage = Mathf.Clamp01(_ultimateCharge / maxUltimate);
+
+        // Calcula el porcentaje de llenado para la sobrecarga (si aplica)
+        float overchargeFillPercentage = isOvercharged ? Mathf.Clamp01((_ultimateCharge - maxUltimate) / maxUltimate) : 0;
+
+        // Actualiza el llenado y el color de la barra normal
+        ultimateBar.fillAmount = normalFillPercentage;
+        ultimateBar.color = Color.Lerp(Color.black, Color.green, normalFillPercentage);
+
+        // Actualiza el llenado y el color de la barra de sobrecarga
+        overchardedBar.fillAmount = overchargeFillPercentage;
+        overchardedBar.color = Color.Lerp(Color.green, Color.yellow, overchargeFillPercentage);
+    }
+
+    public void UseUltimate()
+    {
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            if (_ultimateCharge >= maxUltimate)
+            {
+                // Resta solo el valor de maxUltimate de la carga actual
+                _ultimateCharge -= maxUltimate;
+
+                // Asegúrate de mantener los valores dentro de los límites permitidos
+                _ultimateCharge = Mathf.Clamp(_ultimateCharge, 0, maxOvercharge);
+            }
+        }
+    }
 
     public void Cast()
     {
@@ -429,14 +517,13 @@ public class Player : HP
         Invoke(nameof(Setvelocity), 0.1f);
     }
 
-   
+
 
     public void ResetRestrictions()
     {
         activeGrapple = false;
     }
 
-    [SerializeField] private float maxGrappleVelocity = 20f;
 
     private void Setvelocity()
     {
@@ -451,7 +538,7 @@ public class Player : HP
         _rb.velocity = velocityToSet * velocity;
     }
 
- private bool isDead = false;
+    private bool isDead = false;
     public override void ReciveDamage(float damage)
     {
         GetLife -= damage;
@@ -491,7 +578,7 @@ public class Player : HP
 
         // Aplica ambas fuerzas al Rigidbody
         _rb.AddForce(forwardDirection + upwardImpulse, ForceMode.Impulse);
-    }   
+    }
     public override void Health(float amount)
     {
         GetLife += amount;
