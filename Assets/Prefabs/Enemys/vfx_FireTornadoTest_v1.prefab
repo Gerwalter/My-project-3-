@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2226874163953968662}
   - component: {fileID: -1336833648279787685}
+  - component: {fileID: -1340672942325394270}
   m_Layer: 0
   m_Name: vfx_FireTornadoTest_v1
   m_TagString: Untagged
@@ -56,7 +57,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 0}
-  speed: 10
+  speed: 6
+  damage: 2
+  playerLayerMask:
+    serializedVersion: 2
+    m_Bits: 8
+--- !u!65 &-1340672942325394270
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1561802307287973036}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 9.738594, y: 12.438257, z: 10.069392}
+  m_Center: {x: 0.2719574, y: 5.7191286, z: -0.26424646}
 --- !u!1 &1832344088734083096
 GameObject:
   m_ObjectHideFlags: 0

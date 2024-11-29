@@ -147,6 +147,7 @@ public class Boss : HP
         // Actualizar la rotación para que mire al jugador
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * _speed);
+        _animator.SetBool("isMoving", true);
     }
 
     private void UpdateHealthBar()

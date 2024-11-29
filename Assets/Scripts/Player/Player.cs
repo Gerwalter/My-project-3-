@@ -150,6 +150,43 @@ public class Player : HP
 
         UpdateHealthBar();
         groundCheck = IsGrounded();
+        Dash();
+    }
+
+    void Dash()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift) && _canDash)
+            StartCoroutine(Dashing());
+    }
+    [SerializeField] private float _dashForce = 10f; // Fuerza del dash
+    [SerializeField] private float _dashCooldown = 1f; // Tiempo entre dashes
+    [SerializeField] private float _dashDuration = 0.2f; // Duración del dash
+    private bool _canDash = true;
+    private bool _isDashing = false;
+    private Vector3 _dashDirection;
+
+    IEnumerator Dashing()
+    {
+        _canDash = false;
+        _isDashing = true;
+
+        // Guardamos la dirección del dash
+        _dashDirection = _dirFix;
+
+        float dashTime = 0f;
+        while (dashTime < _dashDuration)
+        {
+            // Mover al personaje durante el dash
+            _rb.MovePosition(transform.position + _dashDirection * _dashForce * Time.deltaTime);
+            dashTime += Time.deltaTime;
+            yield return null;
+        }
+
+        _isDashing = false;
+
+        // Esperamos el cooldown
+        yield return new WaitForSeconds(_dashCooldown);
+        _canDash = true;
     }
 
     private void FixedUpdate()
@@ -212,6 +249,7 @@ public class Player : HP
 
     private void Movement(Vector3 dir)
     {
+        if (_isDashing) return;
         _camForwardFix = _camTransform.forward;
         _camRightFix = _camTransform.right;
 

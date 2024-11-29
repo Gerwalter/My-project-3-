@@ -43,4 +43,5 @@ public class FireShader : MonoBehaviour
 
         isAnimating = false;
     }
+
 }
