@@ -16,7 +16,6 @@ public class LevelChanger : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
 
-        Canvas.gameObject.SetActive(true);  
 
         LoadLevelByName("Casino 1");
     }
@@ -25,5 +24,6 @@ public class LevelChanger : MonoBehaviour
     {
         // Cargar una escena específica por nombre
         SceneManager.LoadScene(levelName);
+        GameManager.Instance.Enemies.Clear();
     }
 }

@@ -444,7 +444,6 @@ public class Player : HP
 
     public void Ultimate(bool isOvercharged = false)
     {
-        maxUltimate = 10f;
         maxOvercharge = maxUltimate * 2f;
 
         float currentMax = isOvercharged ? maxOvercharge : maxUltimate;
@@ -464,28 +463,39 @@ public class Player : HP
 
     public void UseUltimate()
     {
+        // Obtén la habilidad seleccionada
         UltimateAbilities selectedAbility = _ultimateAbilities[selectedAbilityIndex];
 
-        // Verifica si hay suficiente carga para usar la habilidad
-        if (_ultimateCharge >= selectedAbility.Cost)
+        if (Input.GetKeyDown(KeyCode.Z))
         {
-            // Consume la carga necesaria
-            _ultimateCharge -= selectedAbility.Cost;
-
-            // Asegúrate de mantener la carga dentro de los límites
-            _ultimateCharge = Mathf.Clamp(_ultimateCharge, 0, maxOvercharge);
-
-            // Instancia el prefab de la habilidad si está asignado
-            if (selectedAbility.Ability != null)
-            {
-                Instantiate(selectedAbility.Ability, transform.position, transform.rotation);
-            }
-
-            Debug.Log($"Used ability: {selectedAbility.Name}, remaining charge: {_ultimateCharge}");
+            // Cambiar al siguiente índice en el array
+            selectedAbilityIndex = (selectedAbilityIndex + 1) % _ultimateAbilities.Length;
+            Debug.Log($"Switched to ability: {_ultimateAbilities[selectedAbilityIndex].Name}");
         }
-        else
+
+        if (Input.GetKeyDown(KeyCode.LeftControl))
         {
-            Debug.Log("Not enough charge to use the selected ability!");
+            // Verifica si hay suficiente carga para usar la habilidad
+            if (_ultimateCharge >= selectedAbility.Cost)
+            {
+                // Consume la carga necesaria
+                _ultimateCharge -= selectedAbility.Cost;
+
+                // Asegúrate de mantener la carga dentro de los límites
+                _ultimateCharge = Mathf.Clamp(_ultimateCharge, 0, maxOvercharge);
+
+                // Instancia el prefab de la habilidad si está asignado
+                if (selectedAbility.Ability != null)
+                {
+                    Instantiate(selectedAbility.Ability, transform.position, transform.rotation);
+                }
+
+                Debug.Log($"Used ability: {selectedAbility.Name}, remaining charge: {_ultimateCharge}");
+            }
+            else
+            {
+                Debug.Log("Not enough charge to use the selected ability!");
+            }
         }
     }
     public void Cast()
@@ -569,6 +579,7 @@ public class Player : HP
             }
         }
     }
+
     public void MovePlayer(float force)
     {
         Vector3 forwardDirection = transform.forward; // Dirección actual del jugador

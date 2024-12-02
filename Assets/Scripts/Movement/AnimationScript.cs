@@ -76,6 +76,11 @@ public class AnimationScript : MonoBehaviour
         _player.DisableMovement();
     }
 
+    public void EnableMovement()
+    {
+        _player.EnableMovement();
+    }
+
     public void Interact()
     {
         _player.Interact();
