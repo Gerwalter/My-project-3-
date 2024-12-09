@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAvatar : MonoBehaviour
+public class Enemy2Avatar : MonoBehaviour
 {
-    public Enemy _parent;
+    public Enemy2 _parent;
 
     private void Start()
     {
-        _parent = GetComponentInParent<Enemy>();
+        _parent = GetComponentInParent<Enemy2>();
     }
     public void Attack()
     {

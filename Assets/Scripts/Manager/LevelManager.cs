@@ -3,18 +3,14 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-    public CameraController controller;
-    // Reinicia la escena actual
-
-    private void Start()
-    {
-        controller = FindObjectOfType<CameraController>();
-    }
+    [SerializeField] private PauseManager pauseManager;
     public void RestartLevel()
     {
         // Obtener la escena actual y reiniciarla
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        controller.IsCameraFixed = false;
+        GameManager.Instance.Enemies.Clear();
+        pauseManager.MenuDeactivate();
+        pauseManager.isPaused = false;
     }
 
     // Cambiar a una escena específica por nombre

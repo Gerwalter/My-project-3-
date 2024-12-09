@@ -143,9 +143,7 @@ GameObject:
   - component: {fileID: 4139764367681046122}
   - component: {fileID: 2372050120881644880}
   - component: {fileID: 1335479480660468796}
-  - component: {fileID: 7295938850444405045}
   - component: {fileID: 1995751719782077969}
-  - component: {fileID: 1153973766275239518}
   - component: {fileID: 383256922455601560}
   - component: {fileID: 2356771727668389393}
   m_Layer: 0
@@ -203,6 +201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundSFXObject: {fileID: 3082623153927528285, guid: f7f35ebe7d84fa54aae894637a439d96, type: 3}
+  musicObject: {fileID: 3082623153927528285, guid: 6fb937db747223d47a625622ce2ee764, type: 3}
 --- !u!114 &2372050120881644880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,19 +229,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _vignettePP: {fileID: 2100000, guid: 18f6e3adc2f67a04a9990a228d637321, type: 2}
   _vigAmountName: _ScreenBorderAmount
---- !u!114 &7295938850444405045
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8630724509985047641}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f1bd1787ee79a143af17332a130c12c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controller: {fileID: 0}
 --- !u!114 &1995751719782077969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,7 +236,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8630724509985047641}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b0db911059123094ab96cdae5c62a5ff, type: 3}
   m_Name: 
@@ -294,23 +280,6 @@ MonoBehaviour:
   maxInputs: 7
   inputDisplay: {fileID: 0}
   cameraController: {fileID: 0}
---- !u!114 &1153973766275239518
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8630724509985047641}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e45fa3c51544a894985b5a7732e8599b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthbar: {fileID: 0}
-  hookTimer: {fileID: 0}
-  crossHair: {fileID: 0}
-  goldText: {fileID: 0}
-  handle: {fileID: 0}
 --- !u!114 &383256922455601560
 MonoBehaviour:
   m_ObjectHideFlags: 0

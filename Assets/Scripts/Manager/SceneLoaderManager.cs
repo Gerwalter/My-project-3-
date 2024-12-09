@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class SceneLoaderManager : MonoBehaviour
 {
     #region Singleton
-    public static SceneLoaderManager Instance;
+
 
     private void Awake()
     {
@@ -30,14 +30,13 @@ public class SceneLoaderManager : MonoBehaviour
     [SerializeField] private Image _loadBarBG;
     [SerializeField] private Image _loadBarFill;
     [SerializeField] private TextMeshProUGUI _stateText;
-
+    public static SceneLoaderManager Instance;
     private bool _isLoading;
 
     private void Start()
     {
         _bgImage.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
         _loadBarFill.fillAmount = 0.0f;
-
         _bgImage.enabled = false;
         _loadBarBG.enabled = false;
         _loadBarFill.enabled = false;

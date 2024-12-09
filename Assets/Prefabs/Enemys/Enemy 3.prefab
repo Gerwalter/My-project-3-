@@ -529,7 +529,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7e3fb9f598c26f64fa93a5f6954518da, type: 2}
+  - {fileID: 2100000, guid: fc907f2f6d09e0844a7cdffa535dd976, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1552,7 +1552,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7e3fb9f598c26f64fa93a5f6954518da, type: 2}
+  - {fileID: 2100000, guid: fc907f2f6d09e0844a7cdffa535dd976, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2045,7 +2045,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3026621932215622796}
   - component: {fileID: 9184416210414114211}
-  - component: {fileID: 1478625594348891342}
+  - component: {fileID: 527771855750071316}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
@@ -2093,7 +2093,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1478625594348891342
+--- !u!114 &527771855750071316
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2102,10 +2102,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6554799549098542710}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4673c1a296b13004882ab1a6b4d51e79, type: 3}
+  m_Script: {fileID: 11500000, guid: 15c886e1c7f1a424b8c436db927840d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _parent: {fileID: 7715154201322672574}
+  _parent: {fileID: 0}
 --- !u!1 &6773885322772451936
 GameObject:
   m_ObjectHideFlags: 0
@@ -2246,11 +2246,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1312728046518551862}
   - component: {fileID: 1143680971518595395}
-  - component: {fileID: 8966580579443905447}
-  - component: {fileID: 7715154201322672574}
   - component: {fileID: 6900142964974486969}
+  - component: {fileID: 7828435169862138920}
   m_Layer: 6
-  m_Name: Enemy
+  m_Name: Enemy 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2264,7 +2263,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7326823367288068571}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.6399999, y: 0, z: 61.76}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2297,72 +2296,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!195 &8966580579443905447
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7326823367288068571}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 1
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
---- !u!114 &7715154201322672574
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7326823367288068571}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0ad9e2fcf32de5428a4d6b851038e1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxLife: 40
-  currentLife: 0
-  _bloodVFX: {fileID: 8050358303301125689}
-  _isNormal: 1
-  _isHealer: 0
-  _isShooter: 0
-  projectilePrefab: {fileID: 8951607973867105544, guid: c2928fa2c9b9c9549966da44ada4a3c3, type: 3}
-  _shieldInstance: {fileID: 0}
-  shootPoint: {fileID: 156520991036475152}
-  shootCooldown: 2
-  _enemyClass: 0
-  _chaseDist: 7
-  _atkDist: 1.5
-  _speed: 4
-  enemyType: 0
-  _target: {fileID: 0}
-  _animator: {fileID: 9184416210414114211}
-  clips:
-  - {fileID: 8300000, guid: 181a368a4a717f746804209787043db5, type: 3}
-  _rb: {fileID: 0}
-  liftForce: 10
-  isDead: 0
-  healthBar: {fileID: 3510542959025991487}
-  _atkOrigin: {fileID: 1085586048006099824}
-  _atkRayDist: 1
-  _atkMask:
-    serializedVersion: 2
-    m_Bits: 8
-  _atkDmg: 4
-  healCooldown: 7
-  weakness: 0
-  elementalMultiplier: 2
 --- !u!54 &6900142964974486969
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2390,6 +2323,49 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &7828435169862138920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7326823367288068571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f098295963a8dd1499f25ee72a65219f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxLife: 20
+  currentLife: 0
+  _bloodVFX: {fileID: 8050358303301125689}
+  _isNormal: 0
+  _isHealer: 0
+  _isShooter: 0
+  projectilePrefab: {fileID: 8951607973867105544, guid: c2928fa2c9b9c9549966da44ada4a3c3, type: 3}
+  _shieldInstance: {fileID: 0}
+  shootPoint: {fileID: 156520991036475152}
+  shootCooldown: 2
+  _enemyClass: 0
+  _chaseDist: 6
+  _atkDist: 2
+  _speed: 2
+  enemyType: 0
+  _target: {fileID: 0}
+  _animator: {fileID: 9184416210414114211}
+  clips: []
+  _rb: {fileID: 6900142964974486969}
+  liftForce: 10
+  isDead: 0
+  healthBar: {fileID: 3510542959025991487}
+  _atkOrigin: {fileID: 1085586048006099824}
+  _atkRayDist: 1
+  _atkMask:
+    serializedVersion: 2
+    m_Bits: 8
+  _atkDmg: 2
+  healCooldown: 7
+  weakness: 0
+  elementalMultiplier: 2
 --- !u!1 &7354300413807863108
 GameObject:
   m_ObjectHideFlags: 0

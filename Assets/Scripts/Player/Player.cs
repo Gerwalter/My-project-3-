@@ -117,7 +117,7 @@ public class Player : HP
 
         GetLife = maxLife;
         UpdateHealthBar();
-        FireShader.DeactivateFire();
+       // FireShader.DeactivateFire();
     }
     private void Update()
     {
@@ -371,7 +371,7 @@ public class Player : HP
         {
             if (_atkHit.collider.TryGetComponent<Enemy>(out Enemy enemy))
             {
-                enemy.ReciveDamage(_atkDmg, selectedElement);
+                enemy.ReceiveDamage(_atkDmg, selectedElement);
             }
             else if (_atkHit.collider.TryGetComponent<HealthSystem>(out HealthSystem enemyHealth))
             {
@@ -388,7 +388,7 @@ public class Player : HP
         {
             if (_atkHit.collider.TryGetComponent<Enemy>(out Enemy enemy))
             {
-                enemy.ReciveDamage(_atkDmg, selectedElement);
+                enemy.ReceiveDamage(_atkDmg, selectedElement);
             }
             else if (_atkHit.collider.TryGetComponent<HealthSystem>(out HealthSystem enemyHealth))
             {
@@ -410,7 +410,7 @@ public class Player : HP
         {
             if (_atkHit.collider.TryGetComponent<Enemy>(out Enemy enemy))
             {
-                enemy.ReciveDamage(_atkDmg);
+                enemy.ReceiveDamage(_atkDmg, selectedElement);
                 enemy.ApplyLiftImpulse();
             }
             else if (_atkHit.collider.TryGetComponent<HealthSystem>(out HealthSystem enemyHealth))
@@ -507,7 +507,7 @@ public class Player : HP
 
     public void Die()
     {
-        Handle.OnDie();
+        //Handle.OnDie();
         freeze = true;
         gameObje.SetActive(false);
 

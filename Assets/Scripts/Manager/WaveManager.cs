@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.EventSystems.EventTrigger;
 
 [Serializable]
 public struct EnemyWaveData
@@ -18,6 +19,7 @@ public class WaveManager : MonoBehaviour
 
     [Header("Spawn Area Settings")]
     [SerializeField] private List<Transform> spawnPoints; // Lista de puntos de spawn
+    [SerializeField] private GameObject spawnPointos; // Lista de puntos de spawn
 
     [SerializeField] private Queue<EnemyWaveData> _spawnOrder = new Queue<EnemyWaveData>();
     public float _timer;
@@ -46,9 +48,7 @@ public class WaveManager : MonoBehaviour
     {
         _spawnOrder.Enqueue(normalEnemyWave);
         _spawnOrder.Enqueue(ligthEnemyWave);
-        _spawnOrder.Enqueue(normalEnemyWave);
         _spawnOrder.Enqueue(heavyEnemyWave);
-        _spawnOrder.Enqueue(ligthEnemyWave);
     }
 
     private void Update()
@@ -74,7 +74,16 @@ public class WaveManager : MonoBehaviour
                 // Instanciar el enemigo en la posición del punto de spawn
                 Instantiate(enemy, spawnPoint.position, Quaternion.identity);
             }
+
+            foreach (var enemy2 in spawnData.enemyToSpawn)
+            {
+                Transform spawnPoint = GetRandomSpawnPoint();
+
+                // Instanciar el enemigo en la posición del punto de spawn
+                Instantiate(enemy2, spawnPoint.position, Quaternion.identity);
+            }
         }
+
     }
 
     // Devuelve un punto de spawn aleatorio de la lista

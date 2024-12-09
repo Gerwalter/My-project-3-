@@ -10,6 +10,6 @@ public class MusicPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SFXManager.instance.PlaySFXClip(Theme, transform, 2f);
+        SFXManager.instance.PlayMusic(Theme, transform, 2f);
     }
 }

@@ -46,35 +46,16 @@ public class CameraController : MonoBehaviour
 
     private void Awake()
     {
-        if (!Instance)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-                CamTransform = transform;
+        Instance = this;
+        CamTransform = transform;
         _ignoreLayerMask = LayerMask.GetMask("Player");
   
     }
 
-    private void OnEnable()
-    {
-        // Suscribe el método para cuando se cargue una nueva escena
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
 
-    private void OnDisable()
-    {
-        // Desuscribe el método al desactivar el script
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
 
     private void Start()
     {   
-
         InitializeCamera();
         DisableMenu(); // Asegurarse de desactivar el menú en el inicio
     }
@@ -197,13 +178,17 @@ public class CameraController : MonoBehaviour
         Cursor.lockState = _lockMode;
         Cursor.visible = _isCursorVisible;
     }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    private void OnEnable()
     {
-        InitializeCamera();
-        DisableMenu(); // Desactivar el menú cuando se cargue una nueva escena
+        // Suscribirse al evento SceneManager.sceneLoaded
+       // SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
+    private void OnDisable()
+    {
+        // Desuscribe el método al desactivar el script
+        //SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
     private void InitializeCamera()
     {
         _target = GameManager.Instance.Player.GetCamTarget;

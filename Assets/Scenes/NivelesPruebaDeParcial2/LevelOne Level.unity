@@ -1586,7 +1586,6 @@ GameObject:
   - component: {fileID: 278745248}
   - component: {fileID: 278745247}
   - component: {fileID: 278745246}
-  - component: {fileID: 278745245}
   m_Layer: 7
   m_Name: Cylinder
   m_TagString: Untagged
@@ -1609,21 +1608,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1258975653}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!114 &278745245
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 278745243}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad117cc2eff17864a91b669443cdc9fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menu: {fileID: 1661471293}
-  player: {fileID: 0}
-  Lock: {fileID: 0}
 --- !u!65 &278745246
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1695,74 +1679,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 278745243}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &307859331
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 307859334}
-  - component: {fileID: 307859333}
-  - component: {fileID: 307859332}
-  m_Layer: 0
-  m_Name: EventSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &307859332
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 307859331}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
---- !u!114 &307859333
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 307859331}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
-  m_sendNavigationEvents: 1
-  m_DragThreshold: 10
---- !u!4 &307859334
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 307859331}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &323078474
 GameObject:
   m_ObjectHideFlags: 0
@@ -2973,11 +2889,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43162f13a8d8d13418474634f0403805, type: 3}
---- !u!223 &584182451 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 9133459934618539245, guid: 43162f13a8d8d13418474634f0403805, type: 3}
-  m_PrefabInstance: {fileID: 584182450}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &585001759
 GameObject:
   m_ObjectHideFlags: 0
@@ -6691,7 +6602,6 @@ GameObject:
   - component: {fileID: 1444456063}
   - component: {fileID: 1444456062}
   - component: {fileID: 1444456061}
-  - component: {fileID: 1444456060}
   m_Layer: 7
   m_Name: Cylinder
   m_TagString: Untagged
@@ -6714,21 +6624,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 672418966}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!114 &1444456060
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1444456058}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad117cc2eff17864a91b669443cdc9fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menu: {fileID: 7936457}
-  player: {fileID: 0}
-  Lock: {fileID: 0}
 --- !u!65 &1444456061
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20773,7 +20668,7 @@ GameObject:
   - component: {fileID: 1648886000657051200}
   - component: {fileID: 8082096730134095901}
   - component: {fileID: 6670905418876874262}
-  - component: {fileID: 6467495160226887723}
+  - component: {fileID: 8082096730134095902}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -20951,19 +20846,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &6467495160226887723
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5201809718408291695}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57f678bb159a5724c84f0f55572fd819, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Canvas: {fileID: 584182451}
 --- !u!4 &6492157000240013135
 Transform:
   m_ObjectHideFlags: 0
@@ -21277,6 +21159,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8082096730134095902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5201809718408291695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef03bbaebeb9ea845926d88a4ffc76f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Theme: {fileID: 8300000, guid: 6bd15c2dd55db2645b3f2bf6bf4658a2, type: 3}
 --- !u!65 &8275491744606136120
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21462,7 +21357,6 @@ SceneRoots:
   - {fileID: 584182450}
   - {fileID: 6498618991024755891}
   - {fileID: 684193787}
-  - {fileID: 307859334}
   - {fileID: 1232116325}
   - {fileID: 513457965}
   - {fileID: 2000314276}
