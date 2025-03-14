@@ -32,7 +32,10 @@ public class AnimationScript : MonoBehaviour
     }
 
     public CameraController cameraController;
-
+    private void Start()
+    {
+        cameraController = CameraController.Instance;
+    }
     void Fight()
     {
         if (cameraController.IsCameraFixed) return;

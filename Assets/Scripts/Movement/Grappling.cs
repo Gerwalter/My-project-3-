@@ -36,6 +36,7 @@ public class Grappling : MonoBehaviour
 
     private void Start()
     {
+        Cameracontroller = CameraController.Instance;
         controller = GameManager.Instance.Player;
         grappleCDImage = CanvasReferencesManager.Instance.HookTimer;
         CrossHair = CanvasReferencesManager.Instance.CrossHair;
