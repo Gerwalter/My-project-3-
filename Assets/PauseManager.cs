@@ -5,47 +5,62 @@ using UnityEngine.SceneManagement;
 
 public class PauseManager : MonoBehaviour
 {
-    public GameObject pauseMenuUI; // Referencia al menú de pausa en la escena
-    public bool isPaused = false; // Estado del juego (pausado o no)
+    public GameObject pauseMenuUI; // Asigna el menú de pausa en el Inspector
+    public GameObject OptionsMenuUI; // Asigna el menú de pausa en el Inspector
+    public bool isPaused = false;
+    public bool isOptions = false;
+    private bool canPause = true; // Variable para controlar si se puede pausar
 
     private void Start()
     {
+        isPaused = false;
         pauseMenuUI.SetActive(false);
+        OptionsMenuUI.SetActive(false);
+        isOptions = false;
+        // Verifica si estás en la escena 0
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            canPause = false; // No se puede pausar en la escena 0
+            return; // Sale de la función Start
+        }
+
+        isPaused = false;
+        pauseMenuUI.SetActive(false);
+        OptionsMenuUI.SetActive(false);
+        isOptions = false;
     }
 
     void Update()
     {
-        // Detectar el input para pausar/reanudar (por defecto, la tecla Escape)
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (canPause && Input.GetKeyDown(KeyCode.Escape))
         {
-            if (isPaused)
-                ResumeGame();
-            else
-                PauseGame();
+            TogglePause();
         }
     }
 
-    // Método para pausar el juego
-    public void PauseGame()
+    public void TogglePause()
     {
-        pauseMenuUI.SetActive(true); // Mostrar el menú de pausa
-                                     // Time.timeScale = 0f; // Detener el tiempo del juego
-        isPaused = true;
-
+        if (!canPause) return;
+        isPaused = !isPaused;
+        OptionsMenuUI.SetActive(isOptions);
+        Time.timeScale = isPaused ? 0 : 1;
+        pauseMenuUI.SetActive(isPaused);
     }
-
-
-    public void MenuDeactivate()
+    public void ToggleOptions()
     {
+        isOptions = !isOptions;
+        OptionsMenuUI.SetActive(isOptions);
+    }
+    public void ResumeGame()
+    {
+        isPaused = false;
+        Time.timeScale = 1;
         pauseMenuUI.SetActive(false);
     }
 
-    // Método para reanudar el juego
-    public void ResumeGame()
+    public void QuitToMainMenu()
     {
-        pauseMenuUI.SetActive(false); // Ocultar el menú de pausa
-       // Time.timeScale = 1f; // Restaurar el tiempo del juego
-        isPaused = false;
-
+        Time.timeScale = 1; // Asegura que el tiempo se reanude al salir
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Main Menu"); // Cambia "MainMenu" por el nombre de tu escena principal
     }
 }
