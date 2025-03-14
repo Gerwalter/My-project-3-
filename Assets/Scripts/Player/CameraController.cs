@@ -1,12 +1,12 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class CameraController : MonoBehaviour
 {
     [Header("<color=#6A89A7>Cursor</color>")]
     [SerializeField] private CursorLockMode _lockMode = CursorLockMode.Locked;
-    [SerializeField] public bool _isCursorVisible = false;
-    [SerializeField] public bool _isCameraFixed = false;
+    [SerializeField] private bool _isCursorVisible = false;
 
     [Header("<color=#6A89A7>Physics</color>")]
     [Range(.01f, 1f)][SerializeField] private float _detectionRadius = .1f;
@@ -15,97 +15,45 @@ public class CameraController : MonoBehaviour
     [Header("<color=#6A89A7>Settings</color>")]
     [Range(1f, 1000f)][SerializeField] private float _mouseSensitivity = 500f;
     [Range(.125f, 1f)][SerializeField] private float _minDistance = .25f;
-    [Range(1f, 10f)][SerializeField] public float _maxDistance = 5f;
+    [Range(1f, 10f)][SerializeField] private float _maxDistance = 5f;
     [Range(-90f, 0f)][SerializeField] private float _minRotation = -45f;
     [Range(0f, 90f)][SerializeField] private float _maxRotation = 80f;
 
-    [SerializeField] private bool _isCamBlocked = false;
-    [SerializeField] private float _mouseX = 0.0f, _mouseY = 0.0f;
-    [SerializeField] private Vector3 _dir = new(), _dirTest = new(), _camPos = new();
+    private bool _isCamBlocked = false;
+    private float _mouseX = 0.0f, _mouseY = 0.0f;
+    private Vector3 _dir = new(), _dirTest = new(), _camPos = new();
 
-    [SerializeField] private Camera _cam;
+    private Camera _cam;
     [SerializeField] private Transform _target;
 
-    [SerializeField] private Ray _camRay;
-    [SerializeField] private RaycastHit _camRayHit;
-
-    [Header("<color=#6A89A7>UI Settings</color>")]
-    [SerializeField] private GameObject menu; // Referencia al menú que debe desactivarse
-    [SerializeField] private float scroll;
-    [Header("<color=#6A89A7>Layer Settings</color>")]
-    [SerializeField] private LayerMask _ignoreLayerMask;
-    public static CameraController Instance;
-
-    [SerializeField] private Transform camTransform;
-
-    public Transform CamTransform
-    {
-        get { return camTransform; }
-        set { camTransform = value; }
-    }
-
-    private void Awake()
-    {
-        Instance = this;
-        CamTransform = transform;
-        _ignoreLayerMask = LayerMask.GetMask("Player");
-  
-    }
-
-
+    private Ray _camRay;
+    private RaycastHit _camRayHit;
 
     private void Start()
-    {   
-        InitializeCamera();
-        DisableMenu(); // Asegurarse de desactivar el menú en el inicio
-    }
-
-    private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            _isCameraFixed = !_isCameraFixed;
-            ToggleCursorMode(_isCameraFixed);
-        }
-        scroll = Input.GetAxisRaw("Mouse ScrollWheel");
+        _cam = Camera.main;
 
-        if (!_isCameraFixed)
-        {
-            UpdateCamRot(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
-            if (scroll != 0f)
-            {
-                _maxDistance = Mathf.Clamp(_maxDistance - scroll, _minDistance + 2, 10f); // Ajusta el 10f al valor máximo deseado
-            }
-        }
+        Cursor.lockState = _lockMode;
+        Cursor.visible = _isCursorVisible;
 
-        // Ajustar la distancia máxima con la rueda del ratón
+        transform.forward = _target.forward;
 
-
+        _mouseX = transform.eulerAngles.y;
+        _mouseY = transform.eulerAngles.x;
     }
 
     private void FixedUpdate()
     {
         _camRay = new Ray(transform.position, _dir);
 
-        _isCamBlocked = Physics.SphereCast(_camRay, _detectionRadius, out _camRayHit, _maxDistance, ~_ignoreLayerMask);
+        _isCamBlocked = Physics.SphereCast(_camRay, _detectionRadius, out _camRayHit, _maxDistance);
     }
 
     private void LateUpdate()
     {
-        if (!_isCameraFixed)
-        {
-            UpdateSpringArm();
-        }
-    }
+        UpdateCamRot(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
 
-    public bool IsCameraFixed
-    {
-        get { return _isCameraFixed; }
-        set
-        {
-            _isCameraFixed = value;
-            ToggleCursorMode(_isCameraFixed);
-        }
+        UpdateSpringArm();
     }
 
     private void UpdateCamRot(float x, float y)
@@ -158,54 +106,5 @@ public class CameraController : MonoBehaviour
 
         _cam.transform.position = _camPos;
         _cam.transform.LookAt(transform.position);
-    }
-
-    private void ToggleCursorMode(bool isFixed)
-    {
-        if (isFixed)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-        else
-        {
-            LockCursor();
-        }
-    }
-
-    private void LockCursor()
-    {
-        Cursor.lockState = _lockMode;
-        Cursor.visible = _isCursorVisible;
-    }
-    private void OnEnable()
-    {
-        // Suscribirse al evento SceneManager.sceneLoaded
-       // SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    private void OnDisable()
-    {
-        // Desuscribe el método al desactivar el script
-        //SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-    private void InitializeCamera()
-    {
-        _target = GameManager.Instance.Player.GetCamTarget;
-        _cam = Camera.main;
-
-        LockCursor();
-        transform.forward = _target.forward;
-
-        _mouseX = transform.eulerAngles.y;
-        _mouseY = transform.eulerAngles.x;
-    }
-
-    private void DisableMenu()
-    {
-        if (menu != null)
-        {
-            menu.SetActive(false); // Desactiva el menú si no está ya desactivado
-        }
     }
 }
