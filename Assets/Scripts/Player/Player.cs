@@ -101,7 +101,7 @@ public class Player : HP
         _rb = GetComponent<Rigidbody>();
         _rb.constraints = RigidbodyConstraints.FreezeRotation;
 
-        GameManager.Instance.Player = this;
+       // GameManager.Instance.Player = this;
 
 
     }
@@ -609,7 +609,7 @@ public class Player : HP
             EnableMovementAfterCollision = false;
             ResetRestrictions();
 
-            grapple.stopGrapple();
+           // grapple.stopGrapple();
         }
     }
 

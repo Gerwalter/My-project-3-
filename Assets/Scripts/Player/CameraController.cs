@@ -191,7 +191,7 @@ public class CameraController : MonoBehaviour
     }
     private void InitializeCamera()
     {
-        _target = GameManager.Instance.Player.GetCamTarget;
+      //  _target = GameManager.Instance.Player.GetCamTarget;
         _cam = Camera.main;
 
         LockCursor();

@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PauseManager : MonoBehaviour
 {
@@ -15,7 +14,7 @@ public class PauseManager : MonoBehaviour
     {
         isPaused = false;
         pauseMenuUI.SetActive(false);
-        //OptionsMenuUI.SetActive(false);
+        OptionsMenuUI.SetActive(false);
         isOptions = false;
         // Verifica si estás en la escena 0
         if (SceneManager.GetActiveScene().buildIndex == 0)
@@ -26,7 +25,7 @@ public class PauseManager : MonoBehaviour
 
         isPaused = false;
         pauseMenuUI.SetActive(false);
-      //  OptionsMenuUI.SetActive(false);
+        OptionsMenuUI.SetActive(false);
         isOptions = false;
     }
 
@@ -42,7 +41,8 @@ public class PauseManager : MonoBehaviour
     {
         if (!canPause) return;
         isPaused = !isPaused;
-        //OptionsMenuUI.SetActive(isOptions);
+        isOptions = !isOptions;
+        OptionsMenuUI.SetActive(isOptions);
         Time.timeScale = isPaused ? 0 : 1;
         pauseMenuUI.SetActive(isPaused);
     }
