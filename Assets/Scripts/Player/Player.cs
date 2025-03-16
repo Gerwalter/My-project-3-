@@ -109,10 +109,10 @@ public class Player : HP
     private void Start()
     {
         _camTransform = Camera.main.transform;
-        healthBar = CanvasReferencesManager.Instance.Healthbar;
-        ultimateBar = CanvasReferencesManager.Instance.Ultimate;
-        overchardedBar = CanvasReferencesManager.Instance.Overcharge;
-        Handle = CanvasReferencesManager.Instance.Handle;
+       // healthBar = CanvasReferencesManager.Instance.Healthbar;
+       // ultimateBar = CanvasReferencesManager.Instance.Ultimate;
+       // overchardedBar = CanvasReferencesManager.Instance.Overcharge;
+       // Handle = CanvasReferencesManager.Instance.Handle;
         _anim = GetComponentInChildren<Animator>();
 
         GetLife = maxLife;

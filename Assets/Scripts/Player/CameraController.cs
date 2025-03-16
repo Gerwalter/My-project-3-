@@ -35,7 +35,7 @@ public class CameraController : MonoBehaviour
     [Header("<color=#6A89A7>Layer Settings</color>")]
     [SerializeField] private LayerMask _ignoreLayerMask;
     public static CameraController Instance;
-
+    public PauseManager pauseManager;
     [SerializeField] private Transform camTransform;
 
     public Transform CamTransform
@@ -77,7 +77,7 @@ public class CameraController : MonoBehaviour
                 _maxDistance = Mathf.Clamp(_maxDistance - scroll, _minDistance + 2, 10f); // Ajusta el 10f al valor máximo deseado
             }
         }
-
+        _isCameraFixed = pauseManager.isPaused;
         // Ajustar la distancia máxima con la rueda del ratón
 
 
@@ -162,6 +162,13 @@ public class CameraController : MonoBehaviour
 
     private void ToggleCursorMode(bool isFixed)
     {
+        if (pauseManager != null && pauseManager.isPaused)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            return;
+        }
+
         if (isFixed)
         {
             Cursor.lockState = CursorLockMode.None;
@@ -175,6 +182,13 @@ public class CameraController : MonoBehaviour
 
     private void LockCursor()
     {
+        if (pauseManager != null && pauseManager.isPaused)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            return;
+        }
+
         Cursor.lockState = _lockMode;
         Cursor.visible = _isCursorVisible;
     }
