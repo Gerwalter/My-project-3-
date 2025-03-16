@@ -41,8 +41,6 @@ public class PauseManager : MonoBehaviour
     {
         if (!canPause) return;
         isPaused = !isPaused;
-        isOptions = !isOptions;
-        OptionsMenuUI.SetActive(isOptions);
         Time.timeScale = isPaused ? 0 : 1;
         pauseMenuUI.SetActive(isPaused);
     }

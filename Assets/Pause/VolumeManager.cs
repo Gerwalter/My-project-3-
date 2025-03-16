@@ -11,9 +11,9 @@ public class VolumeManager : MonoBehaviour
     public Slider SfxSlider;
     public Slider MasterSlider;
 
-   public const string MIXER_MUSIC = "Music Volume";
-    public const string MIXER_SFX = "SFX Volume";
-    public const string MIXER_Master = "Master Volume";
+   public const string MIXER_MUSIC = "Music";
+    public const string MIXER_SFX = "SFX";
+    public const string MIXER_Master = "Master";
 
     private void Awake()
     {
