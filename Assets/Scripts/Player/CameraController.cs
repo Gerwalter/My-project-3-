@@ -5,7 +5,7 @@ public class CameraController : MonoBehaviour
 {
     [Header("<color=#6A89A7>Cursor</color>")]
     [SerializeField] private CursorLockMode _lockMode = CursorLockMode.Locked;
-    [SerializeField] public bool _isCursorVisible = false;
+    //[SerializeField] public bool _isCursorVisible = false;
     [SerializeField] public bool _isCameraFixed = false;
 
     [Header("<color=#6A89A7>Physics</color>")]
@@ -30,7 +30,6 @@ public class CameraController : MonoBehaviour
     [SerializeField] private RaycastHit _camRayHit;
 
     [Header("<color=#6A89A7>UI Settings</color>")]
-    [SerializeField] private GameObject menu; // Referencia al menú que debe desactivarse
     [SerializeField] private float scroll;
     [Header("<color=#6A89A7>Layer Settings</color>")]
     [SerializeField] private LayerMask _ignoreLayerMask;
@@ -57,16 +56,10 @@ public class CameraController : MonoBehaviour
     private void Start()
     {   
         InitializeCamera();
-        DisableMenu(); // Asegurarse de desactivar el menú en el inicio
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            _isCameraFixed = !_isCameraFixed;
-            ToggleCursorMode(_isCameraFixed);
-        }
         scroll = Input.GetAxisRaw("Mouse ScrollWheel");
 
         if (!_isCameraFixed)
@@ -78,6 +71,7 @@ public class CameraController : MonoBehaviour
             }
         }
         _isCameraFixed = pauseManager.isPaused;
+        ToggleCursorMode(_isCameraFixed);
         // Ajustar la distancia máxima con la rueda del ratón
 
 
@@ -162,35 +156,33 @@ public class CameraController : MonoBehaviour
 
     private void ToggleCursorMode(bool isFixed)
     {
-        if (pauseManager != null && pauseManager.isPaused)
+        if (isFixed == true)
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            return;
-        }
-
-        if (isFixed)
-        {
+            // Si el juego está en pausa, desbloquea y muestra el cursor
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
         else
         {
+            // Si no está en pausa, aplica la lógica de bloqueo
             LockCursor();
         }
     }
 
     private void LockCursor()
     {
-        if (pauseManager != null && pauseManager.isPaused)
+        if (pauseManager.isPaused)
         {
+            // Asegurar que cuando esté en pausa, el cursor sea visible
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            return;
         }
-
-        Cursor.lockState = _lockMode;
-        Cursor.visible = _isCursorVisible;
+        else
+        {
+            // Bloquear y ocultar el cursor cuando el juego no está pausado
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
     private void OnEnable()
     {
@@ -213,13 +205,5 @@ public class CameraController : MonoBehaviour
 
         _mouseX = transform.eulerAngles.y;
         _mouseY = transform.eulerAngles.x;
-    }
-
-    private void DisableMenu()
-    {
-        if (menu != null)
-        {
-            menu.SetActive(false); // Desactiva el menú si no está ya desactivado
-        }
     }
 }
