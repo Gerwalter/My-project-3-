@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,10 +23,11 @@ public class Player : HP
     [Header("<color=#6A89A7>Inputs</color>")]
     [SerializeField] private KeyCode _intKey = KeyCode.F;
     [SerializeField] private KeyCode _jumpKey = KeyCode.Space;
+    [SerializeField] private KeyCode _sprintKey = KeyCode.LeftShift;  // Tecla para correr
 
     [Header("<color=#6A89A7>UI</color>")]
     [SerializeField] private Image healthBar;
-
+    [SerializeField] private Image _staminaBar;
 
     [Header("<color=#6A89A7>Physics - Interaction</color>")]
     [SerializeField] private Transform _intOrigin;
@@ -75,10 +77,12 @@ public class Player : HP
     {
         _camTransform = Camera.main.transform;
         _anim = GetComponentInChildren<Animator>();
-
+        _rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
         GetLife = maxLife;
         UpdateHealthBar();
         _wallHitStatus = new bool[_wallCheckDirections.Length];
+        _currentStamina = _staminaMax;
+        UpdateStaminaUI();
     }
     private void Update()
     {
@@ -128,22 +132,9 @@ public class Player : HP
         {
             StopWallRun();
         }
-
-        if (groundCheck)
-        {
-            _wallDetectionTimer = 0f;
-        }
-        else
-        {
-            // Si no está en el suelo, sumamos el tiempo transcurrido
-            _wallDetectionTimer += Time.deltaTime;
-        }
-
-        if (_wallDetectionTimer >= _wallDetectionDelay)
-        {
-            UpdateWallCheck(); // Actualiza la detección de la pared
-        }
-
+        UpdateWallCheck();
+        HandleSprint();
+        UpdateStaminaUI();
     }
 
    
@@ -157,6 +148,12 @@ public class Player : HP
         {
             Movement(_dir);
         }
+
+        if (_isSprinting)
+        {
+            PreventWallClipping();
+        }
+
     }
     public void DisableMovement()
     {
@@ -223,20 +220,25 @@ public class Player : HP
 
     private void Movement(Vector3 dir)
     {
+
         _camForwardFix = _camTransform.forward;
         _camRightFix = _camTransform.right;
+
         _camForwardFix.y = 0.0f;
         _camRightFix.y = 0.0f;
+
         Rotate(_camForwardFix);
 
         _dirFix = (_camRightFix * dir.x + _camForwardFix * dir.z).normalized;
 
+        // Aplicamos la velocidad normal o con sprint
+        float speed = _isSprinting ? _movSpeed * _sprintMultiplier : _movSpeed;
         if (OnSlope()) // Si está en una pendiente, ajusta el movimiento
         {
             _dirFix = GetSlopeDirection(_dirFix);
         }
 
-        _rb.MovePosition(transform.position + _dirFix * _movSpeed * Time.fixedDeltaTime);
+        _rb.MovePosition(transform.position + _dirFix * speed * Time.fixedDeltaTime);
     }
 
     private void Rotate(Vector3 dir)
@@ -276,12 +278,79 @@ public class Player : HP
         }
     }
 
+    [Header("<color=yellow>Sprint</color>")]
+    [SerializeField] private float _sprintMultiplier = 2.0f;  // Multiplicador de velocidad al esprintar
+    [SerializeField] private float _staminaMax = 100f;  // Máxima cantidad de stamina
+    [SerializeField] private float _staminaDrainRate = 20f;  // Cuánta stamina se gasta por segundo corriendo
+    [SerializeField] private float _staminaRegenRate = 10f;  // Cuánta stamina se regenera por segundo
+    [SerializeField] private float _sprintWallCheckDistance = 0.6f;
+    [SerializeField] private LayerMask _wallLayer;
+    [SerializeField] private float _currentStamina;
+    private bool _isSprinting = false;
+
+    private void HandleSprint()
+    {
+        bool isMoving = _dir.x != 0 || _dir.z != 0;
+
+        if (Input.GetKey(_sprintKey) && _currentStamina > 0 && isMoving)
+        {
+            if (!IsNearWall())
+            {
+                _isSprinting = true;
+                _currentStamina -= _staminaDrainRate * Time.deltaTime;
+            }
+        }
+        else
+        {
+            _isSprinting = false;
+            RegenerateStamina();
+        }
+
+        _currentStamina = Mathf.Clamp(_currentStamina, 0, _staminaMax);
+    }
+    private bool IsNearWall()
+    {
+        RaycastHit hit;
+        return Physics.Raycast(transform.position, transform.forward, out hit, _sprintWallCheckDistance, _wallLayer);
+    }
+
+    private void PreventWallClipping()
+    {
+        Vector3 moveDirection = transform.forward; // Dirección en la que se mueve el jugador
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position, moveDirection, out hit, _sprintWallCheckDistance, _wallLayer))
+        {
+            // Si hay una pared cerca, reducimos la velocidad para evitar atravesarla
+            _isSprinting = false; // Detenemos el sprint si está muy cerca de una pared
+        }
+    }
+    // Regeneración de Stamina
+    private void RegenerateStamina()
+    {
+        // Si el jugador NO está corriendo, regenera stamina
+        float regenRate = (_dir.x == 0 && _dir.z == 0) ? _staminaRegenRate * 1.5f : _staminaRegenRate;
+        _currentStamina += regenRate * Time.deltaTime;
+    }
+    private void UpdateStaminaUI()
+    {
+        if (_staminaBar != null)
+        {
+            float fillAmount = _currentStamina / _staminaMax;
+            _staminaBar.fillAmount = fillAmount;
+
+            // Lerp de verde (stamina llena) a rojo (stamina vacía)
+            _staminaBar.color = Color.Lerp(Color.red, Color.green, fillAmount);
+            _staminaBar.gameObject.SetActive(fillAmount < 1.0f);
+        }
+    }
+
     [Header("<color=#6A89A7>Wall Running</color>")]
     [SerializeField] private float _wallCheckDistance = 1.0f; // Distancia de los Raycasts
     [SerializeField] private LayerMask _wallMask;             // Capa de detección de paredes
     private bool _isWallDetected = false;
     private bool _isWallRunning = false;
-    [SerializeField] private bool[] _wallHitStatus;
+    private bool[] _wallHitStatus;
     // Direcciones de los Raycasts en un círculo
     [SerializeField]
     private Vector3[] _wallCheckDirections = new Vector3[]
@@ -293,7 +362,7 @@ public class Player : HP
     (Vector3.back + Vector3.left).normalized
     };
     [SerializeField] private float climbSpeed = 3.0f; // Velocidad de subida en la pared
-    [SerializeField] private bool isClimbing = false; // Indica si el jugador está escalando
+        [SerializeField]private bool isClimbing = false; // Indica si el jugador está escalando
     [SerializeField] private float _wallDetectionDelay = 1.0f; // Tiempo de retraso en segundos
     private float _wallDetectionTimer = 0f; // Temporizador para la detección
     private void DetectWall()
