@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class DMGBooster : MonoBehaviour
 {
-    [SerializeField] private Player _player; // Multiplicador de velocidad
+    [SerializeField] private PlayerAttack _player; // Multiplicador de velocidad
     private void Start()
     {
-        _player = GameManager.Instance.Player;
+        //_player = GameManager.Instance.Player;
     }
     private void OnTriggerEnter(Collider other)
     {

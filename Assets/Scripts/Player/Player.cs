@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.VFX;
 
 public class Player : HP
 {
@@ -15,7 +14,6 @@ public class Player : HP
 
     [Header("<color=#6A89A7>Camera</color>")]
     [SerializeField] private Transform _camTarget;
-    [SerializeField] private FireShader FireShader;
 
     public Transform GetCamTarget { get { return _camTarget; } }
     public Vector3 _camForwardFix = new(), _camRightFix = new();
@@ -27,8 +25,7 @@ public class Player : HP
 
     [Header("<color=#6A89A7>UI</color>")]
     [SerializeField] private Image healthBar;
-    [SerializeField] private Image ultimateBar;
-    [SerializeField] private Image overchardedBar;
+
 
     [Header("<color=#6A89A7>Physics - Interaction</color>")]
     [SerializeField] private Transform _intOrigin;
@@ -53,47 +50,16 @@ public class Player : HP
     private Vector3 _dirFix = new();
     [SerializeField] private Ray _movRay;
 
-    [Header("<color=yellow>Attack</color>")]
-    [SerializeField] private Transform _atkOrigin;
-    [SerializeField] private float _atkRayDist = 1.0f;
-    [SerializeField] private LayerMask _atkMask;
-    [SerializeField] private int _atkDmg = 20;
-    private Ray _atkRay;
-    private RaycastHit _atkHit;
-    [SerializeField] private float originaldmg;
-    [SerializeField] private int dmgMultiplier = 2; // Multiplicador de velocidad
-    public float _sphereAtkRadius = 0.5f;
-    [SerializeField] private ElementType selectedElement;
-    [SerializeField] private float _ultimateCharge;
+
 
 
     [Header("<color=#6A89A6>Physics - Speed</color>")]
     [SerializeField] private float originalSpeed;
     [SerializeField] private float speedMultiplier = 2.0f;
     [SerializeField] private float duration = 5.0f;
-
-
-
-
     private Rigidbody _rb;
-
-    [Header("<color=red>Misc</color>")]
-    [SerializeField] private VisualEffect _fire;
-    [SerializeField] private GameObject gameObje;
-    [SerializeField] private Lock Handle;
-
-
-    [Header("<color=blue>Grapple</color>")]
     public bool groundCheck;
-    public Grappling grapple;
-    public bool EnableMovementAfterCollision = true;
     [SerializeField] public bool freeze = false;
-    [SerializeField] public bool activeGrapple = false;
-    [SerializeField] private Vector3 velocityToSet;
-    [SerializeField] private float velocity;
-    [SerializeField] private float maxGrappleVelocity = 20f;
-
-    // Nueva variable para desactivar el movimiento
 
 
     private void Awake()
@@ -101,27 +67,21 @@ public class Player : HP
         _rb = GetComponent<Rigidbody>();
         _rb.constraints = RigidbodyConstraints.FreezeRotation;
 
-       // GameManager.Instance.Player = this;
-
+        // GameManager.Instance.Player = this;
 
     }
 
     private void Start()
     {
         _camTransform = Camera.main.transform;
-       // healthBar = CanvasReferencesManager.Instance.Healthbar;
-       // ultimateBar = CanvasReferencesManager.Instance.Ultimate;
-       // overchardedBar = CanvasReferencesManager.Instance.Overcharge;
-       // Handle = CanvasReferencesManager.Instance.Handle;
         _anim = GetComponentInChildren<Animator>();
 
         GetLife = maxLife;
         UpdateHealthBar();
-       // FireShader.DeactivateFire();
+        _wallHitStatus = new bool[_wallCheckDirections.Length];
     }
     private void Update()
     {
-        ElementalCast();
         if (freeze)
         {
             _anim.SetFloat(_xName, 0.0f);
@@ -154,81 +114,40 @@ public class Player : HP
         if (Input.GetKeyDown(_jumpKey) && IsGrounded())
         {
             _anim.SetTrigger(_jumpName);
+        }
+        else if (Input.GetKeyDown(_jumpKey) && _isWallDetected)
+        {
             Jump();
         }
 
         UpdateHealthBar();
         groundCheck = IsGrounded();
-        Dash();
-        Ultimate(true);
-        UseUltimate();
-    }
+        DetectWall();
 
-    void Dash()
-    {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && _canDash)
+        if (_isWallRunning && Input.GetKeyDown(KeyCode.G))
         {
-            if (_dashResetCoroutine != null)
-            {
-                StopCoroutine(_dashResetCoroutine); // Detenemos el reset si hay un nuevo dash
-            }
-            StartCoroutine(Dashing());
-        }
-    }
-
-    [Header("<color=red>Dash</color>")]
-    [SerializeField] private float _dashForce = 10f; // Fuerza del dash
-    [SerializeField] private float _dashCooldown = 0.2f; // Cooldown entre dashes consecutivos
-    [SerializeField] private float _dashResetTime = 0.5f; // Tiempo máximo entre dashes consecutivos
-    [SerializeField] private float _dashFinalCooldown = 1f; // Cooldown después del tercer dash
-    [SerializeField] private float _dashDuration = 0.2f; // Duración de cada dash
-
-    private int _dashCount = 0; // Contador de dashes consecutivos
-    private bool _canDash = true; // Indica si el jugador puede iniciar un dash
-    private bool _isDashing = false;
-    private Vector3 _dashDirection;
-    private Coroutine _dashResetCoroutine;
-
-    IEnumerator Dashing()
-    {
-        _isDashing = true;
-        _canDash = false;
-
-        // Guardar la dirección del dash
-        _dashDirection = _dirFix;
-
-        float dashTime = 0f;
-        while (dashTime < _dashDuration)
-        {
-            _rb.MovePosition(transform.position + _dashDirection * _dashForce * Time.deltaTime);
-            dashTime += Time.deltaTime;
-            yield return null;
+            StopWallRun();
         }
 
-        _isDashing = false;
-        print(_dashCount);
-        _dashCount++;
-
-        // Comprobamos si es el tercer dash
-        if (_dashCount >= 3)
+        if (groundCheck)
         {
-            _dashCount = 0; // Reset del contador
-            yield return new WaitForSeconds(_dashFinalCooldown); // Espera el cooldown largo
+            _wallDetectionTimer = 0f;
         }
         else
         {
-            _dashResetCoroutine = StartCoroutine(DashResetTimer()); // Inicia el temporizador de reset
-            yield return new WaitForSeconds(_dashCooldown); // Cooldown entre dashes
+            // Si no está en el suelo, sumamos el tiempo transcurrido
+            _wallDetectionTimer += Time.deltaTime;
         }
 
-        _canDash = true; // Permitir realizar un nuevo dash
+        if (_wallDetectionTimer >= _wallDetectionDelay)
+        {
+            UpdateWallCheck(); // Actualiza la detección de la pared
+        }
+
     }
 
-    private IEnumerator DashResetTimer()
-    {
-        yield return new WaitForSeconds(_dashResetTime);
-        _dashCount = 0; // Reset del contador de dashes
-    }
+   
+
 
     private void FixedUpdate()
     {
@@ -254,9 +173,96 @@ public class Player : HP
         healthBar.fillAmount = lifePercent;
         healthBar.color = Color.Lerp(Color.red, Color.green, lifePercent);
     }
+    public void Jump()
+    {
+        if (_isWallRunning)
+        {
+            Vector3 wallNormal = Vector3.zero;
+            int wallCount = 0;
 
+            foreach (Vector3 dir in _wallCheckDirections)
+            {
+                if (Physics.Raycast(transform.position, dir, _wallCheckDistance, _wallMask))
+                {
+                    wallNormal += -dir; // Sumamos la dirección opuesta a la detección
+                    wallCount++;
+                }
+            }
 
+            if (wallCount > 0)
+            {
+                wallNormal /= wallCount; // Promediamos si hay varias colisiones
+                wallNormal.Normalize(); // Normalizamos para evitar fuerzas exageradas
+            }
 
+            _rb.AddForce((wallNormal + Vector3.up).normalized * _jumpForce , ForceMode.Impulse);
+        }
+        else
+        {
+            _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
+        }
+    }
+    private bool OnSlope()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit slopeHit, _jumpRayDist + 0.1f, _jumpMask))
+        {
+            float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
+            return angle > 0f && angle < 45f; // Considera pendientes menores de 45 grados como transitables
+        }
+        return false;
+    }
+
+    private Vector3 GetSlopeDirection(Vector3 direction)
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit slopeHit, _jumpRayDist + 0.1f, _jumpMask))
+        {
+            return Vector3.ProjectOnPlane(direction, slopeHit.normal).normalized;
+        }
+        return direction;
+    }
+
+    private void Movement(Vector3 dir)
+    {
+        _camForwardFix = _camTransform.forward;
+        _camRightFix = _camTransform.right;
+        _camForwardFix.y = 0.0f;
+        _camRightFix.y = 0.0f;
+        Rotate(_camForwardFix);
+
+        _dirFix = (_camRightFix * dir.x + _camForwardFix * dir.z).normalized;
+
+        if (OnSlope()) // Si está en una pendiente, ajusta el movimiento
+        {
+            _dirFix = GetSlopeDirection(_dirFix);
+        }
+
+        _rb.MovePosition(transform.position + _dirFix * _movSpeed * Time.fixedDeltaTime);
+    }
+
+    private void Rotate(Vector3 dir)
+    {
+        transform.forward = dir;
+    }
+
+    public bool IsGrounded()
+    {
+        _jumpOffset = new Vector3(transform.position.x, transform.position.y + 0.125f, transform.position.z);
+
+        _jumpRay = new Ray(_jumpOffset, -transform.up);
+
+        return Physics.Raycast(_jumpRay, _jumpRayDist, _jumpMask);
+    }
+
+    private bool IsBlocked(float x, float z)
+    {
+        _movRayDir = (transform.right * x + transform.forward * z).normalized;
+        _movRay = new Ray(transform.position, _movRayDir);
+
+        // Ignorar el suelo en esta comprobación para evitar interferencias con OnSlope()
+        int layerMask2 = _movMask & ~_jumpMask; // Excluir la capa de suelo
+
+        return Physics.Raycast(_movRay, _movRayDist, layerMask2);
+    }
     public void Interact()
     {
         _intRay = new Ray(_intOrigin.position, transform.forward);
@@ -270,6 +276,108 @@ public class Player : HP
         }
     }
 
+    [Header("<color=#6A89A7>Wall Running</color>")]
+    [SerializeField] private float _wallCheckDistance = 1.0f; // Distancia de los Raycasts
+    [SerializeField] private LayerMask _wallMask;             // Capa de detección de paredes
+    private bool _isWallDetected = false;
+    private bool _isWallRunning = false;
+    [SerializeField] private bool[] _wallHitStatus;
+    // Direcciones de los Raycasts en un círculo
+    [SerializeField]
+    private Vector3[] _wallCheckDirections = new Vector3[]
+    {
+    Vector3.forward, Vector3.back, Vector3.right, Vector3.left,
+    (Vector3.forward + Vector3.right).normalized,
+    (Vector3.forward + Vector3.left).normalized,
+    (Vector3.back + Vector3.right).normalized,
+    (Vector3.back + Vector3.left).normalized
+    };
+    [SerializeField] private float climbSpeed = 3.0f; // Velocidad de subida en la pared
+    [SerializeField] private bool isClimbing = false; // Indica si el jugador está escalando
+    [SerializeField] private float _wallDetectionDelay = 1.0f; // Tiempo de retraso en segundos
+    private float _wallDetectionTimer = 0f; // Temporizador para la detección
+    private void DetectWall()
+    {
+        _isWallDetected = false;
+
+        foreach (Vector3 dir in _wallCheckDirections)
+        {
+            if (Physics.Raycast(transform.position, dir, _wallCheckDistance, _wallMask))
+            {
+                _isWallDetected = true;
+                break; // Si detectamos una pared, no hace falta seguir verificando
+            }
+        }
+
+        if (!IsGrounded() && _isWallDetected)
+        {
+            StartWallRun();
+        }
+        else if (_isWallRunning && (!_isWallDetected || IsGrounded()))
+        {
+            StopWallRun();
+        }
+    }
+    private void UpdateWallCheck()
+    {
+        for (int i = 0; i < _wallCheckDirections.Length; i++)
+        {
+            if (Physics.Raycast(transform.position, _wallCheckDirections[i], out RaycastHit hit, _wallCheckDistance, _wallMask))
+            {
+                _wallHitStatus[i] = true;
+            }
+            else
+            {
+                _wallHitStatus[i] = false;
+            }
+        }
+    }
+
+    private void StartWallRun()
+    {
+        if (_isWallRunning) return;
+
+        _isWallRunning = true;
+        _rb.useGravity = false;
+        _rb.velocity = new Vector3(_rb.velocity.x, 0, _rb.velocity.z);
+        Debug.Log("Wall Run Activado!");
+    }
+
+    private void StopWallRun()
+    {
+        if (!_isWallRunning) return;
+
+        _isWallRunning = false;
+        _rb.useGravity = true;
+        Debug.Log("Wall Run Desactivado.");
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = (!_isWallDetected || IsGrounded()) ? Color.red : Color.green;
+
+        foreach (Vector3 dir in _wallCheckDirections)
+        {
+            Gizmos.DrawLine(transform.position, transform.position + dir * _wallCheckDistance);
+        }
+        if (_wallCheckDirections == null) return;
+
+        for (int i = 0; i < _wallCheckDirections.Length; i++)
+        {
+            Gizmos.color = _wallHitStatus != null && _wallHitStatus[i] ? Color.green : Color.red;
+            Gizmos.DrawRay(transform.position, _wallCheckDirections[i] * _wallCheckDistance);
+        }
+        Gizmos.color = Color.blue;
+        Gizmos.DrawRay(_jumpRay);
+
+        // Dibuja la línea del SphereCast
+        Gizmos.color = Color.yellow; // Color del gizmo
+        Gizmos.DrawLine(_intOrigin.position, _intOrigin.position + transform.forward * _intRayDist);
+
+        // Dibuja la esfera al final del SphereCast
+        Gizmos.color = Color.cyan; // Color de la esfera
+        Gizmos.DrawWireSphere(_intRay.origin + _intRay.direction * _intRayDist, _sphereIntRadius);
+    }
     private IEnumerator ApplySpeedBoost()
     {
         originalSpeed = _movSpeed; // Guarda la velocidad original
@@ -283,228 +391,6 @@ public class Player : HP
     {
         StartCoroutine(ApplySpeedBoost());
     }
-    private void Jump()
-    {
-        _rb.AddForce(transform.up * _jumpForce, ForceMode.Impulse);
-    }
-
-    private void Movement(Vector3 dir)
-    {
-        if (_isDashing) return;
-        _camForwardFix = _camTransform.forward;
-        _camRightFix = _camTransform.right;
-
-        _camForwardFix.y = 0.0f;
-        _camRightFix.y = 0.0f;
-
-        Rotate(_camForwardFix);
-
-        _dirFix = (_camRightFix * dir.x + _camForwardFix * dir.z).normalized;
-
-        _rb.MovePosition(transform.position + _dirFix * _movSpeed * Time.fixedDeltaTime);
-    }
-
-    private void Rotate(Vector3 dir)
-    {
-        transform.forward = dir;
-    }
-
-
-    public bool IsGrounded()
-    {
-        _jumpOffset = new Vector3(transform.position.x, transform.position.y + 0.125f, transform.position.z);
-
-        _jumpRay = new Ray(_jumpOffset, -transform.up);
-
-        return Physics.Raycast(_jumpRay, _jumpRayDist, _jumpMask);
-    }
-
-    private bool IsBlocked(float x, float z)
-    {
-        _movRayDir = (transform.right * x + transform.forward * z);
-
-        _movRay = new Ray(transform.position, _movRayDir);
-
-        return Physics.Raycast(_movRay, _movRayDist, _movMask);
-    }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawRay(_jumpRay);
-
-        // Dibuja la línea del SphereCast
-        Gizmos.color = Color.red; // Color del gizmo
-        Gizmos.DrawLine(_intOrigin.position, _intOrigin.position + transform.forward * _intRayDist);
-
-        // Dibuja la esfera al final del SphereCast
-        Gizmos.color = Color.yellow; // Color de la esfera
-        Gizmos.DrawWireSphere(_intRay.origin + _intRay.direction * _intRayDist, _sphereIntRadius);
-
-        // Dibuja la línea del SphereCast
-        Gizmos.color = Color.white; // Color del gizmo
-        Gizmos.DrawLine(_atkOrigin.position, _atkOrigin.position + transform.forward * _atkRayDist);
-
-        // Dibuja la esfera al final del SphereCast
-        Gizmos.color = Color.green; // Color de la esfera
-        Gizmos.DrawWireSphere(_atkRay.origin + _atkRay.direction * _atkRayDist, _sphereAtkRadius);
-    }
-
-
-    private IEnumerator ApplyDMGBoost()
-    {
-        originaldmg = _atkDmg; // Guarda la velocidad original
-        _atkDmg *= dmgMultiplier; // Aplica el multiplicador
-
-        yield return new WaitForSeconds(duration); // Espera el tiempo de duración
-
-        _atkDmg = dmgMultiplier; // Restaura la velocidad original
-    }
-    public void DMGBooster()
-    {
-        StartCoroutine(ApplyDMGBoost());
-    }
-    public void Attack()
-    {
-        _atkRay = new Ray(_atkOrigin.position, transform.forward);
-
-        if (Physics.SphereCast(_atkRay, _sphereAtkRadius, out _atkHit, _atkRayDist, _atkMask))
-        {
-            if (_atkHit.collider.TryGetComponent<Enemy>(out Enemy enemy))
-            {
-                enemy.ReceiveDamage(_atkDmg, selectedElement);
-            }
-            else if (_atkHit.collider.TryGetComponent<HealthSystem>(out HealthSystem enemyHealth))
-            {
-                enemyHealth.ReceiveDamage(_atkDmg, selectedElement);
-            }
-            else if (_atkHit.collider.TryGetComponent<Boss>(out Boss BossHealth))
-            {
-                BossHealth.ReciveDamage(_atkDmg, selectedElement);
-            }
-            _ultimateCharge++;
-        }
-
-        else if (Physics.Raycast(_atkRay, out _atkHit, _atkRayDist, _atkMask))
-        {
-            if (_atkHit.collider.TryGetComponent<Enemy>(out Enemy enemy))
-            {
-                enemy.ReceiveDamage(_atkDmg, selectedElement);
-            }
-            else if (_atkHit.collider.TryGetComponent<HealthSystem>(out HealthSystem enemyHealth))
-            {
-                enemyHealth.ReceiveDamage(_atkDmg, selectedElement);
-            }
-            else if (_atkHit.collider.TryGetComponent<Boss>(out Boss BossHealth))
-            {
-                BossHealth.ReciveDamage(_atkDmg, selectedElement);
-            }
-            _ultimateCharge++;
-        }
-    }
-
-    public void PerformLiftAttack()
-    {
-        _atkRay = new Ray(_atkOrigin.position, transform.forward);
-
-        if (Physics.Raycast(_atkRay, out _atkHit, _atkRayDist, _atkMask))
-        {
-            if (_atkHit.collider.TryGetComponent<Enemy>(out Enemy enemy))
-            {
-                enemy.ReceiveDamage(_atkDmg, selectedElement);
-                enemy.ApplyLiftImpulse();
-            }
-            else if (_atkHit.collider.TryGetComponent<HealthSystem>(out HealthSystem enemyHealth))
-            {
-                int randomValue = Random.Range(0, 101); // Incluye 0 y 100
-                if (randomValue >= 20)
-                {
-                    enemyHealth.ApplyContinuousDamageFromPlayer(10f, 2.5f, selectedElement);
-                }
-                else
-                {
-                    enemyHealth.ReceiveDamage(_atkDmg, selectedElement);
-                }
-
-            }
-            else if (_atkHit.collider.TryGetComponent<Boss>(out Boss BossHealth))
-            {
-                BossHealth.ReciveDamage(_atkDmg);
-                BossHealth.ApplyLiftImpulse();
-            }
-
-            _ultimateCharge++;
-        }
-    }
-
-    [SerializeField] private float maxUltimate;
-    [SerializeField] private float maxOvercharge;
-
-    [SerializeField] UltimateAbilities[] _ultimateAbilities;
-    [SerializeField] private int selectedAbilityIndex = 0;
-
-    public void Ultimate(bool isOvercharged = false)
-    {
-        maxOvercharge = maxUltimate * 2f;
-
-        float currentMax = isOvercharged ? maxOvercharge : maxUltimate;
-
-        _ultimateCharge = Mathf.Clamp(_ultimateCharge, 0, currentMax);
-
-        float normalFillPercentage = Mathf.Clamp01(_ultimateCharge / maxUltimate);
-
-        float overchargeFillPercentage = isOvercharged ? Mathf.Clamp01((_ultimateCharge - maxUltimate) / maxUltimate) : 0;
-
-        ultimateBar.fillAmount = normalFillPercentage;
-        ultimateBar.color = Color.Lerp(Color.black, Color.green, normalFillPercentage);
-
-        overchardedBar.fillAmount = overchargeFillPercentage;
-        overchardedBar.color = Color.Lerp(Color.green, Color.yellow, overchargeFillPercentage);
-    }
-
-    public void UseUltimate()
-    {
-        // Obtén la habilidad seleccionada
-        UltimateAbilities selectedAbility = _ultimateAbilities[selectedAbilityIndex];
-
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            // Cambiar al siguiente índice en el array
-            selectedAbilityIndex = (selectedAbilityIndex + 1) % _ultimateAbilities.Length;
-            Debug.Log($"Switched to ability: {_ultimateAbilities[selectedAbilityIndex].Name}");
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            // Verifica si hay suficiente carga para usar la habilidad
-            if (_ultimateCharge >= selectedAbility.Cost)
-            {
-                // Consume la carga necesaria
-                _ultimateCharge -= selectedAbility.Cost;
-
-                // Asegúrate de mantener la carga dentro de los límites
-                _ultimateCharge = Mathf.Clamp(_ultimateCharge, 0, maxOvercharge);
-
-                // Instancia el prefab de la habilidad si está asignado
-                if (selectedAbility.Ability != null)
-                {
-                    Instantiate(selectedAbility.Ability, transform.position, transform.rotation);
-                }
-
-                Debug.Log($"Used ability: {selectedAbility.Name}, remaining charge: {_ultimateCharge}");
-            }
-            else
-            {
-                Debug.Log("Not enough charge to use the selected ability!");
-            }
-        }
-    }
-    public void Cast()
-    {
-        _anim.SetTrigger("Cast");
-    }
-
-
-
     public void Die()
     {
         //Handle.OnDie();
@@ -513,48 +399,7 @@ public class Player : HP
 
         // Rend1.enabled = false; Rend2.enabled = false;
     }
-
-    public Vector3 CalculateJumpVelocity(Vector3 startpoint, Vector3 endpoint, float trayectoryHeight)
-    {
-        float gravity = Physics.gravity.y;
-        float displacementY = endpoint.y - startpoint.y;
-        Vector3 displacementZX = new Vector3(endpoint.x - startpoint.x, 0f, endpoint.z - startpoint.z);
-
-        Vector3 velocity = Vector3.up * Mathf.Sqrt(-2 * gravity * trayectoryHeight);
-        Vector3 velocityZX = displacementZX / (Mathf.Sqrt(-2 * trayectoryHeight / gravity)
-            + Mathf.Sqrt(2 * (displacementY - trayectoryHeight) / gravity));
-
-        return velocity + velocityZX;
-    }
-
-    public void JumpToPosition(Vector3 targetposition, float trajectoryHeight)
-    {
-        activeGrapple = true;
-        velocityToSet = CalculateJumpVelocity(transform.position, targetposition, trajectoryHeight);
-        Invoke(nameof(Setvelocity), 0.1f);
-    }
-
-
-
-    public void ResetRestrictions()
-    {
-        activeGrapple = false;
-    }
-
-
-    private void Setvelocity()
-    {
-        EnableMovementAfterCollision = true;
-
-        // Limitar la magnitud de la velocidad al máximo permitido
-        if (velocityToSet.magnitude > maxGrappleVelocity)
-        {
-            velocityToSet = velocityToSet.normalized * maxGrappleVelocity;
-        }
-
-        _rb.velocity = velocityToSet * velocity;
-    }
-
+    [SerializeField] private GameObject gameObje;
     private bool isDead = false;
     public override void ReciveDamage(float damage)
     {
@@ -580,7 +425,7 @@ public class Player : HP
         }
     }
 
-    public void MovePlayer(float force)
+    public void AnimationMoveImpulse(float force)
     {
         Vector3 forwardDirection = transform.forward; // Dirección actual del jugador
         _rb.AddForce(forwardDirection * force, ForceMode.Impulse);
@@ -600,41 +445,5 @@ public class Player : HP
     public override void Health(float amount)
     {
         GetLife += amount;
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (EnableMovementAfterCollision)
-        {
-            EnableMovementAfterCollision = false;
-            ResetRestrictions();
-
-           // grapple.stopGrapple();
-        }
-    }
-
-
-    public enum ElementType
-    {
-        Normal,
-        Fire,
-        Electric,
-    }
-    public void ElementalCast()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            selectedElement = (ElementType)(((int)selectedElement + 1) % System.Enum.GetValues(typeof(ElementType)).Length);
-            Debug.Log("Elemento seleccionado: " + selectedElement);
-        }
-    }
-    public void PlayVFX()
-    {
-        _fire.SendEvent("OnFire");
-    }
-
-    public void PlayVFXAttack()
-    {
-        _fire.SendEvent("Attack");
     }
 }

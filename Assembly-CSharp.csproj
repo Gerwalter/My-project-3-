@@ -62,7 +62,6 @@
     <Compile Include="Assets\Scripts\Enemy-Obstacle\Crate.cs" />
     <Compile Include="Assets\Scripts\Manager\GoldManager.cs" />
     <Compile Include="Assets\Scripts\Manager\Lock.cs" />
-    <Compile Include="Assets\Scripts\Manager\Combo\PlayerController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
     <Compile Include="Assets\Scripts\Misc\Apple.cs" />
@@ -88,7 +87,6 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
     <Compile Include="Assets\BloodVFXHandler.cs" />
     <Compile Include="Assets\Scripts\Player\CameraController.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IDamagable.cs" />
     <Compile Include="Assets\Scripts\Enemy-Obstacle\Entity.cs" />
     <Compile Include="Assets\Scripts\Misc\Shop.cs" />
@@ -100,6 +98,7 @@
     <Compile Include="Assets\Scripts\Manager\OutlineManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerAttack.cs" />
     <Compile Include="Assets\Art\VideoShader.cs" />
     <Compile Include="Assets\Prefabs\Enemys\FireBall.cs" />
     <Compile Include="Assets\Prefabs\Jogador\Heal.cs" />
@@ -121,7 +120,6 @@
     <Compile Include="Assets\Scripts\other scripts to take info\ButtonBehaviour.cs" />
     <Compile Include="Assets\Scripts\Enemy-Obstacle\Enemy2.cs" />
     <Compile Include="Assets\Scripts\Movement\Grappling.cs" />
-    <Compile Include="Assets\Scripts\other scripts to take info\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Manager\IANodeManager.cs" />
     <Compile Include="Assets\Scripts\other scripts to take info\ThirdPersonCamera.cs" />
     <Compile Include="Assets\Scripts\Player\Respawn.cs" />
@@ -164,7 +162,6 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
     <Compile Include="Assets\AnimationTagPrinter.cs" />
-    <Compile Include="Assets\Scripts\Manager\Combo\ControlManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\Scripts\Manager\MenuCameraLocker.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
@@ -480,6 +477,15 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.9.1\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Android.Types">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.5f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Android.Gradle">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.5f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Gradle.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Android.GradleProject">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.5f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.GradleProject.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.5f1\Editor\Data\NetStandard\ref\2.1.0\netstandard.dll</HintPath>

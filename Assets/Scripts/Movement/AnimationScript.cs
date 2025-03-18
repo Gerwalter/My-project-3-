@@ -6,6 +6,7 @@ public class AnimationScript : MonoBehaviour
 {
     public Animator anim;
     [SerializeField] Player _player;
+    [SerializeField] PlayerAttack _playerAttack;
     public GameObject sword;
 
     private void Update()
@@ -17,7 +18,10 @@ public class AnimationScript : MonoBehaviour
     private void Cast()
     {
         if (Input.GetKeyDown(KeyCode.E))
-            anim.SetTrigger("Element");
+        {
+            _playerAttack.Cast();
+        }
+
     }
     void TriggerAnimator(string triggerName)
     {
@@ -51,7 +55,7 @@ public class AnimationScript : MonoBehaviour
 
     public void PrintNum()
     {
-        _player.MovePlayer(1f); ;
+        _player.AnimationMoveImpulse(1f); ;
     }
 
     public void JumpAttack()
@@ -61,19 +65,22 @@ public class AnimationScript : MonoBehaviour
 
     public void EnemyLift()
     {
-        _player.PerformLiftAttack();
+        _playerAttack.PerformLiftAttack();
     }
 
     public void Attack()
     {
-        _player.Attack();
+        _playerAttack.Attack();
     }
 
     public void Die()
     {
         _player.Die();
     }
-
+    public void Jump()
+    {
+        _player.Jump();
+    }
     public void DisableMovement()
     {
         _player.DisableMovement();
@@ -91,12 +98,12 @@ public class AnimationScript : MonoBehaviour
 
     public void PlayVFX()
     {
-        _player.PlayVFX();
+        _playerAttack.PlayVFX();
     }
 
     public void PlayVFXAttack()
     {
-        _player.PlayVFXAttack();
+        _playerAttack.PlayVFXAttack();
     }
 
     public void triggerReset()

@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class DMGBoost : UltimateAbility
 {
-    [SerializeField] private Player _player;
+    [SerializeField] private PlayerAttack _player;
 
     private void Awake()
     {
-        _player = GameManager.Instance.Player;
+        //_player = GameManager.Instance.Player;
     }
     void Start()
 
