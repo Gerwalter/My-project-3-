@@ -220,7 +220,6 @@ public class Player : HP
 
     private void Movement(Vector3 dir)
     {
-
         _camForwardFix = _camTransform.forward;
         _camRightFix = _camTransform.right;
 
@@ -361,10 +360,7 @@ public class Player : HP
     (Vector3.back + Vector3.right).normalized,
     (Vector3.back + Vector3.left).normalized
     };
-    [SerializeField] private float climbSpeed = 3.0f; // Velocidad de subida en la pared
-        [SerializeField]private bool isClimbing = false; // Indica si el jugador está escalando
-    [SerializeField] private float _wallDetectionDelay = 1.0f; // Tiempo de retraso en segundos
-    private float _wallDetectionTimer = 0f; // Temporizador para la detección
+    public GrapplingHook GrapplingHook;
     private void DetectWall()
     {
         _isWallDetected = false;
@@ -394,6 +390,7 @@ public class Player : HP
             if (Physics.Raycast(transform.position, _wallCheckDirections[i], out RaycastHit hit, _wallCheckDistance, _wallMask))
             {
                 _wallHitStatus[i] = true;
+
             }
             else
             {

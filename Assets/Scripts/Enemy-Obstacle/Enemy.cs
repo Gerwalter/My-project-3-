@@ -41,14 +41,14 @@ public class Enemy : Entity
     [SerializeField] private int _atkDmg = 2;
 
     [Header("<color=yellow>Heal</color>")]
-    [SerializeField] private float healCooldown = 7.0f; // Tiempo entre curaciones
-    private float lastHealTime = -Mathf.Infinity; // Tiempo de la última curación
+   // [SerializeField] private float healCooldown = 7.0f; // Tiempo entre curaciones
+   // private float lastHealTime = -Mathf.Infinity; // Tiempo de la última curación
 
     [SerializeField] private ElementType weakness; // Tipo de debilidad
     [SerializeField] private float elementalMultiplier = 2.0f;
 
-    private bool isTakingContinuousDamage = false;
-    private float _groundCheckDistance = 1.1f;
+   // private bool isTakingContinuousDamage = false;
+    //private float _groundCheckDistance = 1.1f;
 
     private void Awake()
     {

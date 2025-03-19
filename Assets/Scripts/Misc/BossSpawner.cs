@@ -10,7 +10,7 @@ public class BossSpawner : MonoBehaviour
     [SerializeField] private PlayableDirector director; // Referencia al PlayableDirector
     public AudioClip Theme;
     [SerializeField] private FireShader FireShader;
-    [SerializeField] private BoxCollider collider;
+   // [SerializeField] private BoxCollider collider;
 
     [Header("Spawn Area Settings")]
     [SerializeField] private Transform spawnPoint; // Lista de puntos de spawn
@@ -67,7 +67,6 @@ public class BossSpawner : MonoBehaviour
             FireShader.ActivateFire();
             //SFXManager.instance.PlaySFXClip(Theme, transform, 1f);
             //Destroy(gameObject);
-            collider.enabled = false;
         }
     }
 }

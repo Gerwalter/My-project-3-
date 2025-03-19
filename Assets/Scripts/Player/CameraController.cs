@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 public class CameraController : MonoBehaviour
 {
     [Header("<color=#6A89A7>Cursor</color>")]
-    [SerializeField] private CursorLockMode _lockMode = CursorLockMode.Locked;
     //[SerializeField] public bool _isCursorVisible = false;
     [SerializeField] public bool _isCameraFixed = false;
 
