@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{27AB3609-15DB-52E3-4D4E-5A489B4C4689}</ProjectGuid>
+    <ProjectGuid>{0EEE7EE8-5624-0BB8-0F53-5B4408E383A6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -70,9 +70,11 @@
     <Compile Include="Assets\Scripts\Enemy-Obstacle\Enemigo.cs" />
     <Compile Include="Assets\Scripts\Misc\BossSpawner.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
+    <Compile Include="Assets\Scripts\IAClase\Node.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IInteract.cs" />
     <Compile Include="Assets\Scripts\Enemy-Obstacle\Entidad.cs" />
     <Compile Include="Assets\Scripts\Enemy-Obstacle\EnemyBehavior.cs" />
+    <Compile Include="Assets\Scripts\IAClase\QuestionNode.cs" />
     <Compile Include="Assets\Prefabs\Jogador\UltimateAbilities.cs" />
     <Compile Include="Assets\FireShader.cs" />
     <Compile Include="Assets\Scripts\Movement\AnimationScript.cs" />
@@ -106,7 +108,9 @@
     <Compile Include="Assets\Pause\SoundManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\CanvasReferencesManager.cs" />
+    <Compile Include="Assets\Scripts\IAClase\Lupinranger.cs" />
     <Compile Include="Assets\Scripts\Manager\Combo\MovesManager\MovesEnum.cs" />
+    <Compile Include="Assets\Scripts\IAClase\ActionNode.cs" />
     <Compile Include="Assets\Scripts\Player\DashCooldownUI.cs" />
     <Compile Include="Assets\Scripts\Manager\LevelManager.cs" />
     <Compile Include="Assets\LootManager.cs" />
@@ -187,6 +191,7 @@
     <Compile Include="Assets\Scene.cs" />
     <Compile Include="Assets\Scripts\IA\FadingPlatform.cs" />
     <Compile Include="Assets\MusicPlayer.cs" />
+    <Compile Include="Assets\Scripts\IAClase\Patranger.cs" />
     <Compile Include="Assets\Scripts\other scripts to take info\Cure.cs" />
     <Compile Include="Assets\Scripts\Manager\SFXManager.cs" />
     <Compile Include="Assets\Scripts\IA\SurfaceReference.cs" />
@@ -1010,7 +1015,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Polyperfect.Universal.csproj">
-      <Project>{43569179-2625-A4F5-C8D6-1F5F185EC8DC}</Project>
+      <Project>{91B4F21D-DC81-3D1A-1A8D-716438D4406E}</Project>
       <Name>Polyperfect.Universal</Name>
     </ProjectReference>
   </ItemGroup>
