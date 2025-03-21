@@ -17,7 +17,8 @@ public class PlayerFollower : HP
     [SerializeField] private Transform _target; // Objeto a seguir
     [SerializeField] private float _followSpeed = 3.5f;
     [SerializeField] private float _stoppingDistance = 1.0f;
-
+    [SerializeField] private LayerMask groundMask;
+    [SerializeField] private float raycastDistance = 1.2f;
     [Header("<color=#6A89A7>UI</color>")]
     [SerializeField] private Image healthBar;
 
@@ -31,13 +32,13 @@ public class PlayerFollower : HP
     [SerializeField] private bool _follow = false;
 
     public string MovName { get { return _isMovName; } }
-    public string GroundName {  get { return _isGroundName; } } 
+    public string GroundName { get { return _isGroundName; } }
     public Animator Animator { get { return _anim; } }
     public string JumpName { get { return _jumpName; } }
     public string XName { get { return _xName; } }
     public float Speed { get { return _followSpeed; } }
     public bool Follow { get { return _follow; } set { _follow = value; } }
-    public bool Freeze { get { return _freeze; }  set { _freeze = value; } }  
+    public bool Freeze { get { return _freeze; } set { _freeze = value; } }
 
     private void Awake()
     {
@@ -62,11 +63,73 @@ public class PlayerFollower : HP
 
         if (_follow)
         {
-            FollowTarget();
+            FollowPlayer();
+            RotateTowardsPlayer();
         }
-
     }
 
+    
+    private void FollowPlayer()
+    {
+        if (_target == null) return;
+        gameObject.layer = LayerMask.NameToLayer("Player");
+        Vector3 direction = (_target.position - transform.position).normalized;
+        float distance = Vector3.Distance(transform.position, _target.position);
+
+        if (distance > _stoppingDistance)
+        {
+            Vector3 moveDirection = GetSlopeDirection(direction) * _followSpeed;
+            _rb.MovePosition(_rb.position + moveDirection * Time.deltaTime);
+            _anim.SetBool(_isMovName, true);
+            _anim.SetFloat(_zName, 1.0f);
+        }
+        else
+        {
+            _anim.SetBool(_isMovName, false);
+            _anim.SetFloat(_xName, 0.0f);
+            _anim.SetFloat(_zName, 0.0f);
+        }
+    }
+
+    private bool OnSlope()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit slopeHit, raycastDistance, groundMask))
+        {
+            float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
+            return angle > 0f && angle < 45f;
+        }
+        return false;
+    }
+
+    private Vector3 GetSlopeDirection(Vector3 direction)
+    {
+        if (OnSlope())
+        {
+            if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit slopeHit, raycastDistance, groundMask))
+            {
+                return Vector3.ProjectOnPlane(direction, slopeHit.normal).normalized;
+            }
+        }
+        return direction;
+    }
+
+    private void RotateTowardsPlayer()
+    {
+        if (_target == null) return;
+
+        Vector3 direction = (_target.position - transform.position).normalized;
+        direction.y = 0; // Evita inclinaciones innecesarias en el eje Y
+
+        if (direction != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+        }
+    }
+
+    /*
+     
+     
     private void FollowTarget()
     {
         if (_target == null) return;
@@ -95,6 +158,9 @@ public class PlayerFollower : HP
         transform.forward = direction;
     }
 
+
+      
+     */
     private void UpdateHealthBar()
     {
         float lifePercent = GetLife / maxLife;
@@ -104,7 +170,7 @@ public class PlayerFollower : HP
 
     public bool IsGrounded()
     {
-        Vector3 jumpOffset = new Vector3(transform.position.x, transform.position.y + 0.125f, transform.position.z);
+        Vector3 jumpOffset = new Vector3(transform.position.x, transform.position.y + 0.126f, transform.position.z);
         Ray jumpRay = new Ray(jumpOffset, -transform.up);
         return Physics.Raycast(jumpRay, _jumpRayDist, _jumpMask);
     }

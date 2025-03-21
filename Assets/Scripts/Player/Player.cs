@@ -427,11 +427,13 @@ public class Player : HP
             Gizmos.DrawLine(transform.position, transform.position + dir * _wallCheckDistance);
         }
         if (_wallCheckDirections == null) return;
-
-        for (int i = 0; i < _wallCheckDirections.Length; i++)
+        if (Application.isPlaying)
         {
-            Gizmos.color = _wallHitStatus != null && _wallHitStatus[i] ? Color.green : Color.red;
-            Gizmos.DrawRay(transform.position, _wallCheckDirections[i] * _wallCheckDistance);
+            for (int i = 0; i < _wallCheckDirections.Length; i++)
+            {
+                Gizmos.color = _wallHitStatus != null && _wallHitStatus[i] ? Color.green : Color.red;
+                Gizmos.DrawRay(transform.position, _wallCheckDirections[i] * _wallCheckDistance);
+            }
         }
         Gizmos.color = Color.blue;
         Gizmos.DrawRay(_jumpRay);

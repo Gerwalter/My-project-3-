@@ -1380,8 +1380,12 @@ MonoBehaviour:
   _xName: xAxis
   _zName: zAxis
   _target: {fileID: 6992016914885446194}
-  _followSpeed: 10
+  _followSpeed: 3
   _stoppingDistance: 1
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0
+  raycastDistance: 1.2
   healthBar: {fileID: 18069961}
   _jumpForce: 5
   _jumpRayDist: 0.75
@@ -1404,6 +1408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panel: {fileID: 1265263687}
+  interacting: 0
   follower: {fileID: 642361914}
 --- !u!1 &680024200
 GameObject:
@@ -13317,6 +13322,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   pauseManager: {fileID: 510248402}
+  follower: {fileID: 642361915}
   camTransform: {fileID: 0}
 --- !u!1 &414117464438869098
 GameObject:
