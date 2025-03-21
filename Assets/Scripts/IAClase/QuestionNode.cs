@@ -7,6 +7,12 @@ public class QuestionNode : Node
     public Node trueNode;
     public Node falseNode;
     public TypeQuestion questionType;
+
+    public override void Follow(PlayerFollower npc)
+    {
+
+    }
+
     public override void Test(Patranger npc)
     {
         switch (questionType) 

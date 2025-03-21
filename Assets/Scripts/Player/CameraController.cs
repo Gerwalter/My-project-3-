@@ -34,6 +34,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private LayerMask _ignoreLayerMask;
     public static CameraController Instance;
     public PauseManager pauseManager;
+    public Follower follower;
     [SerializeField] private Transform camTransform;
 
     public Transform CamTransform
@@ -69,7 +70,7 @@ public class CameraController : MonoBehaviour
                 _maxDistance = Mathf.Clamp(_maxDistance - scroll, _minDistance + 2, 10f); // Ajusta el 10f al valor máximo deseado
             }
         }
-        _isCameraFixed = pauseManager.isPaused;
+        _isCameraFixed = pauseManager.isPaused || follower.interacting;
         ToggleCursorMode(_isCameraFixed);
         // Ajustar la distancia máxima con la rueda del ratón
 

@@ -31,7 +31,7 @@ public class PlayerAttack : MonoBehaviour
     {
         Ultimate(true);
         UseUltimate();
-        ElementalCast();
+
     }
 
     private void Start()
@@ -150,7 +150,7 @@ public class PlayerAttack : MonoBehaviour
 
     public void Cast()
     {
-        _anim.SetTrigger("Cast");
+        ElementalCast();
     }
     public void Ultimate(bool isOvercharged = false)
     {
@@ -211,11 +211,10 @@ public class PlayerAttack : MonoBehaviour
 
     public void ElementalCast()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
+
             selectedElement = (ElementType)(((int)selectedElement + 1) % System.Enum.GetValues(typeof(ElementType)).Length);
             Debug.Log("Elemento seleccionado: " + selectedElement);
-        }
+        
     }
     public void PlayVFX()
     {

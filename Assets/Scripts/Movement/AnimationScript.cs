@@ -17,8 +17,9 @@ public class AnimationScript : MonoBehaviour
 
     private void Cast()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.C))
         {
+            anim.SetTrigger("Cast");
             _playerAttack.Cast();
         }
 

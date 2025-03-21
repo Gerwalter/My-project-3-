@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{0EEE7EE8-5624-0BB8-0F53-5B4408E383A6}</ProjectGuid>
+    <ProjectGuid>{27AB3609-15DB-52E3-4D4E-5A489B4C4689}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -112,6 +112,7 @@
     <Compile Include="Assets\Scripts\Manager\Combo\MovesManager\MovesEnum.cs" />
     <Compile Include="Assets\Scripts\IAClase\ActionNode.cs" />
     <Compile Include="Assets\Scripts\Player\DashCooldownUI.cs" />
+    <Compile Include="Assets\Follower.cs" />
     <Compile Include="Assets\Scripts\Manager\LevelManager.cs" />
     <Compile Include="Assets\LootManager.cs" />
     <Compile Include="Assets\Scripts\Enemy-Obstacle\Bridge.cs" />
@@ -137,6 +138,7 @@
     <Compile Include="Assets\GoldUI.cs" />
     <Compile Include="Assets\Scripts\Player\GrapplingHook.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStats.cs" />
+    <Compile Include="Assets\PlayerFollower.cs" />
     <Compile Include="Assets\Scripts\Enemy-Obstacle\SecurityCamera.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IDamaga.cs" />
     <Compile Include="Assets\Prefabs\Jogador\UltimateCombo.cs" />
@@ -168,6 +170,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
     <Compile Include="Assets\AnimationTagPrinter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
+    <Compile Include="Assets\AnimationScriptFollower.cs" />
     <Compile Include="Assets\Scripts\Manager\MenuCameraLocker.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
@@ -1015,7 +1018,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Polyperfect.Universal.csproj">
-      <Project>{91B4F21D-DC81-3D1A-1A8D-716438D4406E}</Project>
+      <Project>{43569179-2625-A4F5-C8D6-1F5F185EC8DC}</Project>
       <Name>Polyperfect.Universal</Name>
     </ProjectReference>
   </ItemGroup>
