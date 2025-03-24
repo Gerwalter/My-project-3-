@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public class HP : MonoBehaviour, IDamagable
+public abstract class HP : MonoBehaviour, ILife
 {
     [SerializeField] public float maxLife;
     [SerializeField] private float currentLife;
@@ -22,16 +22,13 @@ public class HP : MonoBehaviour, IDamagable
 
     }
 
-   [SerializeField] public VisualEffect _bloodVFX;
+    [SerializeField] public VisualEffect _bloodVFX;
+
     public virtual void ReciveDamage(float damage)
     {
 
     }
-
     public virtual void Health(float amount)
-    {
-
-    }
-
+    { }
 
 }

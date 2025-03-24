@@ -25,8 +25,8 @@ public class VehicleController : MonoBehaviour
     {
         moveInput = Input.GetAxis("Vertical");
         turnInput = Input.GetAxis("Horizontal");
-        isBraking = Input.GetKey(KeyCode.Space);
-        isHandbraking = Input.GetKey(KeyCode.LeftShift);
+        isBraking = Input.GetKey(KeyCode.LeftShift);
+        isHandbraking = Input.GetKey(KeyCode.Space);
     }
 
     void FixedUpdate()

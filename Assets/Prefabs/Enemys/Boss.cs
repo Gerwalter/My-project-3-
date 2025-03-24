@@ -214,5 +214,12 @@ public class Boss : HP
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, _chaseDist);
     }
+
+    
+
+    public override void Health(float amount)
+    {
+        throw new System.NotImplementedException();
+    }
 }
 

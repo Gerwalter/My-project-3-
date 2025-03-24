@@ -39,5 +39,12 @@ public class Entity : HP
         _isHealer = _enemyClass == EnemyClass.Healer;
         _isShooter = _enemyClass == EnemyClass.Shooter;
     }
+
+  
+
+    public override void Health(float amount)
+    {
+        throw new System.NotImplementedException();
+    }
 }
 

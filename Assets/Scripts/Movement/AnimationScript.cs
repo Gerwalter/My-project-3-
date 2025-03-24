@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro.Examples;
 using UnityEngine;
 using static ComboSystem;
@@ -5,24 +6,27 @@ using static ComboSystem;
 public class AnimationScript : MonoBehaviour
 {
     public Animator anim;
-    [SerializeField] Player _player;
-    [SerializeField] PlayerAttack _playerAttack;
-    public GameObject sword;
+    [SerializeField] private List<Player> _players = new List<Player>();
 
     private void Update()
     {
         Fight();
-        Cast();
     }
 
     private void Cast()
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
-            anim.SetTrigger("Cast");
-            _playerAttack.Cast();
+            CallPlayers(p => p.Cast());
         }
 
+    }
+    private void CallPlayers(System.Action<Player> action)
+    {
+        foreach (var player in _players)
+        {
+            action(player);
+        }
     }
     void TriggerAnimator(string triggerName)
     {
@@ -31,19 +35,8 @@ public class AnimationScript : MonoBehaviour
             anim.SetTrigger(triggerName); // Disparar el trigger
         }
     }
-    public void SwordReveal()
-    {
-        sword.SetActive(!sword.activeSelf);
-    }
-
-    public CameraController cameraController;
-    private void Start()
-    {
-        cameraController = CameraController.Instance;
-    }
     void Fight()
     {
-        if (cameraController.IsCameraFixed) return;
         if (Input.GetMouseButtonDown(0)) // Mouse0 para Light Attack
         {
             TriggerAnimator("LightAttack");  // Disparar el trigger LightAttack en el Animator
@@ -54,61 +47,16 @@ public class AnimationScript : MonoBehaviour
         }
     }
 
-    public void PrintNum()
-    {
-        _player.AnimationMoveImpulse(1f); ;
-    }
-
-    public void JumpAttack()
-    {
-        _player.ApplyForwardJumpImpulse(6f, 3f);
-    }
-
-    public void EnemyLift()
-    {
-        _playerAttack.PerformLiftAttack();
-    }
-
-    public void Attack()
-    {
-        _playerAttack.Attack();
-    }
-
-    public void Die()
-    {
-        _player.Die();
-    }
-    public void Jump()
-    {
-        _player.Jump();
-    }
-    public void DisableMovement()
-    {
-        _player.DisableMovement();
-    }
-
-    public void EnableMovement()
-    {
-        _player.EnableMovement();
-    }
-
-    public void Interact()
-    {
-        _player.Interact();
-    }
-
-    public void PlayVFX()
-    {
-        _playerAttack.PlayVFX();
-    }
-
-    public void PlayVFXAttack()
-    {
-        _playerAttack.PlayVFXAttack();
-    }
-
-    public void triggerReset()
-    {
-        anim.ResetTrigger("Hit");
-    }
+    public void PrintNum() => CallPlayers(p => p.AnimationMoveImpulse(1f));
+    public void JumpAttack() => CallPlayers(p => p.ApplyForwardJumpImpulse(6f, 3f));
+    public void EnemyLift() => CallPlayers(p => p.PerformLiftAttack());
+    public void Attack() => CallPlayers(p => p.Attack());
+    public void Die() => CallPlayers(p => p.Die());
+    public void Jump() => CallPlayers(p => p.Jump());
+    public void DisableMovement() => CallPlayers(p => p.DisableMovement());
+    public void EnableMovement() => CallPlayers(p => p.EnableMovement());
+    public void Interact() => CallPlayers(p => p.Interact());
+    public void PlayVFX() => CallPlayers(p => p.PlayVFX());
+    public void PlayVFXAttack() => CallPlayers(p => p.PlayVFXAttack());
+    public void triggerReset() => anim.ResetTrigger("Hit");
 }

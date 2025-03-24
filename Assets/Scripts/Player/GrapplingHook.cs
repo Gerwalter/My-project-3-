@@ -12,7 +12,8 @@ public class GrapplingHook : MonoBehaviour
     [SerializeField] private float _fakeGrappleDuration = 0.3f;
     [SerializeField] private float _grappleDuration = 1f;
     [SerializeField] private bool releaseAtPeak = false;
-
+    [SerializeField] private Camera _camera;
+    [SerializeField] private Camera _mainCamera;
     [Header("<color=#FFD700>Keybinds</color>")]
     [SerializeField] private KeyCode _grappleKey = KeyCode.F;
 
@@ -32,12 +33,20 @@ public class GrapplingHook : MonoBehaviour
     private void Start()
     {
         _playerLayer = _player.gameObject.layer;
+        _camera.enabled = false;
     }
 
     private void Update()
     {
+        if (Input.GetKey(_grappleKey))
+        { 
+            _mainCamera.enabled = false;
+            _camera.enabled = true;
+        }
         if (Input.GetKeyUp(_grappleKey) && !_isGrappling)
         {
+            _mainCamera.enabled = true;
+            _camera.enabled = false;
             StartGrapple();
         }
     }

@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Crate : HP
 {
+    public override void Health(float amount)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    
+
     // Start is called before the first frame update
     void Start()
     {

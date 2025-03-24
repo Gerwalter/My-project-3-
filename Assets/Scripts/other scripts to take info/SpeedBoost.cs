@@ -9,7 +9,7 @@ public class SpeedBoost : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        _player.SpeedBooster();
+       // _player.SpeedBooster();
         Destroy(gameObject); // Destruye el objeto del boost
     }
 }

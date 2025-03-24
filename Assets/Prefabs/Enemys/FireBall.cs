@@ -5,7 +5,7 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class FireBall : BossAttacks
 {
-    public Player _target;
+    public HP _target;
     public float speed = 10f; // Velocidad del movimiento
     private bool shouldMove = false; // Controla si el FireBall debe moverse
     [SerializeField] private int damage = 1;

@@ -174,4 +174,11 @@ public class PlayerFollower : HP
         Ray jumpRay = new Ray(jumpOffset, -transform.up);
         return Physics.Raycast(jumpRay, _jumpRayDist, _jumpMask);
     }
+
+   
+
+    public override void Health(float amount)
+    {
+        throw new System.NotImplementedException();
+    }
 }

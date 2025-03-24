@@ -72,7 +72,6 @@ public class CameraController : MonoBehaviour
         }
         _isCameraFixed = pauseManager.isPaused || follower.interacting;
         ToggleCursorMode(_isCameraFixed);
-        // Ajustar la distancia máxima con la rueda del ratón
 
 
     }

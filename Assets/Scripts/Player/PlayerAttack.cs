@@ -9,7 +9,7 @@ public enum ElementType
     Fire,
     Electric,
 }
-public class PlayerAttack : MonoBehaviour
+public class PlayerAttack : Player
 {
     [Header("<color=red>Misc</color>")]
     [SerializeField] private VisualEffect _fire;
@@ -26,7 +26,6 @@ public class PlayerAttack : MonoBehaviour
     public float _sphereAtkRadius = 0.5f;
     [SerializeField] private ElementType selectedElement;
     [SerializeField] private float _ultimateCharge;
-    private Animator _anim;
     private void Update()
     {
         Ultimate(true);
@@ -64,46 +63,30 @@ public class PlayerAttack : MonoBehaviour
     {
         StartCoroutine(ApplyDMGBoost());
     }
-    public void Attack()
+    public override void Attack()
     {
         _atkRay = new Ray(_atkOrigin.position, transform.forward);
 
         if (Physics.SphereCast(_atkRay, _sphereAtkRadius, out _atkHit, _atkRayDist, _atkMask))
         {
-            if (_atkHit.collider.TryGetComponent<Enemy>(out Enemy enemy))
+            if (_atkHit.collider.TryGetComponent<HP>(out HP enemy))
             {
-                enemy.ReceiveDamage(_atkDmg, selectedElement);
-            }
-            else if (_atkHit.collider.TryGetComponent<HealthSystem>(out HealthSystem enemyHealth))
-            {
-                enemyHealth.ReceiveDamage(_atkDmg, selectedElement);
-            }
-            else if (_atkHit.collider.TryGetComponent<Boss>(out Boss BossHealth))
-            {
-                BossHealth.ReciveDamage(_atkDmg, selectedElement);
+                enemy.ReciveDamage(_atkDmg);
             }
             _ultimateCharge++;
         }
 
         else if (Physics.Raycast(_atkRay, out _atkHit, _atkRayDist, _atkMask))
         {
-            if (_atkHit.collider.TryGetComponent<Enemy>(out Enemy enemy))
+            if (_atkHit.collider.TryGetComponent<HP>(out HP enemy))
             {
-                enemy.ReceiveDamage(_atkDmg, selectedElement);
-            }
-            else if (_atkHit.collider.TryGetComponent<HealthSystem>(out HealthSystem enemyHealth))
-            {
-                enemyHealth.ReceiveDamage(_atkDmg, selectedElement);
-            }
-            else if (_atkHit.collider.TryGetComponent<Boss>(out Boss BossHealth))
-            {
-                BossHealth.ReciveDamage(_atkDmg, selectedElement);
+                enemy.ReciveDamage(_atkDmg);
             }
             _ultimateCharge++;
         }
     }
 
-    public void PerformLiftAttack()
+    public override void PerformLiftAttack()
     {
         _atkRay = new Ray(_atkOrigin.position, transform.forward);
 
@@ -111,28 +94,9 @@ public class PlayerAttack : MonoBehaviour
         {
             if (_atkHit.collider.TryGetComponent<Enemy>(out Enemy enemy))
             {
-                enemy.ReceiveDamage(_atkDmg, selectedElement);
+                enemy.ReciveDamage(_atkDmg);
                 enemy.ApplyLiftImpulse();
             }
-            else if (_atkHit.collider.TryGetComponent<HealthSystem>(out HealthSystem enemyHealth))
-            {
-                int randomValue = Random.Range(0, 101); // Incluye 0 y 100
-                if (randomValue >= 20)
-                {
-                    enemyHealth.ApplyContinuousDamageFromPlayer(10f, 2.5f, selectedElement);
-                }
-                else
-                {
-                    enemyHealth.ReceiveDamage(_atkDmg, selectedElement);
-                }
-
-            }
-            else if (_atkHit.collider.TryGetComponent<Boss>(out Boss BossHealth))
-            {
-                BossHealth.ReciveDamage(_atkDmg);
-                BossHealth.ApplyLiftImpulse();
-            }
-
             _ultimateCharge++;
         }
     }
@@ -148,9 +112,11 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private Image ultimateBar;
     [SerializeField] private Image overchardedBar;
 
-    public void Cast()
+    public override void Cast()
     {
-        ElementalCast();
+        _anim.SetTrigger("Cast");
+        selectedElement = (ElementType)(((int)selectedElement + 1) % System.Enum.GetValues(typeof(ElementType)).Length);
+        Debug.Log("Elemento seleccionado: " + selectedElement);
     }
     public void Ultimate(bool isOvercharged = false)
     {
@@ -209,19 +175,12 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    public void ElementalCast()
-    {
-
-            selectedElement = (ElementType)(((int)selectedElement + 1) % System.Enum.GetValues(typeof(ElementType)).Length);
-            Debug.Log("Elemento seleccionado: " + selectedElement);
-        
-    }
-    public void PlayVFX()
+    public override void PlayVFX()
     {
         _fire.SendEvent("OnFire");
     }
 
-    public void PlayVFXAttack()
+    public override void PlayVFXAttack()
     {
         _fire.SendEvent("Attack");
     }
