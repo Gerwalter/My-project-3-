@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 public class CameraController : MonoBehaviour
 {
     [Header("<color=#6A89A7>Cursor</color>")]
-    //[SerializeField] public bool _isCursorVisible = false;
     [SerializeField] public bool _isCameraFixed = false;
 
     [Header("<color=#6A89A7>Physics</color>")]
@@ -37,6 +36,14 @@ public class CameraController : MonoBehaviour
     public Follower follower;
     [SerializeField] private Transform camTransform;
 
+    [SerializeField] private Camera _alternateCamera;
+
+    public Camera AlternateCamera
+    {
+        get { return _alternateCamera; }
+        set { _alternateCamera = value; }
+    }
+
     public Transform CamTransform
     {
         get { return camTransform; }
@@ -48,13 +55,10 @@ public class CameraController : MonoBehaviour
         Instance = this;
         CamTransform = transform;
         _ignoreLayerMask = LayerMask.GetMask("Player");
-  
     }
 
-
-
     private void Start()
-    {   
+    {
         InitializeCamera();
     }
 
@@ -67,19 +71,16 @@ public class CameraController : MonoBehaviour
             UpdateCamRot(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
             if (scroll != 0f)
             {
-                _maxDistance = Mathf.Clamp(_maxDistance - scroll, _minDistance + 2, 10f); // Ajusta el 10f al valor máximo deseado
+                _maxDistance = Mathf.Clamp(_maxDistance - scroll, _minDistance + 2, 10f);
             }
         }
         _isCameraFixed = pauseManager.isPaused || follower.interacting;
         ToggleCursorMode(_isCameraFixed);
-
-
     }
 
     private void FixedUpdate()
     {
         _camRay = new Ray(transform.position, _dir);
-
         _isCamBlocked = Physics.SphereCast(_camRay, _detectionRadius, out _camRayHit, _maxDistance, ~_ignoreLayerMask);
     }
 
@@ -91,13 +92,12 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    public bool IsCameraFixed
+    public void SwitchCamera()
     {
-        get { return _isCameraFixed; }
-        set
+        if (_alternateCamera != null)
         {
-            _isCameraFixed = value;
-            ToggleCursorMode(_isCameraFixed);
+            _cam.enabled = !_cam.enabled;
+            _alternateCamera.enabled = !_alternateCamera.enabled;
         }
     }
 
@@ -110,7 +110,6 @@ public class CameraController : MonoBehaviour
         if (x != 0.0f)
         {
             _mouseX += x * _mouseSensitivity * Time.deltaTime;
-
             if (_mouseX > 360.0f || _mouseX < -360.0f)
             {
                 _mouseX -= 360.0f * Mathf.Sign(_mouseX);
@@ -120,7 +119,6 @@ public class CameraController : MonoBehaviour
         if (y != 0.0f)
         {
             _mouseY += y * _mouseSensitivity * Time.deltaTime;
-
             _mouseY = Mathf.Clamp(_mouseY, _minRotation, _maxRotation);
         }
 
@@ -134,15 +132,9 @@ public class CameraController : MonoBehaviour
         if (_isCamBlocked)
         {
             _dirTest = (_camRayHit.point - transform.position) + (_camRayHit.normal * _hitOffset);
-
-            if (_dirTest.sqrMagnitude <= _minDistance * _minDistance)
-            {
-                _camPos = transform.position + _dir * _minDistance;
-            }
-            else
-            {
-                _camPos = transform.position + _dirTest;
-            }
+            _camPos = (_dirTest.sqrMagnitude <= _minDistance * _minDistance) ?
+                        transform.position + _dir * _minDistance :
+                        transform.position + _dirTest;
         }
         else
         {
@@ -155,53 +147,28 @@ public class CameraController : MonoBehaviour
 
     private void ToggleCursorMode(bool isFixed)
     {
-        if (isFixed == true)
+        if (isFixed)
         {
-            // Si el juego está en pausa, desbloquea y muestra el cursor
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
         else
         {
-            // Si no está en pausa, aplica la lógica de bloqueo
             LockCursor();
         }
     }
 
     private void LockCursor()
     {
-        if (pauseManager.isPaused)
-        {
-            // Asegurar que cuando esté en pausa, el cursor sea visible
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-        else
-        {
-            // Bloquear y ocultar el cursor cuando el juego no está pausado
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
-    }
-    private void OnEnable()
-    {
-        // Suscribirse al evento SceneManager.sceneLoaded
-       // SceneManager.sceneLoaded += OnSceneLoaded;
+        Cursor.lockState = pauseManager.isPaused ? CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.visible = pauseManager.isPaused;
     }
 
-    private void OnDisable()
-    {
-        // Desuscribe el método al desactivar el script
-        //SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
     private void InitializeCamera()
     {
-      //  _target = GameManager.Instance.Player.GetCamTarget;
         _cam = Camera.main;
-
         LockCursor();
         transform.forward = _target.forward;
-
         _mouseX = transform.eulerAngles.y;
         _mouseY = transform.eulerAngles.x;
     }

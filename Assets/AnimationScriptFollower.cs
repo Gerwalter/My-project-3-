@@ -33,7 +33,7 @@ public class AnimationScriptFollower : MonoBehaviour
     }
     void Fight()
     {
-        if (cameraController.IsCameraFixed) return;
+     //   if (cameraController.IsCameraFixed) return;
         if (Input.GetMouseButtonDown(0)) // Mouse0 para Light Attack
         {
             TriggerAnimator("LightAttack");  // Disparar el trigger LightAttack en el Animator

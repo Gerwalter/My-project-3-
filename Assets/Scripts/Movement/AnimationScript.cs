@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using TMPro.Examples;
 using UnityEngine;
-using static ComboSystem;
 
 public class AnimationScript : MonoBehaviour
 {
