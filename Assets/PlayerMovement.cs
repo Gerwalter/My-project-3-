@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 public class PlayerMovement : Player
@@ -10,6 +9,7 @@ public class PlayerMovement : Player
     [SerializeField] private string _jumpName = "onJump";
     [SerializeField] private string _xName = "xAxis";
     [SerializeField] private string _zName = "zAxis";
+    [SerializeField] private string _sprint = "Sprinting";
     [Header("<color=#6A89A7>Camera</color>")]
     [SerializeField] private Transform _camTarget;
     public Transform GetCamTarget { get { return _camTarget; } }
@@ -105,10 +105,6 @@ public class PlayerMovement : Player
         groundCheck = IsGrounded();
         DetectWall();
 
-        if (_isWallRunning && Input.GetKeyDown(KeyCode.G))
-        {
-            StopWallRun();
-        }
         UpdateWallCheck();
         HandleSprint();
         UpdateStaminaUI();
@@ -243,12 +239,14 @@ public class PlayerMovement : Player
             if (!IsNearWall())
             {
                 _isSprinting = true;
+                _anim.SetFloat(_sprint, 0f);
                 _currentStamina -= _staminaDrainRate * Time.deltaTime;
             }
         }
         else
         {
             _isSprinting = false;
+            _anim.SetFloat(_sprint, 1f);
             RegenerateStamina();
         }
 

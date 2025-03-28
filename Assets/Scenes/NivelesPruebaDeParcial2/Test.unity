@@ -3567,7 +3567,7 @@ GameObject:
   - component: {fileID: 1518428651}
   - component: {fileID: 1518428650}
   - component: {fileID: 1518428649}
-  m_Layer: 7
+  m_Layer: 11
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4010,8 +4010,6 @@ GameObject:
   - component: {fileID: 1654389398}
   - component: {fileID: 1654389397}
   - component: {fileID: 1654389401}
-  - component: {fileID: 1654389402}
-  - component: {fileID: 1654389403}
   m_Layer: 7
   m_Name: Sphere
   m_TagString: Untagged
@@ -4114,59 +4112,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1654389396}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 952eac8fc29218f48bb4da10d5fd54e7, type: 3}
+  m_Script: {fileID: 11500000, guid: efb64e4f1fae5d7478096189e9edc038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceleration: 1000
-  maxSpeed: 25
-  turnSpeed: 100
-  brakeForce: 1000
-  handbrakeForce: 5000
---- !u!54 &1654389402
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1654389396}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
---- !u!114 &1654389403
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1654389396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d578c5790915b5946b1c81982c4f5203, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 6099950593241990573}
-  vehicleSeat: {fileID: 1654389400}
-  vehicleController: {fileID: 1654389401}
-  playerController: {fileID: 6992016914885446201}
-  playerCollider: {fileID: 3045000497598506581}
-  playerRigidbody: {fileID: 1824147539973193170}
+  speed: 0
 --- !u!1 &1676254358
 GameObject:
   m_ObjectHideFlags: 0
@@ -9724,14 +9673,15 @@ GameObject:
   - component: {fileID: 6992016914885446194}
   - component: {fileID: 3045000497598506581}
   - component: {fileID: 1824147539973193170}
-  - component: {fileID: 163187481975133842}
   - component: {fileID: 1559518499834880205}
+  - component: {fileID: 163187481975133842}
   - component: {fileID: 6992016914885446196}
   - component: {fileID: 6992016914885446195}
   - component: {fileID: 6992016914885446198}
   - component: {fileID: 6992016914885446201}
   - component: {fileID: 6992016914885446200}
   - component: {fileID: 6992016914885446199}
+  - component: {fileID: 6992016914885446202}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -10354,6 +10304,7 @@ MonoBehaviour:
   _jumpName: onJump
   _xName: xAxis
   _zName: zAxis
+  _sprint: Sprinting
   _camTarget: {fileID: 8905091985988632482}
   _camForwardFix: {x: 0, y: 0, z: 0}
   _camRightFix: {x: 0, y: 0, z: 0}
@@ -10399,6 +10350,18 @@ MonoBehaviour:
   - {x: -0.70710677, y: 0, z: 0.70710677}
   - {x: 0.70710677, y: 0, z: -0.70710677}
   - {x: -0.70710677, y: 0, z: -0.70710677}
+--- !u!114 &6992016914885446202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6099950593241990573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f5af39e99830f54d8e54ba3b82eeb26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &7028009560250085422
 Transform:
   m_ObjectHideFlags: 0
