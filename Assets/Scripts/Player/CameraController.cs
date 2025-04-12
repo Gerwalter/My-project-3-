@@ -36,13 +36,7 @@ public class CameraController : MonoBehaviour
     public Follower follower;
     [SerializeField] private Transform camTransform;
 
-    [SerializeField] private Camera _alternateCamera;
-
-    public Camera AlternateCamera
-    {
-        get { return _alternateCamera; }
-        set { _alternateCamera = value; }
-    }
+   
 
     public Transform CamTransform
     {
@@ -92,15 +86,7 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    public void SwitchCamera()
-    {
-        if (_alternateCamera != null)
-        {
-            _cam.enabled = !_cam.enabled;
-            _alternateCamera.enabled = !_alternateCamera.enabled;
-        }
-    }
-
+    
     private void UpdateCamRot(float x, float y)
     {
         transform.position = _target.position;

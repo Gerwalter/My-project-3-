@@ -23,7 +23,7 @@ public class PlayerFollower : HP
     [SerializeField] private Image healthBar;
 
     [Header("<color=#6A89A7>Physics - Jumping</color>")]
-    [SerializeField] private float _jumpForce = 5.0f;
+   // [SerializeField] private float _jumpForce = 5.0f;
     [SerializeField] private float _jumpRayDist = 0.75f;
     [SerializeField] private LayerMask _jumpMask;
     private Rigidbody _rb;

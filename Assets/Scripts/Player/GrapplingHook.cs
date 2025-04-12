@@ -7,7 +7,6 @@ public class GrapplingHook : MonoBehaviour
 {
     [Header("<color=#FFD700>Grappling Hook Settings</color>")]
     [SerializeField] private float _grapplingRange = 20f;
-    [SerializeField] private float _pullSpeed = 15f;
     [SerializeField] private float _arcHeight = 5f;
     [SerializeField] private float _stopDistance = 2f;
     [SerializeField] private float _fakeGrappleDuration = 0.3f;
@@ -35,11 +34,7 @@ public class GrapplingHook : MonoBehaviour
     {
         Crosshair.enabled = false;
         _playerLayer = _player.gameObject.layer;
-        alternateCamera.enabled = false;
-        if (CameraController.Instance != null)
-        {
-            CameraController.Instance.AlternateCamera = alternateCamera;
-        }
+
     }
 
     private void Update()

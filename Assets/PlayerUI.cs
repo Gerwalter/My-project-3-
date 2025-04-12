@@ -1,31 +1,53 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerUI : Player
+public class PlayerUI : Player, ILifeObservable
 {
-
+    [SerializeField] List<ILifeObserver> _observers = new List<ILifeObserver>();
 
     [Header("<color=#6A89A7>UI</color>")]
-    [SerializeField] private Image healthBar;
-    [SerializeField] private Image _staminaBar;
+    [SerializeField] KeyCode keyDmg;
+    public void Subscribe(ILifeObserver x)
+    {
+        if (_observers.Contains(x)) return;
+
+        _observers.Add(x);
+    }
+
+    public void Unsubscribe(ILifeObserver x)
+    {
+        if (_observers.Contains(x))
+            _observers.Remove(x);
+    }
 
     private void Start()
     {
+        EventManager.Subscribe("EnemyCall", PlayerCall);
         GetLife = maxLife;
-        UpdateHealthBar();
+    }
+    public void TakeDamage(float damage)
+    {
+        GetLife -= damage;
+
+        foreach (var observer in _observers)
+            observer.Notify(GetLife, maxLife);
+
+        if (GetLife <= 0)
+            Debug.Log("GAME OVER");
     }
     private void Update()
     {
-        UpdateHealthBar();
+        if (Input.GetKeyDown(keyDmg)) //Solo para testear
+            TakeDamage(1);
+        if (Input.GetKeyDown(KeyCode.U)) TakeDamage(-1);
     }
 
-    private void UpdateHealthBar()
+    public void PlayerCall(params object[] args)
     {
-        float lifePercent = GetLife / maxLife;
-        healthBar.fillAmount = lifePercent;
-        healthBar.color = Color.Lerp(Color.red, Color.green, lifePercent);
+        Debug.Log("Alguien ejecuto el evento EnemyCall, con el numero = " + (int)args[0]);
     }
-
 }

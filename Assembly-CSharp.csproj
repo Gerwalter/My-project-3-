@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{0EEE7EE8-5624-0BB8-0F53-5B4408E383A6}</ProjectGuid>
+    <ProjectGuid>{27AB3609-15DB-52E3-4D4E-5A489B4C4689}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -68,8 +68,10 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
     <Compile Include="Assets\Scripts\Misc\Apple.cs" />
+    <Compile Include="Assets\Scripts\Modelos Y Algoritmos\IUltimateObserver.cs" />
     <Compile Include="Assets\Scripts\other scripts to take info\DMGBooster.cs" />
     <Compile Include="Assets\Pause\PauseManager.cs" />
+    <Compile Include="Assets\Scripts\Modelos Y Algoritmos\EventManager.cs" />
     <Compile Include="Assets\Scripts\Enemy-Obstacle\Enemigo.cs" />
     <Compile Include="Assets\Scripts\Misc\BossSpawner.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
@@ -103,6 +105,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
     <Compile Include="Assets\Scripts\Misc\AppleController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
+    <Compile Include="Assets\Scripts\Modelos Y Algoritmos\Player2.cs" />
     <Compile Include="Assets\Scripts\IAClase\Character.cs" />
     <Compile Include="Assets\Scripts\Manager\OutlineManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
@@ -133,9 +136,11 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\Scripts\other scripts to take info\ButtonBehaviour.cs" />
     <Compile Include="Assets\Scripts\Enemy-Obstacle\Enemy2.cs" />
+    <Compile Include="Assets\Scripts\Modelos Y Algoritmos\ILifeObservable.cs" />
     <Compile Include="Assets\Scripts\Movement\Grappling.cs" />
     <Compile Include="Assets\Scripts\Manager\IANodeManager.cs" />
     <Compile Include="Assets\Scripts\other scripts to take info\ThirdPersonCamera.cs" />
+    <Compile Include="Assets\Scripts\Modelos Y Algoritmos\StaminaBat.cs" />
     <Compile Include="Assets\Scripts\Player\Respawn.cs" />
     <Compile Include="Assets\Scripts\Player\HP.cs" />
     <Compile Include="Assets\Scripts\Manager\Combo\MovesManager\Move.cs" />
@@ -163,9 +168,11 @@
     <Compile Include="Assets\Scripts\Enemy-Obstacle\Enemy.cs" />
     <Compile Include="Assets\Scripts\Manager\ConectMesh.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
+    <Compile Include="Assets\Scripts\Modelos Y Algoritmos\ILifeObserver.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
     <Compile Include="Assets\Scripts\Manager\LoadSceneOnTrigger.cs" />
+    <Compile Include="Assets\Scripts\Modelos Y Algoritmos\IUltimateObservable.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IShootBehavior.cs" />
     <Compile Include="Assets\PlayerUI.cs" />
@@ -173,10 +180,12 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
     <Compile Include="Assets\Prefabs\Enemys\Tornado.cs" />
+    <Compile Include="Assets\Scripts\Modelos Y Algoritmos\BarLife.cs" />
     <Compile Include="Assets\Scripts\Manager\CanvasManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
     <Compile Include="Assets\DynamicShopItem.cs" />
     <Compile Include="Assets\Slots.cs" />
+    <Compile Include="Assets\Scripts\Modelos Y Algoritmos\IObserver.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
     <Compile Include="Assets\AnimationTagPrinter.cs" />
@@ -188,6 +197,7 @@
     <Compile Include="Assets\LevelChanger.cs" />
     <Compile Include="Assets\Pause\Sound.cs" />
     <Compile Include="Assets\Scripts\Manager\Texturee.cs" />
+    <Compile Include="Assets\Scripts\Modelos Y Algoritmos\IObservable.cs" />
     <Compile Include="Assets\Cositas\CASINO\Scripts\Rotate.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
     <Compile Include="Assets\Scripts\other scripts to take info\SpeedBoost.cs" />
@@ -1031,7 +1041,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Polyperfect.Universal.csproj">
-      <Project>{91B4F21D-DC81-3D1A-1A8D-716438D4406E}</Project>
+      <Project>{43569179-2625-A4F5-C8D6-1F5F185EC8DC}</Project>
       <Name>Polyperfect.Universal</Name>
     </ProjectReference>
   </ItemGroup>

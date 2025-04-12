@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class PlayerMovement : Player
+public class PlayerMovement : Player, IObservable
 {
     [Header("<color=#6A89A7>Animation</color>")]
     [SerializeField] private string _isMovName = "isMoving";
@@ -37,6 +39,7 @@ public class PlayerMovement : Player
     [SerializeField] private Ray _movRay;
     [SerializeField] private Image _staminaBar;
 
+    [SerializeField] List<IObserver> _observers = new List<IObserver>();
 
 
     [Header("<color=#6A89A6>Physics - Speed</color>")]
@@ -56,7 +59,18 @@ public class PlayerMovement : Player
         // GameManager.Instance.Player = this;
 
     }
+    public void Subscribe(IObserver x)
+    {
+        if (_observers.Contains(x)) return;
 
+        _observers.Add(x);
+    }
+
+    public void Unsubscribe(IObserver x)
+    {
+        if (_observers.Contains(x))
+            _observers.Remove(x);
+    }
     private void Start()
     {
         _camTransform = Camera.main.transform;
@@ -64,7 +78,7 @@ public class PlayerMovement : Player
         _rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
         _wallHitStatus = new bool[_wallCheckDirections.Length];
         _currentStamina = _staminaMax;
-        UpdateStaminaUI();
+
     }
 
     private void Update()
@@ -107,7 +121,6 @@ public class PlayerMovement : Player
 
         UpdateWallCheck();
         HandleSprint();
-        UpdateStaminaUI();
     }
 
     private void FixedUpdate()
@@ -241,6 +254,8 @@ public class PlayerMovement : Player
                 _isSprinting = true;
                 _anim.SetFloat(_sprint, 0f);
                 _currentStamina -= _staminaDrainRate * Time.deltaTime;
+                foreach (var observer in _observers)
+                    observer.Notify(_currentStamina, _staminaMax);
             }
         }
         else
@@ -275,19 +290,10 @@ public class PlayerMovement : Player
         // Si el jugador NO está corriendo, regenera stamina
         float regenRate = (_dir.x == 0 && _dir.z == 0) ? _staminaRegenRate * 1.5f : _staminaRegenRate;
         _currentStamina += regenRate * Time.deltaTime;
+        foreach (var observer in _observers)
+            observer.Notify(_currentStamina, _staminaMax);
     }
-    private void UpdateStaminaUI()
-    {
-        if (_staminaBar != null)
-        {
-            float fillAmount = _currentStamina / _staminaMax;
-            _staminaBar.fillAmount = fillAmount;
-
-            // Lerp de verde (stamina llena) a rojo (stamina vacía)
-            _staminaBar.color = Color.Lerp(Color.red, Color.green, fillAmount);
-            _staminaBar.gameObject.SetActive(fillAmount < 1.0f);
-        }
-    }
+    
 
     [Header("<color=#6A89A7>Wall Running</color>")]
     [SerializeField] private float _wallCheckDistance = 1.0f; // Distancia de los Raycasts
