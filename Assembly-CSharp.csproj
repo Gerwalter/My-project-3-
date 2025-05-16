@@ -121,14 +121,17 @@
     <Compile Include="Assets\CanvasReferencesManager.cs" />
     <Compile Include="Assets\Scripts\IAClase\Lupinranger.cs" />
     <Compile Include="Assets\Scripts\Manager\Combo\MovesManager\MovesEnum.cs" />
+    <Compile Include="Assets\ComboCounter.cs" />
     <Compile Include="Assets\Scripts\IAClase\ActionNode.cs" />
     <Compile Include="Assets\Scripts\Player\DashCooldownUI.cs" />
+    <Compile Include="Assets\PlayerCombat.cs" />
     <Compile Include="Assets\Follower.cs" />
     <Compile Include="Assets\VehicleController.cs" />
     <Compile Include="Assets\Scripts\Manager\LevelManager.cs" />
     <Compile Include="Assets\LootManager.cs" />
     <Compile Include="Assets\Scripts\Enemy-Obstacle\Bridge.cs" />
     <Compile Include="Assets\Scripts\other scripts to take info\SlotMachine.cs" />
+    <Compile Include="Assets\ComboAttack.cs" />
     <Compile Include="Assets\Prefabs\Jogador\UltimateAbility.cs" />
     <Compile Include="Assets\Scripts\Manager\GameManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
@@ -145,6 +148,7 @@
     <Compile Include="Assets\Scripts\Player\HP.cs" />
     <Compile Include="Assets\Scripts\Manager\Combo\MovesManager\Move.cs" />
     <Compile Include="Assets\Prefabs\Jogador\DMGBoost.cs" />
+    <Compile Include="Assets\ComboButton.cs" />
     <Compile Include="Assets\Scripts\Misc\RotateObject.cs" />
     <Compile Include="Assets\Scripts\Movement\TargetMove.cs" />
     <Compile Include="Assets\Scripts\Enemy-Obstacle\Spikes.cs" />
@@ -163,6 +167,7 @@
     <Compile Include="Assets\Scripts\Player\CameraPointer.cs" />
     <Compile Include="Assets\Prefabs\Enemys\Boss.cs" />
     <Compile Include="Assets\Scripts\Manager\Combo\MovesManager\ComboSystem.cs" />
+    <Compile Include="Assets\ComboInput.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
     <Compile Include="Assets\Scripts\Enemy-Obstacle\Enemy.cs" />
@@ -174,6 +179,7 @@
     <Compile Include="Assets\Scripts\Manager\LoadSceneOnTrigger.cs" />
     <Compile Include="Assets\Scripts\Modelos Y Algoritmos\IUltimateObservable.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
+    <Compile Include="Assets\Combat\ComboNode.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IShootBehavior.cs" />
     <Compile Include="Assets\PlayerUI.cs" />
     <Compile Include="Assets\Scripts\Enemy-Obstacle\Bullet.cs" />
@@ -195,11 +201,15 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\LevelChanger.cs" />
+    <Compile Include="Assets\Combat\ComboStore.cs" />
     <Compile Include="Assets\Pause\Sound.cs" />
     <Compile Include="Assets\Scripts\Manager\Texturee.cs" />
+    <Compile Include="Assets\Combat\ComboUnlockManager.cs" />
     <Compile Include="Assets\Scripts\Modelos Y Algoritmos\IObservable.cs" />
     <Compile Include="Assets\Cositas\CASINO\Scripts\Rotate.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
+    <Compile Include="Assets\HealthTest.cs" />
+    <Compile Include="Assets\UiEneabler.cs" />
     <Compile Include="Assets\Scripts\other scripts to take info\SpeedBoost.cs" />
     <Compile Include="Assets\Scripts\Manager\WaveManager.cs" />
     <Compile Include="Assets\Scripts\other scripts to take info\BridgeButton.cs" />
