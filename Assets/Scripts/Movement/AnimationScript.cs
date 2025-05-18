@@ -7,10 +7,6 @@ public class AnimationScript : MonoBehaviour
     public Animator anim;
     [SerializeField] private List<Player> _players = new List<Player>();
 
-    private void Update()
-    {
-        Fight();
-    }
 
     private void Cast()
     {
@@ -32,17 +28,6 @@ public class AnimationScript : MonoBehaviour
         if (anim != null)
         {
             anim.SetTrigger(triggerName); // Disparar el trigger
-        }
-    }
-    void Fight()
-    {
-        if (Input.GetMouseButtonDown(0)) // Mouse0 para Light Attack
-        {
-            TriggerAnimator("LightAttack");  // Disparar el trigger LightAttack en el Animator
-        }
-        if (Input.GetMouseButtonDown(1)) // Mouse1 para Heavy Attack
-        {
-            TriggerAnimator("HeavyAttack"); // Disparar el trigger HeavyAttack en el Animator
         }
     }
 

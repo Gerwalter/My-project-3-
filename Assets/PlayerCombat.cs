@@ -1,21 +1,27 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCombat : MonoBehaviour
+public class PlayerCombat : MonoBehaviour, IAnimObservable
 {
     public ComboNode rootNode; // Nodo inicial
     private ComboNode currentNode;
     public KeyCode keyCode;
-    //private Animator animator;
+    public KeyCode fireKey;
+    [SerializeField] private Animator animator;
     private bool isAttacking = false;
    [SerializeField] private float comboTimer = 0f;
                     public float comboResetTime = 1.2f;
    [SerializeField] private bool canCombo;
+
+    [SerializeField] private float shootRepeatRate = 0.2f;
+    private float shootTimer = 0f;
+
     public bool CanCombo { get { return canCombo; } set { canCombo = value; } }
 
     private Queue<ComboInput> inputBuffer = new Queue<ComboInput>();
-
+    [SerializeField] private ComboInput comboInput;
     void Start()
     {
        // animator = GetComponent<Animator>();
@@ -49,6 +55,26 @@ public class PlayerCombat : MonoBehaviour
             {
                 inputBuffer.Enqueue(ComboInput.Finisher);
             }
+
+            if (Input.GetKey(fireKey))
+            {
+                shootTimer += Time.deltaTime;
+                comboResetTime = 0;
+                if (shootTimer >= shootRepeatRate)
+                {
+                    inputBuffer.Enqueue(ComboInput.Shoot);
+                    foreach (var observer in _observers)
+                        observer.Notify(comboInput.ToString(), true);
+                    shootTimer = 0f;
+                }
+            }
+            else
+            {
+                shootTimer = shootRepeatRate;
+                comboResetTime = 2;
+                foreach (var observer in _observers)
+                    observer.Notify(comboInput.ToString(), false);// Esto permite que al soltar y volver a presionar, dispare de inmediato
+            }
             if (!isAttacking && inputBuffer.Count > 0)
             {
                 ComboInput input = inputBuffer.Dequeue();
@@ -60,6 +86,8 @@ public class PlayerCombat : MonoBehaviour
     void TryExecuteNode(ComboInput input)
     {
         ComboNode nextNode = currentNode.GetNextNode(input);
+        comboInput = input; 
+
         if (nextNode != null)
         {
             StartCoroutine(PerformAttack(nextNode));
@@ -67,7 +95,6 @@ public class PlayerCombat : MonoBehaviour
         }
         else if (currentNode == rootNode)
         {
-            // Reintentar desde el nodo raíz
             ComboNode rootNext = rootNode.GetNextNode(input);
             if (rootNext != null)
             {
@@ -94,6 +121,7 @@ public class PlayerCombat : MonoBehaviour
     public Transform attackPoint; // Asigna un Empty en la mano o arma
     public float attackRange = 1.5f;
     public LayerMask enemyLayers;
+    float stylePerEnemy;
     IEnumerator PerformAttack(ComboNode node)
     {
 
@@ -101,30 +129,52 @@ public class PlayerCombat : MonoBehaviour
 
         int enemiesHit = 0;
 
+        switch (comboInput)
+        {
+            case ComboInput.Light:
+                stylePerEnemy = 10;
+                break;
+            case ComboInput.Heavy:
+                stylePerEnemy = 20;
+                break;
+            case ComboInput.Finisher:
+                stylePerEnemy = 50;
+                break;
+            case ComboInput.Shoot:
+                stylePerEnemy = 1;
+                break;
+            default:
+                Debug.Log("Entrada no reconocida.");
+                break;
+        }
+
         foreach (Collider enemy in hitEnemies)
         {
-            // Aquí haces daño real
-            // enemy.GetComponent<EnemyHealth>()?.TakeDamage(damageAmount);
-
             enemiesHit++;
         }
 
         // Registrar los golpes reales en el combo counter
+        StyleMeter styleMeter = FindObjectOfType<StyleMeter>();
+
         if (enemiesHit > 0)
         {
-            var comboCounter = FindObjectOfType<ComboCounter>();
             for (int i = 0; i < enemiesHit; i++)
             {
-                comboCounter.RegisterHit();
+                EventManager.Trigger("RegisterHit", 4);
+            }
+
+            if (styleMeter != null)
+            {
+                styleMeter.AddStylePoints(enemiesHit * stylePerEnemy);
             }
         }
 
         isAttacking = true;
         comboTimer = 0f;
-        EventManager.Trigger("Attack", 2);
         Debug.Log("Ejecutando nodo de ataque: " + node.nodeName); // Este es el log
 
-        //animator.Play(node.animationClip.name);
+          foreach (var observer in _observers)
+            observer.Notify(comboInput.ToString());
 
 
 
@@ -132,7 +182,7 @@ public class PlayerCombat : MonoBehaviour
 
         isAttacking = false;
     }
-    void OnDrawGizmosSelected()
+    void OnDrawGizmos()
     {
         if (attackPoint == null) return;
 
@@ -145,5 +195,19 @@ public class PlayerCombat : MonoBehaviour
         comboTimer = 0f;
         isAttacking = false;
         inputBuffer.Clear();
+    }
+    [SerializeField] List<IAnimObserver> _observers = new List<IAnimObserver>();
+    public void Subscribe(IAnimObserver x)
+    {
+        if (_observers.Contains(x)) return;
+
+        _observers.Add(x);
+    }
+
+    public void Unsubscribe(IAnimObserver x)
+    {
+        if (_observers.Contains(x)) return;
+
+        _observers.Add(x);
     }
 }

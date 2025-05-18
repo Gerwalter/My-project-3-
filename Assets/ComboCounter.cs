@@ -16,10 +16,11 @@ public class ComboCounter : MonoBehaviour
     private void Awake()
     {
         EventManager.Subscribe("RegisterHit", Hit);
+        EventManager.Subscribe("Damaged", OnPlayerDamaged);
     }
     private void Start()
     {
-        comboText.text = "Combo x" + comboCount;
+        comboText.text = "";
     }
 
     void Update()
@@ -64,7 +65,7 @@ public class ComboCounter : MonoBehaviour
     }
 
     // Llama a esto desde tu sistema de daño cuando el jugador recibe un golpe
-    public void OnPlayerDamaged()
+    public void OnPlayerDamaged(params object[] args)
     {
         ResetCombo();
     }

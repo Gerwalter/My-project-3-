@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9032361184b74e64da2560edd807594a, type: 3}
-  m_Name: Heavy
+  m_Name: Heavy 2
   m_EditorClassIdentifier: 
-  nodeName: Heavy
-  animationClip: {fileID: 7400000, guid: d877fcda792c1644da48610e5035076a, type: 2}
+  nodeName: Heavy 1
+  animationClip: {fileID: 7400000, guid: 98632bb5af6f5e84c86e59439ef16970, type: 2}
   damage: 0
   duration: 0
   transitions:
-  - input: 1
-    nextNode: {fileID: 11400000, guid: 844a268aeb1a9e044a112b7d2a864593, type: 2}
-    comboID: combo_Heavy_1
+  - input: 2
+    nextNode: {fileID: 11400000, guid: 73b43ebb91d4b6c4bba3dfd67042651c, type: 2}
+    comboID: combo_Heavy_Finish
     unlockByDefault: 1

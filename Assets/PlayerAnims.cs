@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static ComboSystem;
 
-public class PlayerAnims : Player
+public class PlayerAnims : Player, IAnimObserver
 {
     public override void Die()
     {
@@ -60,5 +61,20 @@ public class PlayerAnims : Player
 
         // Aplica ambas fuerzas al Rigidbody
         _rb.AddForce(forwardDirection + upwardImpulse, ForceMode.Impulse);
+    }
+    public GameObject observable;
+    private void Awake()
+    {
+        if (observable.GetComponent<IAnimObservable>() != null)
+            observable.GetComponent<IAnimObservable>().Subscribe(this);
+    }
+    public void Notify(string Input, bool Value)
+    {
+        _anim.SetBool(Input, Value);
+    }
+
+    public void Notify(string Input)
+    {
+        _anim.SetTrigger(Input);
     }
 }

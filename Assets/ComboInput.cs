@@ -2,5 +2,6 @@ public enum ComboInput
 {
     Light,
     Heavy,
-    Finisher
+    Finisher,
+    Shoot
 }
