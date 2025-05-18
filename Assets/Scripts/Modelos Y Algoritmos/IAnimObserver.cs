@@ -2,6 +2,6 @@
 
 public interface IAnimObserver
 {
-    void Notify(string Input, bool Value);
-    void Notify(string Input);
+    void OnAttackTriggered(string triggerName);
+    void OnShootStateChanged(bool isShooting);
 }

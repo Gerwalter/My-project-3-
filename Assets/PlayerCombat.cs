@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCombat : MonoBehaviour, IAnimObservable
+public class PlayerCombat : MonoBehaviour
 {
     public ComboNode rootNode; // Nodo inicial
     private ComboNode currentNode;
@@ -63,8 +62,7 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
                 if (shootTimer >= shootRepeatRate)
                 {
                     inputBuffer.Enqueue(ComboInput.Shoot);
-                    foreach (var observer in _observers)
-                        observer.Notify(comboInput.ToString(), true);
+                    animationObserver?.OnShootStateChanged(true);
                     shootTimer = 0f;
                 }
             }
@@ -72,8 +70,7 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
             {
                 shootTimer = shootRepeatRate;
                 comboResetTime = 2;
-                foreach (var observer in _observers)
-                    observer.Notify(comboInput.ToString(), false);// Esto permite que al soltar y volver a presionar, dispare de inmediato
+                animationObserver?.OnShootStateChanged(false);// Esto permite que al soltar y volver a presionar, dispare de inmediato
             }
             if (!isAttacking && inputBuffer.Count > 0)
             {
@@ -117,7 +114,16 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
                 UnlockDefaultCombos(transition.nextNode);
         }
     }
+    private IAnimObserver animationObserver;
 
+    void Awake()
+    {
+        animationObserver = GetComponent<IAnimObserver>();
+        if (animationObserver == null)
+        {
+            Debug.LogWarning("No se encontró un observador de animación.");
+        }
+    }
     public Transform attackPoint; // Asigna un Empty en la mano o arma
     public float attackRange = 1.5f;
     public LayerMask enemyLayers;
@@ -173,8 +179,7 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
         comboTimer = 0f;
         Debug.Log("Ejecutando nodo de ataque: " + node.nodeName); // Este es el log
 
-          foreach (var observer in _observers)
-            observer.Notify(comboInput.ToString());
+        animationObserver?.OnAttackTriggered(comboInput.ToString());
 
 
 
@@ -195,19 +200,5 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
         comboTimer = 0f;
         isAttacking = false;
         inputBuffer.Clear();
-    }
-    [SerializeField] List<IAnimObserver> _observers = new List<IAnimObserver>();
-    public void Subscribe(IAnimObserver x)
-    {
-        if (_observers.Contains(x)) return;
-
-        _observers.Add(x);
-    }
-
-    public void Unsubscribe(IAnimObserver x)
-    {
-        if (_observers.Contains(x)) return;
-
-        _observers.Add(x);
     }
 }

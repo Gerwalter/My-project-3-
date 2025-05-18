@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static ComboSystem;
 
-public class PlayerAnims : Player, IAnimObserver
+public class PlayerAnims : Player
 {
     public override void Die()
     {
@@ -65,16 +65,16 @@ public class PlayerAnims : Player, IAnimObserver
     public GameObject observable;
     private void Awake()
     {
-        if (observable.GetComponent<IAnimObservable>() != null)
-            observable.GetComponent<IAnimObservable>().Subscribe(this);
+      //  if (observable.GetComponent<IAnimObservable>() != null)
+      //      observable.GetComponent<IAnimObservable>().Subscribe(this);
     }
-    public void Notify(string Input, bool Value)
+    public void OnAttackTriggered(string triggerName)
     {
-        _anim.SetBool(Input, Value);
+        _anim.SetTrigger(triggerName);
     }
 
-    public void Notify(string Input)
+    public void OnShootStateChanged(bool isShooting)
     {
-        _anim.SetTrigger(Input);
+        _anim.SetBool("Shoot", isShooting);
     }
 }
