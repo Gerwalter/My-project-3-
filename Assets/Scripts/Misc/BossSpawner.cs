@@ -14,7 +14,7 @@ public class BossSpawner : MonoBehaviour
 
     [Header("Spawn Area Settings")]
     [SerializeField] private Transform spawnPoint; // Lista de puntos de spawn
-    [SerializeField] private Boss enemy;
+
 
 
     private void Awake()
@@ -46,11 +46,6 @@ public class BossSpawner : MonoBehaviour
         }
     }
 
-    public void SpawnBoss()
-    {
-        Instantiate(enemy, spawnPoint.position, Quaternion.identity);
-
-    }
 
     public void Flame()
     {

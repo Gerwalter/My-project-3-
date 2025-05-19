@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCombat : MonoBehaviour
+public class PlayerCombat : MonoBehaviour, IAnimObservable
 {
     public ComboNode rootNode; // Nodo inicial
     private ComboNode currentNode;
@@ -12,6 +13,7 @@ public class PlayerCombat : MonoBehaviour
     private bool isAttacking = false;
    [SerializeField] private float comboTimer = 0f;
                     public float comboResetTime = 1.2f;
+                    public float comboReset = 1.2f;
    [SerializeField] private bool canCombo;
 
     [SerializeField] private float shootRepeatRate = 0.2f;
@@ -62,15 +64,20 @@ public class PlayerCombat : MonoBehaviour
                 if (shootTimer >= shootRepeatRate)
                 {
                     inputBuffer.Enqueue(ComboInput.Shoot);
-                    animationObserver?.OnShootStateChanged(true);
+
+                    foreach (var observer in _observers)
+                        observer.OnShootStateChanged(true);
+
                     shootTimer = 0f;
                 }
             }
             else
             {
                 shootTimer = shootRepeatRate;
-                comboResetTime = 2;
-                animationObserver?.OnShootStateChanged(false);// Esto permite que al soltar y volver a presionar, dispare de inmediato
+                comboResetTime = comboReset;
+
+                foreach (var observer in _observers)
+                    observer.OnShootStateChanged(false);
             }
             if (!isAttacking && inputBuffer.Count > 0)
             {
@@ -100,8 +107,17 @@ public class PlayerCombat : MonoBehaviour
             }
         }
     }
-    void UnlockDefaultCombos(ComboNode node)
+    void UnlockDefaultCombos(ComboNode node, HashSet<ComboNode> visitedNodes = null)
     {
+        if (visitedNodes == null)
+            visitedNodes = new HashSet<ComboNode>();
+
+        // Si ya visitamos este nodo, salimos para evitar bucle
+        if (visitedNodes.Contains(node))
+            return;
+
+        visitedNodes.Add(node);
+
         foreach (var transition in node.transitions)
         {
             if (transition.unlockByDefault && !ComboUnlockManager.Instance.IsUnlocked(transition.comboID))
@@ -109,9 +125,8 @@ public class PlayerCombat : MonoBehaviour
                 ComboUnlockManager.Instance.UnlockCombo(transition.comboID);
             }
 
-            // Recursivamente desbloquear los nodos hijos
             if (transition.nextNode != null)
-                UnlockDefaultCombos(transition.nextNode);
+                UnlockDefaultCombos(transition.nextNode, visitedNodes);
         }
     }
     private IAnimObserver animationObserver;
@@ -179,9 +194,9 @@ public class PlayerCombat : MonoBehaviour
         comboTimer = 0f;
         Debug.Log("Ejecutando nodo de ataque: " + node.nodeName); // Este es el log
 
-        animationObserver?.OnAttackTriggered(comboInput.ToString());
 
-
+        foreach (var observer in _observers)
+            observer.OnAttackTriggered(comboInput.ToString());
 
         yield return new WaitForSeconds(node.duration);
 
@@ -200,5 +215,19 @@ public class PlayerCombat : MonoBehaviour
         comboTimer = 0f;
         isAttacking = false;
         inputBuffer.Clear();
+    }
+
+    public void Subscribe(IAnimObserver x)
+    {
+        if (_observers.Contains(x)) return;
+        _observers.Add(x);
+    }
+
+    [SerializeField] List<IAnimObserver> _observers = new List<IAnimObserver>();
+
+    public void Unsubscribe(IAnimObserver x)
+    {
+        if (_observers.Contains(x)) return;
+        _observers.Remove(x);
     }
 }

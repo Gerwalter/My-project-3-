@@ -19,10 +19,4 @@ public class BarLife : MonoBehaviour, ILifeObserver
         imageBar.fillAmount = lifePercent;
         imageBar.color = Color.Lerp(Color.red, Color.green, lifePercent);
     }
-
-    private void OnDestroy()
-    {
-        if (observable.GetComponent<ILifeObservable>() != null)
-            observable.GetComponent<ILifeObservable>().Unsubscribe(this);
-    }
 }

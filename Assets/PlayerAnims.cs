@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static ComboSystem;
 
-public class PlayerAnims : Player
+public class PlayerAnims : Player, IAnimObserver
 {
     public override void Die()
     {
@@ -65,8 +65,8 @@ public class PlayerAnims : Player
     public GameObject observable;
     private void Awake()
     {
-      //  if (observable.GetComponent<IAnimObservable>() != null)
-      //      observable.GetComponent<IAnimObservable>().Subscribe(this);
+        if (observable.GetComponent<IAnimObservable>() != null)
+            observable.GetComponent<IAnimObservable>().Subscribe(this);
     }
     public void OnAttackTriggered(string triggerName)
     {

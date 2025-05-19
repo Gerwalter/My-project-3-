@@ -318,7 +318,7 @@ public class PlayerMovement : Player, IObservable
 
         foreach (Vector3 dir in _wallCheckDirections)
         {
-            if (Physics.Raycast(transform.position, dir, _wallCheckDistance, _wallMask))
+            if (Physics.Raycast((transform.position), dir, _wallCheckDistance, _wallMask))
             {
                 _isWallDetected = true;
                 break; // Si detectamos una pared, no hace falta seguir verificando
@@ -338,7 +338,7 @@ public class PlayerMovement : Player, IObservable
     {
         for (int i = 0; i < _wallCheckDirections.Length; i++)
         {
-            if (Physics.Raycast(transform.position, _wallCheckDirections[i], out RaycastHit hit, _wallCheckDistance, _wallMask))
+            if (Physics.Raycast((transform.position), _wallCheckDirections[i], out RaycastHit hit, _wallCheckDistance, _wallMask))
             {
                 _wallHitStatus[i] = true;
 
@@ -375,7 +375,7 @@ public class PlayerMovement : Player, IObservable
 
         foreach (Vector3 dir in _wallCheckDirections)
         {
-            Gizmos.DrawLine(transform.position, transform.position + dir * _wallCheckDistance);
+            Gizmos.DrawLine((transform.position), (transform.position) + dir * _wallCheckDistance);
         }
         if (_wallCheckDirections == null) return;
         if (Application.isPlaying)
@@ -383,7 +383,7 @@ public class PlayerMovement : Player, IObservable
             for (int i = 0; i < _wallCheckDirections.Length; i++)
             {
                 Gizmos.color = _wallHitStatus != null && _wallHitStatus[i] ? Color.green : Color.red;
-                Gizmos.DrawRay(transform.position, _wallCheckDirections[i] * _wallCheckDistance);
+                Gizmos.DrawRay((transform.position), _wallCheckDirections[i] * _wallCheckDistance);
             }
         }
         Gizmos.color = Color.blue;

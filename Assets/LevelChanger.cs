@@ -24,6 +24,5 @@ public class LevelChanger : MonoBehaviour
     {
         // Cargar una escena específica por nombre
         SceneManager.LoadScene(levelName);
-        GameManager.Instance.Enemies.Clear();
     }
 }

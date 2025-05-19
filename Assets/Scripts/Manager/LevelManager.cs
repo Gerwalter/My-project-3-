@@ -8,7 +8,7 @@ public class LevelManager : MonoBehaviour
     {
         // Obtener la escena actual y reiniciarla
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        GameManager.Instance.Enemies.Clear();
+
        // pauseManager.MenuDeactivate();
         pauseManager.isPaused = false;
     }

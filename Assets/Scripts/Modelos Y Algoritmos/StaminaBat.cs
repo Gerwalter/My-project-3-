@@ -21,11 +21,4 @@ public class StaminaBat : MonoBehaviour, IObserver
         imageBar.color = Color.Lerp(Color.red, Color.green, fillAmount);
         imageBar.gameObject.SetActive(fillAmount < 1.0f);
     }
-
-    private void OnDestroy()
-    {
-        if (observable.GetComponent<IObservable>() != null)
-            observable.GetComponent<IObservable>().Unsubscribe(this);
-    }
-
 }

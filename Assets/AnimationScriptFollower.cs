@@ -6,7 +6,7 @@ public class AnimationScriptFollower : MonoBehaviour
 {
     public Animator anim;
     [SerializeField] PlayerFollower _player;
-    [SerializeField] PlayerAttack _playerAttack;
+
     public GameObject sword;
 
     private void Update()
@@ -54,15 +54,7 @@ public class AnimationScriptFollower : MonoBehaviour
      //   _player.ApplyForwardJumpImpulse(6f, 3f);
     }
 
-    public void EnemyLift()
-    {
-        _playerAttack.PerformLiftAttack();
-    }
 
-    public void Attack()
-    {
-        _playerAttack.Attack();
-    }
 
     public void Die()
     {
@@ -85,16 +77,6 @@ public class AnimationScriptFollower : MonoBehaviour
     public void Interact()
     {
       //  _player.Interact();
-    }
-
-    public void PlayVFX()
-    {
-        _playerAttack.PlayVFX();
-    }
-
-    public void PlayVFXAttack()
-    {
-        _playerAttack.PlayVFXAttack();
     }
 
     public void triggerReset()

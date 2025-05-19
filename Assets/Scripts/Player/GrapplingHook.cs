@@ -12,7 +12,6 @@ public class GrapplingHook : MonoBehaviour
     [SerializeField] private float _fakeGrappleDuration = 0.3f;
     [SerializeField] private float _grappleDuration = 1f;
     [SerializeField] private bool releaseAtPeak = false;
-    [SerializeField] private Camera alternateCamera;
     [Header("<color=#FFD700>Keybinds</color>")]
     [SerializeField] private KeyCode _grappleKey = KeyCode.F;
 

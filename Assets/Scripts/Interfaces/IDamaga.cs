@@ -7,6 +7,5 @@ public interface IDamaga
 {
     float GetLife { get; set; }
 
-    void ReceiveDamage(float damage, ElementType damageType);
     void Heal(float amount);
 }

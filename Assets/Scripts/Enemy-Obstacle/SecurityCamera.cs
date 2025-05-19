@@ -56,7 +56,6 @@ public class SecurityCamera : MonoBehaviour
             int randomIndex = Random.Range(0, enemyPrefabs.Length);
             GameObject enemyInstance = Instantiate(enemyPrefabs[randomIndex], spawnPoint.position, spawnPoint.rotation);
 
-            Enemy enemyScript = enemyInstance.GetComponent<Enemy>();
 
             //enemyScript.Initialize();
            // iANode.NodesExtraConfirm();
