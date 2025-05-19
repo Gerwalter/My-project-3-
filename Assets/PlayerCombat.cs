@@ -131,14 +131,6 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
     }
     private IAnimObserver animationObserver;
 
-    void Awake()
-    {
-        animationObserver = GetComponent<IAnimObserver>();
-        if (animationObserver == null)
-        {
-            Debug.LogWarning("No se encontró un observador de animación.");
-        }
-    }
     public Transform attackPoint; // Asigna un Empty en la mano o arma
     public float attackRange = 1.5f;
     public LayerMask enemyLayers;

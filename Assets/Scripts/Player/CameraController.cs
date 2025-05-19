@@ -33,7 +33,6 @@ public class CameraController : MonoBehaviour
     [SerializeField] private LayerMask _ignoreLayerMask;
     public static CameraController Instance;
     public PauseManager pauseManager;
-    public Follower follower;
     [SerializeField] private Transform camTransform;
 
    
@@ -68,7 +67,7 @@ public class CameraController : MonoBehaviour
                 _maxDistance = Mathf.Clamp(_maxDistance - scroll, _minDistance + 2, 10f);
             }
         }
-        _isCameraFixed = pauseManager.isPaused || follower.interacting;
+        _isCameraFixed = pauseManager.isPaused;
         ToggleCursorMode(_isCameraFixed);
     }
 
