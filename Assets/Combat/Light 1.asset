@@ -10,22 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9032361184b74e64da2560edd807594a, type: 3}
-  m_Name: Base
+  m_Name: Light 1
   m_EditorClassIdentifier: 
-  nodeName: Base
-  animationClip: {fileID: 0}
+  nodeName: Light 1
+  animationClip: {fileID: 7400000, guid: 468f93592de98d4428b8adcbc784f4e1, type: 2}
   damage: 0
-  duration: 1
+  duration: 0
   transitions:
-  - input: 1
-    nextNode: {fileID: 11400000, guid: 2fcba0b6c793b0a4d84bb6a57134796a, type: 2}
-    comboID: combo_Heavy_Base
-    unlockByDefault: 1
-  - input: 3
-    nextNode: {fileID: 11400000, guid: 9f3d5b1001d01a449ace8e3ed8ab6509, type: 2}
-    comboID: combo_Shoot_Base
+  - input: 2
+    nextNode: {fileID: 11400000, guid: 73bbc69c41e9b644ab7f27cb574ec787, type: 2}
+    comboID: combo_Light_2
     unlockByDefault: 1
   - input: 0
-    nextNode: {fileID: 11400000, guid: c37ba49145fa83c49addac1d8a6210e3, type: 2}
-    comboID: combo_Light_Base
+    nextNode: {fileID: 11400000, guid: a793d421035ef524286eee9bc8e0395d, type: 2}
+    comboID: combo_Light_2
     unlockByDefault: 1
