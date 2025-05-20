@@ -69,6 +69,7 @@
     <Compile Include="Assets\Scripts\Misc\Apple.cs" />
     <Compile Include="Assets\Scripts\Modelos Y Algoritmos\IUltimateObserver.cs" />
     <Compile Include="Assets\Pause\PauseManager.cs" />
+    <Compile Include="Assets\Scripts\Player\AnimationScript.cs" />
     <Compile Include="Assets\Scripts\Modelos Y Algoritmos\EventManager.cs" />
     <Compile Include="Assets\Scripts\Misc\BossSpawner.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
@@ -78,7 +79,6 @@
     <Compile Include="Assets\Scripts\Interfaces\IInteract.cs" />
     <Compile Include="Assets\Scripts\IAClase\QuestionNode.cs" />
     <Compile Include="Assets\FireShader.cs" />
-    <Compile Include="Assets\Scripts\Movement\AnimationScript.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
@@ -86,13 +86,13 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
     <Compile Include="Assets\BloodVFXHandler.cs" />
     <Compile Include="Assets\Scripts\Player\CameraController.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerUI.cs" />
     <Compile Include="Assets\Scripts\ObjectPool.cs" />
     <Compile Include="Assets\Scripts\Obstacle\SecurityCamera.cs" />
     <Compile Include="Assets\Scripts\Misc\Shop.cs" />
     <Compile Include="Assets\PlayerInteract.cs" />
     <Compile Include="Assets\Scripts\Player\ElementalType.cs" />
     <Compile Include="Assets\Scripts\Misc\ActivateVFX.cs" />
-    <Compile Include="Assets\PlayerAnims.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
     <Compile Include="Assets\Scripts\Misc\AppleController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
@@ -113,7 +113,6 @@
     <Compile Include="Assets\ComboCounter.cs" />
     <Compile Include="Assets\Scripts\IAClase\ActionNode.cs" />
     <Compile Include="Assets\Scripts\Player\DashCooldownUI.cs" />
-    <Compile Include="Assets\PlayerCombat.cs" />
     <Compile Include="Assets\Follower.cs" />
     <Compile Include="Assets\VehicleController.cs" />
     <Compile Include="Assets\Scripts\Manager\LevelManager.cs" />
@@ -138,7 +137,7 @@
     <Compile Include="Assets\GoldUI.cs" />
     <Compile Include="Assets\Scripts\Player\GrapplingHook.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStats.cs" />
-    <Compile Include="Assets\PlayerFollower.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerCombat.cs" />
     <Compile Include="Assets\Scripts\Bullet2.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IDamaga.cs" />
     <Compile Include="Assets\Scripts\Manager\FullScreenManager.cs" />
@@ -147,6 +146,7 @@
     <Compile Include="Assets\Scripts\Player\CameraPointer.cs" />
     <Compile Include="Assets\Scripts\Manager\Combo\MovesManager\ComboSystem.cs" />
     <Compile Include="Assets\ComboInput.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerAnims.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
     <Compile Include="Assets\Scripts\Manager\ConectMesh.cs" />
@@ -161,7 +161,6 @@
     <Compile Include="Assets\Scripts\Obstacle\Bridge.cs" />
     <Compile Include="Assets\Combat\ComboNode.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IShootBehavior.cs" />
-    <Compile Include="Assets\PlayerUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
     <Compile Include="Assets\Scripts\Obstacle\Crate.cs" />
@@ -197,11 +196,13 @@
     <Compile Include="Assets\Scripts\Misc\PPMenu.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerView.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
     <Compile Include="Assets\Scripts\Manager\SceneLoaderManager.cs" />
     <Compile Include="Assets\VehicleInteraction.cs" />
     <Compile Include="Assets\Scripts\Misc\Portal.cs" />
     <Compile Include="Assets\Scripts\Manager\TestManager.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerModel.cs" />
     <Compile Include="Assets\Scene.cs" />
     <Compile Include="Assets\Scripts\IA\FadingPlatform.cs" />
     <Compile Include="Assets\MusicPlayer.cs" />

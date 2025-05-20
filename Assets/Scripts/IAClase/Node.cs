@@ -5,5 +5,5 @@ using UnityEngine;
 public abstract class Node : MonoBehaviour
 {
     public abstract void Test(Patranger npc);
-    public abstract void Follow(PlayerFollower follow);
+
 }

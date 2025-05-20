@@ -15,12 +15,7 @@ public class Follower : ButtonBehaviour
     {
         panel.SetActive(true);
     }
-    public PlayerFollower follower;    
-    public void Accept()
-    {
-        follower.Follow = true;
-        panel.SetActive(false);
-    }
+
 
     public void Deny()
     {

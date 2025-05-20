@@ -36,16 +36,18 @@ public class PlayerMovement : Player, IObservable
     [SerializeField] private float _movSpeed = 3.5f;
     public Vector3 _dir = new(), _movRayDir = new();
     private Vector3 _dirFix = new();
-    [SerializeField] private Ray _movRay;
-    [SerializeField] private Image _staminaBar;
+    [SerializeField] private Ray _movRay; 
+    [SerializeField] private float _sprintWallCheckDistance = 0.6f;
+    [SerializeField] private LayerMask _wallLayer;
+    //   [SerializeField] private Image _staminaBar;
 
     [SerializeField] List<IObserver> _observers = new List<IObserver>();
 
 
     [Header("<color=#6A89A6>Physics - Speed</color>")]
     [SerializeField] private float originalSpeed;
-    [SerializeField] private float speedMultiplier = 2.0f;
-    [SerializeField] private float duration = 5.0f;
+//    [SerializeField] private float speedMultiplier = 2.0f;
+//    [SerializeField] private float duration = 5.0f;
 
     public bool groundCheck;
 
@@ -77,7 +79,6 @@ public class PlayerMovement : Player, IObservable
         _anim = GetComponentInChildren<Animator>();
         _rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
         _wallHitStatus = new bool[_wallCheckDirections.Length];
-        _currentStamina = _staminaMax;
 
     }
 
@@ -120,7 +121,6 @@ public class PlayerMovement : Player, IObservable
         DetectWall();
 
         UpdateWallCheck();
-        HandleSprint();
     }
 
     private void FixedUpdate()
@@ -131,12 +131,6 @@ public class PlayerMovement : Player, IObservable
         {
             Movement(_dir);
         }
-
-        if (_isSprinting)
-        {
-            PreventWallClipping();
-        }
-
     }
     public override void Jump()
     {
@@ -199,7 +193,7 @@ public class PlayerMovement : Player, IObservable
         _dirFix = (_camRightFix * dir.x + _camForwardFix * dir.z).normalized;
 
         // Aplicamos la velocidad normal o con sprint
-        float speed = _isSprinting ? _movSpeed * _sprintMultiplier : _movSpeed;
+        float speed = _movSpeed;
         if (OnSlope()) // Si está en una pendiente, ajusta el movimiento
         {
             _dirFix = GetSlopeDirection(_dirFix);
@@ -232,14 +226,14 @@ public class PlayerMovement : Player, IObservable
 
         return Physics.Raycast(_movRay, _movRayDist, layerMask2);
     }
-
+/*
     [Header("<color=yellow>Sprint</color>")]
     [SerializeField] private float _sprintMultiplier = 2.0f;  // Multiplicador de velocidad al esprintar
     [SerializeField] private float _staminaMax = 100f;  // Máxima cantidad de stamina
     [SerializeField] private float _staminaDrainRate = 20f;  // Cuánta stamina se gasta por segundo corriendo
     [SerializeField] private float _staminaRegenRate = 10f;  // Cuánta stamina se regenera por segundo
-    [SerializeField] private float _sprintWallCheckDistance = 0.6f;
-    [SerializeField] private LayerMask _wallLayer;
+
+
     [SerializeField] private float _currentStamina;
     private bool _isSprinting = false;
 
@@ -266,24 +260,8 @@ public class PlayerMovement : Player, IObservable
         }
 
         _currentStamina = Mathf.Clamp(_currentStamina, 0, _staminaMax);
-    }
-    private bool IsNearWall()
-    {
-        RaycastHit hit;
-        return Physics.Raycast(transform.position, transform.forward, out hit, _sprintWallCheckDistance, _wallLayer);
-    }
-
-    private void PreventWallClipping()
-    {
-        Vector3 moveDirection = transform.forward; // Dirección en la que se mueve el jugador
-        RaycastHit hit;
-
-        if (Physics.Raycast(transform.position, moveDirection, out hit, _sprintWallCheckDistance, _wallLayer))
-        {
-            // Si hay una pared cerca, reducimos la velocidad para evitar atravesarla
-            _isSprinting = false; // Detenemos el sprint si está muy cerca de una pared
-        }
-    }
+    }*/
+/*
     // Regeneración de Stamina
     private void RegenerateStamina()
     {
@@ -294,6 +272,7 @@ public class PlayerMovement : Player, IObservable
             observer.Notify(_currentStamina, _staminaMax);
     }
     
+    */
 
     [Header("<color=#6A89A7>Wall Running</color>")]
     [SerializeField] private float _wallCheckDistance = 1.0f; // Distancia de los Raycasts
@@ -390,21 +369,6 @@ public class PlayerMovement : Player, IObservable
         Gizmos.DrawRay(_jumpRay);
 
     }
-    private IEnumerator ApplySpeedBoost()
-    {
-        originalSpeed = _movSpeed; // Guarda la velocidad original
-        _movSpeed *= speedMultiplier; // Aplica el multiplicador
-
-        yield return new WaitForSeconds(duration); // Espera el tiempo de duración
-
-        _movSpeed = originalSpeed; // Restaura la velocidad original
-    }
-    public void SpeedBooster()
-    {
-        StartCoroutine(ApplySpeedBoost());
-    }
-
-
 }
 
 

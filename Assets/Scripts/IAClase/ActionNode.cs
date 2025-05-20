@@ -7,10 +7,6 @@ public class ActionNode : Node
 {
     public TypeAction actionType;
 
-    public override void Follow(PlayerFollower npc)
-    {
-
-    }
 
     public override void Test(Patranger npc)
     {
