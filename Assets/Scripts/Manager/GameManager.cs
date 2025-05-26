@@ -36,12 +36,6 @@ public class GameManager : MonoBehaviour
         set { _stats = value; }
     }
 
-    [SerializeField] private List<Enemy> _enemies = new();
-    public List<Enemy> Enemies
-    {
-        get { return _enemies; }
-        set { _enemies = value; }
-    }
 
     [SerializeField] private NavMeshSurface _surface;
     public NavMeshSurface Surface

@@ -10,11 +10,11 @@ public class BossSpawner : MonoBehaviour
     [SerializeField] private PlayableDirector director; // Referencia al PlayableDirector
     public AudioClip Theme;
     [SerializeField] private FireShader FireShader;
-    [SerializeField] private BoxCollider collider;
+   // [SerializeField] private BoxCollider collider;
 
     [Header("Spawn Area Settings")]
     [SerializeField] private Transform spawnPoint; // Lista de puntos de spawn
-    [SerializeField] private Boss enemy;
+
 
 
     private void Awake()
@@ -32,7 +32,7 @@ public class BossSpawner : MonoBehaviour
             print("Jugador detectado.");
             if (director != null)
             {
-                _player.freeze = true; // Congela al jugador
+              //  _player.freeze = true; // Congela al jugador
                 director.Play(); // Inicia la reproducción del PlayableDirector
           
                 // Subscribirse al evento "stopped"
@@ -46,11 +46,6 @@ public class BossSpawner : MonoBehaviour
         }
     }
 
-    public void SpawnBoss()
-    {
-        Instantiate(enemy, spawnPoint.position, Quaternion.identity);
-
-    }
 
     public void Flame()
     {
@@ -62,12 +57,11 @@ public class BossSpawner : MonoBehaviour
         if (finishedDirector == director)
         {
             Debug.Log("Timeline finalizada. Liberando al jugador.");
-            _player.freeze = false; // Libera al jugador
+         //   _player.freeze = false; // Libera al jugador
             director.stopped -= OnTimelineFinished; // Desuscribirse del evento
             FireShader.ActivateFire();
             //SFXManager.instance.PlaySFXClip(Theme, transform, 1f);
             //Destroy(gameObject);
-            collider.enabled = false;
         }
     }
 }

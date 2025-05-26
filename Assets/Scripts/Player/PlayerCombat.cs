@@ -1,0 +1,225 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerCombat : MonoBehaviour, IAnimObservable
+{
+    public ComboNode rootNode; // Nodo inicial
+    private ComboNode currentNode;
+    public KeyCode keyCode;
+    public KeyCode fireKey;
+    [SerializeField] private Animator animator;
+    private bool isAttacking = false;
+   [SerializeField] private float comboTimer = 0f;
+                    public float comboResetTime = 1.2f;
+                    public float comboReset = 1.2f;
+   [SerializeField] private bool canCombo;
+
+    [SerializeField] private float shootRepeatRate = 0.2f;
+    private float shootTimer = 0f;
+
+    public bool CanCombo { get { return canCombo; } set { canCombo = value; } }
+
+    private Queue<ComboInput> inputBuffer = new Queue<ComboInput>();
+    [SerializeField] private ComboInput comboInput;
+    void Start()
+    {
+       // animator = GetComponent<Animator>();
+        currentNode = rootNode;
+
+        UnlockDefaultCombos(rootNode);
+    }
+
+    void Update()
+    {
+        if (canCombo)
+        {
+            comboTimer += Time.deltaTime;
+
+            if (comboTimer > comboResetTime)
+            {
+                ResetCombo();
+            }
+
+            if (Input.GetButtonDown("Fire1"))
+            {
+                inputBuffer.Enqueue(ComboInput.Light);
+            }
+
+            if (Input.GetButtonDown("Fire2"))
+            {
+                inputBuffer.Enqueue(ComboInput.Heavy);
+            }
+
+            if (Input.GetKeyDown(keyCode))
+            {
+                inputBuffer.Enqueue(ComboInput.Finisher);
+            }
+
+            if (Input.GetKey(fireKey))
+            {
+                shootTimer += Time.deltaTime;
+                comboResetTime = 0;
+                if (shootTimer >= shootRepeatRate)
+                {
+                    inputBuffer.Enqueue(ComboInput.Shoot);
+
+                    foreach (var observer in _observers)
+                        observer.OnShootStateChanged(true);
+
+                    shootTimer = 0f;
+                }
+            }
+            else
+            {
+                shootTimer = shootRepeatRate;
+                comboResetTime = comboReset;
+
+                foreach (var observer in _observers)
+                    observer.OnShootStateChanged(false);
+            }
+            if (!isAttacking && inputBuffer.Count > 0)
+            {
+                ComboInput input = inputBuffer.Dequeue();
+                TryExecuteNode(input);
+            }
+        }
+    }
+
+    void TryExecuteNode(ComboInput input)
+    {
+        ComboNode nextNode = currentNode.GetNextNode(input);
+        comboInput = input; 
+
+        if (nextNode != null)
+        {
+            StartCoroutine(PerformAttack(nextNode));
+            currentNode = nextNode;
+        }
+        else if (currentNode == rootNode)
+        {
+            ComboNode rootNext = rootNode.GetNextNode(input);
+            if (rootNext != null)
+            {
+                StartCoroutine(PerformAttack(rootNext));
+                currentNode = rootNext;
+            }
+        }
+    }
+    void UnlockDefaultCombos(ComboNode node, HashSet<ComboNode> visitedNodes = null)
+    {
+        if (visitedNodes == null)
+            visitedNodes = new HashSet<ComboNode>();
+
+        // Si ya visitamos este nodo, salimos para evitar bucle
+        if (visitedNodes.Contains(node))
+            return;
+
+        visitedNodes.Add(node);
+
+        foreach (var transition in node.transitions)
+        {
+            if (transition.unlockByDefault && !ComboUnlockManager.Instance.IsUnlocked(transition.comboID))
+            {
+                ComboUnlockManager.Instance.UnlockCombo(transition.comboID);
+            }
+
+            if (transition.nextNode != null)
+                UnlockDefaultCombos(transition.nextNode, visitedNodes);
+        }
+    }
+    private IAnimObserver animationObserver;
+
+    public Transform attackPoint; // Asigna un Empty en la mano o arma
+    public float attackRange = 1.5f;
+    public LayerMask enemyLayers;
+    float stylePerEnemy;
+    IEnumerator PerformAttack(ComboNode node)
+    {
+
+        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
+
+        int enemiesHit = 0;
+
+        switch (comboInput)
+        {
+            case ComboInput.Light:
+                stylePerEnemy = 10;
+                break;
+            case ComboInput.Heavy:
+                stylePerEnemy = 20;
+                break;
+            case ComboInput.Finisher:
+                stylePerEnemy = 50;
+                break;
+            case ComboInput.Shoot:
+                stylePerEnemy = 1;
+                break;
+            default:
+                Debug.Log("Entrada no reconocida.");
+                break;
+        }
+
+        foreach (Collider enemy in hitEnemies)
+        {
+            enemiesHit++;
+        }
+
+        // Registrar los golpes reales en el combo counter
+        StyleMeter styleMeter = FindObjectOfType<StyleMeter>();
+
+        if (enemiesHit > 0)
+        {
+            for (int i = 0; i < enemiesHit; i++)
+            {
+                EventManager.Trigger("RegisterHit", 4);
+            }
+
+            if (styleMeter != null)
+            {
+                styleMeter.AddStylePoints(enemiesHit * stylePerEnemy);
+            }
+        }
+
+        isAttacking = true;
+        comboTimer = 0f;
+        Debug.Log("Ejecutando nodo de ataque: " + node.nodeName); // Este es el log
+
+
+        foreach (var observer in _observers)
+            observer.OnAttackTriggered(comboInput.ToString());
+
+        yield return new WaitForSeconds(node.duration);
+
+        isAttacking = false;
+    }
+    void OnDrawGizmos()
+    {
+        if (attackPoint == null) return;
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+    }
+    void ResetCombo()
+    {
+        currentNode = rootNode;
+        comboTimer = 0f;
+        isAttacking = false;
+        inputBuffer.Clear();
+    }
+
+    public void Subscribe(IAnimObserver x)
+    {
+        if (_observers.Contains(x)) return;
+        _observers.Add(x);
+    }
+
+    [SerializeField] List<IAnimObserver> _observers = new List<IAnimObserver>();
+
+    public void Unsubscribe(IAnimObserver x)
+    {
+        if (_observers.Contains(x)) return;
+        _observers.Remove(x);
+    }
+}

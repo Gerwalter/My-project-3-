@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9032361184b74e64da2560edd807594a, type: 3}
+  m_Name: Base
+  m_EditorClassIdentifier: 
+  nodeName: Base
+  animationClip: {fileID: 0}
+  damage: 0
+  duration: 1
+  transitions:
+  - input: 1
+    nextNode: {fileID: 11400000, guid: 2fcba0b6c793b0a4d84bb6a57134796a, type: 2}
+    comboID: combo_Heavy_Base
+    unlockByDefault: 1
+  - input: 3
+    nextNode: {fileID: 11400000, guid: 9f3d5b1001d01a449ace8e3ed8ab6509, type: 2}
+    comboID: combo_Shoot_Base
+    unlockByDefault: 1
+  - input: 0
+    nextNode: {fileID: 11400000, guid: c37ba49145fa83c49addac1d8a6210e3, type: 2}
+    comboID: combo_Light_Base
+    unlockByDefault: 1

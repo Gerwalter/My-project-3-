@@ -16,7 +16,7 @@ public class Lock : MonoBehaviour
     public void OnDie()
     {
         menu.SetActive(true);
-           Locker.LockCamera();
+
 
     }
 

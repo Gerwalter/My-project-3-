@@ -12,7 +12,7 @@ public class FireShader : MonoBehaviour
         material.SetFloat(noisePowerProperty, 0);
     }
 
-    private bool isAnimating = false; // Controla si una animación ya está en curso
+
 
     public void ActivateFire()
     {
@@ -23,10 +23,7 @@ public class FireShader : MonoBehaviour
         material.SetFloat(noisePowerProperty, 0);
     }
     IEnumerator AnimateNoisePower()
-    {
-        isAnimating = true;
-
-        // Obtiene el valor actual de NoisePower_
+    {        // Obtiene el valor actual de NoisePower_
         float currentValue = material.GetFloat(noisePowerProperty);
         float targetValue = (currentValue == 0f) ? 0.64f : 0f; // Si está en 0, va a 0.64; si está en 0.64, va a 0
         
@@ -44,7 +41,6 @@ public class FireShader : MonoBehaviour
         // Asegura que el valor final sea el objetivo (0 o 0.64)
         material.SetFloat(noisePowerProperty, targetValue);
 
-        isAnimating = false;
     }
 
 }

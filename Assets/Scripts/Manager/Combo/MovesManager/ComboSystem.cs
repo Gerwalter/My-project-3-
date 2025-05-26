@@ -35,7 +35,7 @@ public class ComboSystem : MonoBehaviour
         void Update()
     {
         // Verificar si la cámara está fija. Si está fija, no hacer nada
-        if (cameraController.IsCameraFixed) return;
+       // if (cameraController.IsCameraFixed) return;
 
         // Si hay inputs en progreso, inicia el temporizador
         if (isWaitingForInput)

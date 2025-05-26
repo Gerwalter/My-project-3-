@@ -4,11 +4,5 @@ using UnityEngine;
 
 public class BossAvatar : MonoBehaviour
 {
-    public Boss _parent;
-
-    private void Start()
-    {
-        _parent = GetComponentInParent<Boss>();
-    }
 
 }

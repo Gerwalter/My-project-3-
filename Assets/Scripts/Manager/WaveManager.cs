@@ -7,7 +7,7 @@ using static UnityEngine.EventSystems.EventTrigger;
 [Serializable]
 public struct EnemyWaveData
 {
-    public List<Enemy> enemyToSpawn;
+
 }
 
 public class WaveManager : MonoBehaviour
@@ -66,22 +66,6 @@ public class WaveManager : MonoBehaviour
         {
             _timer = 0;
             var spawnData = _spawnOrder.Dequeue();
-
-            foreach (var enemy in spawnData.enemyToSpawn)
-            {
-                Transform spawnPoint = GetRandomSpawnPoint();
-
-                // Instanciar el enemigo en la posición del punto de spawn
-                Instantiate(enemy, spawnPoint.position, Quaternion.identity);
-            }
-
-            foreach (var enemy2 in spawnData.enemyToSpawn)
-            {
-                Transform spawnPoint = GetRandomSpawnPoint();
-
-                // Instanciar el enemigo en la posición del punto de spawn
-                Instantiate(enemy2, spawnPoint.position, Quaternion.identity);
-            }
         }
 
     }

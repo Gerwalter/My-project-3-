@@ -16,9 +16,8 @@ public class PPMenu : MonoBehaviour
     public void Menudisable()
     {
         menu.SetActive(false);
-        player.freeze = false;
+       // player.freeze = false;
 
-        _lock.UnlockCamera();
         
     }
 }

@@ -26,28 +26,28 @@ public class LootManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        InitializeLootData();
+       // InitializeLootData();
     }
     #endregion
 
-    private Dictionary<EnemyType, LootData> _enemyLoot = new Dictionary<EnemyType, LootData>();
+  //  private Dictionary<EnemyType, LootData> _enemyLoot = new Dictionary<EnemyType, LootData>();
 
 
-    private void InitializeLootData()
-    {
-        _enemyLoot.Add(EnemyType.MELEE, new LootData { gold = 50 });
-        _enemyLoot.Add(EnemyType.RANGE, new LootData { gold = 45 });
-        _enemyLoot.Add(EnemyType.TANK, new LootData { gold = 25 });
-        _enemyLoot.Add(EnemyType.BOSS, new LootData { gold = 300 });
-    }
-
-    public LootData GetLoot(EnemyType enemyType)
-    {
-        if (_enemyLoot.TryGetValue(enemyType, out var lootData))
-        {
-            return lootData;
-        }
-
-        return new LootData { gold = 0 };
-    }
+ //   private void InitializeLootData()
+ //   {
+ //       _enemyLoot.Add(EnemyType.MELEE, new LootData { gold = 50 });
+ //       _enemyLoot.Add(EnemyType.RANGE, new LootData { gold = 45 });
+ //       _enemyLoot.Add(EnemyType.TANK, new LootData { gold = 25 });
+ //       _enemyLoot.Add(EnemyType.BOSS, new LootData { gold = 300 });
+ //   }
+ //
+ //   public LootData GetLoot(EnemyType enemyType)
+ //   {
+ //       if (_enemyLoot.TryGetValue(enemyType, out var lootData))
+ //       {
+ //           return lootData;
+ //       }
+ //
+ //       return new LootData { gold = 0 };
+ //   }
 }
