@@ -20,7 +20,11 @@ public class PlayerAnims : Player, IAnimObserver
     {
         GetLife += amount;
     }
-
+    public void Start()
+    {
+        EventManager.Subscribe("OnAttack", OnAttack);
+        EventManager.Subscribe("OnJumpAttack", OnJumpAttack);
+    }
     public override void ReciveDamage(float damage)
     {
         GetLife -= damage;
@@ -44,7 +48,19 @@ public class PlayerAnims : Player, IAnimObserver
             }
         }
     }
+    void OnAttack(params object[] args)
+    {
+        print((float)args[0]);
+        float forward = (float)args[0];
+        AnimationMoveImpulse(forward); // método original
+    }
 
+    void OnJumpAttack(params object[] args)
+    {
+        float forward = (float)args[0];
+        float up = (float)args[1];
+        ApplyForwardJumpImpulse(forward, up);
+    }
     public override void AnimationMoveImpulse(float force)
     {
         Vector3 forwardDirection = transform.forward; // Dirección actual del jugador

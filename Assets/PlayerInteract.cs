@@ -21,7 +21,15 @@ public class PlayerInteract : Player
         if (Input.GetKeyDown(_intKey))
             _anim.SetTrigger("Int");
     }
+    public void Start()
+    {
+        EventManager.Subscribe("OnInteract", OnInteract);
+    }
 
+    void OnInteract(params object[] args)
+    {
+        Interact(); // método original
+    }
     public override void Interact()
     {
         _intRay = new Ray(_intOrigin.position, transform.forward);

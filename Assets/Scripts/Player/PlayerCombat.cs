@@ -9,7 +9,6 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
     private ComboNode currentNode;
     public KeyCode keyCode;
     public KeyCode fireKey;
-    [SerializeField] private Animator animator;
     private bool isAttacking = false;
    [SerializeField] private float comboTimer = 0f;
                     public float comboResetTime = 1.2f;

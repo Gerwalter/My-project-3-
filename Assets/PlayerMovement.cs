@@ -51,7 +51,7 @@ public class PlayerMovement : Player, IObservable
 
     public bool groundCheck;
 
-
+    
 
     private void Awake()
     {
@@ -79,9 +79,27 @@ public class PlayerMovement : Player, IObservable
         _anim = GetComponentInChildren<Animator>();
         _rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
         _wallHitStatus = new bool[_wallCheckDirections.Length];
-
+        EventManager.Subscribe("OnDisableMovement", Disable);
+        EventManager.Subscribe("OnEnableMovement", Enable);
     }
 
+    void Disable(params object[] args)
+    {
+        DisableMovement();
+    }
+    void Enable(params object[] args)
+    {
+        EnableMovement();
+    }
+    public void DisableMovement()
+    {
+        freeze = true;
+    }
+
+    public void EnableMovement()
+    {
+        freeze = false;
+    }
     private void Update()
     {
         if (freeze)

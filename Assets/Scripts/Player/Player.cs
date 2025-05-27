@@ -51,13 +51,4 @@ public class Player : HP
     {
        
     }
-    public void DisableMovement()
-    {
-        freeze = true;
-    }
-
-    public void EnableMovement()
-    {
-        freeze = false;
-    }
 }
