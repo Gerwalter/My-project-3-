@@ -50,6 +50,7 @@ public class PlayerMovement : Player, IObservable
 //    [SerializeField] private float duration = 5.0f;
 
     public bool groundCheck;
+    public bool freeze;
 
     
 
@@ -76,11 +77,11 @@ public class PlayerMovement : Player, IObservable
     private void Start()
     {
         _camTransform = Camera.main.transform;
-        _anim = GetComponentInChildren<Animator>();
         _rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
         _wallHitStatus = new bool[_wallCheckDirections.Length];
         EventManager.Subscribe("OnDisableMovement", Disable);
         EventManager.Subscribe("OnEnableMovement", Enable);
+        EventManager.Subscribe("OnJump", OnJump);
     }
 
     void Disable(params object[] args)
@@ -90,6 +91,10 @@ public class PlayerMovement : Player, IObservable
     void Enable(params object[] args)
     {
         EnableMovement();
+    }
+    void OnJump(params object[] args)
+    {
+        Jump();
     }
     public void DisableMovement()
     {
@@ -104,9 +109,8 @@ public class PlayerMovement : Player, IObservable
     {
         if (freeze)
         {
-            _anim.SetFloat(_xName, 0.0f);
-            _anim.SetFloat(_zName, 0.0f);
-
+            EventManager.Trigger("Float", _zName, 0.0f);
+            EventManager.Trigger("Float", _xName, 0.0f);
             return;
         }
         _dir.x = Input.GetAxisRaw("Horizontal");
@@ -114,22 +118,22 @@ public class PlayerMovement : Player, IObservable
 
         if (!IsBlocked(_dir.x, _dir.z))
         {
-            _anim.SetFloat(_xName, _dir.x);
-            _anim.SetFloat(_zName, _dir.z);
+            EventManager.Trigger("Float", _xName, _dir.x);
+            EventManager.Trigger("Float", _zName, _dir.z);
         }
         else
         {
-            _anim.SetFloat(_xName, 0.0f);
-            _anim.SetFloat(_zName, 0.0f);
+            EventManager.Trigger("Float", _zName, 0.0f);
+            EventManager.Trigger("Float", _xName, 0.0f);
         }
 
-        _anim.SetBool(_isGroundName, IsGrounded());
-        _anim.SetBool(_isMovName, _dir.x != 0 || _dir.z != 0);
+        EventManager.Trigger("Bool", _isGroundName, IsGrounded()); 
+        EventManager.Trigger("Bool", _isMovName, _dir.x != 0 || _dir.z != 0); 
 
 
         if (Input.GetKeyDown(_jumpKey) && IsGrounded())
         {
-            _anim.SetTrigger(_jumpName);
+           EventManager.Trigger("Input", _jumpName);
         }
         else if (Input.GetKeyDown(_jumpKey) && _isWallDetected)
         {
@@ -150,7 +154,7 @@ public class PlayerMovement : Player, IObservable
             Movement(_dir);
         }
     }
-    public override void Jump()
+    public void Jump()
     {
         if (_isWallRunning)
         {

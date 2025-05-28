@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour, IAnimObservable
@@ -26,7 +27,7 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
     {
        // animator = GetComponent<Animator>();
         currentNode = rootNode;
-
+        EventManager.Subscribe("OnAttack", OnAttack);
         UnlockDefaultCombos(rootNode);
     }
 
@@ -93,7 +94,8 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
 
         if (nextNode != null)
         {
-            StartCoroutine(PerformAttack(nextNode));
+            //StartCoroutine(PerformAttack(nextNode));
+            PerformAttack(nextNode);
             currentNode = nextNode;
         }
         else if (currentNode == rootNode)
@@ -101,7 +103,8 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
             ComboNode rootNext = rootNode.GetNextNode(input);
             if (rootNext != null)
             {
-                StartCoroutine(PerformAttack(rootNext));
+                //StartCoroutine(PerformAttack(rootNext));
+                PerformAttack(rootNext);
                 currentNode = rootNext;
             }
         }
@@ -134,9 +137,17 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
     public float attackRange = 1.5f;
     public LayerMask enemyLayers;
     float stylePerEnemy;
-    IEnumerator PerformAttack(ComboNode node)
+    void PerformAttack(ComboNode node)
     {
-
+        foreach (var observer in _observers)
+            observer.OnAttackTriggered(comboInput.ToString());
+    }
+    void OnAttack(params object[] args)
+    {
+        Attack();
+    }
+    private void Attack()
+    {
         Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
 
         int enemiesHit = 0;
@@ -183,16 +194,13 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
 
         isAttacking = true;
         comboTimer = 0f;
-        Debug.Log("Ejecutando nodo de ataque: " + node.nodeName); // Este es el log
+        //Debug.Log("Ejecutando nodo de ataque: " + node.nodeName); // Este es el log
 
-
-        foreach (var observer in _observers)
-            observer.OnAttackTriggered(comboInput.ToString());
-
-        yield return new WaitForSeconds(node.duration);
+        //  yield return new WaitForSeconds(node.duration);
 
         isAttacking = false;
     }
+
     void OnDrawGizmos()
     {
         if (attackPoint == null) return;

@@ -19,7 +19,7 @@ public class PlayerInteract : Player
     private void Update()
     {
         if (Input.GetKeyDown(_intKey))
-            _anim.SetTrigger("Int");
+            EventManager.Trigger("Input", "Int");
     }
     public void Start()
     {
@@ -30,7 +30,7 @@ public class PlayerInteract : Player
     {
         Interact(); // método original
     }
-    public override void Interact()
+    public void Interact()
     {
         _intRay = new Ray(_intOrigin.position, transform.forward);
 
