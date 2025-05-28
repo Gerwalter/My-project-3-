@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class PlayerMovement : Player, IObservable
+public class PlayerMovement : MonoBehaviour, IObservable
 {
     [Header("<color=#6A89A7>Animation</color>")]
     [SerializeField] private string _isMovName = "isMoving";
