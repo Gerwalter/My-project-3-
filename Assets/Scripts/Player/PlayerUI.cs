@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerUI : Player, ILifeObservable
+public class PlayerUI : HP, ILifeObservable
 {
     [SerializeField] List<ILifeObserver> _observers = new List<ILifeObserver>();
 

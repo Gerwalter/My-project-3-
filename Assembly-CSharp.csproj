@@ -126,6 +126,7 @@
     <Compile Include="Assets\Scripts\Manager\GameManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
     <Compile Include="Assets\PlayerAnimationHandler.cs" />
+    <Compile Include="Assets\PlayerSprint.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\Scripts\other scripts to take info\ButtonBehaviour.cs" />
     <Compile Include="Assets\Scripts\Modelos Y Algoritmos\ILifeObservable.cs" />
@@ -148,6 +149,7 @@
     <Compile Include="Assets\Combat\StyleMeter.cs" />
     <Compile Include="Assets\Scripts\Player\DamageController.cs" />
     <Compile Include="Assets\Scripts\Player\CameraPointer.cs" />
+    <Compile Include="Assets\PlayerWallRun.cs" />
     <Compile Include="Assets\Scripts\Manager\Combo\MovesManager\ComboSystem.cs" />
     <Compile Include="Assets\ComboInput.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerAnims.cs" />
@@ -156,6 +158,7 @@
     <Compile Include="Assets\Scripts\Manager\ConectMesh.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
     <Compile Include="Assets\Scripts\Modelos Y Algoritmos\ILifeObserver.cs" />
+    <Compile Include="Assets\PlayerController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
     <Compile Include="Assets\Scripts\Manager\LoadSceneOnTrigger.cs" />
@@ -202,6 +205,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
     <Compile Include="Assets\Scripts\Manager\SceneLoaderManager.cs" />
+    <Compile Include="Assets\PlayerJump.cs" />
     <Compile Include="Assets\Scripts\Player\Memento\Rewind.cs" />
     <Compile Include="Assets\VehicleInteraction.cs" />
     <Compile Include="Assets\Scripts\Misc\Portal.cs" />
@@ -949,14 +953,14 @@
     <Reference Include="Unity.AI.Navigation.Editor.ConversionSystem">
       <HintPath>Library\ScriptAssemblies\Unity.AI.Navigation.Editor.ConversionSystem.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Animation.Rigging">
-      <HintPath>Library\ScriptAssemblies\Unity.Animation.Rigging.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Animation.Rigging">
+      <HintPath>Library\ScriptAssemblies\Unity.Animation.Rigging.dll</HintPath>
     </Reference>
     <Reference Include="Unity.EditorCoroutines.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.EditorCoroutines.Editor.dll</HintPath>
