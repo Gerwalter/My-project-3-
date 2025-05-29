@@ -10,8 +10,8 @@ public class AnimationScript : MonoBehaviour
     public void Die() => EventManager.Trigger("OnDie");
     public void Jump() => EventManager.Trigger("OnJump");
     public void Attack() => EventManager.Trigger("OnAttack");
-    public void DisableMovement() => EventManager.Trigger("OnDisableMovement");
-    public void EnableMovement() => EventManager.Trigger("OnEnableMovement");
+  //  public void DisableMovement() => EventManager.Trigger("OnDisableMovement");
+  //  public void EnableMovement() => EventManager.Trigger("OnEnableMovement");
     public void Interact() => EventManager.Trigger("OnInteract");
     public void PlayVFX() => EventManager.Trigger("OnPlayVFX");
     public void PlayVFXAttack() => EventManager.Trigger("OnPlayVFXAttack");
