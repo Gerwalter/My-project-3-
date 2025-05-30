@@ -5,10 +5,6 @@ using static ComboSystem;
 
 public class PlayerAnims : Player, IAnimObserver
 {
-    public void Die()
-    {
-        gameObje.SetActive(false);
-    }
     public Animator _anim;
 
     [SerializeField] private Rigidbody _rb;
@@ -24,6 +20,7 @@ public class PlayerAnims : Player, IAnimObserver
     {
         EventManager.Subscribe("PrintNum", OnAttack);
         EventManager.Subscribe("OnJumpAttack", OnJumpAttack);
+
     }/*
     public override void ReciveDamage(float damage)
     {

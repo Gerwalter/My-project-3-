@@ -39,7 +39,6 @@ public class PlayerController : MonoBehaviour
     private PlayerMovement movement;
     private PlayerJump jump;
     private PlayerWallRun wallRun;
-    private PlayerSprint sprint;
 
     private void Awake()
     {
@@ -48,7 +47,6 @@ public class PlayerController : MonoBehaviour
         movement = new PlayerMovement(this);
         jump = new PlayerJump(this);
         wallRun = new PlayerWallRun(this);
-        sprint = new PlayerSprint(this);
     }
 
     private void Update()
@@ -56,7 +54,6 @@ public class PlayerController : MonoBehaviour
         movement.Update();
         jump.Update();
         wallRun.Update();
-        sprint.Update();
     }
 
     private void FixedUpdate()

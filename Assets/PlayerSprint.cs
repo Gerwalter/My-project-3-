@@ -1,6 +1,7 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSprint
+public class PlayerSprint: IObservable
 {
     private readonly PlayerController _player;
     private float _currentStamina;
@@ -10,6 +11,20 @@ public class PlayerSprint
     {
         _player = player;
         _currentStamina = player.StaminaMax;
+    }
+    private List<IObserver> _observers = new List<IObserver>();
+    public void Subscribe(IObserver x)
+    {
+        if (_observers.Contains(x)) return;
+
+        _observers.Add(x);
+    }
+
+    public void Unsubscribe(IObserver x)
+    {
+        if (_observers.Contains(x)) return;
+
+        _observers.Remove(x);
     }
 
     public void Update()
@@ -22,12 +37,20 @@ public class PlayerSprint
             _isSprinting = true;
             _currentStamina -= _player.StaminaDrainRate * Time.deltaTime;
             EventManager.Trigger("Float", "Sprinting", 0f); // activo
+            foreach (var obs in _observers)
+            {
+                obs.Notify(_currentStamina, _player.StaminaMax);
+            }
         }
         else
         {
             _isSprinting = false;
             RegenerateStamina();
             EventManager.Trigger("Float", "Sprinting", 1f); // no sprint
+            foreach (var obs in _observers)
+            {
+                obs.Notify(_currentStamina, _player.StaminaMax);
+            }
         }
 
         _currentStamina = Mathf.Clamp(_currentStamina, 0, _player.StaminaMax);

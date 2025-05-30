@@ -5,17 +5,13 @@ using UnityEngine;
 public class ComboNode : ScriptableObject
 {
     public string nodeName;
-    public AnimationClip animationClip;
-    public float damage;
-    public float duration;
-
     [System.Serializable]
     public class ComboTransition
     {
         public ComboInput input;
         public ComboNode nextNode;
         public string comboID;
-        public bool unlockByDefault = false; // <-- NUEVO
+       // public bool unlockByDefault = false;
     }
 
     public List<ComboTransition> transitions = new List<ComboTransition>();
@@ -24,8 +20,8 @@ public class ComboNode : ScriptableObject
     {
         foreach (var transition in transitions)
         {
-            if (transition.input == input &&
-                ComboUnlockManager.Instance.IsUnlocked(transition.comboID))
+            if (transition.input == input)
+             //   && ComboUnlockManager.Instance.IsUnlocked(transition.comboID))
             {
                 return transition.nextNode;
             }

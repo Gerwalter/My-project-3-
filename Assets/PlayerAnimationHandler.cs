@@ -14,8 +14,8 @@ public class PlayerAnimationHandler : MonoBehaviour, IAnimObserver
         EventManager.Subscribe("Input", PlayerInput);
         EventManager.Subscribe("Float", PlayerFloat);
         EventManager.Subscribe("Bool", PlayerBool);
-    }
 
+    }
     private void PlayerInput(params object[] args)
     {
         var input = (string)args[0];

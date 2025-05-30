@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9032361184b74e64da2560edd807594a, type: 3}
-  m_Name: Shooting
+  m_Name: Light Safari
   m_EditorClassIdentifier: 
-  nodeName: Shooting
-  animationClip: {fileID: 0}
-  damage: 0
-  duration: 0
-  transitions: []
+  nodeName: Light_Safari
+  transitions:
+  - input: 0
+    nextNode: {fileID: 11400000, guid: e09e6d6e538b89247b7ca5094c969132, type: 2}
+    comboID: Light_Safari_1

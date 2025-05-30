@@ -8,7 +8,7 @@ public class PauseManager : MonoBehaviour
     public GameObject OptionsMenuUI; // Asigna el menú de pausa en el Inspector
     public bool isPaused = false;
     public bool isOptions = false;
-    private bool canPause = true; // Variable para controlar si se puede pausar
+    public bool canPause = true; // Variable para controlar si se puede pausar
 
     private void Start()
     {
@@ -19,7 +19,7 @@ public class PauseManager : MonoBehaviour
         // Verifica si estás en la escena 0
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
-            canPause = false; // No se puede pausar en la escena 0
+           // canPause = false; // No se puede pausar en la escena 0
             return; // Sale de la función Start
         }
 
@@ -33,12 +33,14 @@ public class PauseManager : MonoBehaviour
     {
         if (canPause && Input.GetKeyDown(KeyCode.Escape))
         {
+            
             TogglePause();
         }
     }
 
     public void TogglePause()
     {
+        
         if (!canPause) return;
         isPaused = !isPaused;
         Time.timeScale = isPaused ? 0 : 1;

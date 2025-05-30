@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour, IAnimObservable
 {
-    public ComboNode rootNode; // Nodo inicial
+    public ComboNode rootNode;
     private ComboNode currentNode;
     public KeyCode keyCode;
     public KeyCode fireKey;
@@ -24,10 +24,10 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
     [SerializeField] private ComboInput comboInput;
     void Start()
     {
-       // animator = GetComponent<Animator>();
         currentNode = rootNode;
         EventManager.Subscribe("OnAttack", OnAttack);
-        UnlockDefaultCombos(rootNode);
+        EventManager.Subscribe("ComboChanger", ComboChanger);
+        //UnlockDefaultCombos(rootNode);
     }
 
     void Update()
@@ -86,6 +86,19 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
         }
     }
 
+    void ComboChanger(params object[] args)
+    {
+        var combo = (ComboNode)args[0];
+        ChangeCombatStyle(combo);
+    }
+
+    public void ChangeCombatStyle(ComboNode newRootNode)
+    {
+        rootNode = newRootNode;
+        currentNode = rootNode;
+        ResetCombo(); // Opcional: limpia el estado actual del combo para evitar inconsistencias
+        Debug.Log("Estilo de combate cambiado.");
+    }
     void TryExecuteNode(ComboInput input)
     {
         ComboNode nextNode = currentNode.GetNextNode(input);
@@ -107,7 +120,7 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
                 currentNode = rootNext;
             }
         }
-    }
+    }/*
     void UnlockDefaultCombos(ComboNode node, HashSet<ComboNode> visitedNodes = null)
     {
         if (visitedNodes == null)
@@ -129,7 +142,7 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
             if (transition.nextNode != null)
                 UnlockDefaultCombos(transition.nextNode, visitedNodes);
         }
-    }
+    }*/
     private IAnimObserver animationObserver;
 
     public Transform attackPoint; // Asigna un Empty en la mano o arma
@@ -138,8 +151,10 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
     float stylePerEnemy;
     void PerformAttack(ComboNode node)
     {
-        foreach (var observer in _observers)
-            observer.OnAttackTriggered(comboInput.ToString());
+        Debug.Log("Ejecutando Ataque " + node);
+             foreach (var observer in _observers)
+                 observer.OnAttackTriggered(comboInput.ToString());
+
     }
     void OnAttack(params object[] args)
     {
@@ -182,7 +197,7 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
         {
             for (int i = 0; i < enemiesHit; i++)
             {
-                EventManager.Trigger("RegisterHit", 4);
+                EventManager.Trigger("RegisterHit");
             }
 
             if (styleMeter != null)
