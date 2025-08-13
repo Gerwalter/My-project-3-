@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float staminaDrainRate = 20f;
     [SerializeField] private float staminaRegenRate = 10f;
 
+
+    public PlayerCrouch Crouch => crouch;
     // Accesores públicos para módulos
     public float MoveSpeed => moveSpeed;
     public float JumpForce => jumpForce;
@@ -36,9 +38,11 @@ public class PlayerController : MonoBehaviour
     public Vector3 Direction => new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
 
     // Módulos
+    // Dentro de PlayerController
     private PlayerMovement movement;
     private PlayerJump jump;
     private PlayerWallRun wallRun;
+    private PlayerCrouch crouch; // <-- Nuevo módulo
 
     private void Awake()
     {
@@ -47,6 +51,7 @@ public class PlayerController : MonoBehaviour
         movement = new PlayerMovement(this);
         jump = new PlayerJump(this);
         wallRun = new PlayerWallRun(this);
+        crouch = new PlayerCrouch(this); // <-- Inicialización
     }
 
     private void Update()
@@ -54,6 +59,7 @@ public class PlayerController : MonoBehaviour
         movement.Update();
         jump.Update();
         wallRun.Update();
+        crouch.Update(); // <-- Llamada al módulo
     }
 
     private void FixedUpdate()

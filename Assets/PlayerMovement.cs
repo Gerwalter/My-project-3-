@@ -36,7 +36,17 @@ public class PlayerMovement
             }
 
             _player.Transform.forward = forward; // orienta al jugador
-            _player.Rigidbody.MovePosition(_player.Transform.position + moveDir * _player.MoveSpeed * Time.fixedDeltaTime);
+            float speed = _player.MoveSpeed;
+
+            // Si está agachado, reducir velocidad
+            if (_player.Crouch != null && _player.Crouch.IsCrouching)
+            {
+                speed *= _player.Crouch.crouchSpeedMultiplier;
+            }
+
+            _player.Rigidbody.MovePosition(
+                _player.Transform.position + moveDir * speed * Time.fixedDeltaTime
+            );
         }
     }
 
