@@ -2,6 +2,6 @@
 
 public interface IAnimObserver
 {
-    void OnAttackTriggered(string triggerName);
+    void OnAttackTriggered(ComboNode node); // ahora recibe el nodo
     void OnShootStateChanged(bool isShooting);
 }

@@ -10,7 +10,6 @@ public class PlayerAnims : Player, IAnimObserver
     [SerializeField] private Rigidbody _rb;
 
     [SerializeField] private GameObject gameObje;
-    private bool isDead = false;
 
     public override void Health(float amount)
     {
@@ -80,9 +79,20 @@ public class PlayerAnims : Player, IAnimObserver
         if (observable.GetComponent<IAnimObservable>() != null)
             observable.GetComponent<IAnimObservable>().Subscribe(this);
     }
-    public void OnAttackTriggered(string triggerName)
+    public void OnAttackTriggered(ComboNode node)
     {
-        _anim.SetTrigger(triggerName);
+        if (node != null && node.animationClip != null)
+        {
+            int attackLayerIndex = _anim.GetLayerIndex("Ataque");
+            print(attackLayerIndex);
+            _anim.Play(node.animationClip.name, attackLayerIndex, 0f);
+            print(node.animationClip.name);
+            print(node.name);
+        }
+        else
+        {
+            Debug.LogWarning("El nodo no tiene animación asignada.");
+        }
     }
 
     public void OnShootStateChanged(bool isShooting)

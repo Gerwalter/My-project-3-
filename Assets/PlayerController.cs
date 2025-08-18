@@ -15,10 +15,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float wallCheckDistance = 1.0f;
     [SerializeField] private LayerMask wallMask;
 
-    [Header("Sprint")]
-    [SerializeField] private float staminaMax = 100f;
-    [SerializeField] private float staminaDrainRate = 20f;
-    [SerializeField] private float staminaRegenRate = 10f;
 
 
     public PlayerCrouch Crouch => crouch;
@@ -29,9 +25,6 @@ public class PlayerController : MonoBehaviour
     public LayerMask GroundMask => groundMask;
     public float WallCheckDistance => wallCheckDistance;
     public LayerMask WallMask => wallMask;
-    public float StaminaMax => staminaMax;
-    public float StaminaDrainRate => staminaDrainRate;
-    public float StaminaRegenRate => staminaRegenRate;
 
     public Rigidbody Rigidbody { get; private set; }
     public Transform Transform => transform;

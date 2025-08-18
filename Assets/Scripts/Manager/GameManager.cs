@@ -43,12 +43,4 @@ public class GameManager : MonoBehaviour
         get { return _surface; }
         set { _surface = value; }
     }
-
-
-    [SerializeField] private IANodeManager _nodes;
-    public IANodeManager Nodes
-    {
-        get { return _nodes; }
-        set { _nodes = value; }
-    }
 }

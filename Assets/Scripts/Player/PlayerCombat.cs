@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour, IAnimObservable
 {
+
     public ComboNode rootNode;
     private ComboNode currentNode;
     public KeyCode keyCode;
@@ -152,8 +153,9 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
     void PerformAttack(ComboNode node)
     {
         Debug.Log("Ejecutando Ataque " + node);
-             foreach (var observer in _observers)
-                 observer.OnAttackTriggered(comboInput.ToString());
+
+        foreach (var observer in _observers)
+            observer.OnAttackTriggered(node); // <--- ahora pasa el nodo entero
     }
     void OnAttack(params object[] args)
     {
