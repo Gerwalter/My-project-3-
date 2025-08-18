@@ -79,20 +79,9 @@ public class PlayerAnims : Player, IAnimObserver
         if (observable.GetComponent<IAnimObservable>() != null)
             observable.GetComponent<IAnimObservable>().Subscribe(this);
     }
-    public void OnAttackTriggered(ComboNode node)
+    public void OnAttackTriggered(string triggerName)
     {
-        if (node != null && node.animationClip != null)
-        {
-            int attackLayerIndex = _anim.GetLayerIndex("Ataque");
-            print(attackLayerIndex);
-            _anim.Play(node.animationClip.name, attackLayerIndex, 0f);
-            print(node.animationClip.name);
-            print(node.name);
-        }
-        else
-        {
-            Debug.LogWarning("El nodo no tiene animación asignada.");
-        }
+        _anim.SetTrigger(triggerName);
     }
 
     public void OnShootStateChanged(bool isShooting)
