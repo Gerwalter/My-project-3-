@@ -156,6 +156,7 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
         foreach (var observer in _observers)
             observer.OnAttackTriggered(comboInput.ToString());
     }
+
     void OnAttack(params object[] args)
     {
         Attack();
