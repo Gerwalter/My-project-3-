@@ -5,9 +5,19 @@ public class PlayerAnimationHandler : MonoBehaviour, IAnimObserver
 {
     [SerializeField] private Animator animator;
     [SerializeField] private Rigidbody _rb;
-    public void OnAttackTriggered(string triggerName)
+    [SerializeField] private float _fadeDuration;
+    public void OnAttackTriggered(ComboNode node)
     {
-        animator.SetTrigger(triggerName);
+        if (node != null && node.animationClip != null)
+        {
+            // Reproducir el clip directamente en el Animator
+            int attackLayerIndex = animator.GetLayerIndex("AttackLayer");
+            animator.CrossFade(node.animationClip.name, _fadeDuration, attackLayerIndex, 0f);
+        }
+        else
+        {
+            Debug.LogWarning("El nodo no tiene animación asignada.");
+        }
     }
     private void Start()
     {

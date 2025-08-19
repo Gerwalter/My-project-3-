@@ -2,16 +2,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ComboNode", menuName = "Combat/Combo Node")]
+[System.Serializable]
 public class ComboNode : ScriptableObject
 {
     public string nodeName;
+    public AnimationClip animationClip; // el clip asociado al nodo
+
     [System.Serializable]
     public class ComboTransition
     {
         public ComboInput input;
         public ComboNode nextNode;
         public string comboID;
-       // public bool unlockByDefault = false;
     }
 
     public List<ComboTransition> transitions = new List<ComboTransition>();
@@ -21,7 +23,6 @@ public class ComboNode : ScriptableObject
         foreach (var transition in transitions)
         {
             if (transition.input == input)
-             //   && ComboUnlockManager.Instance.IsUnlocked(transition.comboID))
             {
                 return transition.nextNode;
             }

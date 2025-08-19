@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: Base
   m_EditorClassIdentifier: 
   nodeName: Base
+  animationClip: {fileID: 0}
   transitions:
+  - input: 0
+    nextNode: {fileID: 11400000, guid: e371ca5f11a92a649be6bc982fe4838e, type: 2}
+    comboID: combo_light
   - input: 1
     nextNode: {fileID: 11400000, guid: 2fcba0b6c793b0a4d84bb6a57134796a, type: 2}
-    comboID: combo_Heavy_Base
+    comboID: combo_heavy
   - input: 3
     nextNode: {fileID: 11400000, guid: 9f3d5b1001d01a449ace8e3ed8ab6509, type: 2}
-    comboID: combo_Shoot_Base
-  - input: 0
-    nextNode: {fileID: 11400000, guid: c37ba49145fa83c49addac1d8a6210e3, type: 2}
-    comboID: combo_Light_Base
+    comboID: combo_shooting

@@ -98,7 +98,7 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
         rootNode = newRootNode;
         currentNode = rootNode;
         ResetCombo(); // Opcional: limpia el estado actual del combo para evitar inconsistencias
-        Debug.Log("Estilo de combate cambiado.");
+        Debug.Log("Estilo de combate cambiado." + newRootNode.name);
     }
     void TryExecuteNode(ComboInput input)
     {
@@ -153,8 +153,9 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
     void PerformAttack(ComboNode node)
     {
         Debug.Log("Ejecutando Ataque " + node);
+
         foreach (var observer in _observers)
-            observer.OnAttackTriggered(comboInput.ToString());
+            observer.OnAttackTriggered(node); // <--- ahora pasa el nodo entero
     }
 
     void OnAttack(params object[] args)
