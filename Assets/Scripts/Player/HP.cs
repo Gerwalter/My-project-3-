@@ -8,8 +8,6 @@ public abstract class HP : MonoBehaviour, ILife
     [SerializeField] public float maxLife;
     [SerializeField] private float currentLife;
 
-
-
     public float GetLife
     {
         get { return currentLife; }

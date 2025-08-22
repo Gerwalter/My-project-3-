@@ -55,19 +55,22 @@ public class ChestScript : ButtonBehaviour
     private void RecibirValor(params object[] parametros)
     {
         int valor = (int)parametros[0];
-        Debug.Log("El valor actual es: " + valor);
+        //Debug.Log("El valor actual es: " + valor);
 
         if (valor >= valorObjetivo)
         {
             Debug.Log(" El contador alcanzó o superó " + valorObjetivo);
+            EventManager.Trigger("ReiniciarContador");
         }
         else
         {
             Debug.Log(" El contador aún no llegó a " + valorObjetivo);
+            EventManager.Trigger("IncrementarContador", 2);
         }
     }
     public override void OnInteract()
     {
+        //EventManager.Trigger("IncrementarContador", 2);
         EventManager.Trigger("ObtenerContador");
     }
 }

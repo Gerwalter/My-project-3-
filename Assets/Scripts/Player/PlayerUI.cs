@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerUI : HP, ILifeObservable
+public class PlayerUI : Health, ILifeObservable
 {
     [SerializeField] List<ILifeObserver> _observers = new List<ILifeObserver>();
 
@@ -27,23 +27,26 @@ public class PlayerUI : HP, ILifeObservable
     private void Start()
     {
         EventManager.Subscribe("EnemyCall", PlayerCall);
-        GetLife = maxLife;
+        GetLife = maxHealth;
     }
-    public void TakeDamage(float damage)
+    public override void OnTakeDamage(float damage)
     {
         GetLife -= damage;
-
+        if (_bloodVFX != null)
+        {
+            _bloodVFX.SendEvent("OnTakeDamage"); // Activa el sistema de partículas
+            print("LAREPUTAMADREQUETEREMILPARIO");
+        }
         foreach (var observer in _observers)
-            observer.Notify(GetLife, maxLife);
-
+            observer.Notify(GetLife, maxHealth);
         if (GetLife <= 0)
             Debug.Log("GAME OVER");
     }
     private void Update()
     {
         if (Input.GetKeyDown(keyDmg)) //Solo para testear
-            TakeDamage(1);
-        if (Input.GetKeyDown(KeyCode.U)) TakeDamage(-1);
+                OnTakeDamage(10);
+        if (Input.GetKeyDown(KeyCode.U)) OnTakeDamage(-1);
     }
 
     public void PlayerCall(params object[] args)
