@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInteract : Player
+public class PlayerInteract : MonoBehaviour
 {
     [Header("<color=#6A89A7>Inputs</color>")]
     [SerializeField] private KeyCode _intKey = KeyCode.F;
