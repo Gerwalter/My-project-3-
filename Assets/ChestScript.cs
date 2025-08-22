@@ -8,26 +8,46 @@ public class ChestScript : ButtonBehaviour
     [Header("Configuración del detector")]
     public float radioDeteccion = 5f;        // Radio del OverlapSphere
     public LayerMask capaJugador;            // Para filtrar solo el jugador
+
+    [Header("Referencia UI")]
+    public GameObject imagenUI; // La imagen o panel de UI que quieres mostrar
+
+    private bool jugadorEnRango = false;
     private void Awake()
     {
         EventManager.Subscribe("RespuestaContador", RecibirValor);
     }
+
+    private void Start()
+    {
+        imagenUI.SetActive(false);
+    }
+
     void Update()
     {
         // Detectar todos los colliders dentro de la esfera
         Collider[] objetosDetectados = Physics.OverlapSphere(transform.position, radioDeteccion, capaJugador);
 
+        bool jugadorDetectado = false;
+
         foreach (Collider col in objetosDetectados)
         {
-            if (col.CompareTag("Player")) // Verifica que el collider tenga la etiqueta "Player"
+            if (col.CompareTag("Player"))
             {
-                Debug.Log("Jugador detectado en el rango!");
+                jugadorDetectado = true;
+                break; // ya encontramos al jugador, no hace falta seguir
             }
         }
-    }
 
+        // Si cambió el estado, actualizamos la UI
+        if (jugadorDetectado != jugadorEnRango)
+        {
+            jugadorEnRango = jugadorDetectado;
+            imagenUI.SetActive(jugadorEnRango);
+        }
+    }
     // Dibujar la esfera en el editor para debug
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, radioDeteccion);
