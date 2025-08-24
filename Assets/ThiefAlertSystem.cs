@@ -1,12 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ThiefAlertSystem : MonoBehaviour
+public class ThiefAlertSystem : MonoBehaviour, IAlertSystemObservable
 {// Instancia única accesible desde cualquier script
     public static ThiefAlertSystem instance;
 
-    [SerializeField] private int contador = 0;
+    [SerializeField] private int _alert = 0;
+    [SerializeField] private int _MaxAlert = 100;
 
     private void Awake()
     {
@@ -20,50 +22,71 @@ public class ThiefAlertSystem : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
+        foreach (var observer in _observers)
+            observer.Notify(_alert, _MaxAlert);
         // Suscribimos eventos
-        EventManager.Subscribe("IncrementarContador", IncrementarHandler);
-        EventManager.Subscribe("DecrementarContador", DecrementarHandler);
-        EventManager.Subscribe("ReiniciarContador", ReiniciarHandler);
-        EventManager.Subscribe("ObtenerContador", ObtenerHandler);
+        EventManager.Subscribe("IncreaseAlert", IncreaseAlert);
+        EventManager.Subscribe("DecreaseAlert", DecreaseAlert);
+        EventManager.Subscribe("ResetAlert", ResetAlert);
+        EventManager.Subscribe("ObtainAlert", ObtainAlert);
     }
 
     private void OnDestroy()
     {
         // Limpiamos suscripciones
-        EventManager.Unsubscribe("IncrementarContador", IncrementarHandler);
-        EventManager.Unsubscribe("DecrementarContador", DecrementarHandler);
-        EventManager.Unsubscribe("ReiniciarContador", ReiniciarHandler);
-        EventManager.Unsubscribe("ObtenerContador", ObtenerHandler);
+        EventManager.Unsubscribe("IncreaseAlert", IncreaseAlert);
+        EventManager.Unsubscribe("DecreaseAlert", DecreaseAlert);
+        EventManager.Unsubscribe("ResetAlert", ResetAlert);
+        EventManager.Unsubscribe("ObtainAlert", ObtainAlert);
     }
 
     // ----------- Métodos internos -----------
-    private void IncrementarHandler(params object[] parametros)
+    private void IncreaseAlert(params object[] parametros)
     {
         int cantidad = (parametros.Length > 0) ? (int)parametros[0] : 1;
-        contador += cantidad;
-        Debug.Log("Contador incrementado: " + contador);
+        _alert += cantidad;
+        Debug.Log("Contador incrementado: " + _alert);
+        foreach (var observer in _observers)
+            observer.Notify(_alert, _MaxAlert);
     }
 
-    private void DecrementarHandler(params object[] parametros)
+    private void DecreaseAlert(params object[] parametros)
     {
         int cantidad = (parametros.Length > 0) ? (int)parametros[0] : 1;
-        contador -= cantidad;
-        Debug.Log("Contador decrementado: " + contador);
+        _alert -= cantidad;
+        Debug.Log("Contador decrementado: " + _alert);
+        foreach (var observer in _observers)
+            observer.Notify(_alert, _MaxAlert);
     }
 
-    private void ReiniciarHandler(params object[] parametros)
+    private void ResetAlert(params object[] parametros)
     {
-        contador = 0;
+        _alert = 0;
+        foreach (var observer in _observers)
+            observer.Notify(_alert, _MaxAlert);
         Debug.Log("Contador reiniciado.");
     }
 
-    private void ObtenerHandler(params object[] parametros)
+    private void ObtainAlert(params object[] parametros)
     {
-        EventManager.Trigger("RespuestaContador", contador);
+        EventManager.Trigger("ReceiveAlertValue", _alert);
     }
 
     // Si prefieres acceso directo:
-    public int ObtenerValor() => contador;
+    public int ObtainValue() => _alert;
+    [SerializeField] List<IAlertSystemObserver> _observers = new List<IAlertSystemObserver>();
+    public void Subscribe(IAlertSystemObserver x)
+    {
+        if (_observers.Contains(x)) return;
+
+        _observers.Add(x);
+    }
+
+    public void Unsubscribe(IAlertSystemObserver x)
+    {
+        if (_observers.Contains(x)) return;
+
+        _observers.Remove(x);
+    }
 }
 

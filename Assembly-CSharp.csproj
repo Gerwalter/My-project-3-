@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{0EEE7EE8-5624-0BB8-0F53-5B4408E383A6}</ProjectGuid>
+    <ProjectGuid>{27AB3609-15DB-52E3-4D4E-5A489B4C4689}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -61,10 +61,10 @@
     <Compile Include="Assets\Scripts\Player\Memento\GameManagerMemento.cs" />
     <Compile Include="Assets\Scripts\Misc\BadApple.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IDamage.cs" />
-    <Compile Include="Assets\Scripts\Manager\GoldManager.cs" />
     <Compile Include="Assets\Scripts\Creator.cs" />
     <Compile Include="Assets\Scripts\Manager\Lock.cs" />
     <Compile Include="Assets\Scripts\IA\PatrolState.cs" />
+    <Compile Include="Assets\Scripts\Misc\GoldManager.cs" />
     <Compile Include="Assets\Scripts\Player\CameraSwitcher.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
@@ -74,6 +74,7 @@
     <Compile Include="Assets\Scripts\Player\AnimationScript.cs" />
     <Compile Include="Assets\Scripts\Modelos Y Algoritmos\EventManager.cs" />
     <Compile Include="Assets\Scripts\Misc\BossSpawner.cs" />
+    <Compile Include="Assets\Scripts\Modelos Y Algoritmos\IAlertSystemObserver.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\Scripts\Obstacle\Water.cs" />
     <Compile Include="Assets\Scripts\Interfaces\ILife.cs" />
@@ -90,7 +91,6 @@
     <Compile Include="Assets\Scripts\Player\PlayerUI.cs" />
     <Compile Include="Assets\Scripts\ObjectPool.cs" />
     <Compile Include="Assets\Scripts\IA\WASDMovement.cs" />
-    <Compile Include="Assets\Scripts\Misc\Shop.cs" />
     <Compile Include="Assets\PlayerInteract.cs" />
     <Compile Include="Assets\Scripts\Player\ElementalType.cs" />
     <Compile Include="Assets\Scripts\Misc\ActivateVFX.cs" />
@@ -123,12 +123,13 @@
     <Compile Include="Assets\LootManager.cs" />
     <Compile Include="Assets\Scripts\IA\ChaseState.cs" />
     <Compile Include="Assets\Scripts\IA\FOVAgent.cs" />
-    <Compile Include="Assets\Scripts\other scripts to take info\SlotMachine.cs" />
     <Compile Include="Assets\ComboAttack.cs" />
     <Compile Include="Assets\Scripts\Player\Health.cs" />
     <Compile Include="Assets\Scripts\Manager\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Misc\IGoldObserver.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
     <Compile Include="Assets\PlayerAnimationHandler.cs" />
+    <Compile Include="Assets\Scripts\Misc\Gold.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\Scripts\other scripts to take info\ButtonBehaviour.cs" />
     <Compile Include="Assets\Scripts\Modelos Y Algoritmos\ILifeObservable.cs" />
@@ -140,7 +141,6 @@
     <Compile Include="Assets\ComboButton.cs" />
     <Compile Include="Assets\Scripts\Misc\RotateObject.cs" />
     <Compile Include="Assets\Scripts\Movement\TargetMove.cs" />
-    <Compile Include="Assets\GoldUI.cs" />
     <Compile Include="Assets\Scripts\Player\GrapplingHook.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStats.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerCombat.cs" />
@@ -164,6 +164,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
     <Compile Include="Assets\Scripts\Manager\LoadSceneOnTrigger.cs" />
+    <Compile Include="Assets\Scripts\Modelos Y Algoritmos\AlertBar.cs" />
     <Compile Include="Assets\Scripts\Modelos Y Algoritmos\IUltimateObservable.cs" />
     <Compile Include="Assets\Scripts\IA\Pathfinding.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
@@ -177,7 +178,8 @@
     <Compile Include="Assets\Scripts\Modelos Y Algoritmos\BarLife.cs" />
     <Compile Include="Assets\Scripts\Manager\CanvasManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
-    <Compile Include="Assets\DynamicShopItem.cs" />
+    <Compile Include="Assets\Scripts\Modelos Y Algoritmos\IAlertSystemObservable.cs" />
+    <Compile Include="Assets\Scripts\Misc\GoldUI.cs" />
     <Compile Include="Assets\Slots.cs" />
     <Compile Include="Assets\Scripts\Modelos Y Algoritmos\IObserver.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
@@ -200,6 +202,7 @@
     <Compile Include="Assets\Scripts\Player\Memento\Coin.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
     <Compile Include="Assets\HealthTest.cs" />
+    <Compile Include="Assets\Scripts\Misc\IGoldObservable.cs" />
     <Compile Include="Assets\UiEneabler.cs" />
     <Compile Include="Assets\Scripts\other scripts to take info\SpeedBoost.cs" />
     <Compile Include="Assets\Scripts\Manager\WaveManager.cs" />

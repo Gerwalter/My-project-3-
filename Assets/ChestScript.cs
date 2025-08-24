@@ -1,22 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ChestScript : ButtonBehaviour
 {
     public int valorObjetivo = 10;
-    [Header("Configuración del detector")]
-    public float radioDeteccion = 5f;        // Radio del OverlapSphere
-    public LayerMask capaJugador;            // Para filtrar solo el jugador
-
-    [Header("Referencia UI")]
-    public GameObject imagenUI; // La imagen o panel de UI que quieres mostrar
+    public float radioDeteccion = 5f;
+    public LayerMask capaJugador;
+    public GameObject imagenUI;
 
     private bool jugadorEnRango = false;
-    private void Awake()
-    {
-        EventManager.Subscribe("RespuestaContador", RecibirValor);
-    }
+
+    // Cofre actualmente interactuado
+    public static ChestScript cofreActivo;
 
     private void Start()
     {
@@ -25,7 +19,6 @@ public class ChestScript : ButtonBehaviour
 
     void Update()
     {
-        // Detectar todos los colliders dentro de la esfera
         Collider[] objetosDetectados = Physics.OverlapSphere(transform.position, radioDeteccion, capaJugador);
 
         bool jugadorDetectado = false;
@@ -35,42 +28,55 @@ public class ChestScript : ButtonBehaviour
             if (col.CompareTag("Player"))
             {
                 jugadorDetectado = true;
-                break; // ya encontramos al jugador, no hace falta seguir
+                break;
             }
         }
 
-        // Si cambió el estado, actualizamos la UI
         if (jugadorDetectado != jugadorEnRango)
         {
             jugadorEnRango = jugadorDetectado;
             imagenUI.SetActive(jugadorEnRango);
         }
     }
-    // Dibujar la esfera en el editor para debug
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, radioDeteccion);
-    }
+
     private void RecibirValor(params object[] parametros)
     {
+        // Solo procesar si este cofre es el activo
+        if (cofreActivo != this) return;
+
         int valor = (int)parametros[0];
-        //Debug.Log("El valor actual es: " + valor);
 
         if (valor >= valorObjetivo)
         {
-            Debug.Log(" El contador alcanzó o superó " + valorObjetivo);
-            EventManager.Trigger("ReiniciarContador");
+            Debug.Log("El contador alcanzó o superó " + valorObjetivo);
+            EventManager.Trigger("ResetAlert");
         }
         else
         {
-            Debug.Log(" El contador aún no llegó a " + valorObjetivo);
-            EventManager.Trigger("IncrementarContador", 2);
+            Debug.Log("El contador aún no llegó a " + valorObjetivo);
+            EventManager.Trigger("IncreaseAlert", 10);
         }
+
+        // Liberar el cofre activo después de procesar
+        cofreActivo = null;
+        EventManager.Unsubscribe("ReceiveAlertValue", RecibirValor);
     }
+
     public override void OnInteract()
     {
-        //EventManager.Trigger("IncrementarContador", 2);
-        EventManager.Trigger("ObtenerContador");
+        // Marcar este cofre como activo
+        cofreActivo = this;
+
+        // Suscribirse solo cuando interactúa
+        EventManager.Subscribe("ReceiveAlertValue", RecibirValor);
+
+        // Pedir el contador
+        EventManager.Trigger("ObtainAlert");
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, radioDeteccion);
     }
 }
