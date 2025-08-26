@@ -6,8 +6,8 @@ public class ChestScript : ButtonBehaviour
     public float radioDeteccion = 5f;
     public LayerMask capaJugador;
     public GameObject imagenUI;
-
     private bool jugadorEnRango = false;
+    [SerializeField] private CoinSpawer spawner;
 
     // Cofre actualmente interactuado
     public static ChestScript cofreActivo;
@@ -49,6 +49,7 @@ public class ChestScript : ButtonBehaviour
         if (valor >= valorObjetivo)
         {
             Debug.Log("El contador alcanzó o superó " + valorObjetivo);
+            spawner.SpawnRandomCoins();
             EventManager.Trigger("ResetAlert");
         }
         else

@@ -59,7 +59,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Player\Memento\GameManagerMemento.cs" />
-    <Compile Include="Assets\Scripts\Misc\BadApple.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IDamage.cs" />
     <Compile Include="Assets\Scripts\Creator.cs" />
     <Compile Include="Assets\Scripts\Manager\Lock.cs" />
@@ -68,12 +67,10 @@
     <Compile Include="Assets\Scripts\Player\CameraSwitcher.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
-    <Compile Include="Assets\Scripts\Misc\Apple.cs" />
     <Compile Include="Assets\Scripts\Modelos Y Algoritmos\IUltimateObserver.cs" />
     <Compile Include="Assets\Pause\PauseManager.cs" />
     <Compile Include="Assets\Scripts\Player\AnimationScript.cs" />
     <Compile Include="Assets\Scripts\Modelos Y Algoritmos\EventManager.cs" />
-    <Compile Include="Assets\Scripts\Misc\BossSpawner.cs" />
     <Compile Include="Assets\Scripts\Modelos Y Algoritmos\IAlertSystemObserver.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\Scripts\Obstacle\Water.cs" />
@@ -89,15 +86,17 @@
     <Compile Include="Assets\Scripts\Player\CameraController.cs" />
     <Compile Include="Assets\Scripts\IA\PatrollingNPC.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerUI.cs" />
+    <Compile Include="Assets\Scripts\Misc\ICoin.cs" />
     <Compile Include="Assets\Scripts\ObjectPool.cs" />
     <Compile Include="Assets\Scripts\IA\WASDMovement.cs" />
     <Compile Include="Assets\PlayerInteract.cs" />
     <Compile Include="Assets\Scripts\Player\ElementalType.cs" />
     <Compile Include="Assets\Scripts\Misc\ActivateVFX.cs" />
+    <Compile Include="Assets\Scripts\Misc\Test.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
-    <Compile Include="Assets\Scripts\Misc\AppleController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
     <Compile Include="Assets\ChestScript.cs" />
+    <Compile Include="Assets\CoinSpawer.cs" />
     <Compile Include="Assets\Scripts\Modelos Y Algoritmos\IAnimObserver.cs" />
     <Compile Include="Assets\Scripts\Player\Memento\Jogador.cs" />
     <Compile Include="Assets\Scripts\Manager\OutlineManager.cs" />
@@ -147,12 +146,14 @@
     <Compile Include="Assets\Scripts\Player\CombatStyleSwitcher.cs" />
     <Compile Include="Assets\Scripts\Bullet2.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IDamaga.cs" />
+    <Compile Include="Assets\Scripts\Misc\CoinFactory.cs" />
     <Compile Include="Assets\Scripts\Manager\FullScreenManager.cs" />
     <Compile Include="Assets\Combat\StyleMeter.cs" />
     <Compile Include="Assets\Scripts\Player\DamageController.cs" />
     <Compile Include="Assets\Scripts\Player\CameraPointer.cs" />
     <Compile Include="Assets\PlayerWallRun.cs" />
     <Compile Include="Assets\Scripts\Manager\Combo\MovesManager\ComboSystem.cs" />
+    <Compile Include="Assets\Scripts\Misc\Factory.cs" />
     <Compile Include="Assets\ComboInput.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerAnims.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
@@ -164,6 +165,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
     <Compile Include="Assets\Scripts\Manager\LoadSceneOnTrigger.cs" />
+    <Compile Include="Assets\Scripts\Misc\GoldCoin.cs" />
     <Compile Include="Assets\Scripts\Modelos Y Algoritmos\AlertBar.cs" />
     <Compile Include="Assets\Scripts\Modelos Y Algoritmos\IUltimateObservable.cs" />
     <Compile Include="Assets\Scripts\IA\Pathfinding.cs" />
@@ -199,7 +201,6 @@
     <Compile Include="Assets\Scripts\Manager\Texturee.cs" />
     <Compile Include="Assets\Combat\ComboUnlockManager.cs" />
     <Compile Include="Assets\Scripts\Modelos Y Algoritmos\IObservable.cs" />
-    <Compile Include="Assets\Scripts\Player\Memento\Coin.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
     <Compile Include="Assets\HealthTest.cs" />
     <Compile Include="Assets\Scripts\Misc\IGoldObservable.cs" />
@@ -213,6 +214,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
     <Compile Include="Assets\Scripts\IA\NPC.cs" />
+    <Compile Include="Assets\Scripts\Misc\Coin.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
     <Compile Include="Assets\Scripts\Manager\SceneLoaderManager.cs" />
     <Compile Include="Assets\PlayerJump.cs" />
