@@ -35,7 +35,8 @@ public class PlayerController : MonoBehaviour
     private PlayerMovement movement;
     private PlayerJump jump;
     private PlayerWallRun wallRun;
-    private PlayerCrouch crouch; // <-- Nuevo módulo
+    private PlayerCrouch crouch;
+    private PlayerStamina stamina;
 
     private void Awake()
     {
@@ -44,7 +45,8 @@ public class PlayerController : MonoBehaviour
         movement = new PlayerMovement(this);
         jump = new PlayerJump(this);
         wallRun = new PlayerWallRun(this);
-        crouch = new PlayerCrouch(this); // <-- Inicialización
+        crouch = new PlayerCrouch(this);
+        stamina = new PlayerStamina(this); // nuevo
     }
 
     private void Update()
@@ -52,8 +54,11 @@ public class PlayerController : MonoBehaviour
         movement.Update();
         jump.Update();
         wallRun.Update();
-        crouch.Update(); // <-- Llamada al módulo
+        crouch.Update();
+        stamina.Update(); // nuevo
     }
+
+    public PlayerStamina Stamina => stamina; // para que otros módulos accedan
 
     private void FixedUpdate()
     {

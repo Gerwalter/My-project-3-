@@ -35,7 +35,6 @@ public class PlayerUI : Health, ILifeObservable
         if (_bloodVFX != null)
         {
             _bloodVFX.SendEvent("OnTakeDamage"); // Activa el sistema de partículas
-            print("LAREPUTAMADREQUETEREMILPARIO");
         }
         foreach (var observer in _observers)
             observer.Notify(GetLife, maxHealth);

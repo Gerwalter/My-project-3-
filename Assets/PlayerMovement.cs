@@ -38,6 +38,19 @@ public class PlayerMovement
             _player.Transform.forward = forward; // orienta al jugador
             float speed = _player.MoveSpeed;
 
+            // Sprint
+            if (_player.Stamina.IsSprinting)
+            {
+                speed *= 1.8f; // multiplicador de sprint
+            }
+
+            // Dash
+            if (_player.Stamina.IsDashing)
+            {
+                Vector3 dashDir = _player.Transform.forward * 10f; // puedes ajustar la fuerza
+                _player.Rigidbody.AddForce(dashDir, ForceMode.VelocityChange);
+            }
+
             // Si está agachado, reducir velocidad
             if (_player.Crouch != null && _player.Crouch.IsCrouching)
             {
