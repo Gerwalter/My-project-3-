@@ -11,7 +11,17 @@ public class FOVAgent : FOVTarget
 
     [SerializeField, Range(0.5f, 15)] float _viewRange; //Esfera
     [SerializeField, Range(15, 360)] float _viewAngle; //Cono
+    public float ViewRange
+    {
+        get => _viewRange;
+        set => _viewRange = Mathf.Clamp(value, 0.5f, 15f); // respeta el rango
+    }
 
+    public float ViewAngle
+    {
+        get => _viewAngle;
+        set => _viewAngle = Mathf.Clamp(value, 15f, 360f); // respeta el rango
+    }
     // Start is called before the first frame update
     protected override void Start()
     {

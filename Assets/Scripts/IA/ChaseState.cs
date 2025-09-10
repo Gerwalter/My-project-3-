@@ -14,11 +14,12 @@ public class ChaseState : INPCState
     {
         while (npc.IsPlayerVisible())
         {
+            npc.FOVAgent.ViewAngle = 360;
             npc.lastSeenPosition = npc.player.transform.position;
 
             // Verificar distancia para "atrapar"
             float distanceToPlayer = Vector3.Distance(npc.transform.position, npc.lastSeenPosition);
-            if (distanceToPlayer <= 1.5f) // Rango de captura
+            if (distanceToPlayer <= npc.captureRange) // Rango de captura
             {
                 Debug.Log($"{npc.name} atrapó al jugador!");
                 // Aquí en el futuro puedes restar vida al jugador
