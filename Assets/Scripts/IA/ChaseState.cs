@@ -22,6 +22,9 @@ public class ChaseState : INPCState
             if (distanceToPlayer <= npc.captureRange) // Rango de captura
             {
                 Debug.Log($"{npc.name} atrapó al jugador!");
+                string currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+                BattleManager.Instance.StartBattle(npc.player.transform.position, currentScene, battleSceneName);
+
                 // Aquí en el futuro puedes restar vida al jugador
 
                 // Cambiar estado de vuelta a patrulla
@@ -58,6 +61,7 @@ public class ChaseState : INPCState
         if (chaseRoutine != null)
             npc.StopCoroutine(chaseRoutine);
     }
+    [SerializeField] private string battleSceneName = "BattleScene"; // Nombre de la escena de pelea
 
-    
+
 }

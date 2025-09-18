@@ -88,4 +88,14 @@ public class PlayerAnimationHandler : MonoBehaviour, IAnimObserver
     {
         animator.SetBool("Shoot", isShooting);
     }
+
+    private void OnDestroy()
+    {
+        EventManager.Unsubscribe("Input", PlayerInput);
+        EventManager.Unsubscribe("Float", PlayerFloat);
+        EventManager.Unsubscribe("Bool", PlayerBool);
+
+        EventManager.Unsubscribe("PrintNum", OnAttack);
+        EventManager.Unsubscribe("OnJumpAttack", OnJumpAttack);
+    }
 }

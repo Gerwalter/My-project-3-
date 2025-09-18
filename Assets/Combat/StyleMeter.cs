@@ -53,7 +53,7 @@ public class StyleMeter : MonoBehaviour
     private void StylePoints()
     {
         timer += Time.deltaTime;
-        if (stylePoints == 0) 
+        if (stylePoints <= 0) 
         {
             styleText.enabled = false;
             styleBar.enabled = false;
