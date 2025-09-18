@@ -54,4 +54,8 @@ public class PlayerInteract : MonoBehaviour
         Gizmos.color = Color.cyan; // Color de la esfera
         Gizmos.DrawWireSphere(_intRay.origin + _intRay.direction * _intRayDist, _sphereIntRadius);
     }
+    private void OnDestroy()
+    {
+        EventManager.Unsubscribe("OnInteract", OnInteract);
+    }
 }

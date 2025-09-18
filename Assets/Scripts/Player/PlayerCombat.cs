@@ -26,8 +26,8 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
     void Start()
     {
         currentNode = rootNode;
-        EventManager.Subscribe("OnAttack", OnAttack);
-        EventManager.Subscribe("ComboChanger", ComboChanger);
+   //     EventManager.Subscribe("OnAttack", OnAttack);
+   //     EventManager.Subscribe("ComboChanger", ComboChanger);
         //UnlockDefaultCombos(rootNode);
     }
 
@@ -244,5 +244,17 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
     {
         if (_observers.Contains(x)) return;
         _observers.Remove(x);
+    }
+    void OnEnable()
+    {
+        EventManager.Subscribe("OnAttack", OnAttack);
+        EventManager.Subscribe("ComboChanger", ComboChanger);
+        canCombo = true;
+    }
+
+    void OnDisable()
+    {
+        EventManager.Unsubscribe("OnAttack", OnAttack);
+        EventManager.Unsubscribe("ComboChanger", ComboChanger);
     }
 }
