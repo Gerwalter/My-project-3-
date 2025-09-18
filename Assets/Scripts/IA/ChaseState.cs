@@ -23,7 +23,8 @@ public class ChaseState : INPCState
             {
                 Debug.Log($"{npc.name} atrapó al jugador!");
                 // Aquí en el futuro puedes restar vida al jugador
-
+                string currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+                BattleManager.Instance.StartBattle(npc.player.transform.position, currentScene, battleSceneName);
                 // Cambiar estado de vuelta a patrulla
                 npc.SwitchState(new PatrolState());
                 yield break; // Termina la corrutina correctamente
@@ -59,5 +60,6 @@ public class ChaseState : INPCState
             npc.StopCoroutine(chaseRoutine);
     }
 
-    
+    [SerializeField] private string battleSceneName = "BattleScene";
+
 }

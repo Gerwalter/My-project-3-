@@ -15,6 +15,7 @@ public class StyleMeter : MonoBehaviour
     public StyleRank currentRank = StyleRank.D;
     [SerializeField] private readonly float[] rankThresholds = { 0, 100, 200, 300, 500, 700, 1000, Mathf.Infinity };
     public Image styleBar;
+    public Image PanelBar;
 
 
     [Header("Multiplicador de Estilo")]
@@ -57,11 +58,13 @@ public class StyleMeter : MonoBehaviour
         {
             styleText.enabled = false;
             styleBar.enabled = false;
+            PanelBar.enabled = false;
         }
         else
         {
             styleText.enabled = true;
             styleBar.enabled = true;
+            PanelBar.enabled = true;
         }
 
         if (timer >= resetTime)
