@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneChanger: MonoBehaviour
+public class Scene : MonoBehaviour
 {
     public string[] Scenes; // Nombres de las escenas a cargar
     [SerializeField] private int currentSceneIndex = -1; // Índice de la escena actual (-1 significa ninguna)

@@ -34,7 +34,7 @@ public class FOVAgent : FOVTarget
     {
         foreach (var agent in _otherAgents)
         {
-           // agent.ChangeColor(InFOV(agent.transform.position) ? Color.red : Color.white);
+            agent.ChangeColor(InFOV(agent.transform.position) ? Color.red : Color.white);
 
             //if(InFOV(agent.transform.position)) agent.ChangeColor(Color.red);
             //else agent.ChangeColor(Color.white);

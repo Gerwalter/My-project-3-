@@ -245,10 +245,4 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
         if (_observers.Contains(x)) return;
         _observers.Remove(x);
     }
-
-    private void OnDestroy()
-    {
-        EventManager.Unsubscribe("OnAttack", OnAttack);
-        EventManager.Unsubscribe("ComboChanger", ComboChanger);
-    }
 }
