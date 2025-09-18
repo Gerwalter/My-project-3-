@@ -5,7 +5,7 @@ public class EnemyManager : MonoBehaviour
 {
     public static EnemyManager Instance;
 
-    [SerializeField] private List<Enemy> enemies = new List<Enemy>();
+    private List<Enemy> enemies = new List<Enemy>();
 
     private void Awake()
     {
