@@ -1,32 +1,52 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : Health
 {
-    // Start is called before the first frame update
+    // Enemigo actualmente seleccionado/activo
+    public static Enemy enemyActivo;
+
+    private void OnEnable()
+    {
+        EventManager.Subscribe("SendDamage", RecibirDanio);
+    }
+
+    private void OnDisable()
+    {
+        EventManager.Unsubscribe("SendDamage", RecibirDanio);
+    }
+
+    private void RecibirDanio(params object[] parametros)
+    {
+        float damage = (float)parametros[0];
+        GameObject objetivo = (GameObject)parametros[1];
+
+        // Solo aplicar si el mensaje viene dirigido a este enemigo
+        if (objetivo == gameObject)
+        {
+            OnTakeDamage(damage);
+            print(GetLife);
+        }
+    }
     void Start()
     {
         EnemyManager.Instance.RegisterEnemy(this);
+        GetLife = maxHealth;
     }
 
-    public int health = 10;
 
-
-    public void TakeDamage(int amount)
+    public override void OnTakeDamage(float damage)
     {
-        health -= amount;
-        if (health <= 0)
-        {
+        GetLife -= damage;
+        if (_bloodVFX != null)
+            _bloodVFX.SendEvent("OnTakeDamage");
+
+        if (GetLife <= 0)
             Die();
-        }
     }
+
     private void Die()
     {
-        // Avisar al EnemyManager que este enemigo murió
         EnemyManager.Instance.UnregisterEnemy(this);
-
-        // Aquí puedes poner animación, efectos, etc.
         Destroy(gameObject);
     }
 

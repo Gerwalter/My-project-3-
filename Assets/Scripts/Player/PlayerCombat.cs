@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour, IAnimObservable
@@ -11,14 +9,13 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
     public KeyCode keyCode;
     public KeyCode fireKey;
     private bool isAttacking = false;
-   [SerializeField] private float comboTimer = 0f;
-                    public float comboResetTime = 1.2f;
-                    public float comboReset = 1.2f;
-   [SerializeField] private bool canCombo;
-
+    [SerializeField] private float comboTimer = 0f;
+    public float comboResetTime = 1.2f;
+    public float comboReset = 1.2f;
+    [SerializeField] private bool canCombo;
     [SerializeField] private float shootRepeatRate = 0.2f;
     private float shootTimer = 0f;
-
+    public float Damage;
     public bool CanCombo { get { return canCombo; } set { canCombo = value; } }
 
     private Queue<ComboInput> inputBuffer = new Queue<ComboInput>();
@@ -26,8 +23,8 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
     void Start()
     {
         currentNode = rootNode;
-   //     EventManager.Subscribe("OnAttack", OnAttack);
-   //     EventManager.Subscribe("ComboChanger", ComboChanger);
+        //     EventManager.Subscribe("OnAttack", OnAttack);
+        //     EventManager.Subscribe("ComboChanger", ComboChanger);
         //UnlockDefaultCombos(rootNode);
     }
 
@@ -103,7 +100,7 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
     void TryExecuteNode(ComboInput input)
     {
         ComboNode nextNode = currentNode.GetNextNode(input);
-        comboInput = input; 
+        comboInput = input;
 
         if (nextNode != null)
         {
@@ -190,6 +187,10 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
         foreach (Collider enemy in hitEnemies)
         {
             enemiesHit++;
+
+            // 🔹 Llamamos directamente al evento de daño para este enemigo
+            EventManager.Trigger("SendDamage", Damage, enemy.gameObject);
+            // Puedes ajustar el "10f" para usar valores según comboInput o un daño real
         }
 
         // Registrar los golpes reales en el combo counter
@@ -210,10 +211,6 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
 
         isAttacking = true;
         comboTimer = 0f;
-        //Debug.Log("Ejecutando nodo de ataque: " + node.nodeName); // Este es el log
-
-        //  yield return new WaitForSeconds(node.duration);
-
         isAttacking = false;
     }
 
