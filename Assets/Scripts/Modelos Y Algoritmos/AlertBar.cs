@@ -16,8 +16,6 @@ public class AlertBar : MonoBehaviour, IAlertSystemObserver
         {
             observable.Subscribe(this);
         }
-
-        imageBar.color = Color.green;
     }
 
     public void Notify(float Alert, float maxAlert)

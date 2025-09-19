@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2504108084714676904}
   - component: {fileID: 1524706342592511567}
   - component: {fileID: 957684317414477096}
-  - component: {fileID: 2256996886542010060}
   - component: {fileID: 8243799083501682679}
   - component: {fileID: 4629452918001069522}
   m_Layer: 0
@@ -101,29 +100,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coinID: SilverCoin
   GoldAmmount: 10
---- !u!136 &2256996886542010060
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5861663278414826460}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
+  detectionRadius: 0.48
+  collectRadius: 2
+  playerLayer:
     serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.49
-  m_Height: 0.46
-  m_Direction: 2
-  m_Center: {x: 0, y: 0, z: 0}
+    m_Bits: 8
 --- !u!54 &8243799083501682679
 Rigidbody:
   m_ObjectHideFlags: 0

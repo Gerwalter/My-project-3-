@@ -80,6 +80,8 @@ public class ThiefAlertSystem : MonoBehaviour, IAlertSystemObservable
         if (_observers.Contains(x)) return;
 
         _observers.Add(x);
+        foreach (var observer in _observers)
+            observer.Notify(_alert, _MaxAlert);
     }
 
     public void Unsubscribe(IAlertSystemObserver x)

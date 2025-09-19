@@ -39,7 +39,7 @@ public class PlayerStamina : IStaminaObservable
 
     private void HandleDash()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && Time.time > lastDashTime + dashCooldown && CurrentStamina >= DashCost)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && Time.time > lastDashTime + dashCooldown && CurrentStamina >= DashCost && !Input.GetKey(KeyCode.LeftControl))
         {
             IsDashing = true;
             lastDashTime = Time.time;
@@ -58,7 +58,7 @@ public class PlayerStamina : IStaminaObservable
             return;
         }
 
-        if (Input.GetKey(KeyCode.LeftShift) && _player.Direction.magnitude > 0.1f && CurrentStamina > 0)
+        if (Input.GetKey(KeyCode.LeftShift) && _player.Direction.magnitude > 0.1f && CurrentStamina > 0 && !Input.GetKey(KeyCode.LeftControl))
         {
             IsSprinting = true;
             CurrentStamina = Mathf.Max(0, CurrentStamina - SprintDrain * Time.deltaTime);

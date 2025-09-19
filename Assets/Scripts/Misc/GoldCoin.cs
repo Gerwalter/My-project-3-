@@ -5,22 +5,47 @@ using UnityEngine;
 public class GoldCoin : Coin
 {
     public int GoldAmmount;
-    private bool collected = false;
-
-    private void OnTriggerEnter(Collider other)
+    public float detectionRadius = 5f;   // Rango en el que detecta al jugador
+    public float collectRadius = 2f;       // Rango en el que puede atacar
+    public LayerMask playerLayer;
+    private Transform targetPlayer;
+    private void Start()
     {
-        if (collected) return;
+        collectRadius = detectionRadius;
+    }
+    private void Update()
+    {
+        Collider[] players = Physics.OverlapSphere(transform.position, detectionRadius, playerLayer);
 
-        // Si el objeto con el que chocó tiene el GoldManager
-        if (other.TryGetComponent<GoldManager>(out GoldManager intObj))
+        if (players.Length > 0)
         {
-            Colect();
+            targetPlayer = players[0].transform;
+
+            // Verificar si está lo suficientemente cerca para atacar
+            float distance = Vector3.Distance(transform.position, targetPlayer.position);
+            if (distance <= collectRadius)
+            {
+                Colect();
+            }
+        }
+        else
+        {
+            targetPlayer = null;
         }
     }
-    public override void Colect()
+
+
+public override void Colect()
     {
         EventManager.Trigger("IncreaseGold", GoldAmmount);
-        collected = true;
         Destroy(gameObject); // Destruye la moneda
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, detectionRadius);
+
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireSphere(transform.position, collectRadius);
     }
 }

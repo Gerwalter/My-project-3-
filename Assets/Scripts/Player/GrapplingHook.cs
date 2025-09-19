@@ -38,11 +38,11 @@ public class GrapplingHook : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(_grappleKey))
+        if (Input.GetKeyDown(_grappleKey) && !Input.GetKey(KeyCode.LeftControl))
         {
             Crosshair.enabled = true;
         }
-        if (Input.GetKeyUp(_grappleKey) && !_isGrappling)
+        if (Input.GetKeyUp(_grappleKey) && !_isGrappling && !Input.GetKey(KeyCode.LeftControl))
         {
             Crosshair.enabled = false;
            // CameraController.Instance.SwitchCamera();
