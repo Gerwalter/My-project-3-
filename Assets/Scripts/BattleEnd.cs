@@ -6,12 +6,4 @@ public class BattleEnd : MonoBehaviour
     {
         BattleManager.Instance.EndBattle();
     }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Escape)) 
-            {
-            OnBattleWon();
-            }
-    }
 }
