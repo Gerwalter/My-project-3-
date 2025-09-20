@@ -14,7 +14,6 @@ public class PatrolState : INPCState
     {
         if (npc.IsPlayerVisible())
         {
-            Debug.Log("AAA");
             npc.lastSeenPosition = npc.player.transform.position;
             npc.SwitchState(new ChaseState());
         }

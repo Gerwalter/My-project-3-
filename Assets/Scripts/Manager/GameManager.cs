@@ -29,14 +29,6 @@ public class GameManager : MonoBehaviour
         set { _player = value; }
     }
 
-    [SerializeField] private PlayerStats _stats;
-    public PlayerStats Stats
-    {
-        get { return _stats; }
-        set { _stats = value; }
-    }
-
-
     [SerializeField] private NavMeshSurface _surface;
     public NavMeshSurface Surface
     {

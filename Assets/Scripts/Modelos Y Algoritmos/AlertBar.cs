@@ -6,11 +6,11 @@ using UnityEngine.UI;
 public class AlertBar : MonoBehaviour, IAlertSystemObserver
 {
     public Image imageBar;
-
-    private void Awake()
+    public ThiefAlertSystem system;
+    private void Start()
     {
         // Accedemos al singleton
-        ThiefAlertSystem system = ThiefAlertSystem.instance;
+        system = ThiefAlertSystem.instance;
 
         if (system != null && system is IAlertSystemObservable observable)
         {

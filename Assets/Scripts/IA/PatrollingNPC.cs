@@ -51,7 +51,8 @@ public class PatrollingNPC : MonoBehaviour
     // Control de transición de estados
     private bool _isTransitioning;
     private INPCState _pendingState;
-
+    public bool hasTriggered = false;
+    [SerializeField] private string battleSceneName = "BattleScene";
     protected void Start()
     {
         pathfinder = new Pathfinding();
@@ -63,6 +64,13 @@ public class PatrollingNPC : MonoBehaviour
     private void Update()
     {
         currentState?.Update(this);
+
+        if (hasTriggered) 
+        {
+            string currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+            BattleManager.Instance.StartBattle(player.transform.position, currentScene, battleSceneName);
+            GetComponent<EnemyPersistent>()?.DefeatEnemy();
+        }
     }
 
     public void SwitchState(INPCState newState)
