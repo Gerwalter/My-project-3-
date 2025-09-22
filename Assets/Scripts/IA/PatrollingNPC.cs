@@ -65,12 +65,18 @@ public class PatrollingNPC : MonoBehaviour
     {
         currentState?.Update(this);
 
-        if (hasTriggered) 
+        if (hasTriggered)
         {
-            string currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-            BattleManager.Instance.StartBattle(player.transform.position, currentScene, battleSceneName);
-            GetComponent<EnemyPersistent>()?.DefeatEnemy();
+            DefeatEnemy();
         }
+    }
+
+    public void DefeatEnemy()
+    {
+        print("AAA");
+        string currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        BattleManager.Instance.StartBattle(player.transform.position, currentScene, battleSceneName);
+        GetComponent<EnemyPersistent>()?.DefeatEnemy();
     }
 
     public void SwitchState(INPCState newState)
