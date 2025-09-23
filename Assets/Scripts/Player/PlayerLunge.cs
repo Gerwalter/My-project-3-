@@ -14,7 +14,6 @@ public class PlayerLunge : MonoBehaviour
     public float cooldown = 1.2f;
 
     [Header("Optional")]
-    public MonoBehaviour playerMovementToDisable; // referencia a tu script de movimiento (si quieres desactivarlo durante la embestida)
     public PatrollingNPC patrol; // referencia a tu script de movimiento (si quieres desactivarlo durante la embestida)
 
     bool onCooldown = false;
@@ -29,12 +28,12 @@ public class PlayerLunge : MonoBehaviour
             Collider[] hits = Physics.OverlapSphere(transform.position, lungeRange, enemyLayer);
             if (hits.Length == 0)
             {
-                // retroalimentación simple: no hay enemigos
-                // podrías reproducir un sonido o animación aquí
+                // retroalimentaci n simple: no hay enemigos
+                // podr as reproducir un sonido o animaci n aqu 
                 return;
             }
 
-            // elegimos el enemigo más cercano
+            // elegimos el enemigo m s cercano
             Transform target = null;
             float bestDist = float.MaxValue;
             foreach (var c in hits)
@@ -49,16 +48,16 @@ public class PlayerLunge : MonoBehaviour
 
             if (target != null)
             {
-                // Antes de lanzarnos, comprobamos (si existe) el radio de detección del EnemyAmbush
+                // Antes de lanzarnos, comprobamos (si existe) el radio de detecci n del EnemyAmbush
                 EnemyAmbush ea = target.GetComponent<EnemyAmbush>();
                 if (ea != null)
                 {
                     float distToEnemy = Vector3.Distance(transform.position, ea.transform.position);
-                    // Si quieres obligar que el enemigo esté "detectando" (por ejemplo el jugador activa la UI),
+                    // Si quieres obligar que el enemigo est  "detectando" (por ejemplo el jugador activa la UI),
                     // usamos el radioDeteccion del enemigo como criterio:
                     if (distToEnemy > ea.radioDeteccion)
                     {
-                        // fuera del radio de detección del enemigo -> no se puede hacer sorpresa
+                        // fuera del radio de detecci n del enemigo -> no se puede hacer sorpresa
                         return;
                     }
                 }
@@ -73,9 +72,6 @@ public class PlayerLunge : MonoBehaviour
         isLunging = true;
         onCooldown = true;
 
-        if (playerMovementToDisable != null)
-            playerMovementToDisable.enabled = false;
-
         Vector3 startPos = transform.position;
         Vector3 dirToEnemy = (target.position - transform.position).normalized;
         Vector3 targetPoint = target.position - dirToEnemy * lungeStopDistance;
@@ -86,20 +82,14 @@ public class PlayerLunge : MonoBehaviour
             yield return null;
         }
 
-        // Aquí marcamos al enemigo como "alertado"
-             patrol = target.GetComponent<PatrollingNPC>();
+        // Aqu  marcamos al enemigo como "alertado"
         if (patrol != null)
         {
             patrol.hasTriggered = true;
         }
 
-        target.SendMessage("TakeDamage", damage, SendMessageOptions.DontRequireReceiver);
-        target.SendMessage("OnAmbushed", SendMessageOptions.DontRequireReceiver);
 
         yield return new WaitForSeconds(0.12f);
-
-        if (playerMovementToDisable != null)
-            playerMovementToDisable.enabled = true;
 
         isLunging = false;
         yield return new WaitForSeconds(cooldown);
