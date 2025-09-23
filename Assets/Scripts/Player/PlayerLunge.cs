@@ -82,7 +82,7 @@ public class PlayerLunge : MonoBehaviour
             yield return null;
         }
 
-        // Aqu  marcamos al enemigo como "alertado"
+        patrol = GetComponent<PatrollingNPC>();
         if (patrol != null)
         {
             patrol.hasTriggered = true;
