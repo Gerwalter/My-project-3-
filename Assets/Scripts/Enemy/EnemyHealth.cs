@@ -24,7 +24,6 @@ public class EnemyHealth : Health
         if (objetivo == gameObject)
         {
             OnTakeDamage(damage);
-            print(GetLife);
         }
     }
     virtual public void Start()
