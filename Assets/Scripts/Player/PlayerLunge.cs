@@ -14,7 +14,7 @@ public class PlayerLunge : MonoBehaviour
     public float cooldown = 1.2f;
 
     [Header("Optional")]
-    public MonoBehaviour playerMovementToDisable; // referencia a tu script de movimiento (si quieres desactivarlo durante la embestida)
+    public PatrollingNPC patrol; // referencia a tu script de movimiento (si quieres desactivarlo durante la embestida)
 
     bool onCooldown = false;
     bool isLunging = false;
@@ -72,47 +72,26 @@ public class PlayerLunge : MonoBehaviour
         isLunging = true;
         onCooldown = true;
 
-        if (playerMovementToDisable != null)
-            playerMovementToDisable.enabled = false;
-
         Vector3 startPos = transform.position;
-        // objetivo: punto delante del enemigo (para no atravesarlo)
         Vector3 dirToEnemy = (target.position - transform.position).normalized;
         Vector3 targetPoint = target.position - dirToEnemy * lungeStopDistance;
 
-        // Si usas Rigidbody-based movement, considera mover con rb.MovePosition en lugar de transform.
-        float dist = Vector3.Distance(transform.position, targetPoint);
-
         while (Vector3.Distance(transform.position, targetPoint) > 0.1f)
         {
-            // mover con Lerp/Slerp para sentir impulso
             transform.position = Vector3.MoveTowards(transform.position, targetPoint, lungeSpeed * Time.deltaTime);
             yield return null;
         }
 
-        // opcional: pequeño "empuje" / retroceso de la cámara o animación aquí
-
-        GetComponent<PatrollingNPC>()?.DefeatEnemy();
-        // Esperamos un frame o dos para "terminar" la animación del golpe
-        yield return new WaitForSeconds(0.12f);
-        // volvemos al punto inicial (o no — depende de tu diseño). Aquí vuelvo ligeramente atrás para dar sensación de rebote
-        Vector3 returnPoint = startPos; // podrías cambiarlo por una posición relativa
-
-        float t = 0f;
-        float duration = 0.18f;
-        Vector3 origin = transform.position;
-        while (t < duration)
+        // Aquí marcamos al enemigo como "alertado"
+        patrol = target.GetComponent<PatrollingNPC>();
+        if (patrol != null)
         {
-            t += Time.deltaTime;
-            transform.position = Vector3.Lerp(origin, returnPoint, t / duration);
-            yield return null;
+            patrol.hasTriggered = true;
         }
 
-        if (playerMovementToDisable != null)
-            playerMovementToDisable.enabled = true;
+        yield return new WaitForSeconds(0.12f);
 
         isLunging = false;
-        // cooldown
         yield return new WaitForSeconds(cooldown);
         onCooldown = false;
     }
