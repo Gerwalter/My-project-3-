@@ -8,23 +8,29 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: GoldCoin
-  m_Shader: {fileID: -6465566751694194690, guid: 7a6e317a4d65e644ba8182ec93bbfbb2, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 4a9e7546a2f3f6f4c92bfc0922cda8c2, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - _SURFACE_TYPE_TRANSPARENT
   - _USE_SCREEN_SPACE
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap: {}
+  stringTagMap:
+    RenderType: Transparent
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
     - _Base_Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _CelshadingSubGraph_5280e13c1a3c47e1a8cecae8b3c5267c_Texture2D_3009055030_Texture2D:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -46,7 +52,15 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Alpha: 1
+    - _AlphaClip: 0
+    - _AlphaThereshold: 1
+    - _AlphaToMask: 0
+    - _Blend: 0
+    - _CastShadows: 1
     - _CircleDensity: 182.61
+    - _Cull: 2
+    - _DstBlend: 10
     - _FalloffThreshold: 1.01
     - _Lerp: 1.24
     - _Lit_Threshold: 1.2
@@ -54,12 +68,20 @@ Material:
     - _Min: 1.04
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _Ring: 0.41
     - _Rotation: 0
+    - _SHADOW_PRO: 0
     - _ShadingMultiplier: 4
     - _Shadow: 1.73
+    - _SoftGrid: 0.14
     - _Softness: 1
+    - _SrcBlend: 5
+    - _Surface: 1
     - _Thereshold: 0
     - _USE_SCREEN_SPACE: 1
+    - _ZTest: 4
+    - _ZWrite: 1
+    - _ZWriteControl: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 0.9648957, b: 0, a: 1}
   m_BuildTextureStacks: []
