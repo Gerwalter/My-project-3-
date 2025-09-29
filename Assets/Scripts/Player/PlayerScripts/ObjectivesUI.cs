@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+Ôªøusing System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,7 +26,7 @@ public class ObjectivesUI : MonoBehaviour
     {
         if (panel != null)
         {
-            // Mostrar mientras Tab est· presionado
+            // Mostrar mientras Tab est√° presionado
             panel.SetActive(Input.GetKey(KeyCode.Tab));
         }
     }
@@ -35,29 +35,34 @@ public class ObjectivesUI : MonoBehaviour
 
     public void RefreshUI()
     {
-        // limpiar y (re)crear
         foreach (Transform t in contentParent) Destroy(t.gameObject);
         rows.Clear();
 
         if (ObjectiveManager.Instance == null) return;
-        foreach (var obj in ObjectiveManager.Instance.objectives)
+
+        foreach (var cfg in ObjectiveManager.Instance.objectiveConfigs)
         {
+            //  Aqu√≠ filtramos: si el objetivo tiene requiredCount = 0, no lo mostramos
+            if (cfg.requiredCount <= 0) continue;
+
             GameObject row = Instantiate(rowPrefab, contentParent);
             TextMeshProUGUI t = row.GetComponentInChildren<TextMeshProUGUI>();
             if (t != null)
             {
-                t.text = $"{obj.itemType} {obj.currentCount}/{obj.requiredCount}";
-                rows[obj.itemType] = t;
+                t.text = $"{cfg.itemType} {cfg.currentCount}/{cfg.requiredCount}";
+                rows[cfg.itemType] = t;
             }
         }
     }
 
-    // MÈtodo p˙blico si quieres actualizar solo un tipo
     public void UpdateRow(ItemType type)
     {
         if (ObjectiveManager.Instance == null) return;
-        var obj = ObjectiveManager.Instance.objectives.Find(o => o.itemType == type);
-        if (obj != null && rows.ContainsKey(type))
-            rows[type].text = $"{obj.itemType} {obj.currentCount}/{obj.requiredCount}";
+        var cfg = ObjectiveManager.Instance.objectiveConfigs.Find(o => o.itemType == type);
+
+        if (cfg != null && cfg.requiredCount > 0 && rows.ContainsKey(type))
+        {
+            rows[type].text = $"{cfg.itemType} {cfg.currentCount}/{cfg.requiredCount}";
+        }
     }
 }
