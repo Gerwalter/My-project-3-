@@ -10,11 +10,10 @@ public class BattleManager : MonoBehaviour
 
     private void Awake()
     {
-        // Asegurarse de que solo exista un BattleManager
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // persiste entre escenas
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -22,25 +21,21 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Llamar cuando empiece una batalla
-    /// </summary>
     public void StartBattle(Vector3 playerPosition, string currentScene, string battleScene)
     {
         savedPlayerPosition = playerPosition;
         savedSceneName = currentScene;
 
-        // Cargar escena de batalla
-        SceneManager.LoadScene(battleScene);
+        // Usamos la pantalla de carga
+        LoadingScreen.nextScene = battleScene;
+        SceneManager.LoadScene("LoadingScene");
     }
 
-    /// <summary>
-    /// Llamar cuando la batalla termine
-    /// </summary>
     public void EndBattle()
     {
-        SceneManager.LoadScene(savedSceneName);
-        // Usamos SceneManager.sceneLoaded para reubicar al jugador al cargar
+        LoadingScreen.nextScene = savedSceneName;
+        SceneManager.LoadScene("LoadingScene");
+
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -54,7 +49,6 @@ public class BattleManager : MonoBehaviour
                 player.transform.position = savedPlayerPosition;
             }
 
-            // Dejar de escuchar el evento
             SceneManager.sceneLoaded -= OnSceneLoaded;
         }
     }

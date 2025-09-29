@@ -10,11 +10,12 @@ public class Enemy : EnemyHealth
         base.Start();
         EnemyManager.Instance.RegisterEnemy(this);
     }
+
+
     public override void Die()
     {
         EnemyManager.Instance.UnregisterEnemy(this);
         base.Die();
-
     }
     [Header("Enemy Settings")]
     public float detectionRadius = 5f;   // Rango en el que detecta al jugador

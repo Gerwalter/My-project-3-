@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class EnemyHealth : Health
+public class EnemyHealth : Health, IEnemy
 {
     // Enemigo actualmente seleccionado/activo
     public static EnemyHealth enemyActivo;
-
+    public Animator anim;
     private void OnEnable()
     {
         EventManager.Subscribe("SendDamage", RecibirDanio);
@@ -38,14 +38,24 @@ public class EnemyHealth : Health
         GetLife -= damage;
         if (_bloodVFX != null)
             _bloodVFX.SendEvent("OnTakeDamage");
-
+        anim.SetTrigger("Damage");
         if (GetLife <= 0)
             Die();
     }
 
     virtual public void Die()
     {
-        Destroy(gameObject);
+        Despawn();
     }
 
+    public void Spawn(Vector3 position)
+    {
+        gameObject.SetActive(true);
+        transform.position = position;
+    }
+
+    public void Despawn()
+    {
+        gameObject.SetActive(false);
+    }
 }

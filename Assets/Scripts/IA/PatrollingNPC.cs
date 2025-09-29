@@ -73,7 +73,6 @@ public class PatrollingNPC : MonoBehaviour
 
     public void DefeatEnemy()
     {
-        print("AAA");
         string currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
         BattleManager.Instance.StartBattle(player.transform.position, currentScene, battleSceneName);
         GetComponent<EnemyPersistent>()?.DefeatEnemy();

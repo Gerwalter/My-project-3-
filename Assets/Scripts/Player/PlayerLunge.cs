@@ -10,11 +10,8 @@ public class PlayerLunge : MonoBehaviour
     public LayerMask enemyLayer;            // capa de enemigos
     public float lungeSpeed = 25f;          // velocidad de la "embestida"
     public float lungeStopDistance = 1.2f;  // distancia al objetivo donde se considera golpeado
-    public float damage = 25f;
+   // public float damage = 25f;
     public float cooldown = 1.2f;
-
-    [Header("Optional")]
-    public PatrollingNPC patrol; // referencia a tu script de movimiento (si quieres desactivarlo durante la embestida)
 
     bool onCooldown = false;
     bool isLunging = false;
@@ -26,15 +23,10 @@ public class PlayerLunge : MonoBehaviour
         if (Input.GetKeyDown(lungeKey) && !onCooldown)
         {
             Collider[] hits = Physics.OverlapSphere(transform.position, lungeRange, enemyLayer);
-            if (hits.Length == 0)
-            {
-                // retroalimentaci n simple: no hay enemigos
-                // podr as reproducir un sonido o animaci n aqu 
-                return;
-            }
+            if (hits.Length == 0) return;
 
-            // elegimos el enemigo m s cercano
-            Transform target = null;
+            // elegimos el enemigo más cercano (guardamos el collider)
+            Collider targetCollider = null;
             float bestDist = float.MaxValue;
             foreach (var c in hits)
             {
@@ -42,39 +34,37 @@ public class PlayerLunge : MonoBehaviour
                 if (d < bestDist)
                 {
                     bestDist = d;
-                    target = c.transform;
+                    targetCollider = c;
                 }
             }
 
-            if (target != null)
+            if (targetCollider != null)
             {
-                // Antes de lanzarnos, comprobamos (si existe) el radio de detecci n del EnemyAmbush
-                EnemyAmbush ea = target.GetComponent<EnemyAmbush>();
+                // comprobamos (si existe) el radio de detección del EnemyAmbush en cualquiera de los padres
+                EnemyAmbush ea = targetCollider.GetComponentInParent<EnemyAmbush>();
                 if (ea != null)
                 {
                     float distToEnemy = Vector3.Distance(transform.position, ea.transform.position);
-                    // Si quieres obligar que el enemigo est  "detectando" (por ejemplo el jugador activa la UI),
-                    // usamos el radioDeteccion del enemigo como criterio:
                     if (distToEnemy > ea.radioDeteccion)
                     {
-                        // fuera del radio de detecci n del enemigo -> no se puede hacer sorpresa
+                        // fuera del radio de detección -> no se puede hacer sorpresa
                         return;
                     }
                 }
 
-                StartCoroutine(LungeRoutine(target));
+                StartCoroutine(LungeRoutine(targetCollider));
             }
         }
     }
 
-    IEnumerator LungeRoutine(Transform target)
+    IEnumerator LungeRoutine(Collider targetCollider)
     {
         isLunging = true;
         onCooldown = true;
 
         Vector3 startPos = transform.position;
-        Vector3 dirToEnemy = (target.position - transform.position).normalized;
-        Vector3 targetPoint = target.position - dirToEnemy * lungeStopDistance;
+        Vector3 dirToEnemy = (targetCollider.transform.position - transform.position).normalized;
+        Vector3 targetPoint = targetCollider.transform.position - dirToEnemy * lungeStopDistance;
 
         while (Vector3.Distance(transform.position, targetPoint) > 0.1f)
         {
@@ -82,12 +72,19 @@ public class PlayerLunge : MonoBehaviour
             yield return null;
         }
 
-        patrol = GetComponent<PatrollingNPC>();
-        if (patrol != null)
-        {
-            patrol.hasTriggered = true;
-        }
+        // --> Aquí está la corrección importante: buscamos el PatrollingNPC EN el enemigo, no en el jugador.
+        PatrollingNPC enemyPatrol = targetCollider.GetComponentInParent<PatrollingNPC>();
+        if (enemyPatrol == null) enemyPatrol = targetCollider.GetComponentInChildren<PatrollingNPC>();
 
+        if (enemyPatrol != null)
+        {
+            enemyPatrol.hasTriggered = true;
+            Debug.Log($"PlayerLunge: alertado PatrollingNPC en {targetCollider.gameObject.name}");
+        }
+        else
+        {
+            Debug.LogWarning($"PlayerLunge: no se encontró PatrollingNPC en el objetivo {targetCollider.gameObject.name}");
+        }
 
         yield return new WaitForSeconds(0.12f);
 
