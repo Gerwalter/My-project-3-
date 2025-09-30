@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public enum ItemType { Vasija, Cuadro, Estatua }
+public enum ItemType { Vasija, Cuadro, Artefacto }
 
 [System.Serializable]
 public class ObjectiveRandomConfig

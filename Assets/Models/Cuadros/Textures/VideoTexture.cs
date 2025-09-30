@@ -1,51 +1,69 @@
 using UnityEngine;
 using UnityEngine.Video;
+using UnityEngine.Audio;
 
+[RequireComponent(typeof(VideoPlayer))]
+[RequireComponent(typeof(Renderer))]
+[RequireComponent(typeof(AudioSource))]
 public class VideoTexture : MonoBehaviour
 {
-    [Header("Configuración del video")]
-    public VideoClip videoClip;          // El video que querés reproducir
-    public bool loop = true;             // Si el video se repite
+    [Header("Video Settings")]
+    public VideoClip videoClip;
+    public bool playOnAwake = true;
+    public string textureProperty = "_BaseMap"; // o "_MainTex" según tu shader
 
-    [Header("Materiales de la TV")]
-    public Material[] tvMaterials;       // Varios materiales
-    public string textureProperty = "_BaseMap"; // Nombre de la propiedad del shader
+    [Header("Audio Settings")]
+    public AudioMixerGroup musicGroup; // arrastra aquí el canal "Music" de tu mixer
 
     private VideoPlayer videoPlayer;
-    private RenderTexture renderTexture;
+    private Renderer rend;
+    private AudioSource audioSource;
 
     void Awake()
     {
-        // Crear RenderTexture
-        renderTexture = new RenderTexture(1920, 1080, 0);
-        renderTexture.Create();
-
-        // Configurar VideoPlayer
+        // Obtener componentes
         videoPlayer = GetComponent<VideoPlayer>();
-        videoPlayer.playOnAwake = false;
-        videoPlayer.isLooping = loop;
-        videoPlayer.renderMode = VideoRenderMode.RenderTexture;
-        videoPlayer.targetTexture = renderTexture;
+        rend = GetComponent<Renderer>();
+        audioSource = GetComponent<AudioSource>();
 
+        // Configuración del VideoPlayer
+        videoPlayer.playOnAwake = playOnAwake;
+        videoPlayer.isLooping = true;
+
+        // --- VIDEO ---
+        videoPlayer.renderMode = VideoRenderMode.RenderTexture;
+        RenderTexture rt = new RenderTexture(512, 512, 0);
+        videoPlayer.targetTexture = rt;
+        //rend.material.SetTexture(textureProperty, rt);
+
+        // --- AUDIO ---
+        videoPlayer.audioOutputMode = VideoAudioOutputMode.AudioSource;
+        videoPlayer.EnableAudioTrack(0, true);
+        videoPlayer.SetTargetAudioSource(0, audioSource);
+
+        // Configuración del AudioSource
+        audioSource.playOnAwake = false;
+        audioSource.loop = true;
+        if (musicGroup != null)
+            audioSource.outputAudioMixerGroup = musicGroup;
+
+        // Asignar el clip
         if (videoClip != null)
             videoPlayer.clip = videoClip;
 
-        // Asignar la textura a todos los materiales
-        foreach (var mat in tvMaterials)
-        {
-            if (mat != null)
-                mat.SetTexture(textureProperty, renderTexture);
-        }
+        if (playOnAwake && videoClip != null)
+            videoPlayer.Play();
     }
 
-    void Start()
+    public void PlayVideo()
     {
-        videoPlayer.Play();
+        if (!videoPlayer.isPlaying)
+            videoPlayer.Play();
     }
 
-    private void OnDestroy()
+    public void StopVideo()
     {
-        if (renderTexture != null)
-            renderTexture.Release();
+        if (videoPlayer.isPlaying)
+            videoPlayer.Stop();
     }
 }

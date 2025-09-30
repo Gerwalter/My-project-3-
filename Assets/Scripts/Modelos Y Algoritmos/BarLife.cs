@@ -17,6 +17,6 @@ public class BarLife : MonoBehaviour, ILifeObserver
     {
         float lifePercent = life / maxLife;
         imageBar.fillAmount = lifePercent;
-        imageBar.color = Color.Lerp(Color.red, Color.green, lifePercent);
+       // imageBar.color = Color.Lerp(Color.red, Color.green, lifePercent);
     }
 }
