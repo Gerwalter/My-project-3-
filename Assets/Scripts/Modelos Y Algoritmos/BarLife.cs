@@ -11,7 +11,7 @@ public class BarLife : MonoBehaviour, ILifeObserver
     {
         if(observable.GetComponent<ILifeObservable>() != null)
             observable.GetComponent<ILifeObservable>().Subscribe(this);
-        imageBar.color = Color.green;
+       // imageBar.color = Color.green;
     }
     public void Notify(float life, float maxLife)
     {

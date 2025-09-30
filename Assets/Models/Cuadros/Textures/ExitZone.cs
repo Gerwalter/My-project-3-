@@ -17,7 +17,8 @@ public class ExitZone : MonoBehaviour
             if (ObjectiveManager.Instance != null && ObjectiveManager.Instance.AllComplete())
             {
                 Debug.Log("¡Todos los objetivos completados! Cargando escena de victoria...");
-                SceneManager.LoadScene(victorySceneName);
+                LoadingScreen.nextScene = victorySceneName;
+                SceneManager.LoadScene("LoadingScene");
             }
             else
             {
