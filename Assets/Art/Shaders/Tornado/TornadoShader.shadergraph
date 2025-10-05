@@ -874,6 +874,24 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Texture2DInputMaterialSlot",
+    "m_ObjectId": "0994a342bdac40b2b9da02fe10e49fc3",
+    "m_Id": -1285912266,
+    "m_DisplayName": "Texture2D",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Texture2D",
+    "m_StageCapability": 3,
+    "m_BareResource": false,
+    "m_Texture": {
+        "m_SerializedTexture": "{\"texture\":{\"instanceID\":0}}",
+        "m_Guid": ""
+    },
+    "m_DefaultType": 0
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "09ed31b7694c4cdb82960a83c07c0f95",
     "m_Id": 4,
@@ -1401,7 +1419,7 @@
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
-    "m_Value": 20.0,
+    "m_Value": 20.899999618530275,
     "m_FloatType": 0,
     "m_RangeValues": {
         "x": 0.0,
@@ -3402,15 +3420,15 @@
     "m_Group": {
         "m_Id": ""
     },
-    "m_Name": "Celshadin(SubGraph)",
+    "m_Name": "Celshading(SubGraph)",
     "m_DrawState": {
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 27.549957275390626,
-            "y": -43.45002365112305,
-            "width": 210.0,
-            "height": 326.0
+            "x": 46.00001907348633,
+            "y": -241.3333282470703,
+            "width": 231.99998474121095,
+            "height": 352.00006103515627
         }
     },
     "m_Slots": [
@@ -3422,6 +3440,9 @@
         },
         {
             "m_Id": "26779a47afa044ac8632cbc538f7f72a"
+        },
+        {
+            "m_Id": "0994a342bdac40b2b9da02fe10e49fc3"
         },
         {
             "m_Id": "7646ddded3ea43c2b6c06502354e9d7c"
@@ -3439,12 +3460,14 @@
     "m_PropertyGuids": [
         "a3b73c4f-9c52-401f-95e2-7bc1efac2751",
         "ba999be6-1205-4da0-b967-34e7d43e4a2f",
-        "73ddd51d-64e1-48bf-bf36-a7faa36b933a"
+        "73ddd51d-64e1-48bf-bf36-a7faa36b933a",
+        "f9397d38-26ad-4397-88c7-f6e22b1502eb"
     ],
     "m_PropertyIds": [
         1945431655,
         1061671054,
-        -78189344
+        -78189344,
+        -1285912266
     ],
     "m_Dropdowns": [],
     "m_DropdownSelectedEntries": []
@@ -4049,7 +4072,7 @@
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
-    "m_Value": 1.0,
+    "m_Value": 1.1799999475479127,
     "m_FloatType": 0,
     "m_RangeValues": {
         "x": 0.0,
@@ -4069,10 +4092,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 261.00006103515627,
-            "y": 14.000014305114746,
-            "width": 207.99993896484376,
-            "height": 302.0
+            "x": 337.9999694824219,
+            "y": -44.0,
+            "width": 209.33334350585938,
+            "height": 304.0
         }
     },
     "m_Slots": [

@@ -1,20 +1,27 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class WaveSpawner : MonoBehaviour
 {
+    [Header("Enemy Settings")]
     public Enemy enemyPrefab;
     public Transform parent;
-
     private EnemyFactory factory;
-    public BoxCollider spawnArea;
 
-    public float spawnDelay = 2f;      // tiempo entre indicador y enemigo
-    public float WaveTotal = 2f;      // tiempo entre indicador y enemigo
+    [Header("Spawn Settings")]
+    public BoxCollider spawnArea;
+    public float spawnDelay = 2f; // tiempo entre indicador y aparición del enemigo
+
+    [Header("Wave Settings")]
+    public int totalWaves = 5; // número total de oleadas
+    public List<int> enemiesPerWave = new List<int> { 3, 5, 7, 9, 12 }; // cantidad por oleada
+    public float timeBetweenWaves = 5f; // tiempo entre oleadas
 
     [Header("Indicator")]
     public GameObject spawnIndicatorPrefab;
-    Vector3 GetRandomSpawnPosition()
+
+    private Vector3 GetRandomSpawnPosition()
     {
         if (spawnArea == null) return Vector3.zero;
 
@@ -36,41 +43,42 @@ public class WaveSpawner : MonoBehaviour
             Gizmos.DrawWireCube(spawnArea.transform.position, spawnArea.size);
         }
     }
+
     void Start()
     {
         factory = new EnemyFactory();
 
-        // Registrar un pool para Goblins
-        var goblinPool = new ObjectPool<Enemy>(enemyPrefab, 10, parent);
-        factory.RegisterPool("Enemy", goblinPool);
+        // Crear un pool base
+        var pool = new ObjectPool<Enemy>(enemyPrefab, 20, parent);
+        factory.RegisterPool("Enemy", pool);
 
-        // Lanzar corrutina de oleadas
         StartCoroutine(SpawnWaves());
     }
 
     IEnumerator SpawnWaves()
     {
-        int wave = 1;
-        while (true)
+        for (int wave = 0; wave < totalWaves; wave++)
         {
-            Debug.Log("Oleada " + wave);
+            int enemiesToSpawn = (wave < enemiesPerWave.Count) ? enemiesPerWave[wave] : enemiesPerWave[enemiesPerWave.Count - 1];
+            Debug.Log($"Oleada {wave + 1} - Enemigos: {enemiesToSpawn}");
 
-            for (int i = 0; i < WaveTotal; i++)
+            for (int i = 0; i < enemiesToSpawn; i++)
             {
                 var pos = GetRandomSpawnPosition();
                 if (spawnIndicatorPrefab != null)
                 {
-                    GameObject indicator = Instantiate((spawnIndicatorPrefab), (pos + new Vector3 (0, .03f, 0)), Quaternion.Euler(-90f, 0f, 0f));
-                    Destroy(indicator, spawnDelay+1);
+                    GameObject indicator = Instantiate(spawnIndicatorPrefab, pos + new Vector3(0, .03f, 0), Quaternion.Euler(-90f, 0f, 0f));
+                    Destroy(indicator, spawnDelay + 1);
                 }
 
-                yield return new WaitForSeconds(spawnDelay+0.5f);
+                yield return new WaitForSeconds(spawnDelay);
                 factory.Create("Enemy", pos);
                 yield return new WaitForSeconds(0.5f);
             }
 
-            wave++;
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(timeBetweenWaves);
         }
+
+        Debug.Log("Todas las oleadas han terminado.");
     }
 }

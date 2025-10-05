@@ -5,6 +5,7 @@ public class StealableObject : ButtonBehaviour
 {
     public ItemType itemType = ItemType.Vasija;
     public int stealAmount = 1; // cuantos cuenta un robo (por defecto 1)
+    public int alertAmmount = 1; // cuantos cuenta un robo (por defecto 1)
     public GameObject stealConfirmHUDPrefab; // opcional: un prefab con botones "Robar / Cancelar"
     public bool destroyOnSteal = true; // si se destruye el objeto al robar
 
@@ -44,7 +45,7 @@ public class StealableObject : ButtonBehaviour
         }
 
         ObjectiveManager.Instance.Steal(itemType, stealAmount);
-
+        EventManager.Trigger("IncreaseAlert", alertAmmount);
         // Aquí puedes reproducir sonido, animación, spawn de loot, etc.
         Debug.Log($"Objeto {itemType} robado.");
 
