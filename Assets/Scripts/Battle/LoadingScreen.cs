@@ -18,7 +18,6 @@ public class LoadingScreen : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(FadeIn()); // Al entrar, fade desde negro a transparente
         StartCoroutine(LoadAsync());
     }
 
@@ -39,8 +38,7 @@ public class LoadingScreen : MonoBehaviour
                 loadingText.text = "100%";
 
                 // Pequeña pausa y fade out antes de entrar a la escena
-                yield return new WaitForSeconds(0.5f);
-                yield return StartCoroutine(FadeOut());
+                yield return new WaitForSeconds(0.75f);
                 op.allowSceneActivation = true;
             }
 
@@ -48,18 +46,7 @@ public class LoadingScreen : MonoBehaviour
         }
     }
 
-    IEnumerator FadeIn()
-    {
-        fadePanel.alpha = 1;
-        float t = 0;
-        while (t < fadeDuration)
-        {
-            t += Time.deltaTime;
-            fadePanel.alpha = 1 - (t / fadeDuration);
-            yield return null;
-        }
-        fadePanel.alpha = 0;
-    }
+    
 
     IEnumerator FadeOut()
     {

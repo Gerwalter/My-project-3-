@@ -285,6 +285,7 @@ GameObject:
   - component: {fileID: 495897466}
   - component: {fileID: 495897465}
   - component: {fileID: 495897464}
+  - component: {fileID: 495897468}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -377,6 +378,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!225 &495897468
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 495897463}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &745234882
 GameObject:
   m_ObjectHideFlags: 0
@@ -765,7 +778,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loadingBar: {fileID: 1498097304}
   loadingText: {fileID: 1800702847}
-  fadePanel: {fileID: 0}
+  fadePanel: {fileID: 495897468}
   fadeDuration: 1
 --- !u!4 &1286537808
 Transform:

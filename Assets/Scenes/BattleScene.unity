@@ -6860,6 +6860,7 @@ GameObject:
   - component: {fileID: 1146349927}
   - component: {fileID: 1146349926}
   - component: {fileID: 1146349925}
+  - component: {fileID: 1146349928}
   m_Layer: 0
   m_Name: Pause (1)
   m_TagString: Untagged
@@ -6917,6 +6918,19 @@ Transform:
   - {fileID: 1729574698}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1146349928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1146349924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 765bd2e3ca9f7f440bcd34224ebf401d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadingSceneName: LoadingScene
 --- !u!1 &1149008919
 GameObject:
   m_ObjectHideFlags: 0
@@ -8005,9 +8019,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1146349926}
-        m_TargetAssemblyTypeName: PauseManager, Assembly-CSharp
-        m_MethodName: QuitToMainMenu
+      - m_Target: {fileID: 1146349928}
+        m_TargetAssemblyTypeName: RestartButton, Assembly-CSharp
+        m_MethodName: RestartLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11628,6 +11642,14 @@ PrefabInstance:
     - target: {fileID: 802138722031963208, guid: 72409ccaa2fce204daa0c57bd49770ba, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2999710837917971474, guid: 72409ccaa2fce204daa0c57bd49770ba, type: 3}
+      propertyPath: attackDamage
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2999710837917971474, guid: 72409ccaa2fce204daa0c57bd49770ba, type: 3}
+      propertyPath: attackCooldown
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 9112864795212777025, guid: 72409ccaa2fce204daa0c57bd49770ba, type: 3}
       propertyPath: m_Name
