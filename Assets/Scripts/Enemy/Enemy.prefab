@@ -902,7 +902,7 @@ VFXRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1846350653753924159}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -2615,7 +2615,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &515546930092009264
 Transform:
   m_ObjectHideFlags: 0
@@ -2646,12 +2646,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bloodVFX: {fileID: 5447051676155871467}
-  maxHealth: 10
+  maxHealth: 5
   anim: {fileID: 3353439412863764815}
-  detectionRadius: 3.4
-  attackRange: 1.92
-  attackDamage: 10
-  attackCooldown: 1.5
+  detectionRadius: 3
+  attackRange: 1.6
+  attackDamage: 2
+  attackCooldown: 4
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
