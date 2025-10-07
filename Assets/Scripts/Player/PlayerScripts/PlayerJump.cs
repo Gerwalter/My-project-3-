@@ -17,10 +17,17 @@ public class PlayerJump
         if (Input.GetKeyDown(KeyCode.Space) && grounded)
         {
             EventManager.Trigger("Input", "onJump");
-            Jump(Vector3.up);
+
         }
     }
-
+    public void Start()
+    {
+        EventManager.Subscribe("OnJump", JumpUp);
+    }
+    private void JumpUp(params object[] args)
+    {
+        Jump(Vector3.up);
+    }
     public void Jump(Vector3 direction)
     {
         _player.Rigidbody.AddForce(direction * _player.JumpForce, ForceMode.Impulse);

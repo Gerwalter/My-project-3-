@@ -5,9 +5,8 @@ using UnityEngine;
 public class PatrollingNPC : MonoBehaviour
 {
     [Header("Patrullaje")]
-    public List<Node> patrolPoints;
+    public List<Node> patrolPoints = new List<Node>();
     public float moveSpeed = 2f;
-    public Color NPCColor;
     public TypeOfPathfinding pathfindingType;
     public TypeOfPathCalc myPathCalc;
 
@@ -16,29 +15,23 @@ public class PatrollingNPC : MonoBehaviour
     public float investigateDuration = 4f;
 
     [Header("Detección de Suelo")]
-    public LayerMask groundLayers = ~0; // Todas por defecto
+    public LayerMask groundLayers = ~0;
     public float groundRayLength = 2f;
-    public Vector3 groundRayOffset = new Vector3(0, 1f, 0);
-
-    // Debug gizmo
-    private Vector3 debugGroundRayStart;
-    private Vector3 debugGroundRayEnd;
-    private bool debugGroundHit;
-    [Header("Tiempos de Comportamiento")]
-    public float timeBeforeReturningToPatrol = 2f;
-    [SerializeField] private INPCState currentState;
-
-    [Header("Alerta")]
-    public bool hasBeenAlerted = false;
+    [SerializeField] private Vector3 groundRayOffset = new Vector3(0, 1f, 0);
 
     [Header("Detección y Alerta")]
     public GameObject player;
+    public LayerMask playerLayer;
     public FOVAgent FOVAgent;
 
     [Header("Captura")]
     public float captureRange = 1.5f;
 
     [HideInInspector] public Vector3 lastSeenPosition;
+
+    // Estado y path
+    [SerializeField] private INPCState currentState;
+    private bool _isSwitchingState = false;
 
     private int currentTargetIndex = 0;
     private bool isMoving = false;
@@ -48,15 +41,38 @@ public class PatrollingNPC : MonoBehaviour
     private Coroutine followPathRoutine;
     private Coroutine patrolRoutineHandle;
 
-    // Control de transición de estados
-    private bool _isTransitioning;
-    private INPCState _pendingState;
+    // Debug
+    private Vector3 debugGroundRayStart;
+    private Vector3 debugGroundRayEnd;
+    private bool debugGroundHit;
+
+    // Cached nodes
+    private Node[] cachedNodes;
+
+    // Otros
     public bool hasTriggered = false;
     [SerializeField] private string battleSceneName = "BattleScene";
+
+    [Header("Distracciones / Audición")]
+    [Tooltip("Capas que pueden escuchar el sonido (por ejemplo: NPCs en layer 'NPC')")]
+    public LayerMask hearingLayerMask = ~0;
+    [Tooltip("Distancia máxima a la que el NPC puede oír (si usas OverlapSphere desde SoundEmitter)")]
+    public float hearingRange = 10f; // valor por defecto, SoundEmitter normalmente define su propio radio
+
+    [HideInInspector] public Vector3 lastHeardPosition;
+    [HideInInspector] public bool heardDistraction = false;
+    [Tooltip("Duración de investigación si la investigación fue causada por una distracción")]
+    public float distractionInvestigateDuration = 6f; // override para distracciones
+
     protected void Start()
     {
         pathfinder = new Pathfinding();
-        FOVAgent.ChangeColor(NPCColor);
+        // Cachear nodos (mejor que buscar cada vez)
+        cachedNodes = FindObjectsOfType<Node>();
+
+        // Aplicar configuración global de pathcalc
+        PathfindingGameManager.instance.myPathCalc = myPathCalc;
+
         SwitchState(new PatrolState());
         NPCAlertSystem.RegisterNPC(this);
     }
@@ -66,9 +82,7 @@ public class PatrollingNPC : MonoBehaviour
         currentState?.Update(this);
 
         if (hasTriggered)
-        {
             DefeatEnemy();
-        }
     }
 
     public void DefeatEnemy()
@@ -77,56 +91,61 @@ public class PatrollingNPC : MonoBehaviour
         BattleManager.Instance.StartBattle(player.transform.position, currentScene, battleSceneName);
         GetComponent<EnemyPersistent>()?.DefeatEnemy();
     }
+    public void HearNoise(Vector3 sourcePosition, float intensity = 1f)
+    {
+        print("Chocó");
+        // Si está persiguiendo al jugador intensamente, quizá no se distrae.
+        // Ajusta la condición según tu diseño (ejemplo: si está en ChaseState lo ignora).
+        if (currentState is ChaseState)
+        {
+            // Ignorar si estás en persecución. Cambiar comportamiento si quieres que los NPCs puedan ser distraídos en chase.
+            return;
+        }
 
+        // Registrar fuente y marcar como distracción
+        lastHeardPosition = sourcePosition;
+        heardDistraction = true;
+
+        // Cambiar a investigar inmediatamente
+        StopPatrolRoutine();
+        StopFollowingPath();
+
+        // Reutilizamos InvestigateState (que leerá heardDistraction para usar la duración especifica)
+        SwitchState(new InvestigateState());
+    }
+    #region StateManagement (simplificado)
     public void SwitchState(INPCState newState)
     {
-        // Evita cambiar al mismo estado
-        if (currentState != null && currentState.GetType() == newState.GetType())
-            return;
-
-        if (_isTransitioning)
+        if (newState == null) return;
+        if (currentState != null && currentState.GetType() == newState.GetType()) return;
+        if (_isSwitchingState)
         {
-            _pendingState = newState;
+            // Evitamos reentradas: simplemente ignoramos cambios simultáneos
             return;
         }
 
-        StartCoroutine(SwitchStateDeferred(newState));
-    }
-
-    private IEnumerator SwitchStateDeferred(INPCState newState)
-    {
-        _isTransitioning = true;
-
-        // Salir del estado actual
+        _isSwitchingState = true;
         currentState?.Exit(this);
-
-        // Yield para cortar posibles llamadas recursivas
-        yield return null;
-
-        // Entrar al nuevo estado
         currentState = newState;
         currentState.Enter(this);
-
-        _isTransitioning = false;
-
-        // Si se pidió otro cambio mientras tanto, lo aplicamos
-        if (_pendingState != null)
-        {
-            var next = _pendingState;
-            _pendingState = null;
-            SwitchState(next);
-        }
+        _isSwitchingState = false;
     }
+    #endregion
 
+    #region Detección
     public bool IsPlayerVisible()
     {
-        return FOVAgent.InFOV(player.transform.position);
+        if (player == null) return false;
+        if (((1 << player.layer) & playerLayer) == 0) return false;
+        return FOVAgent != null && FOVAgent.InFOV(player.transform.position);
     }
 
     public void OnPlayerSpotted(Vector3 playerPosition)
     {
-        lastSeenPosition = playerPosition;
+        if (player == null) return;
+        if (((1 << player.layer) & playerLayer) == 0) return;
 
+        lastSeenPosition = playerPosition;
         if (currentState is not InvestigateState)
         {
             StopFollowingPath();
@@ -142,10 +161,16 @@ public class PatrollingNPC : MonoBehaviour
             SwitchState(new PatrolState());
         }
     }
+    #endregion
 
+    #region Pathfinding
     public void GeneratePath(Node start, Node goal)
     {
+        if (start == null || goal == null) { currentPath.Clear(); return; }
+
+        // Asegurar la misma configuración global que tenías antes
         PathfindingGameManager.instance.myPathCalc = myPathCalc;
+
         switch (pathfindingType)
         {
             case TypeOfPathfinding.BFS:
@@ -163,47 +188,40 @@ public class PatrollingNPC : MonoBehaviour
             case TypeOfPathfinding.ThetaStar:
                 currentPath = pathfinder.CalculateThetaStar(start, goal);
                 break;
+            default:
+                currentPath = new List<Node>();
+                break;
         }
+    }
+    #endregion
+
+    #region Movement / Patrol
+    public IEnumerator FollowPath()
+    {
+        if (currentPath == null || currentPath.Count == 0) yield break;
+        isMoving = true;
 
         foreach (var node in currentPath)
         {
-            node.ChangeColor(NPCColor);
-        }
-    }
-
-    public IEnumerator FollowPath()
-    {
-        isMoving = true;
-
-        foreach (Node node in currentPath)
-        {
             Vector3 targetPos = node.transform.position;
 
-            // Ajustar altura al suelo del nodo
+            // Ajustar Y al suelo del nodo (si hay suelo cerca)
             if (Physics.Raycast(targetPos + Vector3.up * 2f, Vector3.down, out RaycastHit hitNode, 5f, groundLayers))
-            {
                 targetPos.y = hitNode.point.y;
-            }
 
+            // Mover hasta el objetivo
             float stuckTimer = 0f;
-
             while (Vector3.Distance(transform.position, targetPos) > 0.1f)
             {
-                Vector3 moveDir = (targetPos - transform.position).normalized;
-
-                // --- Raycast hacia abajo para adaptarse a pendientes ---
+                // Raycast suelo desde el NPC para adaptarse a pendientes una sola vez por frame
                 Vector3 rayOrigin = transform.position + groundRayOffset;
                 if (Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hitGround, groundRayLength, groundLayers))
                 {
-                    // Guardar info para gizmo
                     debugGroundRayStart = rayOrigin;
                     debugGroundRayEnd = hitGround.point;
                     debugGroundHit = true;
 
-                    // Proyectar movimiento en el plano de la pendiente
-                    moveDir = Vector3.ProjectOnPlane(moveDir, hitGround.normal).normalized;
-
-                    // Ajustar posición Y al suelo
+                    // Ajustar altura al suelo
                     Vector3 pos = transform.position;
                     pos.y = hitGround.point.y;
                     transform.position = pos;
@@ -213,12 +231,13 @@ public class PatrollingNPC : MonoBehaviour
                     debugGroundHit = false;
                 }
 
-                // Mover NPC
-                transform.position += moveDir * moveSpeed * Time.deltaTime;
+                // Movimiento horizontal hacia el objetivo (sin afectar demasiado la y)
+                Vector3 moveTarget = new Vector3(targetPos.x, transform.position.y, targetPos.z);
+                transform.position = Vector3.MoveTowards(transform.position, moveTarget, moveSpeed * Time.deltaTime);
 
-                // Orientar hacia la dirección de movimiento
-                if (moveDir != Vector3.zero)
-                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDir), 10f * Time.deltaTime);
+                Vector3 lookDir = (moveTarget - transform.position);
+                if (lookDir.sqrMagnitude > 0.001f)
+                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDir.normalized), 10f * Time.deltaTime);
 
                 stuckTimer += Time.deltaTime;
                 if (stuckTimer > 5f) break;
@@ -230,25 +249,27 @@ public class PatrollingNPC : MonoBehaviour
         isMoving = false;
     }
 
-
-
     public IEnumerator PatrolRoutine()
     {
+        // Requiere al menos 2 puntos para patrullar en ciclo
         while (true)
         {
-            if (!isMoving && patrolPoints.Count > 1)
+            if (!isMoving && patrolPoints != null && patrolPoints.Count > 1)
             {
                 Node startNode = GetClosestNode();
                 Node goalNode = patrolPoints[currentTargetIndex];
-
                 GeneratePath(startNode, goalNode);
+
+                if (followPathRoutine != null) StopCoroutine(followPathRoutine);
                 followPathRoutine = StartCoroutine(FollowPath());
                 yield return followPathRoutine;
 
                 currentTargetIndex = (currentTargetIndex + 1) % patrolPoints.Count;
             }
-
-            yield return null;
+            else
+            {
+                yield return null;
+            }
         }
     }
 
@@ -275,53 +296,56 @@ public class PatrollingNPC : MonoBehaviour
             followPathRoutine = null;
         }
         isMoving = false;
+        currentPath.Clear();
     }
+    #endregion
 
+    #region Node helpers (usa cache)
     public Node GetClosestNode()
     {
-        Node[] allNodes = FindObjectsOfType<Node>();
         Node closest = null;
         float minDist = Mathf.Infinity;
+        if (cachedNodes == null) cachedNodes = FindObjectsOfType<Node>();
 
-        foreach (var node in allNodes)
+        foreach (var node in cachedNodes)
         {
-            if (node.Block) continue;
-            float dist = Vector3.Distance(transform.position, node.transform.position);
-            if (dist < minDist)
+            if (node == null || node.Block) continue;
+            float d = Vector3.Distance(transform.position, node.transform.position);
+            if (d < minDist)
             {
-                minDist = dist;
+                minDist = d;
                 closest = node;
             }
         }
-
         return closest;
     }
 
     public Node GetNodeAtPosition(Vector3 pos)
     {
-        Node[] allNodes = FindObjectsOfType<Node>();
         Node closest = null;
         float minDist = Mathf.Infinity;
+        if (cachedNodes == null) cachedNodes = FindObjectsOfType<Node>();
 
-        foreach (var node in allNodes)
+        foreach (var node in cachedNodes)
         {
-            float dist = Vector3.Distance(pos, node.transform.position);
-            if (dist < minDist)
+            if (node == null) continue;
+            float d = Vector3.Distance(pos, node.transform.position);
+            if (d < minDist)
             {
-                minDist = dist;
+                minDist = d;
                 closest = node;
             }
         }
-
         return closest;
     }
+    #endregion
+
     private void OnDrawGizmos()
     {
-        // Gizmo del rango de captura
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, captureRange);
-
-        // Gizmo del raycast de suelo
+        Gizmos.color = Color.grey;
+        Gizmos.DrawWireSphere(transform.position, hearingRange);
         if (debugGroundHit)
         {
             Gizmos.color = Color.green;
@@ -331,21 +355,20 @@ public class PatrollingNPC : MonoBehaviour
         else
         {
             Gizmos.color = Color.yellow;
-            Vector3 endPos = debugGroundRayStart + Vector3.down * groundRayLength;
-            Gizmos.DrawLine(debugGroundRayStart, endPos);
+            Vector3 start = transform.position + groundRayOffset;
+            Vector3 endPos = start + Vector3.down * groundRayLength;
+            Gizmos.DrawLine(start, endPos);
         }
 
         if (currentPath != null && currentPath.Count > 0)
         {
-            Gizmos.color = NPCColor;
-
             for (int i = 0; i < currentPath.Count; i++)
             {
+                if (currentPath[i] == null) continue;
                 Vector3 nodePos = currentPath[i].transform.position;
-                nodePos.y += 0.1f; // un poco arriba para que no se mezcle con el suelo
-                Gizmos.DrawSphere(nodePos, 0.15f);
-
-                if (i < currentPath.Count - 1)
+                nodePos.y += 0.1f;
+                Gizmos.DrawSphere(nodePos, 0.12f);
+                if (i < currentPath.Count - 1 && currentPath[i + 1] != null)
                 {
                     Vector3 nextPos = currentPath[i + 1].transform.position;
                     nextPos.y += 0.1f;

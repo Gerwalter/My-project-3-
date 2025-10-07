@@ -1,23 +1,15 @@
 using System.Collections;
 using UnityEngine;
 
-public class InvestigateState : INPCState
+public class InvestigateState : NPCBaseState
 {
-    Coroutine investigateRoutine;
-
-    public void Enter(PatrollingNPC npc)
-    {
-        investigateRoutine = npc.StartCoroutine(Investigate(npc));
-    }
-
-    IEnumerator Investigate(PatrollingNPC npc)
+    protected override IEnumerator StartMainRoutine(PatrollingNPC npc)
     {
         Node startNode = npc.GetClosestNode();
         Node targetNode = npc.GetNodeAtPosition(npc.lastSeenPosition);
 
         if (targetNode == null)
         {
-            Debug.LogWarning($"{npc.name} no encontró un nodo válido para investigar.");
             npc.SwitchState(new PatrolState());
             yield break;
         }
@@ -26,15 +18,21 @@ public class InvestigateState : INPCState
 
         if (npc.currentPath == null || npc.currentPath.Count == 0)
         {
-            Debug.LogWarning($"{npc.name} no tiene un camino válido hacia el punto de investigación.");
             npc.SwitchState(new PatrolState());
             yield break;
         }
 
+        // Seguir el camino hasta el punto
         yield return npc.StartCoroutine(npc.FollowPath());
 
+        // Determinar duración: si fue una distracción, usar la duracion especial
         float timer = 0f;
-        while (timer < npc.investigateDuration)
+        float maxDuration = npc.heardDistraction ? npc.distractionInvestigateDuration : npc.investigateDuration;
+
+        // resetear la marca (ya fue usada)
+        npc.heardDistraction = false;
+
+        while (timer < maxDuration)
         {
             if (npc.IsPlayerVisible())
             {
@@ -46,14 +44,7 @@ public class InvestigateState : INPCState
             yield return null;
         }
 
+        // Volver a patrulla
         npc.SwitchState(new PatrolState());
-    }
-
-    public void Update(PatrollingNPC npc) { }
-
-    public void Exit(PatrollingNPC npc)
-    {
-        if (investigateRoutine != null)
-            npc.StopCoroutine(investigateRoutine);
     }
 }
