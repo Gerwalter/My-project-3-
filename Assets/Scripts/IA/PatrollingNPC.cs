@@ -10,16 +10,16 @@ public class PatrollingNPC : MonoBehaviour
     public TypeOfPathfinding pathfindingType;
     public TypeOfPathCalc myPathCalc;
 
-    [Header("Persecución e Investigación")]
+    [Header("Persecucion e Investigacion")]
     public float chaseSpeed = 3.5f;
     public float investigateDuration = 4f;
 
-    [Header("Detección de Suelo")]
-    public LayerMask groundLayers = ~0;
+    [Header("Deteccion de Suelo")]
+    public LayerMask groundLayers = 0;
     public float groundRayLength = 2f;
     [SerializeField] private Vector3 groundRayOffset = new Vector3(0, 1f, 0);
 
-    [Header("Detección y Alerta")]
+    [Header("Deteccion y Alerta")]
     public GameObject player;
     public LayerMask playerLayer;
     public FOVAgent FOVAgent;
@@ -29,7 +29,6 @@ public class PatrollingNPC : MonoBehaviour
 
     [HideInInspector] public Vector3 lastSeenPosition;
 
-    // Estado y path
     [SerializeField] private INPCState currentState;
     private bool _isSwitchingState = false;
 
@@ -41,36 +40,32 @@ public class PatrollingNPC : MonoBehaviour
     private Coroutine followPathRoutine;
     private Coroutine patrolRoutineHandle;
 
-    // Debug
     private Vector3 debugGroundRayStart;
     private Vector3 debugGroundRayEnd;
     private bool debugGroundHit;
 
-    // Cached nodes
     private Node[] cachedNodes;
 
     // Otros
     public bool hasTriggered = false;
     [SerializeField] private string battleSceneName = "BattleScene";
 
-    [Header("Distracciones / Audición")]
-    [Tooltip("Capas que pueden escuchar el sonido (por ejemplo: NPCs en layer 'NPC')")]
-    public LayerMask hearingLayerMask = ~0;
-    [Tooltip("Distancia máxima a la que el NPC puede oír (si usas OverlapSphere desde SoundEmitter)")]
-    public float hearingRange = 10f; // valor por defecto, SoundEmitter normalmente define su propio radio
+    [Header("Distracciones / Audicion")]
+
+    public LayerMask hearingLayerMask = 0;
+
+    public float hearingRange = 10f; 
 
     [HideInInspector] public Vector3 lastHeardPosition;
     [HideInInspector] public bool heardDistraction = false;
-    [Tooltip("Duración de investigación si la investigación fue causada por una distracción")]
+    [Tooltip("Duraci0n de investigaci0n si la investigacion fue causada por una distraccion")]
     public float distractionInvestigateDuration = 6f; // override para distracciones
 
     protected void Start()
     {
         pathfinder = new Pathfinding();
-        // Cachear nodos (mejor que buscar cada vez)
         cachedNodes = FindObjectsOfType<Node>();
 
-        // Aplicar configuración global de pathcalc
         PathfindingGameManager.instance.myPathCalc = myPathCalc;
 
         SwitchState(new PatrolState());
@@ -93,16 +88,11 @@ public class PatrollingNPC : MonoBehaviour
     }
     public void HearNoise(Vector3 sourcePosition, float intensity = 1f)
     {
-        print("Chocó");
-        // Si está persiguiendo al jugador intensamente, quizá no se distrae.
-        // Ajusta la condición según tu diseño (ejemplo: si está en ChaseState lo ignora).
         if (currentState is ChaseState)
-        {
-            // Ignorar si estás en persecución. Cambiar comportamiento si quieres que los NPCs puedan ser distraídos en chase.
+        { 
             return;
         }
 
-        // Registrar fuente y marcar como distracción
         lastHeardPosition = sourcePosition;
         heardDistraction = true;
 
@@ -110,7 +100,6 @@ public class PatrollingNPC : MonoBehaviour
         StopPatrolRoutine();
         StopFollowingPath();
 
-        // Reutilizamos InvestigateState (que leerá heardDistraction para usar la duración especifica)
         SwitchState(new InvestigateState());
     }
     #region StateManagement (simplificado)
@@ -120,7 +109,6 @@ public class PatrollingNPC : MonoBehaviour
         if (currentState != null && currentState.GetType() == newState.GetType()) return;
         if (_isSwitchingState)
         {
-            // Evitamos reentradas: simplemente ignoramos cambios simultáneos
             return;
         }
 
@@ -132,7 +120,7 @@ public class PatrollingNPC : MonoBehaviour
     }
     #endregion
 
-    #region Detección
+    #region Deteccion
     public bool IsPlayerVisible()
     {
         if (player == null) return false;
@@ -168,7 +156,6 @@ public class PatrollingNPC : MonoBehaviour
     {
         if (start == null || goal == null) { currentPath.Clear(); return; }
 
-        // Asegurar la misma configuración global que tenías antes
         PathfindingGameManager.instance.myPathCalc = myPathCalc;
 
         switch (pathfindingType)
@@ -205,7 +192,6 @@ public class PatrollingNPC : MonoBehaviour
         {
             Vector3 targetPos = node.transform.position;
 
-            // Ajustar Y al suelo del nodo (si hay suelo cerca)
             if (Physics.Raycast(targetPos + Vector3.up * 2f, Vector3.down, out RaycastHit hitNode, 5f, groundLayers))
                 targetPos.y = hitNode.point.y;
 
@@ -213,7 +199,6 @@ public class PatrollingNPC : MonoBehaviour
             float stuckTimer = 0f;
             while (Vector3.Distance(transform.position, targetPos) > 0.1f)
             {
-                // Raycast suelo desde el NPC para adaptarse a pendientes una sola vez por frame
                 Vector3 rayOrigin = transform.position + groundRayOffset;
                 if (Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hitGround, groundRayLength, groundLayers))
                 {
@@ -230,8 +215,6 @@ public class PatrollingNPC : MonoBehaviour
                 {
                     debugGroundHit = false;
                 }
-
-                // Movimiento horizontal hacia el objetivo (sin afectar demasiado la y)
                 Vector3 moveTarget = new Vector3(targetPos.x, transform.position.y, targetPos.z);
                 transform.position = Vector3.MoveTowards(transform.position, moveTarget, moveSpeed * Time.deltaTime);
 
@@ -251,7 +234,6 @@ public class PatrollingNPC : MonoBehaviour
 
     public IEnumerator PatrolRoutine()
     {
-        // Requiere al menos 2 puntos para patrullar en ciclo
         while (true)
         {
             if (!isMoving && patrolPoints != null && patrolPoints.Count > 1)
@@ -358,23 +340,6 @@ public class PatrollingNPC : MonoBehaviour
             Vector3 start = transform.position + groundRayOffset;
             Vector3 endPos = start + Vector3.down * groundRayLength;
             Gizmos.DrawLine(start, endPos);
-        }
-
-        if (currentPath != null && currentPath.Count > 0)
-        {
-            for (int i = 0; i < currentPath.Count; i++)
-            {
-                if (currentPath[i] == null) continue;
-                Vector3 nodePos = currentPath[i].transform.position;
-                nodePos.y += 0.1f;
-                Gizmos.DrawSphere(nodePos, 0.12f);
-                if (i < currentPath.Count - 1 && currentPath[i + 1] != null)
-                {
-                    Vector3 nextPos = currentPath[i + 1].transform.position;
-                    nextPos.y += 0.1f;
-                    Gizmos.DrawLine(nodePos, nextPos);
-                }
-            }
         }
     }
 }

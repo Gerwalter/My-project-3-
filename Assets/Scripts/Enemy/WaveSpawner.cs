@@ -20,7 +20,7 @@ public class WaveSpawner : MonoBehaviour
 
     [Header("Indicator")]
     public GameObject spawnIndicatorPrefab;
-
+    public bool allWavesCompleted { get; private set; } = false;
     private Vector3 GetRandomSpawnPosition()
     {
         if (spawnArea == null) return Vector3.zero;
@@ -80,5 +80,6 @@ public class WaveSpawner : MonoBehaviour
         }
 
         Debug.Log("Todas las oleadas han terminado.");
+        allWavesCompleted = true;
     }
 }

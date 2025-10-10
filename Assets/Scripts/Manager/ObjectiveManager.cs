@@ -18,7 +18,7 @@ public class ObjectiveRandomConfig
 
 public class ObjectiveManager : MonoBehaviour
 {
-    public static ObjectiveManager Instance { get; private set; }
+    public static ObjectiveManager Instance { get; set; }
 
     [Tooltip("Configura el rango de objetivos posibles para cada tipo")]
     public List<ObjectiveRandomConfig> objectiveConfigs = new List<ObjectiveRandomConfig>();

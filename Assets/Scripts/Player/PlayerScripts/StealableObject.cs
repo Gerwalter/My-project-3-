@@ -8,20 +8,30 @@ public class StealableObject : ButtonBehaviour
     public int alertAmmount = 1; // cuantos cuenta un robo (por defecto 1)
     public GameObject stealConfirmHUDPrefab; // opcional: un prefab con botones "Robar / Cancelar"
     public bool destroyOnSteal = true; // si se destruye el objeto al robar
+    public bool stealConfirm = true; // si se destruye el objeto al robar
+    public ObjectiveManager manager;
 
     private GameObject activeHUD;
 
+    private void Start()
+    {
+            manager = FindObjectOfType<ObjectiveManager>();
+        if (manager != null)
+        {
+            ObjectiveManager.Instance = manager;
+        }
+    }
     public override void OnInteract()
     {
         // Si diste prefab para confirmación, lo instanciamos; si no, robamos directo
-        if (stealConfirmHUDPrefab != null)
-        {
-            ShowConfirmHUD();
-        }
-        else
-        {
+        //if (stealConfirmHUDPrefab != null && stealConfirm)
+        //{
+        //    ShowConfirmHUD();
+        //}
+        //else
+        //{
             DoSteal();
-        }
+       // }
     }
 
     private void ShowConfirmHUD()
@@ -38,20 +48,20 @@ public class StealableObject : ButtonBehaviour
 
     private void DoSteal()
     {
-        if (ObjectiveManager.Instance == null)
+        if (manager == null)
         {
             Debug.LogError("No hay ObjectiveManager en la escena.");
             return;
         }
 
-        ObjectiveManager.Instance.Steal(itemType, stealAmount);
+        manager.Steal(itemType, stealAmount);
         EventManager.Trigger("IncreaseAlert", alertAmmount);
         // Aquí puedes reproducir sonido, animación, spawn de loot, etc.
         Debug.Log($"Objeto {itemType} robado.");
 
         if (destroyOnSteal)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }

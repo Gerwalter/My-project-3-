@@ -25,7 +25,7 @@ public class InvestigateState : NPCBaseState
         // Seguir el camino hasta el punto
         yield return npc.StartCoroutine(npc.FollowPath());
 
-        // Determinar duración: si fue una distracción, usar la duracion especial
+        // Determinar duracion: si fue una distraccion, usar la duracion especial
         float timer = 0f;
         float maxDuration = npc.heardDistraction ? npc.distractionInvestigateDuration : npc.investigateDuration;
 
