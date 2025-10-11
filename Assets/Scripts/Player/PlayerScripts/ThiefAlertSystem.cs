@@ -49,10 +49,10 @@ public class ThiefAlertSystem : MonoBehaviour, IAlertSystemObservable
         SceneManager.activeSceneChanged -= OnSceneChanged;
     }
 
-    // 🔁 Limpieza automática al cambiar de escena
+    // Limpieza automática al cambiar de escena
     private void OnSceneChanged(Scene oldScene, Scene newScene)
     {
-        Debug.Log($"[ThiefAlertSystem] Cambió de escena ({oldScene.name} → {newScene.name}), limpiando observers...");
+     //   Debug.Log($"[ThiefAlertSystem] Cambió de escena ({oldScene.name} → {newScene.name}), limpiando observers...");
         _observers.Clear();
     }
 

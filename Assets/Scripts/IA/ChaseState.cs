@@ -6,6 +6,8 @@ public class ChaseState : NPCBaseState
     protected override IEnumerator StartMainRoutine(PatrollingNPC npc)
     {
         npc.FOVAgent.ViewAngle = 360f;
+        npc.agent.speed = npc.chaseSpeed;  // Aumenta velocidad
+        npc.agent.updateRotation = false;  // Rotación manual para persecución
 
         while (npc.IsPlayerVisible())
         {
@@ -19,6 +21,10 @@ public class ChaseState : NPCBaseState
                 yield break;
             }
 
+            // Actualiza destino cada frame (persecución dinámica)
+            npc.agent.SetDestination(npc.lastSeenPosition);
+
+            // Rotación manual
             Vector3 dir = (npc.lastSeenPosition - npc.transform.position).normalized;
             dir.y = 0;
             npc.transform.rotation = Quaternion.Slerp(
@@ -27,10 +33,11 @@ public class ChaseState : NPCBaseState
                 5f * Time.deltaTime
             );
 
-            npc.transform.position += dir * npc.chaseSpeed * Time.deltaTime;
             yield return null;
         }
 
+        npc.agent.speed = npc.moveSpeed;  // Vuelve a velocidad normal
+        npc.agent.updateRotation = true;
         npc.SwitchState(new InvestigateState());
     }
 }

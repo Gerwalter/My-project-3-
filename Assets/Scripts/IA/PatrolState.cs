@@ -6,7 +6,7 @@ public class PatrolState : NPCBaseState
     protected override IEnumerator StartMainRoutine(PatrollingNPC npc)
     {
         npc.StartPatrolRoutine();
-
+        npc.FOVAgent.ViewAngle = 100;
         while (true)
         {
             if (npc.IsPlayerVisible())

@@ -1,36 +1,47 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class InvestigateState : NPCBaseState
 {
     protected override IEnumerator StartMainRoutine(PatrollingNPC npc)
     {
-        Node startNode = npc.GetClosestNode();
-        Node targetNode = npc.GetNodeAtPosition(npc.lastSeenPosition);
+        Vector3 targetPos = npc.heardDistraction ? npc.lastHeardPosition : npc.lastSeenPosition;
 
-        if (targetNode == null)
+        // Validar posicion en NavMesh
+        if (!NavMesh.SamplePosition(targetPos, out NavMeshHit hit, 2f, NavMesh.AllAreas))
         {
             npc.SwitchState(new PatrolState());
             yield break;
         }
+        targetPos = hit.position;
 
-        npc.GeneratePath(startNode, targetNode);
+        // Mover al punto
+        yield return npc.StartCoroutine(npc.MoveToRoutine(targetPos));
 
-        if (npc.currentPath == null || npc.currentPath.Count == 0)
+        // Si es moneda, buscarla y "recogerla"
+        if (npc.isCoinDistraction)
         {
-            npc.SwitchState(new PatrolState());
-            yield break;
+            Collider[] hits = Physics.OverlapSphere(npc.transform.position, npc.FOVAgent.ViewRange, npc.distractionLayer);
+            foreach (var hita in hits)
+            {
+                DistractionObject coin = hita.GetComponent<DistractionObject>();
+                if (coin != null && coin.distractionType == DistractionType.Coin)
+                {
+                    coin.Dest();
+                    npc.isCoinDistraction = false; // Cambio: Resetea inmediatamente para evitar loops
+                    break;
+                }
+            }
         }
 
-        // Seguir el camino hasta el punto
-        yield return npc.StartCoroutine(npc.FollowPath());
-
-        // Determinar duracion: si fue una distraccion, usar la duracion especial
+        // Determinar duracion
         float timer = 0f;
-        float maxDuration = npc.heardDistraction ? npc.distractionInvestigateDuration : npc.investigateDuration;
+        float maxDuration = npc.isCoinDistraction ? npc.distractionInvestigateDuration : npc.investigateDuration;
 
-        // resetear la marca (ya fue usada)
+        // Resetear marcas
         npc.heardDistraction = false;
+        npc.isCoinDistraction = false; // Movido aquí si no se destruyó, pero ya reseteado arriba si sí
 
         while (timer < maxDuration)
         {
