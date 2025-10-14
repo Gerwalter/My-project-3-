@@ -8,8 +8,9 @@ public class PatrollingNPC : MonoBehaviour
     [Header("Patrullaje")]
     public List<Node> patrolNodes = new List<Node>();
     private List<Vector3> patrolPoints = new List<Vector3>();
+    [SerializeField] private List<Quaternion> patrolRotations = new List<Quaternion>(); // Nuevo: Lista para rotaciones de nodos
     public float moveSpeed = 2f;
-    public TypeOfPathCalc myPathCalc;
+   // public TypeOfPathCalc myPathCalc;
 
     [Header("Persecucion e Investigacion")]
     public float chaseSpeed = 3.5f;
@@ -65,9 +66,10 @@ public class PatrollingNPC : MonoBehaviour
 
         foreach (var node in patrolNodes)
         {
-            if (node != null && !node.Block)
+            if (node != null)
             {
                 patrolPoints.Add(node.transform.position);
+                patrolRotations.Add(node.transform.rotation); // Nuevo: Agregar rotación del nodo
             }
         }
 
@@ -224,7 +226,7 @@ public class PatrollingNPC : MonoBehaviour
     {
         while (true)
         {
-            if (!isMoving && patrolPoints != null && patrolPoints.Count > 0) // Cambio: Verificar Count > 0 en lugar de Count > 1
+            if (!isMoving && patrolPoints != null && patrolPoints.Count > 0)
             {
                 Vector3 goalPos = patrolPoints[currentTargetIndex];
 
@@ -234,7 +236,7 @@ public class PatrollingNPC : MonoBehaviour
                 }
                 else
                 {
-                    if (patrolPoints.Count > 1) // Solo avanzar índice si hay más de un nodo
+                    if (patrolPoints.Count > 1)
                         currentTargetIndex = (currentTargetIndex + 1) % patrolPoints.Count;
                     yield return null;
                     continue;
@@ -244,7 +246,13 @@ public class PatrollingNPC : MonoBehaviour
                 followPathRoutine = StartCoroutine(MoveToRoutine(goalPos));
                 yield return followPathRoutine;
 
-                if (patrolPoints.Count > 1) // Solo avanzar índice si hay más de un nodo
+                // Nuevo: Aplicar rotación del nodo al llegar
+                if (patrolRotations.Count > currentTargetIndex)
+                {
+                    transform.rotation = patrolRotations[currentTargetIndex];
+                }
+
+                if (patrolPoints.Count > 1)
                     currentTargetIndex = (currentTargetIndex + 1) % patrolPoints.Count;
             }
             else

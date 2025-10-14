@@ -41,7 +41,7 @@ public class InvestigateState : NPCBaseState
 
         // Resetear marcas
         npc.heardDistraction = false;
-        npc.isCoinDistraction = false; // Movido aquí si no se destruyó, pero ya reseteado arriba si sí
+        npc.isCoinDistraction = false; // Movido aquí si no se destruyó, pero ya reseteado arriba
 
         while (timer < maxDuration)
         {
