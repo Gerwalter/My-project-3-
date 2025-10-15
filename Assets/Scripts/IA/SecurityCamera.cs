@@ -10,19 +10,18 @@ public class SecurityCamera : MonoBehaviour
 
     [Header("Vision Settings")]
     [SerializeField] private float visionRange = 10f; // Rango de visión
-    [SerializeField] private float visionAngle = 45f; // Ángulo del cono de visión
+    [SerializeField, Range(0, 180)] private float visionAngle = 45f; // Ángulo del cono de visión
     [SerializeField] private LayerMask playerLayer; // Capa del jugador
     [SerializeField] private LayerMask obstacleLayer; // Capa para obstáculos
 
     private float initialRotation;
     private bool rotatingRight = true;
-    private Transform player;
     private bool playerDetected = false;
+    private Transform detectedPlayer;
 
     void Start()
     {
         initialRotation = transform.eulerAngles.y;
-        player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     void Update()
@@ -34,19 +33,14 @@ public class SecurityCamera : MonoBehaviour
     void RotateCamera()
     {
         float currentRotation = transform.eulerAngles.y - initialRotation;
-        float targetAngle = rotatingRight ? rotationAngle : -rotationAngle;
-
-        // Convertir la rotación actual a un rango de -180 a 180
         if (currentRotation > 180) currentRotation -= 360;
         if (currentRotation < -180) currentRotation += 360;
 
-        // Cambiar dirección si se alcanza el límite
         if (rotatingRight && currentRotation >= rotationAngle)
             rotatingRight = false;
         else if (!rotatingRight && currentRotation <= -rotationAngle)
             rotatingRight = true;
 
-        // Rotar la cámara
         float rotationStep = rotationSpeed * Time.deltaTime * (rotatingRight ? 1 : -1);
         transform.Rotate(0, rotationStep, 0);
     }
@@ -54,30 +48,39 @@ public class SecurityCamera : MonoBehaviour
     void CheckPlayerDetection()
     {
         playerDetected = false;
-        Vector3 directionToPlayer = player.position - transform.position;
+        detectedPlayer = null;
 
-        // Verificar si el jugador está dentro del rango de visión
-        if (directionToPlayer.magnitude <= visionRange)
+        // Buscar todos los objetos en el rango de visión que estén en la capa de jugador
+        Collider[] playersInRange = Physics.OverlapSphere(transform.position, visionRange, playerLayer);
+
+        foreach (var playerCollider in playersInRange)
         {
-            float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
+            Vector3 directionToPlayer = playerCollider.transform.position - transform.position;
+            float distanceToPlayer = directionToPlayer.magnitude;
 
-            // Verificar si el jugador está dentro del cono de visión
+            // Verificar si el jugador está dentro del ángulo del cono
+            float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
             if (angleToPlayer <= visionAngle * 0.5f)
             {
-                // Verificar si no hay obstáculos bloqueando la visión
-                if (!Physics.Raycast(transform.position, directionToPlayer, directionToPlayer.magnitude, obstacleLayer))
+                // Verificar si no hay obstáculos entre la cámara y el jugador
+                if (!Physics.Raycast(transform.position, directionToPlayer.normalized, distanceToPlayer, obstacleLayer))
                 {
                     playerDetected = true;
-                    Debug.Log("¡Jugador detectado!");
+                    detectedPlayer = playerCollider.transform;
+
+                    // Debug visual
+                    Debug.DrawRay(transform.position, directionToPlayer, Color.red);
+                    break; // Ya detectó a un jugador, no hace falta seguir
                 }
             }
         }
 
-        // Visualización del cono de visión en el editor
-        Debug.DrawRay(transform.position, transform.forward * visionRange, playerDetected ? Color.red : Color.green);
+        if (!playerDetected)
+        {
+            Debug.DrawRay(transform.position, transform.forward * visionRange, Color.green);
+        }
     }
 
-    // Visualización en el editor
     void OnDrawGizmos()
     {
         Gizmos.color = playerDetected ? Color.red : Color.green;
@@ -87,5 +90,11 @@ public class SecurityCamera : MonoBehaviour
         Gizmos.DrawRay(transform.position, leftBoundary);
         Gizmos.DrawRay(transform.position, rightBoundary);
         Gizmos.DrawWireSphere(transform.position, visionRange);
+
+        if (playerDetected && detectedPlayer != null)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(transform.position, detectedPlayer.position);
+        }
     }
 }
