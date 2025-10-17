@@ -21,17 +21,17 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: MarbleFountain
-  m_Shader: {fileID: -6465566751694194690, guid: 4a9e7546a2f3f6f4c92bfc0922cda8c2, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: a8620047d32b9c84e86f34e6c433a4bb, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - _DETAILS_RING
   - _USE_SCREEN_SPACE
-  m_InvalidKeywords:
-  - _SURFACE_TYPE_TRANSPARENT
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
   m_LockedProperties: 
@@ -48,6 +48,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _CelshadingSubGraph_f49eebe11f3e4718b3a74ae641da269b_Texture2D_3009055030_Texture2D:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: bb41da409e7bfa647a57f2b72414e745, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_aef2acd0803d417c9b76339140a0cdc0_Texture_1_Texture2D:
@@ -76,13 +80,19 @@ Material:
     - _AlphaClip: 0
     - _AlphaThereshold: 1
     - _AlphaToMask: 0
+    - _AmbientStrength: 0.25
     - _Blend: 0
     - _CastShadows: 1
     - _CircleDensity: 100
     - _Cull: 2
+    - _DETAILS_HALFTONE: 0
+    - _DETAILS_RING: 1
     - _DstBlend: 10
-    - _FalloffThreshold: 2.5
+    - _FalloffAmount: 0.09
+    - _FalloffThreshold: 2
     - _Float: 0.44
+    - _FresnelSize: 0.1
+    - _LightingCutoff: 0
     - _Lightness: 0.68
     - _Lit_Threshold: 1
     - _Max: 1.44
@@ -90,11 +100,12 @@ Material:
     - _Offset: 1.08
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Ring: 0.12
+    - _Ring: 0.3
     - _Rotation: 0
     - _SHADOW_PRO: 0
     - _ShadingMultiplier: 0.21
     - _Shadow: 0.16
+    - _Smoothness: 0.5
     - _SoftGrid: 0.14
     - _Softness: 0.1
     - _SrcBlend: 5
@@ -106,6 +117,9 @@ Material:
     - _ZWriteControl: 1
     m_Colors:
     - _BaseColor: {r: 0.9245283, g: 0.9245283, b: 0.9245283, a: 0}
+    - _DiffuseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FresnelColor: {r: 1, g: 1, b: 1, a: 1}
     - _Offset: {r: 1, g: 1, b: 0, a: 0}
+    - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _Tilling: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
