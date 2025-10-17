@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour, IAnimObservable
 {
+
     public ComboNode rootNode;
     private ComboNode currentNode;
     public KeyCode keyCode;
