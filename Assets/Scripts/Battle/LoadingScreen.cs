@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 
@@ -9,12 +8,13 @@ public class LoadingScreen : MonoBehaviour
     public static string nextScene;
 
     [Header("UI")]
-    public Slider loadingBar;
+    public Animator loadingAnimator; // Animator que controla la animación de carga
     public TextMeshProUGUI loadingText;
-    public CanvasGroup fadePanel; // El panel negro con CanvasGroup
+    public CanvasGroup fadePanel;
 
     [Header("Fade Settings")]
     public float fadeDuration = 1f;
+    public float extraDelayAfterFull = 1.5f; // Espera adicional para que se vea la animación
 
     private void Start()
     {
@@ -29,24 +29,31 @@ public class LoadingScreen : MonoBehaviour
         while (!op.isDone)
         {
             float progress = Mathf.Clamp01(op.progress / 0.9f);
-            loadingBar.value = progress;
             loadingText.text = (progress * 100f).ToString("F0") + "%";
+
+            // Pasamos el valor de progreso al Animator (float parameter "Progress")
+            loadingAnimator.SetFloat("Progress", progress);
 
             if (op.progress >= 0.9f)
             {
-                loadingBar.value = 1f;
                 loadingText.text = "100%";
+                loadingAnimator.SetFloat("Progress", 1f);
 
-                // Pequeña pausa y fade out antes de entrar a la escena
-                yield return new WaitForSeconds(0.75f);
+                // Dispara el trigger de finalización
+                loadingAnimator.SetTrigger("LoadFinished");
+
+                // Espera un tiempo adicional antes de activar la escena
+                yield return new WaitForSeconds(extraDelayAfterFull);
+
+                // Opcional: fade out antes de entrar a la escena
+                yield return StartCoroutine(FadeOut());
+
                 op.allowSceneActivation = true;
             }
 
             yield return null;
         }
     }
-
-    
 
     IEnumerator FadeOut()
     {

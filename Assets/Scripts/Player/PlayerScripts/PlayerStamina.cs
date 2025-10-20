@@ -62,16 +62,18 @@ public class PlayerStamina : IStaminaObservable
         {
             IsSprinting = true;
             CurrentStamina = Mathf.Max(0, CurrentStamina - SprintDrain * Time.deltaTime);
-
+            EventManager.Trigger("Bool", "Running", IsSprinting);
             if (CurrentStamina <= 0)
             {
                 sprintLocked = true;
                 IsSprinting = false;
+                EventManager.Trigger("Bool", "Running", IsSprinting);
             }
         }
         else
         {
             IsSprinting = false;
+            EventManager.Trigger("Bool", "Running", IsSprinting);
         }
     }
 
@@ -82,7 +84,7 @@ public class PlayerStamina : IStaminaObservable
             CurrentStamina = Mathf.Min(MaxStamina, CurrentStamina + RegenRate * Time.deltaTime);
 
             // ✅ Desbloquear sprint al llegar al umbral
-            if (CurrentStamina >= MaxStamina * SprintUnlockThreshold)
+            if (CurrentStamina >= MaxStamina * SprintUnlockThreshold+2)
             {
                 sprintLocked = false;
             }

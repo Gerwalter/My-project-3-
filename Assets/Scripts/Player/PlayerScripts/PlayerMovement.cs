@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerMovement
 {
@@ -35,27 +35,22 @@ public class PlayerMovement
                 moveDir = GetSlopeDirection(moveDir, slopeHit.normal);
             }
 
-            _player.Transform.forward = forward; // orienta al jugador
+            // Ahora el jugador mira hacia la dirección de movimiento
+            _player.Transform.forward = moveDir;
+
             float speed = _player.MoveSpeed;
 
-            // Sprint
             if (_player.Stamina.IsSprinting)
-            {
-                speed *= 1.8f; // multiplicador de sprint
-            }
+                speed *= 1.8f;
 
-            // Dash
             if (_player.Stamina.IsDashing)
             {
-                Vector3 dashDir = _player.Transform.forward * 10f; // puedes ajustar la fuerza
+                Vector3 dashDir = _player.Transform.forward * 10f;
                 _player.Rigidbody.AddForce(dashDir, ForceMode.VelocityChange);
             }
 
-            // Si est� agachado, reducir velocidad
             if (_player.Crouch != null && _player.Crouch.IsCrouching)
-            {
                 speed *= _player.Crouch.crouchSpeedMultiplier;
-            }
 
             _player.Rigidbody.MovePosition(
                 _player.Transform.position + moveDir * speed * Time.fixedDeltaTime
