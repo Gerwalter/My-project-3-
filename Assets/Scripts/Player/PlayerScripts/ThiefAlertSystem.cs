@@ -59,7 +59,7 @@ public class ThiefAlertSystem : MonoBehaviour, IAlertSystemObservable
     // ----------- Métodos internos -----------
     private void IncreaseAlert(params object[] parametros)
     {
-        int cantidad = (parametros.Length > 0) ? (int)parametros[0] : 1;
+        float cantidad = (parametros.Length > 0) ? (float)parametros[0] : 1;
         _alert += cantidad;
         Debug.Log("Contador incrementado: " + _alert);
         NotifyAll();
@@ -67,7 +67,7 @@ public class ThiefAlertSystem : MonoBehaviour, IAlertSystemObservable
 
     private void DecreaseAlert(params object[] parametros)
     {
-        int cantidad = (parametros.Length > 0) ? (int)parametros[0] : 1;
+        float cantidad = (parametros.Length > 0) ? (float)parametros[0] : 1;
         _alert -= cantidad;
         Debug.Log("Contador decrementado: " + _alert);
         NotifyAll();

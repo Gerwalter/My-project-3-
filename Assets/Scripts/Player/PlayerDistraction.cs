@@ -1,38 +1,115 @@
 using UnityEngine;
 
+[RequireComponent(typeof(LineRenderer))]
 public class PlayerDistraction : MonoBehaviour
 {
     [Header("Distracciones")]
-    public GameObject stonePrefab;  // Prefab de la piedra
-    public GameObject coinPrefab;   // Prefab de la moneda
-    public float throwForce = 10f;  // Fuerza de lanzamiento
-    public Transform throwPoint;    // Punto de origen (e.g., mano del jugador, asigna en Inspector)
+    public GameObject stonePrefab;
+    public GameObject coinPrefab;
+    public float throwForce = 10f;
+    public Transform throwPoint;
+
+    [Header("Trayectoria")]
+    public int trajectoryPoints = 30;
+    public float timeStep = 0.05f;
+    public LayerMask collisionMask; // Capas con las que la trayectoria colisiona
+
+    private LineRenderer lineRenderer;
+    private GameObject currentPrefab;
+    private bool isAiming = false;
+    private Vector3 aimDirection;
+
+    private void Start()
+    {
+        lineRenderer = GetComponent<LineRenderer>();
+        lineRenderer.positionCount = 0;
+    }
 
     private void Update()
     {
-        // Ejemplo: Q para piedra, E para moneda (usa Input System si lo tienes)
-        if (Input.GetKeyDown(KeyCode.Q))
+        // Iniciar apuntado
+        if (Input.GetKeyDown(KeyCode.Z))
+            StartAiming(stonePrefab);
+        if (Input.GetKeyDown(KeyCode.X))
+            StartAiming(coinPrefab);
+
+        // Mientras apunta
+        if (isAiming)
         {
-            ThrowDistraction(stonePrefab);
+            aimDirection = throwPoint.forward;
+            UpdateTrajectory();
         }
-        if (Input.GetKeyDown(KeyCode.E))
+
+        // Soltar para lanzar
+        if (isAiming && (Input.GetKeyUp(KeyCode.Z) || Input.GetKeyUp(KeyCode.X)))
         {
-            ThrowDistraction(coinPrefab);
+            ThrowDistraction(currentPrefab, aimDirection);
+            StopAiming();
         }
     }
 
-    private void ThrowDistraction(GameObject prefab)
+    private void StartAiming(GameObject prefab)
+    {
+        if (prefab == null) return;
+        currentPrefab = prefab;
+        isAiming = true;
+        lineRenderer.positionCount = trajectoryPoints;
+    }
+
+    private void StopAiming()
+    {
+        isAiming = false;
+        lineRenderer.positionCount = 0;
+    }
+
+    private void ThrowDistraction(GameObject prefab, Vector3 direction)
     {
         if (prefab == null) return;
 
-        // Instanciar el objeto en el punto de lanzamiento
-        GameObject thrownObject = Instantiate(prefab, throwPoint.position, throwPoint.rotation);
+        Vector3 spawnPos = throwPoint.position + direction * 0.3f;
+        GameObject thrownObject = Instantiate(prefab, spawnPos, Quaternion.identity);
 
-        // Aplicar fuerza física
         Rigidbody rb = thrownObject.GetComponent<Rigidbody>();
         if (rb != null)
         {
-            rb.AddForce(throwPoint.forward * throwForce, ForceMode.Impulse);
+            Collider playerCollider = GetComponent<Collider>();
+            Collider objCollider = thrownObject.GetComponent<Collider>();
+            if (playerCollider && objCollider)
+                Physics.IgnoreCollision(playerCollider, objCollider, true);
+
+            rb.AddForce(direction.normalized * throwForce, ForceMode.Impulse);
         }
+    }
+
+    private void UpdateTrajectory()
+    {
+        Vector3 startPos = throwPoint.position;
+        Vector3 startVel = throwPoint.forward * throwForce;
+        Vector3 gravity = Physics.gravity;
+
+        Vector3 previousPoint = startPos;
+        lineRenderer.SetPosition(0, startPos);
+        int pointsUsed = 1;
+
+        for (int i = 1; i < trajectoryPoints; i++)
+        {
+            float t = i * timeStep;
+            Vector3 point = startPos + startVel * t + 0.5f * gravity * t * t;
+
+            // Comprobamos colisión entre el punto anterior y el nuevo
+            if (Physics.Linecast(previousPoint, point, out RaycastHit hit, collisionMask))
+            {
+                lineRenderer.SetPosition(pointsUsed, hit.point);
+                pointsUsed++;
+                break; // Detenemos el cálculo aquí
+            }
+
+            lineRenderer.SetPosition(pointsUsed, point);
+            previousPoint = point;
+            pointsUsed++;
+        }
+
+        // Ajustar la cantidad real de puntos usados
+        lineRenderer.positionCount = pointsUsed;
     }
 }

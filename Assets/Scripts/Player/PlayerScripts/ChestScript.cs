@@ -55,7 +55,7 @@ public class ChestScript : ButtonBehaviour
         else
         {
             Debug.Log("El contador aún no llegó a " + valorObjetivo);
-            EventManager.Trigger("IncreaseAlert", 10);
+            EventManager.Trigger("IncreaseAlert", .1f);
         }
 
         // Liberar el cofre activo después de procesar

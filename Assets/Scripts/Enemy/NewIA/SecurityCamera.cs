@@ -1,33 +1,48 @@
-using System.Collections;
+Ôªøusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SecurityCamera : MonoBehaviour
 {
-    [Header("Movement Settins")]
-    [SerializeField] private float rotationSpeed = 30f; // Velocidad de rotaciÛn en grados/segundo
-    [SerializeField] private float rotationAngle = 45f; // ¡ngulo m·ximo de rotaciÛn (radio)
+    [Header("Movement Settings")]
+    [SerializeField] private float rotationSpeed = 30f; // Velocidad de rotaci√≥n en grados/segundo
+    [SerializeField] private float rotationAngle = 45f; // √Ångulo m√°ximo de rotaci√≥n (radio)
 
     [Header("Vision Settings")]
-    [SerializeField] private float visionRange = 10f; // Rango de visiÛn
-    [SerializeField, Range(0, 180)] private float visionAngle = 45f; // ¡ngulo del cono de visiÛn
+    [SerializeField] private float visionRange = 10f; // Rango de visi√≥n
+    [SerializeField, Range(0, 180)] private float visionAngle = 45f; // √Ångulo del cono de visi√≥n
     [SerializeField] private LayerMask playerLayer; // Capa del jugador
-    [SerializeField] private LayerMask obstacleLayer; // Capa para obst·culos
+    [SerializeField] private LayerMask obstacleLayer; // Capa para obst√°culos
+
+    [Header("Light Feedback")]
+    [SerializeField] private Light indicatorLight; // Luz indicadora
+    [SerializeField] private Color safeColor = Color.green;
+    [SerializeField] private Color alertColor = Color.red;
+    [SerializeField] private float lightChangeSpeed = 5f;
+
+    [Header("Alert Settings")]
+    [SerializeField] private float alertAmount = 10f; // Cu√°nto aumenta el nivel de alerta al detectar al jugador
+    [SerializeField] private float alertCooldown = 1f; // Tiempo m√≠nimo entre alertas consecutivas
 
     private float initialRotation;
     private bool rotatingRight = true;
     private bool playerDetected = false;
     private Transform detectedPlayer;
+    private float lastAlertTime = -999f;
 
     void Start()
     {
         initialRotation = transform.eulerAngles.y;
+
+        if (indicatorLight != null)
+            indicatorLight.color = safeColor;
     }
 
     void Update()
     {
         RotateCamera();
         CheckPlayerDetection();
+        UpdateLightColor();
     }
 
     void RotateCamera()
@@ -47,10 +62,9 @@ public class SecurityCamera : MonoBehaviour
 
     void CheckPlayerDetection()
     {
-        playerDetected = false;
+        bool detectedThisFrame = false;
         detectedPlayer = null;
 
-        // Buscar todos los objetos en el rango de visiÛn que estÈn en la capa de jugador
         Collider[] playersInRange = Physics.OverlapSphere(transform.position, visionRange, playerLayer);
 
         foreach (var playerCollider in playersInRange)
@@ -58,27 +72,41 @@ public class SecurityCamera : MonoBehaviour
             Vector3 directionToPlayer = playerCollider.transform.position - transform.position;
             float distanceToPlayer = directionToPlayer.magnitude;
 
-            // Verificar si el jugador est· dentro del ·ngulo del cono
             float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
             if (angleToPlayer <= visionAngle * 0.5f)
             {
-                // Verificar si no hay obst·culos entre la c·mara y el jugador
                 if (!Physics.Raycast(transform.position, directionToPlayer.normalized, distanceToPlayer, obstacleLayer))
                 {
-                    playerDetected = true;
+                    detectedThisFrame = true;
                     detectedPlayer = playerCollider.transform;
-
-                    // Debug visual
                     Debug.DrawRay(transform.position, directionToPlayer, Color.red);
-                    break; // Ya detectÛ a un jugador, no hace falta seguir
+
+                    // Llamar al evento solo si no fue llamado hace poco
+                    if (Time.time - lastAlertTime >= alertCooldown)
+                    {
+                        lastAlertTime = Time.time;
+                        EventManager.Trigger("IncreaseAlert", alertAmount);
+                    }
+
+                    break;
                 }
             }
         }
+
+        playerDetected = detectedThisFrame;
 
         if (!playerDetected)
         {
             Debug.DrawRay(transform.position, transform.forward * visionRange, Color.green);
         }
+    }
+
+    void UpdateLightColor()
+    {
+        if (indicatorLight == null) return;
+
+        Color targetColor = playerDetected ? alertColor : safeColor;
+        indicatorLight.color = Color.Lerp(indicatorLight.color, targetColor, Time.deltaTime * lightChangeSpeed);
     }
 
     void OnDrawGizmos()
