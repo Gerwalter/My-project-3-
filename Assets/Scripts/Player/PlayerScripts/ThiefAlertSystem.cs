@@ -7,8 +7,8 @@ public class ThiefAlertSystem : MonoBehaviour, IAlertSystemObservable
 {
     public static ThiefAlertSystem instance;
 
-    [SerializeField] private int _alert = 0;
-    [SerializeField] private int _MaxAlert = 100;
+    [SerializeField] private float _alert = 0;
+    [SerializeField] private float _MaxAlert = 100;
 
     [SerializeField] private List<IAlertSystemObserver> _observers = new List<IAlertSystemObserver>();
 
@@ -92,7 +92,7 @@ public class ThiefAlertSystem : MonoBehaviour, IAlertSystemObservable
     }
 
     // ----------- Interfaz Observable -----------
-    public int ObtainValue() => _alert;
+    public float ObtainValue() => _alert;
 
     public void Subscribe(IAlertSystemObserver x)
     {

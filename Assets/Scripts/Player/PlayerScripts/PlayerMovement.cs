@@ -13,9 +13,10 @@ public class PlayerMovement
     {
         Vector3 dir = _player.Direction;
         bool isMoving = dir.x != 0 || dir.z != 0;
-        EventManager.Trigger("Float", "xAxis", dir.x);
-        EventManager.Trigger("Float", "zAxis", dir.z);
-        EventManager.Trigger("Bool", "isMoving", isMoving);
+
+        // Nuevo sistema simplificado
+        float moveValue = isMoving ? 1f : 0f;
+        EventManager.Trigger("Float", "Move", moveValue);
     }
 
     public void FixedUpdate()
@@ -23,20 +24,26 @@ public class PlayerMovement
         Vector3 dir = _player.Direction.normalized;
         if (dir != Vector3.zero)
         {
-            Vector3 forward = Camera.main.transform.forward;
-            Vector3 right = Camera.main.transform.right;
-            forward.y = 0;
-            right.y = 0;
+            Vector3 camForward = Camera.main.transform.forward;
+            Vector3 camRight = Camera.main.transform.right;
+            camForward.y = 0;
+            camRight.y = 0;
 
-            Vector3 moveDir = (right * dir.x + forward * dir.z).normalized;
+            // Dirección de movimiento basada en cámara
+            Vector3 moveDir = (camRight * dir.x + camForward * dir.z).normalized;
 
             if (OnSlope(out RaycastHit slopeHit))
             {
                 moveDir = GetSlopeDirection(moveDir, slopeHit.normal);
             }
 
-            // Ahora el jugador mira hacia la dirección de movimiento
-            _player.Transform.forward = moveDir;
+            // Rotación suave hacia la dirección de movimiento (más estable visualmente)
+            Quaternion targetRotation = Quaternion.LookRotation(moveDir, Vector3.up);
+            _player.Transform.rotation = Quaternion.Slerp(
+                _player.Transform.rotation,
+                targetRotation,
+                18f * Time.fixedDeltaTime // ajustá este valor para rotaciones más o menos rápidas
+            );
 
             float speed = _player.MoveSpeed;
 
@@ -57,6 +64,7 @@ public class PlayerMovement
             );
         }
     }
+
 
     private bool OnSlope(out RaycastHit hit)
     {

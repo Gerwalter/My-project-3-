@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SecurityCamera : MonoBehaviour
 {
-    [Header("Movement Settings")]
+    [Header("Movement Settins")]
     [SerializeField] private float rotationSpeed = 30f; // Velocidad de rotación en grados/segundo
     [SerializeField] private float rotationAngle = 45f; // Ángulo máximo de rotación (radio)
 
