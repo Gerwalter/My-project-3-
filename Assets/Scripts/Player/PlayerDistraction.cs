@@ -3,113 +3,81 @@ using UnityEngine;
 [RequireComponent(typeof(LineRenderer))]
 public class PlayerDistraction : MonoBehaviour
 {
-    [Header("Distracciones")]
-    public GameObject stonePrefab;
-    public GameObject coinPrefab;
-    public float throwForce = 10f;
-    public Transform throwPoint;
+    [Header("Referencias")]
+    public Transform throwPoint;          // Punto desde donde se lanzan los objetos
+    public GameObject rockPrefab;         // Prefab de la piedra
+    public GameObject coinPrefab;         // Prefab de la moneda
 
-    [Header("Trayectoria")]
-    public int trajectoryPoints = 30;
-    public float timeStep = 0.05f;
-    public LayerMask collisionMask; // Capas con las que la trayectoria colisiona
+    [Header("Fuerza de lanzamiento")]
+    public float throwForce = 10f;        // Velocidad del lanzamiento
+    public float upwardForce = 2f;        // Componente vertical opcional
 
-    private LineRenderer lineRenderer;
-    private GameObject currentPrefab;
-    private bool isAiming = false;
-    private Vector3 aimDirection;
+    private GameObject currentItem;       // Objeto que se va a lanzar
+    private bool isAiming = false;        // Si está apuntando actualmente
+    private KeyCode currentKey;           // Qué tecla se está usando
 
-    private void Start()
+    void Update()
     {
-        lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.positionCount = 0;
+        HandleInput();
     }
 
-    private void Update()
+    void HandleInput()
     {
-        // Iniciar apuntado
+        // Presionar tecla de piedra
         if (Input.GetKeyDown(KeyCode.Z))
-            StartAiming(stonePrefab);
+        {
+            StartAiming(rockPrefab, KeyCode.Z);
+        }
+
+        // Presionar tecla de moneda
         if (Input.GetKeyDown(KeyCode.X))
-            StartAiming(coinPrefab);
-
-        // Mientras apunta
-        if (isAiming)
         {
-            aimDirection = throwPoint.forward;
-            UpdateTrajectory();
+            StartAiming(coinPrefab, KeyCode.X);
         }
 
-        // Soltar para lanzar
-        if (isAiming && (Input.GetKeyUp(KeyCode.Z) || Input.GetKeyUp(KeyCode.X)))
+        // Soltar tecla de apuntado
+        if (isAiming && Input.GetKeyUp(currentKey))
         {
-            ThrowDistraction(currentPrefab, aimDirection);
-            StopAiming();
+            ThrowCurrentItem();
         }
     }
 
-    private void StartAiming(GameObject prefab)
+    void StartAiming(GameObject prefab, KeyCode key)
     {
-        if (prefab == null) return;
-        currentPrefab = prefab;
+        // Si ya está apuntando, no iniciar de nuevo
+        if (isAiming) return;
+
+        currentItem = prefab;
+        currentKey = key;
         isAiming = true;
-        lineRenderer.positionCount = trajectoryPoints;
+
+        // Aquí podrías activar animaciones o una retícula de apuntado
+        Debug.Log("Apuntando con: " + prefab.name);
     }
 
-    private void StopAiming()
+    void ThrowCurrentItem()
     {
-        isAiming = false;
-        lineRenderer.positionCount = 0;
-    }
+        if (currentItem == null || throwPoint == null)
+        {
+            isAiming = false;
+            return;
+        }
 
-    private void ThrowDistraction(GameObject prefab, Vector3 direction)
-    {
-        if (prefab == null) return;
+        // Instanciar el objeto
+        GameObject thrown = Instantiate(currentItem, throwPoint.position, throwPoint.rotation);
 
-        Vector3 spawnPos = throwPoint.position + direction * 0.3f;
-        GameObject thrownObject = Instantiate(prefab, spawnPos, Quaternion.identity);
-
-        Rigidbody rb = thrownObject.GetComponent<Rigidbody>();
+        // Aplicar fuerza
+        Rigidbody rb = thrown.GetComponent<Rigidbody>();
         if (rb != null)
         {
-            Collider playerCollider = GetComponent<Collider>();
-            Collider objCollider = thrownObject.GetComponent<Collider>();
-            if (playerCollider && objCollider)
-                Physics.IgnoreCollision(playerCollider, objCollider, true);
-
-            rb.AddForce(direction.normalized * throwForce, ForceMode.Impulse);
-        }
-    }
-
-    private void UpdateTrajectory()
-    {
-        Vector3 startPos = throwPoint.position;
-        Vector3 startVel = throwPoint.forward * throwForce;
-        Vector3 gravity = Physics.gravity;
-
-        Vector3 previousPoint = startPos;
-        lineRenderer.SetPosition(0, startPos);
-        int pointsUsed = 1;
-
-        for (int i = 1; i < trajectoryPoints; i++)
-        {
-            float t = i * timeStep;
-            Vector3 point = startPos + startVel * t + 0.5f * gravity * t * t;
-
-            // Comprobamos colisión entre el punto anterior y el nuevo
-            if (Physics.Linecast(previousPoint, point, out RaycastHit hit, collisionMask))
-            {
-                lineRenderer.SetPosition(pointsUsed, hit.point);
-                pointsUsed++;
-                break; // Detenemos el cálculo aquí
-            }
-
-            lineRenderer.SetPosition(pointsUsed, point);
-            previousPoint = point;
-            pointsUsed++;
+            Vector3 forceDir = throwPoint.forward * throwForce + Vector3.up * upwardForce;
+            rb.AddForce(forceDir, ForceMode.VelocityChange);
         }
 
-        // Ajustar la cantidad real de puntos usados
-        lineRenderer.positionCount = pointsUsed;
+        Debug.Log("Lanzado: " + currentItem.name);
+
+        // Resetear estado
+        isAiming = false;
+        currentItem = null;
     }
 }

@@ -39,13 +39,7 @@ public class PlayerUI : Health, ILifeObservable
         foreach (var observer in _observers)
             observer.Notify(GetLife, maxHealth);
         if (GetLife <= 0)
-            Debug.Log("GAME OVER");
-    }
-    private void Update()
-    {
-        if (Input.GetKeyDown(keyDmg)) //Solo para testear
-                OnTakeDamage(10);
-        if (Input.GetKeyDown(KeyCode.U)) OnTakeDamage(-1);
+            Debug.Log("GAME OVE");
     }
 
     public void PlayerCall(params object[] args)

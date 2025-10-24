@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     public float WallCheckDistance => wallCheckDistance;
     public LayerMask WallMask => wallMask;
 
-    public Rigidbody Rigidbody { get; private set; }
+    public Rigidbody Rigidbody;
     public Transform Transform => transform;
     public Vector3 Direction => new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
 
@@ -40,7 +40,6 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         Rigidbody = GetComponent<Rigidbody>();
-
         movement = new PlayerMovement(this);
         jump = new PlayerJump(this);
         crouch = new PlayerCrouch(this);
@@ -49,6 +48,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         jump.Start();
+        jump.Initialize();
     }
     private void Update()
     {

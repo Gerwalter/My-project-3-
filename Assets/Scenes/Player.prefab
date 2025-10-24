@@ -1047,7 +1047,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1781073883981686708}
-  _rb: {fileID: 4794030810985705776}
+  _rb: {fileID: 0}
+  player: {fileID: 7548635649144807281}
   _fadeDuration: 0.21
   observable: {fileID: 6476961703054510686}
 --- !u!1 &3088333756832410554
@@ -1241,6 +1242,37 @@ Transform:
   - {fileID: 3767400798771508877}
   m_Father: {fileID: 3976756208574027622}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3520191824331166307
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4155918345749348432}
+  m_Layer: 3
+  m_Name: Throwpoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4155918345749348432
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3520191824331166307}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.001732248, y: -0.0024724246, z: 0.0032553046, w: 0.99999017}
+  m_LocalPosition: {x: 1.387, y: 1.081, z: 0.497}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 7214770436194531379}
+  m_LocalEulerAnglesHint: {x: 7.97, y: 0, z: -2}
 --- !u!1 &3646719875114323814
 GameObject:
   m_ObjectHideFlags: 0
@@ -2623,6 +2655,7 @@ MonoBehaviour:
   wallMask:
     serializedVersion: 2
     m_Bits: 1024
+  Rigidbody: {fileID: 0}
 --- !u!114 &1439358844604481671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2705,17 +2738,20 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6476961703054510686}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bba753a03bdc27b41bf96bad567f0747, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stonePrefab: {fileID: 171161859296797672, guid: 048e856f45938434189bcb67b1aada22, type: 3}
-  coinPrefab: {fileID: 7278227806950412572, guid: c6a541e3b8168fc4db31a22697fc7ef3, type: 3}
+  stonePrefab: {fileID: 0}
+  coinPrefab: {fileID: 0}
   throwForce: 10
-  throwPoint: {fileID: 3350907452326638227}
+  throwPoint: {fileID: 4155918345749348432}
   trajectoryPoints: 30
   timeStep: 0.05
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 5632
 --- !u!120 &3048875410908837280
 LineRenderer:
   serializedVersion: 2
@@ -2724,7 +2760,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6476961703054510686}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2737,7 +2773,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 8508907714f845f45b3b97db5ddf3c66, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3283,6 +3319,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 7430657547572112092}
   _rb: {fileID: 0}
+  player: {fileID: 0}
   _fadeDuration: 0.21
   observable: {fileID: 0}
 --- !u!1 &7529434028027037500
@@ -3477,6 +3514,7 @@ Transform:
   - {fileID: 2841879247229887530}
   - {fileID: 7945497877485197948}
   - {fileID: 3350907452326638227}
+  - {fileID: 4155918345749348432}
   m_Father: {fileID: 5049212047837997333}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8303778810341027725

@@ -3,14 +3,57 @@ using UnityEngine;
 
 public class PlayerAnimationHandler : MonoBehaviour, IAnimObserver
 {
+    [Header("References")]
     [SerializeField] private Animator animator;
     [SerializeField] private Rigidbody _rb;
-    [SerializeField] private float _fadeDuration;
+    [SerializeField] private PlayerController player;
+    [SerializeField] private float _fadeDuration = 0.15f;
+
+    [SerializeField] private GameObject observable;
+
+    private void Awake()
+    {
+        // Asegurar que haya referencia al PlayerController
+        if (player == null)
+            player = GetComponent<PlayerController>();
+
+        // Asegurar que haya referencia al Rigidbody
+        if (_rb == null)
+            _rb = player != null ? player.Rigidbody : GetComponent<Rigidbody>();
+
+        // Suscripción al observable si existe
+        if (observable != null)
+        {
+            var animObservable = observable.GetComponent<IAnimObservable>();
+            if (animObservable != null)
+                animObservable.Subscribe(this);
+        }
+        else
+        {
+            Debug.LogWarning("No se asignó observable en PlayerAnimationHandler.");
+        }
+    }
+
+    private void Start()
+    {
+        // Subscribirse a eventos del EventManager
+        EventManager.Subscribe("Input", PlayerInput);
+        EventManager.Subscribe("Float", PlayerFloat);
+        EventManager.Subscribe("Bool", PlayerBool);
+        EventManager.Subscribe("PrintNum", OnAttack);
+        EventManager.Subscribe("OnJumpAttack", OnJumpAttack);
+
+        // Reconfirmar referencias en caso de recarga de escena
+        if (player == null)
+            player = GetComponent<PlayerController>();
+        if (_rb == null && player != null)
+            _rb = player.Rigidbody;
+    }
+
     public void OnAttackTriggered(ComboNode node)
     {
         if (node != null && node.animationClip != null)
         {
-            // Reproducir el clip directamente en el Animator
             int attackLayerIndex = animator.GetLayerIndex("AttackLayer");
             animator.CrossFade(node.animationClip.name, _fadeDuration, attackLayerIndex, 0f);
         }
@@ -19,71 +62,59 @@ public class PlayerAnimationHandler : MonoBehaviour, IAnimObserver
             Debug.LogWarning("El nodo no tiene animación asignada.");
         }
     }
-    private void Start()
-    {
-        EventManager.Subscribe("Input", PlayerInput);
-        EventManager.Subscribe("Float", PlayerFloat);
-        EventManager.Subscribe("Bool", PlayerBool);
 
-        EventManager.Subscribe("PrintNum", OnAttack);
-        EventManager.Subscribe("OnJumpAttack", OnJumpAttack);
-
-
-    }
-    public GameObject observable;
-    private void Awake()
-    {
-        if (observable.GetComponent<IAnimObservable>() != null)
-            observable.GetComponent<IAnimObservable>().Subscribe(this);
-    }
-
-    void OnAttack(params object[] args)
+    private void OnAttack(params object[] args)
     {
         float forward = (float)args[0];
-        AnimationMoveImpulse(forward); // método original
+        AnimationMoveImpulse(forward);
     }
 
-    void OnJumpAttack(params object[] args)
+    private void OnJumpAttack(params object[] args)
     {
         float forward = (float)args[0];
         float up = (float)args[1];
         ApplyForwardJumpImpulse(forward, up);
     }
+
     public void AnimationMoveImpulse(float force)
     {
-        Vector3 forwardDirection = transform.forward; // Dirección actual del jugador
+        if (_rb == null)
+        {
+            Debug.LogError("Rigidbody no asignado en PlayerAnimationHandler.");
+            return;
+        }
+        Vector3 forwardDirection = transform.forward;
         _rb.AddForce(forwardDirection * force, ForceMode.Impulse);
     }
 
     public void ApplyForwardJumpImpulse(float forwardForce, float jumpForce)
     {
-        // Dirección hacia adelante basada en la orientación actual del jugador
+        if (_rb == null)
+        {
+            Debug.LogError("Rigidbody no asignado en PlayerAnimationHandler.");
+            return;
+        }
+
         Vector3 forwardDirection = transform.forward * forwardForce;
-
-        // Impulso en el eje Y para el salto
         Vector3 upwardImpulse = Vector3.up * jumpForce;
-
-        // Aplica ambas fuerzas al Rigidbody
         _rb.AddForce(forwardDirection + upwardImpulse, ForceMode.Impulse);
     }
+
     private void PlayerInput(params object[] args)
     {
-        var input = (string)args[0];
-        animator.SetTrigger(input);
+        animator.SetTrigger((string)args[0]);
     }
+
     private void PlayerFloat(params object[] args)
     {
-        var input = (string)args[0];
-        var Numb = (float)args[1];
-        animator.SetFloat(input, Numb);
+        animator.SetFloat((string)args[0], (float)args[1]);
     }
 
     private void PlayerBool(params object[] args)
     {
-        var input = (string)args[0];
-        var Numb = (bool)args[1];
-        animator.SetBool(input, Numb);
+        animator.SetBool((string)args[0], (bool)args[1]);
     }
+
     public void OnShootStateChanged(bool isShooting)
     {
         animator.SetBool("Shoot", isShooting);
@@ -94,7 +125,6 @@ public class PlayerAnimationHandler : MonoBehaviour, IAnimObserver
         EventManager.Unsubscribe("Input", PlayerInput);
         EventManager.Unsubscribe("Float", PlayerFloat);
         EventManager.Unsubscribe("Bool", PlayerBool);
-
         EventManager.Unsubscribe("PrintNum", OnAttack);
         EventManager.Unsubscribe("OnJumpAttack", OnJumpAttack);
     }

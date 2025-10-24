@@ -949,8 +949,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 521018fdb6f3d4b41b4792a74e263497, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageBar: {fileID: 171779759}
+  alertAnimator: {fileID: 0}
   system: {fileID: 0}
+  thresholds:
+  - percent: 0.2
+    triggerName: AlertLevel1
+  - percent: 0.4
+    triggerName: AlertLevel2
+  - percent: 0.6
+    triggerName: AlertLevel3
+  - percent: 0.8
+    triggerName: AlertLevel4
+  - percent: 1
+    triggerName: AlertMax
 --- !u!114 &171779759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1975,7 +1986,7 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7b99b11c26ed80e44b6029f1f1a89011, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: 2180264, guid: 7b99b11c26ed80e44b6029f1f1a89011, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -2473,7 +2484,7 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7b99b11c26ed80e44b6029f1f1a89011, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: 2180264, guid: 7b99b11c26ed80e44b6029f1f1a89011, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -5351,7 +5362,7 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7b99b11c26ed80e44b6029f1f1a89011, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: 2180264, guid: 7b99b11c26ed80e44b6029f1f1a89011, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -5580,7 +5591,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Salir al Men\xFA\n"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7b99b11c26ed80e44b6029f1f1a89011, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: 2180264, guid: 7b99b11c26ed80e44b6029f1f1a89011, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -6083,7 +6094,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7b99b11c26ed80e44b6029f1f1a89011, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: 2180264, guid: 7b99b11c26ed80e44b6029f1f1a89011, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -6219,7 +6230,7 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7b99b11c26ed80e44b6029f1f1a89011, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: 2180264, guid: 7b99b11c26ed80e44b6029f1f1a89011, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -6650,6 +6661,7 @@ MonoBehaviour:
   wallMask:
     serializedVersion: 2
     m_Bits: 1024
+  Rigidbody: {fileID: 0}
 --- !u!114 &1136306587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7386,8 +7398,8 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Color: {r: 0.8113208, g: 0.8113208, b: 0.8113208, a: 1}
+  m_Intensity: 0.15
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -7445,13 +7457,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1233036770}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalRotation: {x: 0.386317, y: -0, z: -0, w: 0.922366}
+  m_LocalPosition: {x: -112.541, y: 3.95, z: 8.348}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 45.451, y: 0, z: 0}
 --- !u!114 &1233036773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7770,7 +7782,7 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7b99b11c26ed80e44b6029f1f1a89011, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: 2180264, guid: 7b99b11c26ed80e44b6029f1f1a89011, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -9981,6 +9993,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 1756278493}
   _rb: {fileID: 1136306582}
+  player: {fileID: 0}
   _fadeDuration: 0.21
   observable: {fileID: 1136306580}
 --- !u!114 &1756278492
@@ -11042,7 +11055,7 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7b99b11c26ed80e44b6029f1f1a89011, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: 2180264, guid: 7b99b11c26ed80e44b6029f1f1a89011, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -11718,9 +11731,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 802138722031963208, guid: 72409ccaa2fce204daa0c57bd49770ba, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9112864795212777025, guid: 72409ccaa2fce204daa0c57bd49770ba, type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 9112864795212777025, guid: 72409ccaa2fce204daa0c57bd49770ba, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

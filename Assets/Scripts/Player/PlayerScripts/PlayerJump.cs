@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerJump
 {
@@ -8,7 +9,14 @@ public class PlayerJump
     {
         _player = player;
     }
-
+    public void Initialize()
+    {
+        if (_player.Rigidbody == null)
+        {
+            _player.Rigidbody = _player.GetComponent<Rigidbody>();
+            Debug.LogWarning("PlayerJump tuvo que reasignar el Rigidbody manualmente.");
+        }
+    }
     public void Update()
     {
         bool grounded = IsGrounded();
@@ -30,6 +38,12 @@ public class PlayerJump
     }
     public void Jump(Vector3 direction)
     {
+        if (_player.Rigidbody == null)
+        {
+            Debug.LogError("Rigidbody del PlayerController no está inicializado antes del salto.");
+            return;
+        }
+
         _player.Rigidbody.AddForce(direction * _player.JumpForce, ForceMode.Impulse);
     }
 
