@@ -32,7 +32,7 @@ public class LoadingScreen : MonoBehaviour
             loadingText.text = (progress * 100f).ToString("F0") + "%";
 
             // Pasamos el valor de progreso al Animator (float parameter "Progress")
-            loadingAnimator.SetFloat("Progress", progress);
+            //loadingAnimator.SetFloat("Progress", progress);
 
             if (op.progress >= 0.9f)
             {

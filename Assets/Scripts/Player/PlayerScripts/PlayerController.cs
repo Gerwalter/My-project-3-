@@ -40,6 +40,11 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         Rigidbody = GetComponent<Rigidbody>();
+        Rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+        Rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
+        Rigidbody.freezeRotation = true; // evita que se caiga o rote raro
+
+        Rigidbody = GetComponent<Rigidbody>();
         movement = new PlayerMovement(this);
         jump = new PlayerJump(this);
         crouch = new PlayerCrouch(this);

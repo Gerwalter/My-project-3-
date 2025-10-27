@@ -57,7 +57,6 @@ public class EnemyHealth : Health, IEnemy
     public void Despawn()
     {
         Destroy(gameObject);
-        print("AAAAAA");
         gameObject.SetActive(false);
     }
 }

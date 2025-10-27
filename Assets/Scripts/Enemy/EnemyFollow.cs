@@ -4,7 +4,7 @@ public class EnemyFollow : MonoBehaviour
 {
     public float speed = 3f;           // Velocidad de movimiento
     public float stopDistance = 1.5f;  // Distancia mínima para detenerse (ej. atacar)
-
+    public Animator anim;
     public Transform player;
 
     void Start()
@@ -42,5 +42,7 @@ public class EnemyFollow : MonoBehaviour
             // Aquí podrías poner la lógica de ataque
             Debug.Log("Atacando al jugador!");
         }
+
+        anim.SetFloat("Move", speed > 0.1f ? 1f : 0f);
     }
 }

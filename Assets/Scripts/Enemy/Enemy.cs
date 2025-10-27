@@ -20,7 +20,7 @@ public class Enemy : EnemyHealth
     [Header("Enemy Settings")]
     public float detectionRadius = 5f;   // Rango en el que detecta al jugador
     public float attackRange = 2f;       // Rango en el que puede atacar
-    public float attackDamage = 10f;     // Daño que inflige al jugador
+    public float attackDamage = 10f;     // Dapo que inflige al jugador
     public float attackCooldown = 1.5f;  // Tiempo entre ataques
     public LayerMask playerLayer;
 
@@ -31,14 +31,14 @@ public class Enemy : EnemyHealth
     {
         attackTimer -= Time.deltaTime;
 
-        // Buscar jugador en rango de detección
+
         Collider[] players = Physics.OverlapSphere(transform.position, detectionRadius, playerLayer);
 
         if (players.Length > 0)
         {
             targetPlayer = players[0].transform;
 
-            // Verificar si está lo suficientemente cerca para atacar
+            // Verificar si esta lo suficientemente cerca para atacar
             float distance = Vector3.Distance(transform.position, targetPlayer.position);
             if (distance <= attackRange && attackTimer <= 0f)
             {
@@ -50,6 +50,7 @@ public class Enemy : EnemyHealth
         {
             targetPlayer = null;
         }
+        //
     }
 
     private void AttackPlayer(Health playerHealth)
@@ -57,7 +58,7 @@ public class Enemy : EnemyHealth
         if (playerHealth != null)
         {
             playerHealth.OnTakeDamage(attackDamage);
-            Debug.Log($"{gameObject.name} golpeó al jugador y le hizo {attackDamage} de daño");
+            Debug.Log($"{gameObject.name} golpeo al jugador y le hizo {attackDamage} de danio");
         }
     }
     private void OnDrawGizmos()

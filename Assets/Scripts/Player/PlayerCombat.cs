@@ -246,7 +246,7 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
     {
         EventManager.Subscribe("OnAttack", OnAttack);
         EventManager.Subscribe("ComboChanger", ComboChanger);
-        canCombo = true;
+       // canCombo = true;
     }
 
     void OnDisable()

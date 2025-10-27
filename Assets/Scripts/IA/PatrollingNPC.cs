@@ -14,7 +14,8 @@ public class PatrollingNPC : MonoBehaviour
 
     [Header("Persecucion e Investigacion")]
     public float chaseSpeed = 3.5f;
-    public float investigateDuration = 4f;
+    [Tooltip("Duracion de investigacion si la investigacion fue causada por una distraccion")]
+    public float distractionInvestigateDuration = 6f;
 
     [Header("Deteccion de Suelo")]
     public LayerMask groundLayers = 0;
@@ -27,6 +28,8 @@ public class PatrollingNPC : MonoBehaviour
     public LayerMask distractionLayer;
     public FOVAgent FOVAgent;
 
+    [Header("Animation")]
+    [SerializeField] private Animator animator;
     [Header("Captura")]
     public float captureRange = 1.5f;
 
@@ -53,8 +56,6 @@ public class PatrollingNPC : MonoBehaviour
     public float hearingRange = 10f;
     [HideInInspector] public Vector3 lastHeardPosition;
     [HideInInspector] public bool heardDistraction = false;
-    [Tooltip("Duracion de investigacion si la investigacion fue causada por una distraccion")]
-    public float distractionInvestigateDuration = 6f;
 
     public NavMeshAgent agent;
 
@@ -69,7 +70,7 @@ public class PatrollingNPC : MonoBehaviour
             if (node != null)
             {
                 patrolPoints.Add(node.transform.position);
-                patrolRotations.Add(node.transform.rotation); // Nuevo: Agregar rotación del nodo
+                patrolRotations.Add(node.transform.rotation); // Nuevo: Agregar rotacin del nodo
             }
         }
 
@@ -81,6 +82,10 @@ public class PatrollingNPC : MonoBehaviour
     {
         currentState?.Update(this);
 
+        if (animator != null)
+        {
+            animator.SetFloat("Move", isMoving ? 1f : 0f);
+        }
         // Detectar monedas visibles
         if (!(currentState is ChaseState || currentState is InvestigateState))
         {
@@ -246,7 +251,7 @@ public class PatrollingNPC : MonoBehaviour
                 followPathRoutine = StartCoroutine(MoveToRoutine(goalPos));
                 yield return followPathRoutine;
 
-                // Nuevo: Aplicar rotación del nodo al llegar
+                // Nuevo: Aplicar rotacin del nodo al llegar
                 if (patrolRotations.Count > currentTargetIndex)
                 {
                     transform.rotation = patrolRotations[currentTargetIndex];

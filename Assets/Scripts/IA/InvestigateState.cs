@@ -37,7 +37,7 @@ public class InvestigateState : NPCBaseState
 
         // Determinar duracion
         float timer = 0f;
-        float maxDuration = npc.isCoinDistraction ? npc.distractionInvestigateDuration : npc.investigateDuration;
+        float maxDuration = npc.isCoinDistraction ? npc.distractionInvestigateDuration : npc.distractionInvestigateDuration;
 
         // Resetear marcas
         npc.heardDistraction = false;

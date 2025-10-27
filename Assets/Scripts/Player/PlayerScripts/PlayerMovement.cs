@@ -14,7 +14,7 @@ public class PlayerMovement
         Vector3 dir = _player.Direction;
         bool isMoving = dir.x != 0 || dir.z != 0;
 
-        // Nuevo sistema simplificado
+        // Feedback de animación
         float moveValue = isMoving ? 1f : 0f;
         EventManager.Trigger("Float", "Move", moveValue);
     }
@@ -22,49 +22,82 @@ public class PlayerMovement
     public void FixedUpdate()
     {
         Vector3 dir = _player.Direction.normalized;
-        if (dir != Vector3.zero)
+        if (dir == Vector3.zero) return;
+
+        // Dirección relativa a la cámara
+        Vector3 camForward = Camera.main.transform.forward;
+        Vector3 camRight = Camera.main.transform.right;
+        camForward.y = 0;
+        camRight.y = 0;
+
+        Vector3 moveDir = (camRight * dir.x + camForward * dir.z).normalized;
+
+        // Ajuste en pendientes
+        if (OnSlope(out RaycastHit slopeHit))
         {
-            Vector3 camForward = Camera.main.transform.forward;
-            Vector3 camRight = Camera.main.transform.right;
-            camForward.y = 0;
-            camRight.y = 0;
+            moveDir = GetSlopeDirection(moveDir, slopeHit.normal);
+        }
 
-            // Dirección de movimiento basada en cámara
-            Vector3 moveDir = (camRight * dir.x + camForward * dir.z).normalized;
+        // Rotación suave hacia la dirección de movimiento
+        Quaternion targetRotation = Quaternion.LookRotation(moveDir, Vector3.up);
+        _player.Transform.rotation = Quaternion.Slerp(
+            _player.Transform.rotation,
+            targetRotation,
+            18f * Time.fixedDeltaTime
+        );
 
-            if (OnSlope(out RaycastHit slopeHit))
+        float speed = _player.MoveSpeed;
+
+        if (_player.Stamina.IsSprinting)
+            speed *= 1.8f;
+
+        if (_player.Crouch != null && _player.Crouch.IsCrouching)
+            speed *= _player.Crouch.crouchSpeedMultiplier;
+
+        Vector3 targetPos = _player.Transform.position + moveDir * speed * Time.fixedDeltaTime;
+
+        // -----------------------------
+        // -----------------------------
+        float radius = 0.22f; // Ajustar según tu collider
+        float height = 1.8f;
+        Vector3 point1 = _player.Transform.position + Vector3.up * 0.1f;
+        Vector3 point2 = point1 + Vector3.up * (height - 0.2f);
+
+        bool blocked = Physics.CapsuleCast(
+            point1,
+            point2,
+            radius,
+            moveDir,
+            out RaycastHit wallHit,
+            speed * Time.fixedDeltaTime,
+            _player.WallMask
+        );
+
+        if (!blocked)
+        {
+            _player.Rigidbody.MovePosition(targetPos);
+        }
+
+        // -----------------------------
+        // ⚡ Dash con colisión segura
+        // -----------------------------
+        if (_player.Stamina.IsDashing)
+        {
+            Vector3 dashDir = _player.Transform.forward;
+            float dashDistance = 4f; // Distancia de dash
+            float dashForce = 12f;   // Fuerza de impulso
+
+            // Evitar atravesar objetos durante el dash
+            if (!Physics.Raycast(_player.Transform.position, dashDir, dashDistance, _player.WallMask))
             {
-                moveDir = GetSlopeDirection(moveDir, slopeHit.normal);
+                _player.Rigidbody.AddForce(dashDir * dashForce, ForceMode.VelocityChange);
             }
-
-            // Rotación suave hacia la dirección de movimiento (más estable visualmente)
-            Quaternion targetRotation = Quaternion.LookRotation(moveDir, Vector3.up);
-            _player.Transform.rotation = Quaternion.Slerp(
-                _player.Transform.rotation,
-                targetRotation,
-                18f * Time.fixedDeltaTime // ajustá este valor para rotaciones más o menos rápidas
-            );
-
-            float speed = _player.MoveSpeed;
-
-            if (_player.Stamina.IsSprinting)
-                speed *= 1.8f;
-
-            if (_player.Stamina.IsDashing)
+            else
             {
-                Vector3 dashDir = _player.Transform.forward * 10f;
-                _player.Rigidbody.AddForce(dashDir, ForceMode.VelocityChange);
+                _player.Rigidbody.velocity = Vector3.zero; // Detener al impactar pared
             }
-
-            if (_player.Crouch != null && _player.Crouch.IsCrouching)
-                speed *= _player.Crouch.crouchSpeedMultiplier;
-
-            _player.Rigidbody.MovePosition(
-                _player.Transform.position + moveDir * speed * Time.fixedDeltaTime
-            );
         }
     }
-
 
     private bool OnSlope(out RaycastHit hit)
     {
