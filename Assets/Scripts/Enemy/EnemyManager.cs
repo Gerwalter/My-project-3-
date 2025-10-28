@@ -6,10 +6,9 @@ public class EnemyManager : MonoBehaviour
     public static EnemyManager Instance;
 
     [SerializeField] private List<Enemy> enemies = new List<Enemy>();
-
+    [SerializeField] public float Enemycount;
     private void Awake()
     {
-        // Singleton para acceso fácil
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
     }
@@ -24,9 +23,7 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Registrar enemigo en la lista
-    /// </summary>
+
     public void RegisterEnemy(Enemy enemy)
     {
         if (!enemies.Contains(enemy))
@@ -35,21 +32,11 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Eliminar enemigo de la lista
-    /// </summary>
     public void UnregisterEnemy(Enemy enemy)
     {
         if (enemies.Contains(enemy))
         {
             enemies.Remove(enemy);
-
-            if (enemies.Count == 0)
-            {
-                // Cuando no quedan enemigos, victoria
-                Debug.Log("Todos los enemigos derrotados, fin de la batalla.");
-                FindObjectOfType<BattleEnd>()?.OnBattleWon();
-            }
         }
     }
 }

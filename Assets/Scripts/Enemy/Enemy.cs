@@ -12,9 +12,15 @@ public class Enemy : EnemyHealth
     }
 
 
+    public static System.Action OnEnemyDefeated;
+
     public override void Die()
     {
         EnemyManager.Instance.UnregisterEnemy(this);
+
+        // Notificar muerte global
+        OnEnemyDefeated?.Invoke();
+
         base.Die();
     }
     [Header("Enemy Settings")]
