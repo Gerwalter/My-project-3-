@@ -7,15 +7,15 @@ public class EnemyHealth : Health, IEnemy
     public Animator anim;
     private void OnEnable()
     {
-        EventManager.Subscribe("SendDamage", RecibirDanio);
+        EventManager.Subscribe("SendDamage", TakeDamage);
     }
 
     private void OnDisable()
     {
-        EventManager.Unsubscribe("SendDamage", RecibirDanio);
+        EventManager.Unsubscribe("SendDamage", TakeDamage);
     }
 
-    private void RecibirDanio(params object[] parametros)
+    private void TakeDamage(params object[] parametros)
     {
         float damage = (float)parametros[0];
         GameObject objetivo = (GameObject)parametros[1];

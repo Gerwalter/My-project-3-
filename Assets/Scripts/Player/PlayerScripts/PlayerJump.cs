@@ -22,30 +22,30 @@ public class PlayerJump
         bool grounded = IsGrounded();
         EventManager.Trigger("Bool", "isGrounded", grounded);
 
-        if (Input.GetKeyDown(KeyCode.Space) && grounded)
-        {
-            EventManager.Trigger("Input", "onJump");
-
-        }
+       // if (Input.GetKeyDown(KeyCode.Space) && grounded)
+       // {
+       //     EventManager.Trigger("Input", "onJump");
+       //
+       // }
     }
-    public void Start()
-    {
-        EventManager.Subscribe("OnJump", JumpUp);
-    }
-    private void JumpUp(params object[] args)
-    {
-        Jump(Vector3.up);
-    }
-    public void Jump(Vector3 direction)
-    {
-        if (_player.Rigidbody == null)
-        {
-            Debug.LogError("Rigidbody del PlayerController no está inicializado antes del salto.");
-            return;
-        }
-
-        _player.Rigidbody.AddForce(direction * _player.JumpForce, ForceMode.Impulse);
-    }
+    //public void Start()
+    //{
+    //    EventManager.Subscribe("OnJump", JumpUp);
+    //}
+    //private void JumpUp(params object[] args)
+    //{
+    //    Jump(Vector3.up);
+    //}
+    //public void Jump(Vector3 direction)
+    //{
+    //    if (_player.Rigidbody == null)
+    //    {
+    //        Debug.LogError("Rigidbody del PlayerController no está inicializado antes del salto.");
+    //        return;
+    //    }
+    //
+    //    _player.Rigidbody.AddForce(direction * _player.JumpForce, ForceMode.Impulse);
+    //}
 
     private bool IsGrounded()
     {

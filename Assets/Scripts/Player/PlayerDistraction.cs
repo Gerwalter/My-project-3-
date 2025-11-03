@@ -5,7 +5,7 @@ public class PlayerDistraction : MonoBehaviour
 {
     [Header("Referencias")]
     public Transform throwPoint;
-    public GameObject rockPrefab;
+  //  public GameObject rockPrefab;
     public GameObject coinPrefab;
 
     [Header("Lanzamiento")]
@@ -51,10 +51,10 @@ public class PlayerDistraction : MonoBehaviour
     void HandleInput()
     {
         // Iniciar apuntado con piedra
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            StartAiming(rockPrefab, KeyCode.Z);
-        }
+       // if (Input.GetKeyDown(KeyCode.Z))
+       // {
+       //     StartAiming(rockPrefab, KeyCode.Z);
+       // }
 
         // Iniciar apuntado con moneda
         if (Input.GetKeyDown(KeyCode.X))

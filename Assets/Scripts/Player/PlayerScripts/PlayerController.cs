@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Start()
     {
-        jump.Start();
+        //jump.Start();
         jump.Initialize();
     }
     private void Update()
