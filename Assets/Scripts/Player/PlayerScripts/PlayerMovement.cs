@@ -85,7 +85,7 @@ public class PlayerMovement
         {
             Vector3 dashDir = _player.Transform.forward;
             float dashDistance = 4f; // Distancia de dash
-            float dashForce = 12f;   // Fuerza de impulso
+            float dashForce = 12f;   // Fuea de impulso
 
             // Evitar atravesar objetos durante el dash
             if (!Physics.Raycast(_player.Transform.position, dashDir, dashDistance, _player.WallMask))
@@ -95,6 +95,14 @@ public class PlayerMovement
             else
             {
                 _player.Rigidbody.velocity = Vector3.zero; // Detener al impactar pared
+            }
+        }
+        else
+        {
+            // 🚫 Detener el deslizamiento si no se está dashing ni moviendo
+            if (_player.Direction == Vector3.zero)
+            {
+                _player.Rigidbody.velocity = Vector3.zero;
             }
         }
     }

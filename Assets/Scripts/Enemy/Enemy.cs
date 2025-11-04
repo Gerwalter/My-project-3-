@@ -23,6 +23,7 @@ public class Enemy : EnemyHealth
 
         base.Die();
     }
+
     [Header("Enemy Settings")]
     public float detectionRadius = 5f;   // Rango en el que detecta al jugador
     public float attackRange = 2f;       // Rango en el que puede atacar
@@ -48,6 +49,7 @@ public class Enemy : EnemyHealth
             float distance = Vector3.Distance(transform.position, targetPlayer.position);
             if (distance <= attackRange && attackTimer <= 0f)
             {
+                anim.SetTrigger("Punch");
                 AttackPlayer(players[0].GetComponent<Health>());
                 attackTimer = attackCooldown;
             }
