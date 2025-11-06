@@ -1,19 +1,19 @@
-﻿using System.Collections;
-using UnityEngine;
-
+﻿using UnityEngine;
+using System.Collections;
 public class ChaseState : NPCBaseState
 {
     protected override IEnumerator StartMainRoutine(PatrollingNPC npc)
     {
         npc.FOVAgent.ViewAngle = 360f;
-        npc.agent.speed = npc.chaseSpeed;  // Aumenta velocidad
-        npc.agent.updateRotation = false;  // Rotación manual para persecución
+        npc.agent.speed = npc.chaseSpeed;
+        npc.agent.updateRotation = false;
 
-        while (npc.IsPlayerVisible())
+        // Resetear exposición al iniciar persecución
+        npc.currentExposure = 0f;
+
+        while (true)
         {
-            npc.lastSeenPosition = npc.player.transform.position;
-
-            float distance = Vector3.Distance(npc.transform.position, npc.lastSeenPosition);
+            float distance = Vector3.Distance(npc.transform.position, npc.player.transform.position);
             if (distance <= npc.captureRange)
             {
                 npc.hasTriggered = true;
@@ -21,7 +21,14 @@ public class ChaseState : NPCBaseState
                 yield break;
             }
 
-            // Actualiza destino cada frame (persecución dinámica)
+            // Si pierde de vista Y exposición no está llena, vuelve a investigar
+            if (!npc.IsPlayerVisible() && !npc.isExposureFull)
+            {
+                npc.SwitchState(new InvestigateState());
+                yield break;
+            }
+
+            npc.lastSeenPosition = npc.player.transform.position;
             npc.agent.SetDestination(npc.lastSeenPosition);
 
             // Rotación manual
@@ -35,9 +42,5 @@ public class ChaseState : NPCBaseState
 
             yield return null;
         }
-
-        npc.agent.speed = npc.moveSpeed;  // Vuelve a velocidad normal
-        npc.agent.updateRotation = true;
-        npc.SwitchState(new InvestigateState());
     }
 }

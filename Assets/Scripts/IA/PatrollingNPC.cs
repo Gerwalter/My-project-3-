@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class PatrollingNPC : MonoBehaviour
 {
@@ -27,6 +28,18 @@ public class PatrollingNPC : MonoBehaviour
     public LayerMask playerLayer;
     public LayerMask distractionLayer;
     public FOVAgent FOVAgent;
+
+    // NUEVO: Sistema de Exposición
+    [Header("Sistema de Exposición")]
+    public float exposureFillRateBase = 10f; // Velocidad base de llenado
+    public float exposureDecayRate = 5f;     // Velocidad de decremento cuando no visible
+    public Image exposureUI;
+    [SerializeField] public float currentExposure = 0f;
+    [SerializeField] private float maxExposure = 100f;
+    public bool isExposureFull => currentExposure >= maxExposure;
+    public float CurrentExposure => currentExposure;
+    public float ExposurePercentage => currentExposure / maxExposure;
+    public float NormalizedExposure => Mathf.Clamp01(currentExposure / maxExposure);
 
     [Header("Animation")]
     [SerializeField] private Animator animator;
@@ -73,7 +86,7 @@ public class PatrollingNPC : MonoBehaviour
                 patrolRotations.Add(node.transform.rotation); // Nuevo: Agregar rotacin del nodo
             }
         }
-
+        ThiefAlertSystem.instance.Subscribe(new ExposureAlertObserver(this));
         SwitchState(new PatrolState());
         NPCAlertSystem.RegisterNPC(this);
     }
@@ -81,7 +94,11 @@ public class PatrollingNPC : MonoBehaviour
     private void Update()
     {
         currentState?.Update(this);
-
+        UpdateExposure();
+        if (exposureUI != null)
+        {
+            exposureUI.fillAmount = NormalizedExposure;
+        }
         if (animator != null)
         {
             animator.SetFloat("Move", isMoving ? 1f : 0f);
@@ -95,25 +112,25 @@ public class PatrollingNPC : MonoBehaviour
         if (hasTriggered)
             DefeatEnemy();
     }
+    private void UpdateExposure()
+    {
+        float alertMultiplier = ThiefAlertSystem.instance.ObtainValue() / ThiefAlertSystem.instance._MaxAlert;
+        float fillRate = exposureFillRateBase * (1f + alertMultiplier * 2f); // Se llena 3x más rápido al 100% alert
 
+        if (IsPlayerVisible())
+        {
+            currentExposure = Mathf.Min(currentExposure + fillRate * Time.deltaTime, maxExposure);
+        }
+        else
+        {
+            currentExposure = Mathf.Max(currentExposure - exposureDecayRate * Time.deltaTime, 0f);
+        }
+    }
     public void DefeatEnemy()
     {
         string currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
         BattleManager.Instance.StartBattle(player.transform.position, currentScene, battleSceneName);
         GetComponent<EnemyPersistent>()?.DefeatEnemy();
-    }
-
-    public void HearNoise(Vector3 sourcePosition, float intensity = 1f)
-    {
-        if (currentState is ChaseState) return;
-
-        lastHeardPosition = sourcePosition;
-        heardDistraction = true;
-        isCoinDistraction = false;
-
-        StopPatrolRoutine();
-        StopFollowingPath();
-        SwitchState(new InvestigateState());
     }
 
     public void SeeCoin(Vector3 coinPosition)
@@ -168,7 +185,6 @@ public class PatrollingNPC : MonoBehaviour
         if (((1 << player.layer) & playerLayer) == 0) return false;
         return FOVAgent != null && FOVAgent.InFOV(player.transform.position);
     }
-
     public void OnPlayerSpotted(Vector3 playerPosition)
     {
         if (player == null) return;
@@ -313,5 +329,9 @@ public class PatrollingNPC : MonoBehaviour
             Vector3 endPos = start + Vector3.down * groundRayLength;
             Gizmos.DrawLine(start, endPos);
         }
+    }
+    private void OnDisable()
+    {
+        ThiefAlertSystem.instance?.Unsubscribe(new ExposureAlertObserver(this));
     }
 }

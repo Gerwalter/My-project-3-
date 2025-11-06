@@ -8,7 +8,7 @@ public class ThiefAlertSystem : MonoBehaviour, IAlertSystemObservable
     public static ThiefAlertSystem instance;
 
     [SerializeField] private float _alert = 0;
-    [SerializeField] private float _MaxAlert = 100;
+    [SerializeField] public float _MaxAlert = 100;
 
     [SerializeField] private List<IAlertSystemObserver> _observers = new List<IAlertSystemObserver>();
 
@@ -25,7 +25,7 @@ public class ThiefAlertSystem : MonoBehaviour, IAlertSystemObservable
             EventManager.Subscribe("ResetAlert", ResetAlert);
             EventManager.Subscribe("ObtainAlert", ObtainAlert);
 
-            // Limpieza automática al cambiar de escena
+            // Limpieza automtica al cambiar de escena
             SceneManager.activeSceneChanged += OnSceneChanged;
         }
         else
@@ -49,10 +49,9 @@ public class ThiefAlertSystem : MonoBehaviour, IAlertSystemObservable
         SceneManager.activeSceneChanged -= OnSceneChanged;
     }
 
-    // Limpieza automática al cambiar de escena
+    // Limpieza automtica al cambiar de escena
     private void OnSceneChanged(Scene oldScene, Scene newScene)
     {
-     //   Debug.Log($"[ThiefAlertSystem] Cambió de escena ({oldScene.name} → {newScene.name}), limpiando observers...");
         _observers.Clear();
     }
 

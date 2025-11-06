@@ -7,9 +7,10 @@ public class PatrolState : NPCBaseState
     {
         npc.StartPatrolRoutine();
         npc.FOVAgent.ViewAngle = 100;
+
         while (true)
         {
-            if (npc.IsPlayerVisible())
+            if (npc.isExposureFull)
             {
                 npc.lastSeenPosition = npc.player.transform.position;
                 npc.SwitchState(new ChaseState());
