@@ -11,15 +11,23 @@ public class ComboCounter : MonoBehaviour
 
     public int comboCount = 0;
 
-    [Header("UI Settings")]
-    public Sprite[] numberSprites; // Sprites 0-9
-    public Transform comboContainer; // Contenedor en el Canvas (con HorizontalLayoutGroup)
-    public Image digitTemplate; // Imagen base (desactivada en el inspector)
+    [Header("UI (Sprites)")]
+    public Image comboPrefix; // Sprite para el "Combo" o "x"
+    public Transform digitsParent; // Contenedor donde se mostrarán los dígitos
+    public Sprite[] numberSprites; // Array de sprites de 0-9
+    public GameObject digitPrefab; // Prefab con un Image (para cada dígito)
+
+    private List<Image> activeDigits = new List<Image>();
 
     private void Awake()
     {
         EventManager.Subscribe("RegisterHit", Hit);
         EventManager.Subscribe("Damaged", OnPlayerDamaged);
+    }
+
+    private void Start()
+    {
+        ClearDigits();
     }
 
     void Update()
@@ -45,46 +53,48 @@ public class ComboCounter : MonoBehaviour
         comboCount++;
         comboTimer = 0f;
         comboActive = true;
+
         UpdateComboDisplay();
     }
 
     public void ResetCombo()
     {
         if (comboCount > 0)
+        {
             Debug.Log($"Combo perdido: {comboCount} golpes");
+        }
 
         comboCount = 0;
         comboTimer = 0f;
         comboActive = false;
-        ClearComboDisplay();
+
+        ClearDigits();
     }
 
     private void UpdateComboDisplay()
     {
-        if (comboContainer == null || numberSprites.Length == 0) return;
-
-        ClearComboDisplay();
+        ClearDigits();
 
         string comboString = comboCount.ToString();
 
         foreach (char c in comboString)
         {
             int digit = c - '0';
-            if (digit < 0 || digit > 9) continue;
-
-            Image newDigit = Instantiate(digitTemplate, comboContainer);
-            newDigit.sprite = numberSprites[digit];
-            newDigit.gameObject.SetActive(true);
+            GameObject newDigit = Instantiate(digitPrefab, digitsParent);
+            Image img = newDigit.GetComponent<Image>();
+            img.sprite = numberSprites[digit];
+            activeDigits.Add(img);
         }
     }
 
-    private void ClearComboDisplay()
+    private void ClearDigits()
     {
-        foreach (Transform child in comboContainer)
+        foreach (var img in activeDigits)
         {
-            if (child != digitTemplate.transform)
-                Destroy(child.gameObject);
+            if (img != null)
+                Destroy(img.gameObject);
         }
+        activeDigits.Clear();
     }
 
     public void OnPlayerDamaged(params object[] args)
