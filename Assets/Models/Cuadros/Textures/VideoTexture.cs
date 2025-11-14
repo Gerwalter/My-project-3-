@@ -3,7 +3,6 @@ using UnityEngine.Video;
 using UnityEngine.Audio;
 
 [RequireComponent(typeof(VideoPlayer))]
-[RequireComponent(typeof(Renderer))]
 [RequireComponent(typeof(AudioSource))]
 public class VideoTexture : MonoBehaviour
 {
@@ -16,14 +15,14 @@ public class VideoTexture : MonoBehaviour
     public AudioMixerGroup musicGroup; // arrastra aquí el canal "Music" de tu mixer
 
     private VideoPlayer videoPlayer;
-    private Renderer rend;
+    public MeshRenderer rend;
     private AudioSource audioSource;
 
     void Awake()
     {
         // Obtener componentes
         videoPlayer = GetComponent<VideoPlayer>();
-        rend = GetComponent<Renderer>();
+        rend = GetComponent<MeshRenderer>();
         audioSource = GetComponent<AudioSource>();
 
         // Configuración del VideoPlayer
@@ -34,7 +33,7 @@ public class VideoTexture : MonoBehaviour
         videoPlayer.renderMode = VideoRenderMode.RenderTexture;
         RenderTexture rt = new RenderTexture(512, 512, 0);
         videoPlayer.targetTexture = rt;
-        //rend.material.SetTexture(textureProperty, rt);
+        rend.material.SetTexture(textureProperty, rt);
 
         // --- AUDIO ---
         videoPlayer.audioOutputMode = VideoAudioOutputMode.AudioSource;
