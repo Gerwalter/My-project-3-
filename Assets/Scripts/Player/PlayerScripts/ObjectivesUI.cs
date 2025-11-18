@@ -7,6 +7,8 @@ using static UnityEngine.Rendering.DebugUI;
 public class ObjectivesUI : MonoBehaviour
 {
     public GameObject panel;
+    [Header("Imágenes a controlar")]
+    public Image[] images;
     public GameObject rowPrefab; // un GameObject con un Text (o TMP) para mostrar "Vasija 1/3"
     public RectTransform contentParent;
 
@@ -26,8 +28,18 @@ public class ObjectivesUI : MonoBehaviour
     {
         if (panel != null)
         {
-            // Mostrar mientras Tab está presionado
             panel.SetActive(Input.GetKey(KeyCode.Tab));
+            float alpha = (Input.GetKey(KeyCode.Tab)) ? 1f : 0f;
+
+            foreach (var img in images)
+            {
+                if (img != null)
+                {
+                    Color c = img.color;
+                    c.a = alpha;
+                    img.color = c;
+                }
+            }
         }
     }
 

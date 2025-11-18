@@ -1,28 +1,39 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿using UnityEngine;
+public enum RotationAxis
+{
+    None = 0,
+    X = 1,
+    Y = 2,
+    Z = 4
+}
 public class SecurityCamera : MonoBehaviour
 {
-    [Header("Movement Settings")]
-    [SerializeField] private float rotationSpeed = 30f; // Velocidad de rotación en grados/segundo
-    [SerializeField] private float rotationAngle = 45f; // Ángulo máximo de rotación (radio)
+    [Header("Rotation Target")]
+    [SerializeField] private Transform rotatingPart;
+
+    [Header("Rotation Settings")]
+    [SerializeField] private float rotationSpeed = 30f;
+    [SerializeField] private float rotationAngle = 45f;
+
+    [Header("Axis Lock")]
+    [SerializeField] private RotationAxis allowedAxes = RotationAxis.Y;
+    // Por defecto solo gira en Y
 
     [Header("Vision Settings")]
-    [SerializeField] private float visionRange = 10f; // Rango de visión
-    [SerializeField, Range(0, 180)] private float visionAngle = 45f; // Ángulo del cono de visión
-    [SerializeField] private LayerMask playerLayer; // Capa del jugador
-    [SerializeField] private LayerMask obstacleLayer; // Capa para obstáculos
+    [SerializeField] private float visionRange = 10f;
+    [SerializeField, Range(0, 180)] private float visionAngle = 45f;
+    [SerializeField] private LayerMask playerLayer;
+    [SerializeField] private LayerMask obstacleLayer;
 
     [Header("Light Feedback")]
-    [SerializeField] private Light indicatorLight; // Luz indicadora
+    [SerializeField] private Light indicatorLight;
     [SerializeField] private Color safeColor = Color.green;
     [SerializeField] private Color alertColor = Color.red;
     [SerializeField] private float lightChangeSpeed = 5f;
 
     [Header("Alert Settings")]
-    [SerializeField] private float alertAmount = 10f; // Cuánto aumenta el nivel de alerta al detectar al jugador
-    [SerializeField] private float alertCooldown = 1f; // Tiempo mínimo entre alertas consecutivas
+    [SerializeField] private float alertAmount = 10f;
+    [SerializeField] private float alertCooldown = 1f;
 
     private float initialRotation;
     private bool rotatingRight = true;
@@ -32,7 +43,10 @@ public class SecurityCamera : MonoBehaviour
 
     void Start()
     {
-        initialRotation = transform.eulerAngles.y;
+        if (rotatingPart == null)
+            rotatingPart = transform;
+
+        initialRotation = rotatingPart.eulerAngles.y;
 
         if (indicatorLight != null)
             indicatorLight.color = safeColor;
@@ -47,7 +61,7 @@ public class SecurityCamera : MonoBehaviour
 
     void RotateCamera()
     {
-        float currentRotation = transform.eulerAngles.y - initialRotation;
+        float currentRotation = rotatingPart.eulerAngles.y - initialRotation;
         if (currentRotation > 180) currentRotation -= 360;
         if (currentRotation < -180) currentRotation += 360;
 
@@ -57,7 +71,19 @@ public class SecurityCamera : MonoBehaviour
             rotatingRight = true;
 
         float rotationStep = rotationSpeed * Time.deltaTime * (rotatingRight ? 1 : -1);
-        transform.Rotate(0, rotationStep, 0);
+
+        Vector3 rotation = Vector3.zero;
+
+        if ((allowedAxes & RotationAxis.X) != 0)
+            rotation.x = rotationStep;
+
+        if ((allowedAxes & RotationAxis.Y) != 0)
+            rotation.y = rotationStep;
+
+        if ((allowedAxes & RotationAxis.Z) != 0)
+            rotation.z = rotationStep;
+
+        rotatingPart.Rotate(rotation, Space.Self);
     }
 
     void CheckPlayerDetection()
@@ -65,40 +91,32 @@ public class SecurityCamera : MonoBehaviour
         bool detectedThisFrame = false;
         detectedPlayer = null;
 
-        Collider[] playersInRange = Physics.OverlapSphere(transform.position, visionRange, playerLayer);
+        Collider[] playersInRange = Physics.OverlapSphere(rotatingPart.position, visionRange, playerLayer);
 
         foreach (var playerCollider in playersInRange)
         {
-            Vector3 directionToPlayer = playerCollider.transform.position - transform.position;
+            Vector3 directionToPlayer = playerCollider.transform.position - rotatingPart.position;
             float distanceToPlayer = directionToPlayer.magnitude;
 
-            float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
+            float angleToPlayer = Vector3.Angle(rotatingPart.forward, directionToPlayer);
             if (angleToPlayer <= visionAngle * 0.5f)
             {
-                if (!Physics.Raycast(transform.position, directionToPlayer.normalized, distanceToPlayer, obstacleLayer))
+                if (!Physics.Raycast(rotatingPart.position, directionToPlayer.normalized, distanceToPlayer, obstacleLayer))
                 {
                     detectedThisFrame = true;
                     detectedPlayer = playerCollider.transform;
-                    Debug.DrawRay(transform.position, directionToPlayer, Color.red);
 
-                    // Llamar al evento solo si no fue llamado hace poco
                     if (Time.time - lastAlertTime >= alertCooldown)
                     {
                         lastAlertTime = Time.time;
                         EventManager.Trigger("IncreaseAlert", alertAmount);
                     }
-
                     break;
                 }
             }
         }
 
         playerDetected = detectedThisFrame;
-
-        if (!playerDetected)
-        {
-            Debug.DrawRay(transform.position, transform.forward * visionRange, Color.green);
-        }
     }
 
     void UpdateLightColor()
@@ -108,7 +126,6 @@ public class SecurityCamera : MonoBehaviour
         Color targetColor = playerDetected ? alertColor : safeColor;
         indicatorLight.color = Color.Lerp(indicatorLight.color, targetColor, Time.deltaTime * lightChangeSpeed);
     }
-
     void OnDrawGizmos()
     {
         Gizmos.color = playerDetected ? Color.red : Color.green;
@@ -126,3 +143,5 @@ public class SecurityCamera : MonoBehaviour
         }
     }
 }
+
+

@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -9,13 +9,11 @@ public class PatrollingNPC : MonoBehaviour
     [Header("Patrullaje")]
     public List<Node> patrolNodes = new List<Node>();
     private List<Vector3> patrolPoints = new List<Vector3>();
-    [SerializeField] private List<Quaternion> patrolRotations = new List<Quaternion>(); // Nuevo: Lista para rotaciones de nodos
+    [SerializeField] private List<Quaternion> patrolRotations = new List<Quaternion>();
     public float moveSpeed = 2f;
-   // public TypeOfPathCalc myPathCalc;
 
     [Header("Persecucion e Investigacion")]
     public float chaseSpeed = 3.5f;
-    [Tooltip("Duracion de investigacion si la investigacion fue causada por una distraccion")]
     public float distractionInvestigateDuration = 6f;
 
     [Header("Deteccion de Suelo")]
@@ -29,10 +27,12 @@ public class PatrollingNPC : MonoBehaviour
     public LayerMask distractionLayer;
     public FOVAgent FOVAgent;
 
-    // NUEVO: Sistema de Exposici�n
-    [Header("Sistema de Exposici�n")]
-    public float exposureFillRateBase = 10f; // Velocidad base de llenado
-    public float exposureDecayRate = 5f;     // Velocidad de decremento cuando no visible
+    // ----------------------
+    //    SISTEMA DE EXPOSICIÓN
+    // ----------------------
+    [Header("Sistema de Exposición")]
+    public float exposureFillRateBase = 10f;
+    public float exposureDecayRate = 5f;
     public Image exposureUI;
     [SerializeField] public float currentExposure = 0f;
     [SerializeField] private float maxExposure = 100f;
@@ -41,8 +41,17 @@ public class PatrollingNPC : MonoBehaviour
     public float ExposurePercentage => currentExposure / maxExposure;
     public float NormalizedExposure => Mathf.Clamp01(currentExposure / maxExposure);
 
+    [Header("Exposición por Distancia")]
+    public float minDistanceForMaxExposure = 1.2f;  // si toca, se llena al instante
+    public float maxVisionDistance = 8f;            // rango máximo de detección
+    public AnimationCurve distanceExposureCurve =
+        AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
+
+    // ----------------------
+
     [Header("Animation")]
     [SerializeField] private Animator animator;
+
     [Header("Captura")]
     public float captureRange = 1.5f;
 
@@ -77,13 +86,13 @@ public class PatrollingNPC : MonoBehaviour
         if (agent == null) agent = GetComponent<NavMeshAgent>();
         agent.speed = moveSpeed;
         agent.updateRotation = true;
-
+        maxVisionDistance = FOVAgent.ViewRange;
         foreach (var node in patrolNodes)
         {
             if (node != null)
             {
                 patrolPoints.Add(node.transform.position);
-                patrolRotations.Add(node.transform.rotation); // Nuevo: Agregar rotacin del nodo
+                patrolRotations.Add(node.transform.rotation);
             }
         }
         ThiefAlertSystem.instance.Subscribe(new ExposureAlertObserver(this));
@@ -95,37 +104,90 @@ public class PatrollingNPC : MonoBehaviour
     {
         currentState?.Update(this);
         UpdateExposure();
+
         if (exposureUI != null)
-        {
             exposureUI.fillAmount = NormalizedExposure;
-        }
+
         if (animator != null)
-        {
             animator.SetFloat("Move", isMoving ? 1f : 0f);
-        }
-        // Detectar monedas visibles
+
         if (!(currentState is ChaseState || currentState is InvestigateState))
-        {
             CheckForVisibleCoin();
-        }
 
         if (hasTriggered)
             DefeatEnemy();
     }
+
+    // --------------------------------------------
+    //     NUEVO SISTEMA COMPLETO DE EXPOSICIÓN
+    // --------------------------------------------
     private void UpdateExposure()
     {
-        float alertMultiplier = ThiefAlertSystem.instance.ObtainValue() / ThiefAlertSystem.instance._MaxAlert;
-        float fillRate = exposureFillRateBase * (1f + alertMultiplier * 2f); // Se llena 3x m�s r�pido al 100% alert
-
-        if (IsPlayerVisible())
-        {
-            currentExposure = Mathf.Min(currentExposure + fillRate * Time.deltaTime, maxExposure);
-        }
-        else
+        if (player == null || FOVAgent == null)
         {
             currentExposure = Mathf.Max(currentExposure - exposureDecayRate * Time.deltaTime, 0f);
+            return;
         }
+
+        // Si el jugador no está visible → bajar exposición
+        if (!IsPlayerVisible())
+        {
+            currentExposure = Mathf.Max(currentExposure - exposureDecayRate * Time.deltaTime, 0f);
+            return;
+        }
+
+        // Distancia al jugador
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+
+        float viewRange = FOVAgent.ViewRange;       // Rango máximo donde lo puede ver
+        float instantRange = captureRange;          // Rango de captura instantánea
+        float midRange = Mathf.Lerp(instantRange, viewRange, 0.35f); // Rango intermedio
+
+        // Multiplicador según alerta global
+        float alertMultiplier = ThiefAlertSystem.instance.ObtainValue() / ThiefAlertSystem.instance._MaxAlert;
+        float baseFillRate = exposureFillRateBase * (1f + alertMultiplier * 2f);
+
+        // ---------------------------
+        //       RANGOS DE DETECCIÓN
+        // ---------------------------
+
+        // 1. RANGO INSTANTÁNEO (chocó con el NPC)
+        if (distance <= instantRange)
+        {
+            currentExposure = maxExposure;
+            return;
+        }
+
+        // 2. RANGO CERCANO → llenado muy rápido
+        if (distance <= midRange)
+        {
+            // Mapear distancia en: instantRange → midRange   => 1 → 0
+            float t = Mathf.InverseLerp(midRange, instantRange, distance);
+
+            // Rango rápido (2.5x más rápido)
+            float rate = baseFillRate * Mathf.Lerp(1.5f, 3.0f, t);
+
+            currentExposure = Mathf.Min(currentExposure + rate * Time.deltaTime, maxExposure);
+            return;
+        }
+
+        // 3. RANGO LEJANO → llenado lento
+        if (distance <= viewRange)
+        {
+            // Mapear distancia en: midRange → viewRange   => 1 → 0
+            float t = Mathf.InverseLerp(viewRange, midRange, distance);
+
+            // Rango lento (0.1x a 1x)
+            float rate = baseFillRate * Mathf.Lerp(0.05f, 0.5f, t);
+
+            currentExposure = Mathf.Min(currentExposure + rate * Time.deltaTime, maxExposure);
+            return;
+        }
+
+        // 4. Fuera de rango → se reduce exposición
+        currentExposure = Mathf.Max(currentExposure - exposureDecayRate * Time.deltaTime, 0f);
     }
+
     public void DefeatEnemy()
     {
         string currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
@@ -185,6 +247,7 @@ public class PatrollingNPC : MonoBehaviour
         if (((1 << player.layer) & playerLayer) == 0) return false;
         return FOVAgent != null && FOVAgent.InFOV(player.transform.position);
     }
+
     public void OnPlayerSpotted(Vector3 playerPosition)
     {
         if (player == null) return;
@@ -192,6 +255,7 @@ public class PatrollingNPC : MonoBehaviour
 
         lastSeenPosition = playerPosition;
         isCoinDistraction = false;
+
         if (currentState is not InvestigateState)
         {
             StopFollowingPath();
@@ -267,11 +331,8 @@ public class PatrollingNPC : MonoBehaviour
                 followPathRoutine = StartCoroutine(MoveToRoutine(goalPos));
                 yield return followPathRoutine;
 
-                // Nuevo: Aplicar rotacin del nodo al llegar
                 if (patrolRotations.Count > currentTargetIndex)
-                {
                     transform.rotation = patrolRotations[currentTargetIndex];
-                }
 
                 if (patrolPoints.Count > 1)
                     currentTargetIndex = (currentTargetIndex + 1) % patrolPoints.Count;
@@ -316,6 +377,7 @@ public class PatrollingNPC : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, captureRange);
         Gizmos.color = Color.grey;
         Gizmos.DrawWireSphere(transform.position, hearingRange);
+
         if (debugGroundHit)
         {
             Gizmos.color = Color.green;
@@ -329,7 +391,25 @@ public class PatrollingNPC : MonoBehaviour
             Vector3 endPos = start + Vector3.down * groundRayLength;
             Gizmos.DrawLine(start, endPos);
         }
+        float viewRange = FOVAgent.ViewRange;
+        float instantRange = captureRange;
+        float midRange = Mathf.Lerp(instantRange, viewRange, 0.35f);
+
+        Vector3 pos = transform.position;
+
+        // 1. RANGO INSTANTÁNEO → ROJO
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(pos, instantRange);
+
+        // 2. RANGO CERCANO → AMARILLO
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(pos, midRange);
+
+        // 3. RANGO LEJANO / VISIÓN → AZUL
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(pos, viewRange-.5f);
     }
+
     private void OnDisable()
     {
         ThiefAlertSystem.instance?.Unsubscribe(new ExposureAlertObserver(this));

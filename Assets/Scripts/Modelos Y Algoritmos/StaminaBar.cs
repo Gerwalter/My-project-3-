@@ -11,13 +11,13 @@ public class StaminaBar : MonoBehaviour, IStaminaObserver
     private void Start()
     {
         // Buscar el PlayerController en escena y suscribirse
-        var player = FindObjectOfType<PlayerController>();
-        stamina = player.Stamina;
+    //    var player = FindObjectOfType<PlayerController>();
+   //     stamina = player.Stamina;
 
-        stamina.Subscribe(this);
+    //    stamina.Subscribe(this);
 
         // Inicializar UI
-        Notify(stamina.CurrentStamina, stamina.MaxStamina);
+      //  Notify(stamina.CurrentStamina, stamina.MaxStamina);
     }
 
     public void Notify(float value, float maxValue)

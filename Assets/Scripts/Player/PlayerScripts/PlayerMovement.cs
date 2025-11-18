@@ -48,8 +48,8 @@ public class PlayerMovement
 
         float speed = _player.MoveSpeed;
 
-        if (_player.Stamina.IsSprinting)
-            speed *= 1.8f;
+     //   if (_player.Stamina.IsSprinting)
+       //     speed *= 1.8f;
 
         if (_player.Crouch != null && _player.Crouch.IsCrouching)
             speed *= _player.Crouch.crouchSpeedMultiplier;
@@ -78,33 +78,35 @@ public class PlayerMovement
             _player.Rigidbody.MovePosition(targetPos);
         }
 
-        // -----------------------------
-        // ⚡ Dash con colisión segura
-        // -----------------------------
-        if (_player.Stamina.IsDashing)
+        if (_player.Direction == Vector3.zero)
         {
-            Vector3 dashDir = _player.Transform.forward;
-            float dashDistance = 4f; // Distancia de dash
-            float dashForce = 12f;   // Fuea de impulso
+            _player.Rigidbody.velocity = Vector3.zero;
+        }
+        /*
+                // -----------------------------
+                // ⚡ Dash con colisión segura
+                // -----------------------------
+                if (_player.Stamina.IsDashing)
+                {
+                    Vector3 dashDir = _player.Transform.forward;
+                    float dashDistance = 4f; // Distancia de dash
+                    float dashForce = 12f;   // Fuea de impulso
 
-            // Evitar atravesar objetos durante el dash
-            if (!Physics.Raycast(_player.Transform.position, dashDir, dashDistance, _player.WallMask))
-            {
-                _player.Rigidbody.AddForce(dashDir * dashForce, ForceMode.VelocityChange);
-            }
-            else
-            {
-                _player.Rigidbody.velocity = Vector3.zero; // Detener al impactar pared
-            }
-        }
-        else
-        {
-            // 🚫 Detener el deslizamiento si no se está dashing ni moviendo
-            if (_player.Direction == Vector3.zero)
-            {
-                _player.Rigidbody.velocity = Vector3.zero;
-            }
-        }
+                    // Evitar atravesar objetos durante el dash
+                    if (!Physics.Raycast(_player.Transform.position, dashDir, dashDistance, _player.WallMask))
+                    {
+                        _player.Rigidbody.AddForce(dashDir * dashForce, ForceMode.VelocityChange);
+                    }
+                    else
+                    {
+                        _player.Rigidbody.velocity = Vector3.zero; // Detener al impactar pared
+                    }
+                }
+                else*/
+
+        // 🚫 Detener el deslizamiento si no se está dashing ni moviendo
+
+        
     }
 
     private bool OnSlope(out RaycastHit hit)
