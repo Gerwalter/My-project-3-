@@ -1,29 +1,50 @@
-using TMPro;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class StyleMeter : MonoBehaviour
 {
-    public TMP_Text styleText; // UI para mostrar la letra (puedes usar animaciones también)
+    [Header("UI – Rank Sprite")]
+    public Image rankImage;
+    public Sprite spriteD;
+    public Sprite spriteC;
+    public Sprite spriteB;
+    public Sprite spriteA;
+    public Sprite spriteS;
+    public Sprite spriteSS;
+    public Sprite spriteSSS;
 
+    [Header("UI – Bar Sprites por Rango")]
+    public Sprite barD;
+    public Sprite barC;
+    public Sprite barB;
+    public Sprite barA;
+    public Sprite barS;  // Compartida para S – SS – SSS
+
+    [Header("UI – Marco Sprites por Rango")]
+    public Sprite frameD;
+    public Sprite frameC;
+    public Sprite frameB;
+    public Sprite frameA;
+    public Sprite frameS;  // Compartida para S – SS – SSS
+
+    public Image styleBar;
+    public Image PanelBar;
+
+    [Header("Sistema de Estilo")]
     public float stylePoints = 0f;
-    public float decayRate = 5f; // Qué tan rápido baja con el tiempo
+    public float decayRate = 5f;
     public float resetTime = 3f;
     private float timer;
 
     public StyleRank currentRank = StyleRank.D;
     [SerializeField] private readonly float[] rankThresholds = { 0, 100, 200, 300, 500, 700, 1000, Mathf.Infinity };
-    public Image styleBar;
-    public Image PanelBar;
 
-
-    [Header("Multiplicador de Estilo")]
+    [Header("Multiplicador")]
     public float styleMultiplier = 1f;
     public float maxMultiplier = 5f;
-    public float multiplierGrowthRate = 0.5f; // Cuánto sube por segundo mientras mantienes el combo
-    public float multiplierDecayRate = 1f;    // Cuánto baja por segundo si no atacas
-    public float decayAmplification = 5f;     // Multiplica el decaimiento normal por el multiplicador
+    public float multiplierGrowthRate = 0.5f;
+    public float multiplierDecayRate = 1f;
+    public float decayAmplification = 5f;
 
     private void Awake()
     {
@@ -54,29 +75,23 @@ public class StyleMeter : MonoBehaviour
     private void StylePoints()
     {
         timer += Time.deltaTime;
-        if (stylePoints == 0) 
-        {
-            styleText.enabled = false;
-            styleBar.enabled = false;
-            PanelBar.enabled = false;
-        }
-        else
-        {
-            styleText.enabled = true;
-            styleBar.enabled = true;
-            PanelBar.enabled = true;
-        }
+
+        bool activeUI = stylePoints > 0;
+
+        if (rankImage != null) rankImage.enabled = activeUI;
+        if (styleBar != null) styleBar.enabled = activeUI;
+        if (PanelBar != null) PanelBar.enabled = activeUI;
 
         if (timer >= resetTime)
         {
             float amplifiedDecay = decayRate * (1f + styleMultiplier * decayAmplification);
             stylePoints = Mathf.Max(0f, stylePoints - amplifiedDecay * Time.deltaTime);
             UpdateRank();
-            UpdateBar();
+            UpdateBarFill();
         }
-        styleText.color = GetColorForRank(currentRank);
-        styleBar.color = GetColorForRank(currentRank);
-        
+
+   //     if (styleBar != null)
+    //        styleBar.color = GetColorForRank(currentRank);
     }
 
     Color GetColorForRank(StyleRank rank)
@@ -90,29 +105,29 @@ public class StyleMeter : MonoBehaviour
             case StyleRank.S: return Color.magenta;
             case StyleRank.SS: return Color.yellow;
             case StyleRank.SSS: return Color.red;
-            default: return Color.white;
         }
+        return Color.white;
     }
 
-    void UpdateBar()
+    void UpdateBarFill()
     {
         if (styleBar == null) return;
 
         int currentIndex = (int)currentRank;
-        float currentMin = rankThresholds[currentIndex];
-        float nextThreshold = rankThresholds[currentIndex + 1];
+        float min = rankThresholds[currentIndex];
+        float next = rankThresholds[currentIndex + 1];
 
-        float progress = (stylePoints - currentMin) / (nextThreshold - currentMin);
+        float progress = (stylePoints - min) / (next - min);
         styleBar.fillAmount = progress;
     }
-
 
     public void AddStylePoints(float amount)
     {
         stylePoints += amount * styleMultiplier;
         timer = 0f;
+
         UpdateRank();
-        UpdateBar();
+        UpdateBarFill();
         IncreaseMultiplier();
     }
 
@@ -121,32 +136,83 @@ public class StyleMeter : MonoBehaviour
         stylePoints = 0f;
         timer = 0f;
         UpdateRank();
-        UpdateBar();
+        UpdateBarFill();
     }
 
     void UpdateRank()
     {
         StyleRank previousRank = currentRank;
 
-        if (stylePoints >= 1000f) currentRank = StyleRank.SSS;
-        else if (stylePoints >= 700f) currentRank = StyleRank.SS;
-        else if (stylePoints >= 500f) currentRank = StyleRank.S;
-        else if (stylePoints >= 300f) currentRank = StyleRank.A;
-        else if (stylePoints >= 200f) currentRank = StyleRank.B;
-        else if (stylePoints >= 100f) currentRank = StyleRank.C;
+        if (stylePoints >= 1000) currentRank = StyleRank.SSS;
+        else if (stylePoints >= 700) currentRank = StyleRank.SS;
+        else if (stylePoints >= 500) currentRank = StyleRank.S;
+        else if (stylePoints >= 300) currentRank = StyleRank.A;
+        else if (stylePoints >= 200) currentRank = StyleRank.B;
+        else if (stylePoints >= 100) currentRank = StyleRank.C;
         else currentRank = StyleRank.D;
 
-        if (styleText != null)
-            styleText.text = currentRank.ToString();
+        UpdateRankSprite();
+        UpdateBarSprite();
+        UpdateFrameSprite();
+    }
 
-        // Opcional: log o feedback
-        if (currentRank != previousRank)
+    void UpdateRankSprite()
+    {
+        if (rankImage == null) return;
+
+        switch (currentRank)
         {
-            Debug.Log("Rango de estilo cambiado a: " + currentRank);
-            // Aquí puedes hacer efectos visuales, sonidos, animaciones, etc.
+            case StyleRank.D: rankImage.sprite = spriteD; break;
+            case StyleRank.C: rankImage.sprite = spriteC; break;
+            case StyleRank.B: rankImage.sprite = spriteB; break;
+            case StyleRank.A: rankImage.sprite = spriteA; break;
+            case StyleRank.S: rankImage.sprite = spriteS; break;
+            case StyleRank.SS: rankImage.sprite = spriteSS; break;
+            case StyleRank.SSS: rankImage.sprite = spriteSSS; break;
+        }
+    }
+
+    void UpdateBarSprite()
+    {
+        if (styleBar == null) return;
+
+        switch (currentRank)
+        {
+            case StyleRank.D: styleBar.sprite = barD; break;
+            case StyleRank.C: styleBar.sprite = barC; break;
+            case StyleRank.B: styleBar.sprite = barB; break;
+            case StyleRank.A: styleBar.sprite = barA; break;
+
+            // S – SS – SSS COMPARTEN LA MISMA BARRA
+            case StyleRank.S:
+            case StyleRank.SS:
+            case StyleRank.SSS:
+                styleBar.sprite = barS;
+                break;
+        }
+    }
+
+    void UpdateFrameSprite()
+    {
+        if (PanelBar == null) return;
+
+        switch (currentRank)
+        {
+            case StyleRank.D: PanelBar.sprite = frameD; break;
+            case StyleRank.C: PanelBar.sprite = frameC; break;
+            case StyleRank.B: PanelBar.sprite = frameB; break;
+            case StyleRank.A: PanelBar.sprite = frameA; break;
+
+            // S – SS – SSS COMPARTEN MARCO
+            case StyleRank.S:
+            case StyleRank.SS:
+            case StyleRank.SSS:
+                PanelBar.sprite = frameS;
+                break;
         }
     }
 }
+
 public enum StyleRank
 {
     D,
