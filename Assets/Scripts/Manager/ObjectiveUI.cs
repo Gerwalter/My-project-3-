@@ -19,11 +19,20 @@ public class ObjectiveUI : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            LoadingScreen.nextScene = nextSceneName;
-            SceneManager.LoadScene("LoadingScene");
+            ChangeScene();
         }
     }
 
+    public void ChangeScene()
+    {
+        LoadingScreen.nextScene = nextSceneName;
+        SceneManager.LoadScene("LoadingScene");
+    }
+    public void QuitToMainMenu()
+    {
+        Time.timeScale = 1; // Asegura que el tiempo se reanude al salir
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Main Menu"); // Cambia "MainMenu" por el nombre de tu escena principal
+    }
     private void UpdateObjectives()
     {
         if (ObjectiveManager.Instance == null || objectiveText == null)
