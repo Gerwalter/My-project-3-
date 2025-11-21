@@ -5,6 +5,7 @@ public class CameraController : MonoBehaviour
 {
     [Header("<color=#6A89A7>Cursor</color>")]
     [SerializeField] public bool _isCameraFixed = false;
+    [SerializeField] public bool _isCameraPointing = false;
 
     [Header("<color=#6A89A7>Physics</color>")]
     [Range(.01f, 1f)][SerializeField] private float _detectionRadius = .1f;
@@ -18,7 +19,7 @@ public class CameraController : MonoBehaviour
     [Range(0f, 90f)][SerializeField] private float _maxRotation = 80f;
 
     [SerializeField] private bool _isCamBlocked = false;
-    [SerializeField] private float _mouseX = 0.0f, _mouseY = 0.0f;
+    [SerializeField] public float _mouseX = 0.0f, _mouseY = 0.0f;
     [SerializeField] private Vector3 _dir = new(), _dirTest = new(), _camPos = new();
 
     [SerializeField] private Camera _cam;
@@ -59,14 +60,16 @@ public class CameraController : MonoBehaviour
     {
         scroll = Input.GetAxisRaw("Mouse ScrollWheel");
 
-        if (!_isCameraFixed)
+        if (!_isCameraFixed && !_isCameraPointing)
         {
             UpdateCamRot(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
-            if (scroll != 0f)
-            {
-                _maxDistance = Mathf.Clamp(_maxDistance - scroll, _minDistance + 2, 10f);
-            }
         }
+
+        if (scroll != 0f && !_isCameraFixed && !_isCameraPointing)
+        {
+            _maxDistance = Mathf.Clamp(_maxDistance - scroll, _minDistance + 2, 10f);
+        }
+
         _isCameraFixed = pauseManager.isPaused;
         ToggleCursorMode(_isCameraFixed);
     }

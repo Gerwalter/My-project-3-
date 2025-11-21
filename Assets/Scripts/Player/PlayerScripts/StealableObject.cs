@@ -7,6 +7,7 @@ public class StealableObject : ButtonBehaviour
     public int stealAmount = 1; // cuantos cuenta un robo (por defecto 1)
     public float alertAmmount = 1; // cuantos cuenta un robo (por defecto 1)
     public GameObject stealConfirmHUDPrefab; // opcional: un prefab con botones "Robar / Cancelar"
+    public GameObject _ObjectToSteal;
     public bool destroyOnSteal = true; // si se destruye el objeto al robar
     public bool stealConfirm = true; // si se destruye el objeto al robar
     public ObjectiveManager manager;
@@ -24,14 +25,14 @@ public class StealableObject : ButtonBehaviour
     public override void OnInteract()
     {
         // Si diste prefab para confirmación, lo instanciamos; si no, robamos directo
-        //if (stealConfirmHUDPrefab != null && stealConfirm)
-        //{
-        //    ShowConfirmHUD();
-        //}
-        //else
-        //{
-            DoSteal();
-       // }
+           if (stealConfirmHUDPrefab != null && stealConfirm)
+           {
+               ShowConfirmHUD();
+           }
+           else
+           {
+             DoSteal();
+           }
     }
 
     private void ShowConfirmHUD()
@@ -61,7 +62,14 @@ public class StealableObject : ButtonBehaviour
 
         if (destroyOnSteal)
         {
-            gameObject.SetActive(false);
+            if (_ObjectToSteal != null)
+            {
+                _ObjectToSteal.SetActive(false);
+            }
+            else
+            {
+                gameObject.SetActive(false);
+            }
         }
     }
 }
