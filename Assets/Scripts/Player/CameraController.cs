@@ -131,6 +131,16 @@ public class CameraController : MonoBehaviour
 
         _cam.transform.position = _camPos;
         _cam.transform.LookAt(transform.position);
+        float distToPlayer = Vector3.Distance(_cam.transform.position, _target.position);
+
+        if (distToPlayer < 1.2f)  // Ajusta este umbral a gusto
+        {
+            PlayerDitherController.Instance.SetDither(1.5f);
+        }
+        else
+        {
+            PlayerDitherController.Instance.SetDither(1f);
+        }
     }
 
     private void ToggleCursorMode(bool isFixed)

@@ -1,20 +1,30 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerLunge : MonoBehaviour
 {
     [Header("Lunge Settings")]
     public KeyCode lungeKey = KeyCode.E;
-    public float lungeRange = 6f;           // radio en el que buscar enemigos
-    public LayerMask enemyLayer;            // capa de enemigos
-    public float lungeSpeed = 25f;          // velocidad de la "embestida"
-    public float lungeStopDistance = 1.2f;  // distancia al objetivo donde se considera golpeado
-   // public float damage = 25f;
+    public float lungeRange = 6f;
+    public LayerMask enemyLayer;
+    public float lungeSpeed = 18f;           // Un poco mÃ¡s lento = mÃ¡s controlable
+    public float lungeStopDistance = 1.4f;
     public float cooldown = 1.2f;
 
-    bool onCooldown = false;
-    bool isLunging = false;
+    [HideInInspector] public bool isLunging = false;
+    private bool onCooldown = false;
+
+    private Rigidbody rb;
+    private PlayerMovement playerMovement;  // Para desactivar su FixedUpdate durante lunge
+    private Vector3 lungeTargetPoint;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+        playerMovement = GetComponent<PlayerController>().movement as PlayerMovement;
+    }
 
     void Update()
     {
@@ -22,78 +32,111 @@ public class PlayerLunge : MonoBehaviour
 
         if (Input.GetKeyDown(lungeKey) && !onCooldown)
         {
-            Collider[] hits = Physics.OverlapSphere(transform.position, lungeRange, enemyLayer);
-            if (hits.Length == 0) return;
-
-            // elegimos el enemigo más cercano (guardamos el collider)
-            Collider targetCollider = null;
-            float bestDist = float.MaxValue;
-            foreach (var c in hits)
-            {
-                float d = Vector3.Distance(transform.position, c.transform.position);
-                if (d < bestDist)
-                {
-                    bestDist = d;
-                    targetCollider = c;
-                }
-            }
-
-            if (targetCollider != null)
-            {
-                // comprobamos (si existe) el radio de detección del EnemyAmbush en cualquiera de los padres
-                EnemyAmbush ea = targetCollider.GetComponentInParent<EnemyAmbush>();
-                if (ea != null)
-                {
-                    float distToEnemy = Vector3.Distance(transform.position, ea.transform.position);
-                    if (distToEnemy > ea.radioDeteccion)
-                    {
-                        // fuera del radio de detección -> no se puede hacer sorpresa
-                        return;
-                    }
-                }
-
-                StartCoroutine(LungeRoutine(targetCollider));
-            }
+            TryStartLunge();
         }
     }
 
-    IEnumerator LungeRoutine(Collider targetCollider)
+    void TryStartLunge()
+    {
+        Collider[] hits = Physics.OverlapSphere(transform.position, lungeRange, enemyLayer);
+        if (hits.Length == 0) return;
+
+        Collider targetCollider = null;
+        float bestDist = float.MaxValue;
+        foreach (var hit in hits)
+        {
+            float d = Vector3.Distance(transform.position, hit.transform.position);
+            if (d < bestDist)
+            {
+                bestDist = d;
+                targetCollider = hit;
+            }
+        }
+
+        if (targetCollider == null) return;
+
+        // Validar EnemyAmbush (sorpresa)
+        EnemyAmbush ea = targetCollider.GetComponentInParent<EnemyAmbush>();
+        if (ea != null)
+        {
+            float distToEnemy = Vector3.Distance(transform.position, ea.transform.position);
+            if (distToEnemy > ea.radioDeteccion) return;
+        }
+
+        // Buscar PatrollingNPC
+        PatrollingNPC enemyPatrol = targetCollider.GetComponentInParent<PatrollingNPC>()
+                                   ?? targetCollider.GetComponentInChildren<PatrollingNPC>();
+
+        if (enemyPatrol == null)
+        {
+            Debug.LogWarning("No se encontrÃ³ PatrollingNPC en el enemigo objetivo");
+            return;
+        }
+
+        // PARAR AL ENEMIGO
+        enemyPatrol.StopFollowingPath();
+        if (enemyPatrol.agent != null)
+        {
+            enemyPatrol.agent.isStopped = true;
+            enemyPatrol.agent.velocity = Vector3.zero;
+        }
+
+        // INICIAR LUNGE
+        StartCoroutine(LungeRoutine(targetCollider.transform, enemyPatrol));
+    }
+
+    IEnumerator LungeRoutine(Transform enemyTransform, PatrollingNPC enemyPatrol)
     {
         isLunging = true;
         onCooldown = true;
 
-        Vector3 startPos = transform.position;
-        Vector3 dirToEnemy = (targetCollider.transform.position - transform.position).normalized;
-        Vector3 targetPoint = targetCollider.transform.position - dirToEnemy * lungeStopDistance;
+        // DESACTIVAR movimiento normal del jugador
+        rb.isKinematic = true;                    // â† Bloquea fÃ­sica externa
+        rb.velocity = Vector3.zero;
 
-        while (Vector3.Distance(transform.position, targetPoint) > 0.1f)
+        // Calcular punto final (fijo)
+        Vector3 dir = (enemyTransform.position - transform.position).normalized;
+        lungeTargetPoint = enemyTransform.position - dir * lungeStopDistance;
+
+        float distanceToTarget = Vector3.Distance(transform.position, lungeTargetPoint);
+        float duration = distanceToTarget / lungeSpeed;
+
+        float elapsed = 0f;
+
+        while (elapsed < duration)
         {
-            transform.position = Vector3.MoveTowards(transform.position, targetPoint, lungeSpeed * Time.deltaTime);
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration;
+
+            // Movimiento suave y predecible
+            transform.position = Vector3.Lerp(transform.position, lungeTargetPoint, t * 10f * Time.deltaTime);
+
+            // Opcional: mirar al enemigo
+            Vector3 lookDir = enemyTransform.position - transform.position;
+            if (lookDir != Vector3.zero)
+                transform.rotation = Quaternion.LookRotation(lookDir);
+
             yield return null;
         }
 
-        // --> Aquí está la corrección importante: buscamos el PatrollingNPC EN el enemigo, no en el jugador.
-        PatrollingNPC enemyPatrol = targetCollider.GetComponentInParent<PatrollingNPC>();
-        if (enemyPatrol == null) enemyPatrol = targetCollider.GetComponentInChildren<PatrollingNPC>();
+        // Snap final
+        transform.position = lungeTargetPoint;
 
-        if (enemyPatrol != null)
-        {
-            enemyPatrol.hasTriggered = true;
-            Debug.Log($"PlayerLunge: alertado PatrollingNPC en {targetCollider.gameObject.name}");
-        }
-        else
-        {
-            Debug.LogWarning($"PlayerLunge: no se encontró PatrollingNPC en el objetivo {targetCollider.gameObject.name}");
-        }
+        // ACTIVAR DERROTA DEL ENEMIGO
+        enemyPatrol.hasTriggered = true;
+        Debug.Log("Â¡Lunge exitoso! Enemigo derrotado.");
 
-        yield return new WaitForSeconds(0.12f);
+        // Restaurar control del jugador
+        rb.isKinematic = false;
 
+        yield return new WaitForSeconds(0.15f);
         isLunging = false;
+
         yield return new WaitForSeconds(cooldown);
         onCooldown = false;
     }
 
-    // helper para ver el rango en editor
+    // Gizmo
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.cyan;

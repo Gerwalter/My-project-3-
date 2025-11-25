@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
 
     // Módulos
     // Dentro de PlayerController
-    private PlayerMovement movement;
+    public PlayerMovement movement;
     private PlayerJump jump;
     private PlayerCrouch crouch;
    // private PlayerStamina stamina;

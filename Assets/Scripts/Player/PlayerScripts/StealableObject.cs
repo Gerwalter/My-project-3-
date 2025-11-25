@@ -57,6 +57,7 @@ public class StealableObject : ButtonBehaviour
 
         manager.Steal(itemType, stealAmount);
         EventManager.Trigger("IncreaseAlert", alertAmmount);
+        EventManager.Trigger("IncreasePoint", alertAmmount);
         // Aquí puedes reproducir sonido, animación, spawn de loot, etc.
         Debug.Log($"Objeto {itemType} robado.");
 
@@ -71,5 +72,7 @@ public class StealableObject : ButtonBehaviour
                 gameObject.SetActive(false);
             }
         }
+        GetComponent<Collider>().enabled = false;
+        this.enabled = false;
     }
 }

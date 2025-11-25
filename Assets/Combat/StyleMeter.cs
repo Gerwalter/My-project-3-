@@ -1,6 +1,7 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class StyleMeter : MonoBehaviour
 {
     [Header("UI – Rank Sprite")]
@@ -49,8 +50,16 @@ public class StyleMeter : MonoBehaviour
     private void Awake()
     {
         EventManager.Subscribe("Reset", Resetter);
+        SceneManager.activeSceneChanged += OnSceneChanged;
     }
-
+    private void OnDestroy()
+    {
+        SceneManager.activeSceneChanged -= OnSceneChanged;
+    }
+    private void OnSceneChanged(Scene oldScene, Scene newScene)
+    {
+        EventManager.Unsubscribe("Reset", Resetter);
+    }
     public void Resetter(params object[] args)
     {
         ResetStyle();

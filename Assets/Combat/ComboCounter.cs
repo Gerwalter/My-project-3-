@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ComboCounter : MonoBehaviour
@@ -13,9 +14,9 @@ public class ComboCounter : MonoBehaviour
 
     [Header("UI (Sprites)")]
     public Image comboPrefix; // Sprite para el "Combo" o "x"
-    public Transform digitsParent; // Contenedor donde se mostrarán los dígitos
-    public Sprite[] numberSprites; // Array de sprites de 0-9
-    public GameObject digitPrefab; // Prefab con un Image (para cada dígito)
+    public Transform digitsParent; 
+    public Sprite[] numberSprites; 
+    public GameObject digitPrefab; 
 
     private List<Image> activeDigits = new List<Image>();
 
@@ -23,6 +24,7 @@ public class ComboCounter : MonoBehaviour
     {
         EventManager.Subscribe("RegisterHit", Hit);
         EventManager.Subscribe("Damaged", OnPlayerDamaged);
+        SceneManager.activeSceneChanged += OnSceneChanged;
     }
 
     private void Start()
@@ -43,6 +45,15 @@ public class ComboCounter : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        SceneManager.activeSceneChanged -= OnSceneChanged;
+    }
+    private void OnSceneChanged(Scene oldScene, Scene newScene)
+    {
+        EventManager.Unsubscribe("RegisterHit", Hit);
+        EventManager.Unsubscribe("Damaged", OnPlayerDamaged);
+    }
     public void Hit(params object[] args)
     {
         RegisterHit();

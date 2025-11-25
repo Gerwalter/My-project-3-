@@ -7,7 +7,6 @@ public class ChestScript : ButtonBehaviour
     public LayerMask capaJugador;
     public GameObject imagenUI;
     private bool jugadorEnRango = false;
-    [SerializeField] private CoinSpawer spawner;
 
     // Cofre actualmente interactuado
     public static ChestScript cofreActivo;
@@ -38,7 +37,7 @@ public class ChestScript : ButtonBehaviour
             imagenUI.SetActive(jugadorEnRango);
         }
     }
-
+    /*
     private void RecibirValor(params object[] parametros)
     {
         // Solo procesar si este cofre es el activo
@@ -61,7 +60,7 @@ public class ChestScript : ButtonBehaviour
         // Liberar el cofre activo después de procesar
         cofreActivo = null;
         EventManager.Unsubscribe("ReceiveAlertValue", RecibirValor);
-    }
+    }*/
 
     public override void OnInteract()
     {
@@ -69,10 +68,10 @@ public class ChestScript : ButtonBehaviour
         cofreActivo = this;
 
         // Suscribirse solo cuando interactúa
-        EventManager.Subscribe("ReceiveAlertValue", RecibirValor);
-
-        // Pedir el contador
-        EventManager.Trigger("ObtainAlert");
+     //   EventManager.Subscribe("ReceiveAlertValue", RecibirValor);
+     //
+     //   // Pedir el contador
+     //   EventManager.Trigger("ObtainAlert");
     }
 
     private void OnDrawGizmos()

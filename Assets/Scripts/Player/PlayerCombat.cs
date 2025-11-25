@@ -16,6 +16,7 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
     [SerializeField] private float shootRepeatRate = 0.2f;
     private float shootTimer = 0f;
     public float Damage;
+    public StyleMeter styleMeter;
     public bool CanCombo { get { return canCombo; } set { canCombo = value; } }
 
     private Queue<ComboInput> inputBuffer = new Queue<ComboInput>();
@@ -23,6 +24,7 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
     void Start()
     {
         currentNode = rootNode;
+        styleMeter = FindObjectOfType<StyleMeter>();
         //     EventManager.Subscribe("OnAttack", OnAttack);
         //     EventManager.Subscribe("ComboChanger", ComboChanger);
         //UnlockDefaultCombos(rootNode);
@@ -194,7 +196,7 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
         }
 
         // Registrar los golpes reales en el combo counter
-        StyleMeter styleMeter = FindObjectOfType<StyleMeter>();
+
 
         if (enemiesHit > 0)
         {

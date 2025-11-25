@@ -53,10 +53,28 @@ public class GrapplingHook : MonoBehaviour
         if (Input.GetKeyUp(_grappleKey) && !_isGrappling && !Input.GetKey(KeyCode.LeftControl))
         {
             Crosshair.enabled = false;
-            StartGrapple();
+          //  StartGrapple();
         }
     }
+    public void StartGrappleToPoint(Vector3 targetPoint)
+    {
+        Crosshair.enabled = false;
+        _grapplePoint = targetPoint;
+        _isGrappling = true;
+        _rb.useGravity = false;
 
+        _initialPosition = _player.position;
+        _previousPosition = _initialPosition;
+
+        _lineRenderer.enabled = true;
+        _lineRenderer.SetPosition(0, _grappleOrigin ? _grappleOrigin.position : _player.position);
+        _lineRenderer.SetPosition(1, _grapplePoint);
+
+        if (useStraightMovement)
+            StartCoroutine(GrappleStraightMove());
+        else
+            StartCoroutine(GrappleArcMove());
+    }
     private void StartGrapple()
     {
         RaycastHit hit;
