@@ -24,6 +24,8 @@ public class CameraController : MonoBehaviour
 
     [SerializeField] private Camera _cam;
     [SerializeField] private Transform _target;
+    [SerializeField] private Transform _originalTarget;
+    [SerializeField] private Transform _catWalkTarget;
 
     [SerializeField] private Ray _camRay;
     [SerializeField] private RaycastHit _camRayHit;
@@ -54,6 +56,7 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         InitializeCamera();
+        _target = _originalTarget;
     }
 
     private void Update()
@@ -169,5 +172,23 @@ public class CameraController : MonoBehaviour
         transform.forward = _target.forward;
         _mouseX = transform.eulerAngles.y;
         _mouseY = transform.eulerAngles.x;
+    }
+    public void SetMinRotation(bool isOnCatWalk)
+    {
+        if (isOnCatWalk)
+        {
+            _minRotation = 0f;   // El valor mientras está sobre CatWalk
+            _target = _catWalkTarget;
+            //    Vector3 lowered = _originalTargetPos;
+            //    lowered.y -= 0.6f;
+            //    _target.position = lowered;
+        }
+        else
+        {
+            _minRotation = -68f; // Valor original
+            _target = _originalTarget;
+            // restaurar el target a 1.68
+            //     _target.position = _originalTargetPos;
+        }
     }
 }

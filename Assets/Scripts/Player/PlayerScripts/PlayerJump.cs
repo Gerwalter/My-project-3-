@@ -22,11 +22,27 @@ public class PlayerJump
         bool grounded = IsGrounded();
         EventManager.Trigger("Bool", "isGrounded", grounded);
 
-       // if (Input.GetKeyDown(KeyCode.Space) && grounded)
-       // {
-       //     EventManager.Trigger("Input", "onJump");
-       //
-       // }
+        Transform groundModule = GetGroundParent();
+
+        if (groundModule != null && groundModule.name == "CatWalk")
+        {
+            CatWalkTrigger trigger = groundModule.GetComponent<CatWalkTrigger>();
+
+            if (trigger != null)
+            {
+                trigger.OnPlayerStanding();
+            }
+        }
+        else
+        {
+            CameraController.Instance.SetMinRotation(false);
+        }
+
+        // if (Input.GetKeyDown(KeyCode.Space) && grounded)
+        // {
+        //     EventManager.Trigger("Input", "onJump");
+        //
+        // }
     }
     //public void Start()
     //{
@@ -51,5 +67,16 @@ public class PlayerJump
     {
         Vector3 origin = _player.Transform.position + Vector3.up * 0.125f;
         return Physics.Raycast(origin, Vector3.down, _player.GroundCheckDistance, _player.GroundMask);
+    }
+    private Transform GetGroundParent()
+    {
+        Vector3 origin = _player.Transform.position + Vector3.up * 0.125f;
+        RaycastHit hit;
+
+        if (Physics.Raycast(origin, Vector3.down, out hit, _player.GroundCheckDistance, _player.GroundMask))
+        {
+            return hit.collider.transform.parent; // o .parent si preferís
+        }
+        return null;
     }
 }
