@@ -38,6 +38,7 @@ public class PlayerUI : Health, ILifeObservable
         }
         foreach (var observer in _observers)
             observer.Notify(GetLife, maxHealth);
+        EventManager.Trigger("Input","TakeDamage");
         if (GetLife <= 0)
             Debug.Log("GAME OVE");
     }

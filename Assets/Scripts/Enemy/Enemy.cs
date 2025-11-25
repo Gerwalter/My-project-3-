@@ -66,7 +66,7 @@ public class Enemy : EnemyHealth
         if (playerHealth != null)
         {
             playerHealth.OnTakeDamage(attackDamage);
-            Debug.Log($"{gameObject.name} golpeo al jugador y le hizo {attackDamage} de danio");
+         //   Debug.Log($"{gameObject.name} golpeo al jugador y le hizo {attackDamage} de danio");
         }
     }
     private void OnDrawGizmos()
