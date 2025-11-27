@@ -351,6 +351,7 @@ GameObject:
   m_Component:
   - component: {fileID: 173115681326974451}
   - component: {fileID: 3353439412863764815}
+  - component: {fileID: 3306036219056245396}
   m_Layer: 6
   m_Name: Maria WProp J J Ong (1)
   m_TagString: Untagged
@@ -397,6 +398,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3306036219056245396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019468140472992242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d3d47050a1bf6e48a304a84576df61c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDamage: 10
+  attackRange: 2
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 264
+  enemy: {fileID: 2999710837917971474}
 --- !u!1 &1163134826694515624
 GameObject:
   m_ObjectHideFlags: 0
@@ -2650,7 +2669,6 @@ MonoBehaviour:
   anim: {fileID: 3353439412863764815}
   detectionRadius: 3
   attackRange: 1.6
-  attackDamage: 2
   attackCooldown: 4
   playerLayer:
     serializedVersion: 2

@@ -53,6 +53,9 @@ public class ComboCounter : MonoBehaviour
     {
         EventManager.Unsubscribe("RegisterHit", Hit);
         EventManager.Unsubscribe("Damaged", OnPlayerDamaged);
+
+        EventManager.Subscribe("RegisterHit", Hit);
+        EventManager.Subscribe("Damaged", OnPlayerDamaged);
     }
     public void Hit(params object[] args)
     {

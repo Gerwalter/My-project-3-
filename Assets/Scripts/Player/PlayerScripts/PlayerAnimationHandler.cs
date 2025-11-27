@@ -8,7 +8,6 @@ public class PlayerAnimationHandler : MonoBehaviour, IAnimObserver
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private PlayerController player;
     [SerializeField] private float _fadeDuration = 0.15f;
-
     [SerializeField] private GameObject observable;
 
     private void Awake()

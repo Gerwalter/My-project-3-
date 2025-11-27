@@ -13,6 +13,7 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
     public float comboResetTime = 1.2f;
     public float comboReset = 1.2f;
     [SerializeField] private bool canCombo;
+    [SerializeField] private bool canAttack;
     [SerializeField] private float shootRepeatRate = 0.2f;
     private float shootTimer = 0f;
     public float Damage;
@@ -164,7 +165,6 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
     private void Attack()
     {
         Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
-
         int enemiesHit = 0;
 
         switch (comboInput)
@@ -186,35 +186,35 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
                 break;
         }
 
-        foreach (Collider enemy in hitEnemies)
+        //------------------------------
+        // 🛑 SOLO esta sección se bloquea si canAttack es falso
+        //------------------------------
+        if (canAttack)
         {
-            enemiesHit++;
-
-            // 🔹 Llamamos directamente al evento de daño para este enemigo
-            EventManager.Trigger("SendDamage", Damage, enemy.gameObject);
-            // Puedes ajustar el "10f" para usar valores según comboInput o un daño real
-        }
-
-        // Registrar los golpes reales en el combo counter
-
-
-        if (enemiesHit > 0)
-        {
-            for (int i = 0; i < enemiesHit; i++)
+            foreach (Collider enemy in hitEnemies)
             {
-                EventManager.Trigger("RegisterHit");
+                enemiesHit++;
+
+                EventManager.Trigger("SendDamage", Damage, enemy.gameObject);
             }
 
-            if (styleMeter != null)
+            if (enemiesHit > 0)
             {
-                styleMeter.AddStylePoints(enemiesHit * stylePerEnemy);
+                for (int i = 0; i < enemiesHit; i++)
+                    EventManager.Trigger("RegisterHit");
+
+                if (styleMeter != null)
+                    styleMeter.AddStylePoints(enemiesHit * stylePerEnemy);
             }
         }
+        //------------------------------
 
+        // ✔️ Esta parte SIEMPRE se ejecuta
         isAttacking = true;
         comboTimer = 0f;
         isAttacking = false;
     }
+
 
     void OnDrawGizmos()
     {

@@ -31,6 +31,7 @@ public class EnemyFollow : MonoBehaviour
         // Si está más lejos que la distancia mínima, se mueve hacia el jugador
         if (distance > stopDistance)
         {
+            speed = 3;
             Vector3 direction = (player.position - transform.position).normalized;
             transform.position += direction * speed * Time.deltaTime;
 
@@ -39,8 +40,8 @@ public class EnemyFollow : MonoBehaviour
         }
         else
         {
-            // Aquí podrías poner la lógica de ataque
             Debug.Log("Atacando al jugador!");
+            speed = 0f;
         }
 
         anim.SetFloat("Move", speed > 0.1f ? 1f : 0f);

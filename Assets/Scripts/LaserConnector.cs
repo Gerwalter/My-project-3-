@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(LineRenderer))]
+
 public class LaserConnector : MonoBehaviour, IAlertSystemObserver
 {
     [Header("Detección")]
@@ -16,12 +16,11 @@ public class LaserConnector : MonoBehaviour, IAlertSystemObserver
     public float grosor = 0.05f;
     public Color colorLaser = Color.red;
 
-    private LineRenderer line;
+    [SerializeField] private LineRenderer line;
     private bool laserActivo = false;
 
     void Start()
     {
-        line = GetComponent<LineRenderer>();
 
         // Configuración visual inicial
         line.positionCount = 2;
