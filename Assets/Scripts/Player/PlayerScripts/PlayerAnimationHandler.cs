@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using UnityEngine;
 
 public class PlayerAnimationHandler : MonoBehaviour, IAnimObserver
@@ -9,7 +9,7 @@ public class PlayerAnimationHandler : MonoBehaviour, IAnimObserver
     [SerializeField] private PlayerController player;
     [SerializeField] private float _fadeDuration = 0.15f;
     [SerializeField] private GameObject observable;
-
+    private bool damageLocked = false;
     private void Awake()
     {
         // Asegurar que haya referencia al PlayerController
@@ -20,7 +20,7 @@ public class PlayerAnimationHandler : MonoBehaviour, IAnimObserver
         if (_rb == null)
             _rb = player != null ? player.Rigidbody : GetComponent<Rigidbody>();
 
-        // Suscripción al observable si existe
+        // SuscripciÃ³n al observable si existe
         if (observable != null)
         {
             var animObservable = observable.GetComponent<IAnimObservable>();
@@ -29,7 +29,7 @@ public class PlayerAnimationHandler : MonoBehaviour, IAnimObserver
         }
         else
         {
-            Debug.LogWarning("No se asignó observable en PlayerAnimationHandler.");
+            Debug.LogWarning("No se asignÃ³ observable en PlayerAnimationHandler.");
         }
     }
 
@@ -58,7 +58,7 @@ public class PlayerAnimationHandler : MonoBehaviour, IAnimObserver
         }
         else
         {
-            Debug.LogWarning("El nodo no tiene animación asignada.");
+            Debug.LogWarning("El nodo no tiene animaciÃ³n asignada.");
         }
     }
 
@@ -101,7 +101,14 @@ public class PlayerAnimationHandler : MonoBehaviour, IAnimObserver
 
     private void PlayerInput(params object[] args)
     {
-        animator.SetTrigger((string)args[0]);
+        string trigger = (string)args[0];
+        if (trigger == "TakeDamage")
+        {
+            if (damageLocked) return;
+            damageLocked = true;
+        }
+
+        animator.SetTrigger(trigger);
     }
 
     private void PlayerFloat(params object[] args)
@@ -118,7 +125,15 @@ public class PlayerAnimationHandler : MonoBehaviour, IAnimObserver
     {
         animator.SetBool("Shoot", isShooting);
     }
+    public void UnlockDamage()
+    {
+        damageLocked = false;
+    }
 
+    public void DisableMovement()
+    {
+        player.enabled = false;
+    }
     private void OnDestroy()
     {
         EventManager.Unsubscribe("Input", PlayerInput);

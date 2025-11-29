@@ -6,7 +6,7 @@ public class AnimationScript : MonoBehaviour
     public void PrintNum() => EventManager.Trigger("PrintNum", 1f);
     public void JumpAttack() => EventManager.Trigger("OnJumpAttack", 6f, 3f);
     public void EnemyLift() => EventManager.Trigger("OnEnemyLift");
-    public void Die() => EventManager.Trigger("OnDie");
+    public void Die() => EventManager.Trigger("Death");
     public void Jump() => EventManager.Trigger("OnJump");
     public void Attack() => EventManager.Trigger("OnAttack");
     public void DisableHeavyAttack() => EventManager.Trigger("Bool", "HeavyAttack", false);

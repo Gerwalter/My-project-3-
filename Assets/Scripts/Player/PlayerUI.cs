@@ -9,12 +9,9 @@ public class PlayerUI : Health, ILifeObservable
 {
     [SerializeField] List<ILifeObserver> _observers = new List<ILifeObserver>();
 
-    [Header("<color=#6A89A7>UI</color>")]
-    [SerializeField] KeyCode keyDmg;
     public void Subscribe(ILifeObserver x)
     {
         if (_observers.Contains(x)) return;
-
         _observers.Add(x);
     }
 
@@ -38,9 +35,13 @@ public class PlayerUI : Health, ILifeObservable
         }
         foreach (var observer in _observers)
             observer.Notify(GetLife, maxHealth);
-        EventManager.Trigger("Input","TakeDamage");
         if (GetLife <= 0)
-            Debug.Log("GAME OVE");
+        {
+            EventManager.Trigger("Input", "Dying");
+            return;
+        }
+
+        EventManager.Trigger("Input","TakeDamage");
     }
 
     public void PlayerCall(params object[] args)
