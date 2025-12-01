@@ -27,6 +27,8 @@ public class PatrollingNPC : MonoBehaviour
     public LayerMask distractionLayer;
     public FOVAgent FOVAgent;
 
+    [Header("Persecución por Alerta Máxima")]
+    public float maxAlertChaseSpeed = 5.5f;   // más rápido que chaseSpeed normal
     // ----------------------
     //    SISTEMA DE EXPOSICIÓN
     // ----------------------
@@ -42,10 +44,12 @@ public class PatrollingNPC : MonoBehaviour
     public float NormalizedExposure => Mathf.Clamp01(currentExposure / maxExposure);
 
     [Header("Exposición por Distancia")]
-    public float minDistanceForMaxExposure = 1.2f;  // si toca, se llena al instante
     public float maxVisionDistance = 8f;            // rango máximo de detección
     public AnimationCurve distanceExposureCurve =
         AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
+
+    [Header("Escalado de Exposición por Alerta")]
+    public AnimationCurve alertToExposureRateCurve = AnimationCurve.Linear(0, 1f, 1f, 3f);
 
     // ----------------------
 
@@ -139,13 +143,20 @@ public class PatrollingNPC : MonoBehaviour
         // Distancia al jugador
         float distance = Vector3.Distance(transform.position, player.transform.position);
 
-        float viewRange = FOVAgent.ViewRange;       // Rango máximo donde lo puede ver
-        float instantRange = captureRange;          // Rango de captura instantánea
-        float midRange = Mathf.Lerp(instantRange, viewRange, 0.35f); // Rango intermedio
+        float viewRange = FOVAgent.ViewRange;
+        float instantRange = captureRange + 2;
+        float midRange = Mathf.Lerp(instantRange, viewRange, 0.35f);
 
-        // Multiplicador según alerta global
-        float alertMultiplier = ThiefAlertSystem.instance.ObtainValue() / ThiefAlertSystem.instance._MaxAlert;
-        float baseFillRate = exposureFillRateBase * (1f + alertMultiplier * 2f);
+        // -------------------------------------------
+        //   Escalado de exposición según alerta global
+        // -------------------------------------------
+        float alertPercent = ThiefAlertSystem.instance.ObtainValue() / ThiefAlertSystem.instance._MaxAlert;
+
+        // Curva que define CUÁNTO aumenta la exposición
+        float alertRateMultiplier = alertToExposureRateCurve.Evaluate(alertPercent);
+
+        // Base final de llenado (distancia + alerta)
+        float baseFillRate = exposureFillRateBase * alertRateMultiplier;
 
         // ---------------------------
         //       RANGOS DE DETECCIÓN
@@ -206,8 +217,20 @@ public class PatrollingNPC : MonoBehaviour
         StopPatrolRoutine();
         StopFollowingPath();
         SwitchState(new InvestigateState());
-    }
+    }/*
+    private void OnTriggerEnter(Collider other)
+    {
+        if (((1 << other.gameObject.layer) & distractionLayer) != 0)
+        {
+            DistractionObject distraction = other.GetComponent<DistractionObject>();
 
+            if (distraction != null && distraction.distractionType == DistractionType.Coin)
+            {
+                // La moneda golpeó al NPC → investigar ese punto
+                SeeCoin(other.transform.position);
+            }
+        }
+    }*/
     private void CheckForVisibleCoin()
     {
         Collider[] hits = Physics.OverlapSphere(transform.position, FOVAgent.ViewRange, distractionLayer);
@@ -256,13 +279,30 @@ public class PatrollingNPC : MonoBehaviour
         lastSeenPosition = playerPosition;
         isCoinDistraction = false;
 
+        float alert = ThiefAlertSystem.instance.ObtainValue();
+        float maxAlert = ThiefAlertSystem.instance._MaxAlert;
+
+        // ----------------------------------------------------------
+        //     ALERTA MÁXIMA → PERSECUCIÓN INMEDIATA, MÁS VELOCIDAD
+        // ----------------------------------------------------------
+        if (alert >= maxAlert)
+        {
+            StopFollowingPath();
+            agent.speed = maxAlertChaseSpeed;   // velocidad aumentada
+            SwitchState(new ChaseState());
+            return;
+        }
+
+        // ----------------------------------------------------------
+        //    ALERTA NORMAL → comportamiento habitual (Investigar)
+        // ----------------------------------------------------------
         if (currentState is not InvestigateState)
         {
             StopFollowingPath();
+            agent.speed = chaseSpeed;
             SwitchState(new InvestigateState());
         }
     }
-
     public void OnAlertCleared()
     {
         if (!(currentState is PatrolState))
@@ -392,7 +432,7 @@ public class PatrollingNPC : MonoBehaviour
             Gizmos.DrawLine(start, endPos);
         }
         float viewRange = FOVAgent.ViewRange;
-        float instantRange = captureRange;
+        float instantRange = captureRange +2;
         float midRange = Mathf.Lerp(instantRange, viewRange, 0.35f);
 
         Vector3 pos = transform.position;

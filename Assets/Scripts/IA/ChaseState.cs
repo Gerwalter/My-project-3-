@@ -6,6 +6,7 @@ public class ChaseState : NPCBaseState
     {
         npc.FOVAgent.ViewAngle = 360f;
         npc.agent.speed = npc.chaseSpeed;
+
         npc.agent.updateRotation = false;
 
         // Resetear exposición al iniciar persecución

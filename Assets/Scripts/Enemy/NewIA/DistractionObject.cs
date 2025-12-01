@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public enum DistractionType { Stone, Coin }
 
@@ -23,6 +23,13 @@ public class DistractionObject : MonoBehaviour
     {
         // Ignorar colisiones con el jugador
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player")) return;
+        PatrollingNPC npc = collision.collider.GetComponent<PatrollingNPC>();
+
+        if (npc != null)
+        {
+            // Enemigo golpeado  investigar la posición de impacto
+            npc.SeeCoin(collision.contacts[0].point);
+        }
     }
 
     public void Dest()
