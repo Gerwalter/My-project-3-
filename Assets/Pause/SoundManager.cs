@@ -28,7 +28,7 @@ public class SoundManager : MonoBehaviour
         }
 
         // Escuchar cambios de escena
-       // SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {

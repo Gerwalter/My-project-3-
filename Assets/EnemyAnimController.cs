@@ -31,4 +31,9 @@ public class EnemyAnimController : MonoBehaviour
         }
     }
 
+    public void Die()
+    {
+        enemy.Die();
+    }
+
 }

@@ -40,7 +40,8 @@ public class EnemyHealth : Health, IEnemy
             _bloodVFX.SendEvent("OnTakeDamage");
         anim.SetTrigger("Damage");
         if (GetLife <= 0)
-            Die();
+            anim.SetTrigger("Death");
+  //      Die();
     }
 
     virtual public void Die()

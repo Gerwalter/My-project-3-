@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class CameraController : MonoBehaviour
 {
@@ -38,7 +37,7 @@ public class CameraController : MonoBehaviour
     public PauseManager pauseManager;
     [SerializeField] private Transform camTransform;
 
-   
+
 
     public Transform CamTransform
     {
@@ -55,6 +54,8 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
+        pauseManager = FindObjectOfType<PauseManager>();
+        print("AAAAAAAAAAAAA");
         InitializeCamera();
         _target = _originalTarget;
     }
@@ -91,7 +92,7 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    
+
     private void UpdateCamRot(float x, float y)
     {
         transform.position = _target.position;
@@ -169,6 +170,8 @@ public class CameraController : MonoBehaviour
     {
         _cam = Camera.main;
         LockCursor();
+
+
         transform.forward = _target.forward;
         _mouseX = transform.eulerAngles.y;
         _mouseY = transform.eulerAngles.x;

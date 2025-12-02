@@ -976,7 +976,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 496598462050523172, guid: f5334162d004fc24ba7570c00b2ca254, type: 3}
       propertyPath: objectiveConfigs.Array.data[0].maxRequired
-      value: 0
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 496598462050523172, guid: f5334162d004fc24ba7570c00b2ca254, type: 3}
       propertyPath: objectiveConfigs.Array.data[0].minRequired
@@ -988,7 +988,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 496598462050523172, guid: f5334162d004fc24ba7570c00b2ca254, type: 3}
       propertyPath: objectiveConfigs.Array.data[2].maxRequired
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1759098547962665118, guid: f5334162d004fc24ba7570c00b2ca254, type: 3}
       propertyPath: m_Name
@@ -1980,8 +1980,30 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 562577932261239395, guid: 21fae11b4da0d754ebf09ffcb51bb5b4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6967755767057787955}
   m_SourcePrefab: {fileID: 100100000, guid: 21fae11b4da0d754ebf09ffcb51bb5b4, type: 3}
+--- !u!1 &6967755767057787954 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 562577932261239395, guid: 21fae11b4da0d754ebf09ffcb51bb5b4, type: 3}
+  m_PrefabInstance: {fileID: 6967755767057787953}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6967755767057787955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6967755767057787954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08c01cdbc67501d41b29a742f2b5d5e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  background: MainMenu
+  soundManager: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
