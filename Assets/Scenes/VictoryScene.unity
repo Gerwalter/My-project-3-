@@ -414,6 +414,7 @@ GameObject:
   - component: {fileID: 1452440586}
   - component: {fileID: 1452440585}
   - component: {fileID: 1452440589}
+  - component: {fileID: 1452440590}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -521,6 +522,23 @@ MonoBehaviour:
   pointsPerVasija: 25
   pointsPerCuadro: 10
   pointsPerArtefacto: 50
+  colorLabel: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  colorValue: {r: 0, g: 1, b: 0, a: 1}
+  colorTotal: {r: 0.12149668, g: 0, b: 1, a: 1}
+--- !u!114 &1452440590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1452440584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08c01cdbc67501d41b29a742f2b5d5e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  background: EndCredits
+  soundManager: {fileID: 0}
 --- !u!1 &1634360997
 GameObject:
   m_ObjectHideFlags: 0

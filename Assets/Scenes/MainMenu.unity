@@ -821,6 +821,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 432078739451589174, guid: 69072a4f854df9448a54d1c6a366424a, type: 3}
+      propertyPath: Music.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 432078739451589174, guid: 69072a4f854df9448a54d1c6a366424a, type: 3}
+      propertyPath: Music.Array.data[4].name
+      value: EndCredits
+      objectReference: {fileID: 0}
+    - target: {fileID: 432078739451589174, guid: 69072a4f854df9448a54d1c6a366424a, type: 3}
+      propertyPath: Music.Array.data[4].audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 1d02dcf0cffb9d947922157fb865ebc2, type: 3}
     - target: {fileID: 486707393284948208, guid: 69072a4f854df9448a54d1c6a366424a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -904,7 +916,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 496598462050523172, guid: f5334162d004fc24ba7570c00b2ca254, type: 3}
       propertyPath: objectiveConfigs.Array.data[0].maxRequired
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 496598462050523172, guid: f5334162d004fc24ba7570c00b2ca254, type: 3}
       propertyPath: objectiveConfigs.Array.data[0].minRequired
@@ -912,11 +924,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 496598462050523172, guid: f5334162d004fc24ba7570c00b2ca254, type: 3}
       propertyPath: objectiveConfigs.Array.data[1].maxRequired
-      value: 8
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 496598462050523172, guid: f5334162d004fc24ba7570c00b2ca254, type: 3}
       propertyPath: objectiveConfigs.Array.data[2].maxRequired
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1759098547962665118, guid: f5334162d004fc24ba7570c00b2ca254, type: 3}
       propertyPath: m_Name

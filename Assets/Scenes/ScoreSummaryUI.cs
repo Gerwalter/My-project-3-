@@ -10,7 +10,10 @@ public class ScoreSummaryUI : MonoBehaviour, IPointObserver
     [SerializeField] private int pointsPerVasija = 50;
     [SerializeField] private int pointsPerCuadro = 100;
     [SerializeField] private int pointsPerArtefacto = 150;
-
+    [Header("COLORES (Editable en Inspector)")]
+    [SerializeField] private Color colorLabel = Color.yellow;
+    [SerializeField] private Color colorValue = Color.green;
+    [SerializeField] private Color colorTotal = new Color(1f, 0.27f, 0f);  // Naranja
     private int totalScore = 0;
 
     private void Start()
@@ -64,11 +67,16 @@ public class ScoreSummaryUI : MonoBehaviour, IPointObserver
 
         totalScore = scoreVasijas + scoreCuadros + scoreArtefactos;
 
-        // Construir texto completo con formato Rich Text (colores y tamaños)
-        string summaryText = $"<color=#FFD700>Vasijas: <b>{vasijas}</b> × {pointsPerVasija} = <color=#00FF00>{scoreVasijas}</color> pts</color>\n" +
-                            $"<color=#FFD700>Cuadros: <b>{cuadros}</b> × {pointsPerCuadro} = <color=#00FF00>{scoreCuadros}</color> pts</color>\n" +
-                            $"<color=#FFD700>Artefactos: <b>{artefactos}</b> × {pointsPerArtefacto} = <color=#00FF00>{scoreArtefactos}</color> pts</color>\n" +
-                            $"<size=130%><color=#FF4500>TOTAL: <b>{totalScore}</b> puntos</color></size>";
+        // Convertir colores a hex
+        string cLabel = ColorUtility.ToHtmlStringRGB(colorLabel);
+        string cValue = ColorUtility.ToHtmlStringRGB(colorValue);
+        string cTotal = ColorUtility.ToHtmlStringRGB(colorTotal);
+
+        string summaryText =
+            $"<color=#{cLabel}>Vasijas: <b>{vasijas}</b> × {pointsPerVasija} = <color=#{cValue}>{scoreVasijas}</color> pts</color>\n" +
+            $"<color=#{cLabel}>Cuadros: <b>{cuadros}</b> × {pointsPerCuadro} = <color=#{cValue}>{scoreCuadros}</color> pts</color>\n" +
+            $"<color=#{cLabel}>Artefactos: <b>{artefactos}</b> × {pointsPerArtefacto} = <color=#{cValue}>{scoreArtefactos}</color> pts</color>\n" +
+            $"<size=130%><color=#{cTotal}>TOTAL: <b>{totalScore}</b> puntos</color></size>";
 
         textSummary.text = summaryText;
     }

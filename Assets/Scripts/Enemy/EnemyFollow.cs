@@ -40,7 +40,6 @@ public class EnemyFollow : MonoBehaviour
         }
         else
         {
-            Debug.Log("Atacando al jugador!");
             speed = 0f;
         }
 

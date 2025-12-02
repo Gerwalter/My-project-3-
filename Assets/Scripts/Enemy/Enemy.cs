@@ -34,7 +34,6 @@ public class Enemy : EnemyHealth
 
     void Update()
     {
-
         attackTimer -= Time.deltaTime;
 
         Collider[] players = Physics.OverlapSphere(transform.position, detectionRadius, playerLayer);
