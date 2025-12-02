@@ -8,13 +8,17 @@ public class Enemy : EnemyHealth
     {
         base.Start();
         EnemyManager.Instance.RegisterEnemy(this);
+
     }
 
     public static System.Action OnEnemyDefeated;
 
+
+
     public override void Die()
     {
         EnemyManager.Instance.UnregisterEnemy(this);
+
         OnEnemyDefeated?.Invoke();
         base.Die();
     }
@@ -30,6 +34,7 @@ public class Enemy : EnemyHealth
 
     void Update()
     {
+
         attackTimer -= Time.deltaTime;
 
         Collider[] players = Physics.OverlapSphere(transform.position, detectionRadius, playerLayer);
@@ -49,6 +54,7 @@ public class Enemy : EnemyHealth
         {
             targetPlayer = null;
         }
+
     }
 
     public Transform GetTargetPlayer() => targetPlayer;

@@ -55,7 +55,7 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         pauseManager = FindObjectOfType<PauseManager>();
-        print("AAAAAAAAAAAAA");
+        
         InitializeCamera();
         _target = _originalTarget;
     }
