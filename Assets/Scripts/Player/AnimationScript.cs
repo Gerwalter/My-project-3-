@@ -11,9 +11,8 @@ public class AnimationScript : MonoBehaviour
     public void Attack() => EventManager.Trigger("OnAttack");
     public void DisableHeavyAttack() => EventManager.Trigger("Bool", "HeavyAttack", false);
     public void DisableLightAttack() => EventManager.Trigger("Bool", "LightAttack", false);
-    public void EnableHeavyAttack() => EventManager.Trigger("Bool", "HeavyAttack", true);
-    public void EnableLightAttack() => EventManager.Trigger("Bool", "LightAttack", true);
     public void Interact() => EventManager.Trigger("OnInteract");
     public void PlayVFX() => EventManager.Trigger("OnPlayVFX");
     public void PlayVFXAttack() => EventManager.Trigger("OnPlayVFXAttack");
+
 }

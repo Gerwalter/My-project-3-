@@ -7,7 +7,7 @@ public class Enemy : EnemyHealth
     public override void Start()
     {
         base.Start();
-        EnemyManager.Instance.RegisterEnemy(this);
+       // EnemyManager.Instance.RegisterEnemy(this);
 
     }
 

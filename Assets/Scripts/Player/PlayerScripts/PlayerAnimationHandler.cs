@@ -142,4 +142,17 @@ public class PlayerAnimationHandler : MonoBehaviour, IAnimObserver
         EventManager.Unsubscribe("PrintNum", OnAttack);
         EventManager.Unsubscribe("OnJumpAttack", OnJumpAttack);
     }
+    public void AnimEvent_OpenComboWindow()
+    {
+        // Permite transicionar al siguiente ataque
+        var obs = observable.GetComponent<PlayerCombat>();
+        obs.CanCombo = true;
+    }
+
+    public void AnimEvent_EndAttack()
+    {
+        var obs = observable.GetComponent<PlayerCombat>();
+        obs.IsAttacking = false;
+        obs.CanAttack = true;
+    }
 }

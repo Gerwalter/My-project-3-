@@ -57,15 +57,22 @@ Material:
     m_Floats:
     - _AmbientStrength: 1
     - _CircleDensity: 100
+    - _DETAILS_HALFTONE: 0
+    - _DETAILS_RING: 0
+    - _Dither: 1
     - _FalloffAmount: 0.05
     - _FalloffThreshold: 2.5
     - _FresnelSize: 0.1
     - _LightingCutoff: 0
     - _Lit_Threshold: 1
+    - _Max: 1.25
+    - _Min: 1
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Ring: 0.41
     - _Rotation: 0
+    - _SHADOW_PRO: 0
+    - _Shadow: 0.42
     - _Smoothness: 1000
     - _SoftGrid: 0.14
     - _Softness: 0.1
@@ -73,5 +80,7 @@ Material:
     m_Colors:
     - _DiffuseColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Offset: {r: 1, g: 1, b: 0, a: 0}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Tilling: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []

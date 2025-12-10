@@ -8,17 +8,21 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
     private ComboNode currentNode;
     public KeyCode keyCode;
     public KeyCode fireKey;
+    [SerializeField] private bool canAttack;
+    public bool CanAttack { get { return canAttack; } set { canAttack = value; } }
     private bool isAttacking = false;
+    public bool IsAttacking { get { return isAttacking; } set { isAttacking = value; } }
+    [SerializeField] private bool canCombo;
+    public bool CanCombo { get { return canCombo; } set { canCombo = value; } }
+    [SerializeField] private bool canAddDamage;
     [SerializeField] private float comboTimer = 0f;
     public float comboResetTime = 1.2f;
     public float comboReset = 1.2f;
-    [SerializeField] private bool canCombo;
-    [SerializeField] private bool canAttack;
+
     [SerializeField] private float shootRepeatRate = 0.2f;
     private float shootTimer = 0f;
     public float Damage;
     public StyleMeter styleMeter;
-    public bool CanCombo { get { return canCombo; } set { canCombo = value; } }
 
     private Queue<ComboInput> inputBuffer = new Queue<ComboInput>();
     [SerializeField] private ComboInput comboInput;
@@ -79,7 +83,10 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
                 foreach (var observer in _observers)
                     observer.OnShootStateChanged(false);
             }
-            if (!isAttacking && inputBuffer.Count > 0)
+            if (attackLockTimer > 0f)
+                attackLockTimer -= Time.deltaTime;
+
+            if (!isAttacking && attackLockTimer <= 0f && inputBuffer.Count > 0)
             {
                 ComboInput input = inputBuffer.Dequeue();
                 TryExecuteNode(input);
@@ -150,16 +157,31 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
     public float attackRange = 1.5f;
     public LayerMask enemyLayers;
     float stylePerEnemy;
+    [SerializeField] private float attackLockDuration = 0.25f; // evita spam
+    private float attackLockTimer = 0f;
     void PerformAttack(ComboNode node)
     {
+     //   if (isAttacking)
+     //       return; // si algo intenta colarse, lo bloqueamos
         Debug.Log("Ejecutando Ataque " + node);
 
+        isAttacking = true;
+        canAttack = false;
+        canCombo = false;
+
+        // Bloquea spam durante X segundos (ataque mínimo)
+        attackLockTimer = attackLockDuration;
+
+        comboTimer = 0f;
+
+        // Notifica animación
         foreach (var observer in _observers)
-            observer.OnAttackTriggered(node); // <--- ahora pasa el nodo entero
+            observer.OnAttackTriggered(node);
     }
 
     void OnAttack(params object[] args)
     {
+        print("triggered");
         Attack();
     }
     private void Attack()
@@ -189,7 +211,7 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
         //------------------------------
         // 🛑 SOLO esta sección se bloquea si canAttack es falso
         //------------------------------
-        if (canAttack)
+        if (canAddDamage)
         {
             foreach (Collider enemy in hitEnemies)
             {
