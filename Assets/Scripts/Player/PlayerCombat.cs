@@ -7,7 +7,6 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
     public ComboNode rootNode;
     private ComboNode currentNode;
     public KeyCode keyCode;
-    public KeyCode fireKey;
     [SerializeField] private bool canAttack;
     public bool CanAttack { get { return canAttack; } set { canAttack = value; } }
     private bool isAttacking = false;
@@ -61,28 +60,6 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
                 inputBuffer.Enqueue(ComboInput.Finisher);
             }
 
-            if (Input.GetKey(fireKey))
-            {
-                shootTimer += Time.deltaTime;
-                comboResetTime = 0;
-                if (shootTimer >= shootRepeatRate)
-                {
-                    inputBuffer.Enqueue(ComboInput.Shoot);
-
-                    foreach (var observer in _observers)
-                        observer.OnShootStateChanged(true);
-
-                    shootTimer = 0f;
-                }
-            }
-            else
-            {
-                shootTimer = shootRepeatRate;
-                comboResetTime = comboReset;
-
-                foreach (var observer in _observers)
-                    observer.OnShootStateChanged(false);
-            }
             if (attackLockTimer > 0f)
                 attackLockTimer -= Time.deltaTime;
 
@@ -181,7 +158,6 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
 
     void OnAttack(params object[] args)
     {
-        print("triggered");
         Attack();
     }
     private void Attack()
@@ -199,9 +175,6 @@ public class PlayerCombat : MonoBehaviour, IAnimObservable
                 break;
             case ComboInput.Finisher:
                 stylePerEnemy = 50;
-                break;
-            case ComboInput.Shoot:
-                stylePerEnemy = 1;
                 break;
             default:
                 Debug.Log("Entrada no reconocida.");
