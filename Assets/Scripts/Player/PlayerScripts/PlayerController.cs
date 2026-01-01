@@ -14,8 +14,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float wallCheckDistance = 1.0f;
     [SerializeField] private LayerMask wallMask;
 
+    [Header("Abilities")]
+    [SerializeField] private bool useRollInsteadOfCrouch = false;
 
-
+    private PlayerRoll roll;
     public PlayerCrouch Crouch => crouch;
     // Accesores públicos para módulos
     public float MoveSpeed => moveSpeed;
@@ -47,26 +49,65 @@ public class PlayerController : MonoBehaviour
         movement = new PlayerMovement(this);
         jump = new PlayerJump(this);
         crouch = new PlayerCrouch(this);
+        roll = new PlayerRoll(this);
       //  stamina = new PlayerStamina(this);
     }
     private void Start()
     {
         //jump.Start();
         jump.Initialize();
+        EventManager.Subscribe("StopRoll", StopRoll);
     }
     private void Update()
     {
         movement.Update();
         jump.Update();
-        crouch.Update();
-       // stamina.Update();
+        HandleCtrlInput();
+        // stamina.Update();
     }
+    private void StopRoll(params object[] parametros)
+    {
+        StopMovementInstant();
+    }
+    // public PlayerStamina Stamina => stamina; // para que otros módulos accedan
+    private void HandleCtrlInput()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            if (useRollInsteadOfCrouch)
+            {
+                roll.TryRoll();
+            }
+            else
+            {
+                crouch.StartCrouch();
+            }
+        }
 
-   // public PlayerStamina Stamina => stamina; // para que otros módulos accedan
-
+        if (Input.GetKeyUp(KeyCode.LeftControl))
+        {
+            if (!useRollInsteadOfCrouch)
+            {
+                crouch.StopCrouch();
+            }
+        }
+    }
     private void FixedUpdate()
     {
         movement.FixedUpdate();
+    }
+    public void StopMovementInstant(bool keepVerticalVelocity = true)
+    {
+        Vector3 velocity = Rigidbody.velocity;
+
+        if (keepVerticalVelocity)
+        {
+            Rigidbody.velocity = new Vector3(0f, velocity.y, 0f);
+        }
+        else
+        {
+            Rigidbody.velocity = Vector3.zero;
+        }
     }
     private void OnDrawGizmos()
     {

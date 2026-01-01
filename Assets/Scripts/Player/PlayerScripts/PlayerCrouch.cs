@@ -34,21 +34,9 @@ public class PlayerCrouch
         stealthLayer = LayerMask.NameToLayer("PlayerStealth");
     }
 
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            StartCrouch();
-        }
-        else if (Input.GetKeyUp(KeyCode.LeftControl))
-        {
-            StopCrouch();
-        }
 
-        EventManager.Trigger("Bool", "isCrouching", _isCrouching);
-    }
-
-    private void StartCrouch()
+    public
+        void StartCrouch()
     {
         _isCrouching = true;
         EventManager.Trigger("Input", "onCrouch");
@@ -62,7 +50,7 @@ public class PlayerCrouch
         _player.gameObject.layer = stealthLayer;
     }
 
-    private void StopCrouch()
+    public void StopCrouch()
     {
         _isCrouching = false;
         EventManager.Trigger("Input", "onStand");
