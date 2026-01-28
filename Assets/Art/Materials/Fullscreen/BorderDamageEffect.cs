@@ -18,6 +18,7 @@ public class BorderDamageEffect : MonoBehaviour, ILifeObserver
     {
         if (playerUI != null)
             playerUI.Subscribe(this);
+        screenBorderMaterial.SetFloat("_ScreenBorderAmount", maxBorderValue);
     }
 
     private void OnDestroy()

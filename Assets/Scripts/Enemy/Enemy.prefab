@@ -410,7 +410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d3d47050a1bf6e48a304a84576df61c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDamage: 3
+  attackDamage: 2
   attackRange: 2
   playerLayer:
     serializedVersion: 2
@@ -2667,12 +2667,19 @@ MonoBehaviour:
   _bloodVFX: {fileID: 5447051676155871467}
   maxHealth: 10
   anim: {fileID: 3353439412863764815}
+  Mat: {fileID: 2100000, guid: 73bdb2720caa19c44b712d4fae37e5b8, type: 2}
+  flashDuration: 0.2
   detectionRadius: 3
   attackRange: 1.26
   attackCooldown: 3
   playerLayer:
     serializedVersion: 2
     m_Bits: 264
+  hasAttackSlot: 0
+  attackSlotType: 0
+  recoverTimer: 0
+  awareTimer: 0.3
+  currentState: 0
 --- !u!136 &7846588538153680346
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2739,3 +2746,4 @@ MonoBehaviour:
   stopDistance: 1.2
   anim: {fileID: 3353439412863764815}
   player: {fileID: 0}
+  enemy: {fileID: 0}

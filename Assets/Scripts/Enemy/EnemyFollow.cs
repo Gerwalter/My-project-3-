@@ -6,7 +6,7 @@ public class EnemyFollow : MonoBehaviour
     public float stopDistance = 1.5f;  // Distancia mínima para detenerse (ej. atacar)
     public Animator anim;
     public Transform player;
-
+    public Enemy enemy;
     void Start()
     {
         // Busca al objeto con tag "Player"
@@ -19,12 +19,20 @@ public class EnemyFollow : MonoBehaviour
         {
             Debug.LogError("No se encontró ningún objeto con el tag 'Player'.");
         }
+        enemy = GetComponent<Enemy>();
     }
 
     void Update()
     {
         if (player == null) return;
+        if (enemy == null) return;
 
+        if (enemy.CurrentState != EnemyStates.Chasing &&
+            enemy.CurrentState != EnemyStates.WaitingForAttack)
+        {
+            anim.SetFloat("Move", 0f);
+            return;
+        }
         // Calcula la distancia al jugador
         float distance = Vector3.Distance(transform.position, player.position);
 

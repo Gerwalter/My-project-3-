@@ -56,8 +56,8 @@ public class CameraController : MonoBehaviour
     {
         pauseManager = FindObjectOfType<PauseManager>();
         
-        InitializeCamera();
         _target = _originalTarget;
+        InitializeCamera();
     }
 
     private void Update()
@@ -137,13 +137,18 @@ public class CameraController : MonoBehaviour
         _cam.transform.LookAt(transform.position);
         float distToPlayer = Vector3.Distance(_cam.transform.position, _target.position);
 
-        if (distToPlayer < 1.2f)  // Ajusta este umbral a gusto
+        var dither = PlayerDitherController.Instance;
+
+        if (dither == null)
+            return; // o simplemente no hacer nada
+
+        if (distToPlayer < 1.2f)
         {
-            PlayerDitherController.Instance.SetDither(1.5f);
+            dither.SetDither(1.5f);
         }
         else
         {
-            PlayerDitherController.Instance.SetDither(1f);
+            dither.SetDither(1f);
         }
     }
 

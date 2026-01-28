@@ -15,24 +15,32 @@ public class WaveSpawner : MonoBehaviour
 
     [Header("Wave Settings - Base (Demo)")]
     public int baseWaves = 3;
-    public List<int> baseEnemiesPerWave = new List<int> { 4, 5, 6 };  // Total base: 15 enemigos
-    public float timeBetweenWaves = 5f;  // Más rápido para demo
+    public List<int> baseEnemiesPerWave = new List<int> { 4, 5, 6 };
+    public float timeBetweenWaves = 5f;
+
+    [Header("Wave Progression Mode")]
+    [Tooltip("Si está en true → espera a que mueran TODOS los enemigos de la oleada actual antes de la siguiente")]
+    public bool waitForWaveClear = false;           // ← Este es el booleano que controlas
 
     [Header("Indicator")]
     public GameObject spawnIndicatorPrefab;
 
     public bool allWavesCompleted { get; private set; } = false;
 
-    // Contadores
+    // Contadores globales
     private int totalEnemiesToSpawn = 0;
     private int enemiesDefeated = 0;
     private int totalWaves;
+
+    // Contadores por oleada (solo se usan cuando waitForWaveClear = true)
+    private int enemiesInCurrentWave = 0;
+    private int enemiesDefeatedInCurrentWave = 0;
 
     void Start()
     {
         factory = new EnemyFactory();
 
-        // === CALCULAR DIFICULTAD SEGÚN ALERTA (DEMO MODE) ===
+        // Cálculo de dificultad según alerta (igual que antes)
         float currentAlert = ThiefAlertSystem.instance?.ObtainValue() ?? 0f;
         float maxAlert = ThiefAlertSystem.instance?._MaxAlert ?? 100f;
         float alertNorm = currentAlert / maxAlert;
@@ -40,27 +48,25 @@ public class WaveSpawner : MonoBehaviour
         int extraWaves = GetExtraWaves(alertNorm);
         totalWaves = baseWaves + extraWaves;
 
-        Debug.Log($"[WaveSpawner] Alerta: {currentAlert:F0}/{maxAlert} ({alertNorm:P0}) → +{extraWaves} oleadas extra → Total oleadas: {totalWaves}");
+        Debug.Log($"[WaveSpawner] Alerta: {currentAlert:F0}/{maxAlert} ({alertNorm:P0}) → +{extraWaves} oleadas extra → Total: {totalWaves}");
 
-        // === CONSTRUIR LISTA FINAL ===
+        // Construir lista final de enemigos por oleada
         List<int> finalEnemiesPerWave = new List<int>(baseEnemiesPerWave);
-        int lastBaseCount = baseEnemiesPerWave[baseEnemiesPerWave.Count - 1];
+        int lastBaseCount = baseEnemiesPerWave.Count > 0 ? baseEnemiesPerWave[^1] : 5;
 
         for (int i = 0; i < extraWaves; i++)
         {
-            // Progresión suave para demo: 7, 8...
             int extraEnemies = lastBaseCount + 1 + i;
             finalEnemiesPerWave.Add(extraEnemies);
         }
 
-        // Total enemigos
         totalEnemiesToSpawn = 0;
         foreach (int count in finalEnemiesPerWave)
             totalEnemiesToSpawn += count;
 
-        Debug.Log($"[WaveSpawner] Enemigos totales: {totalEnemiesToSpawn} (¡Perfecto para demo!)");
+        Debug.Log($"[WaveSpawner] Enemigos totales: {totalEnemiesToSpawn}");
 
-        // Pool pequeño para demo
+        // Pool
         int poolSize = Mathf.Max(25, totalEnemiesToSpawn + 15);
         var pool = new ObjectPool<Enemy>(enemyPrefab, poolSize, parent);
         factory.RegisterPool("Enemy", pool);
@@ -71,16 +77,14 @@ public class WaveSpawner : MonoBehaviour
 
     private int GetExtraWaves(float alert01)
     {
-        // 5 niveles: 0(<30%), 1(30-59%), 2(60-79%), 3(80-99%), 4(100%)
-        // Extra oleadas escaladas para demo (máx. 2 extra → 5 totales)
-        if (alert01 >= 1.00f) return 2;   // Nivel 4: +2 (5 oleadas)
-        if (alert01 >= 0.80f) return 2;   // Nivel 3: +2 (5 oleadas)
-        if (alert01 >= 0.60f) return 1;   // Nivel 2: +1 (4 oleadas)
-        if (alert01 >= 0.30f) return 1;   // Nivel 1: +1 (4 oleadas)
-        return 0;                         // Nivel 0: 0 (3 oleadas)
+        if (alert01 >= 1.00f) return 2;
+        if (alert01 >= 0.80f) return 2;
+        if (alert01 >= 0.60f) return 1;
+        if (alert01 >= 0.30f) return 1;
+        return 0;
     }
 
-    private void OnDestroy()
+    void OnDestroy()
     {
         Enemy.OnEnemyDefeated -= OnEnemyDefeated;
     }
@@ -102,7 +106,9 @@ public class WaveSpawner : MonoBehaviour
     private void OnEnemyDefeated()
     {
         enemiesDefeated++;
-        Debug.Log($"Progreso: {enemiesDefeated}/{totalEnemiesToSpawn} enemigos");
+        enemiesDefeatedInCurrentWave++;
+
+        Debug.Log($"Progreso global: {enemiesDefeated}/{totalEnemiesToSpawn} | Oleada actual: {enemiesDefeatedInCurrentWave}/{enemiesInCurrentWave}");
 
         if (enemiesDefeated >= totalEnemiesToSpawn && allWavesCompleted)
         {
@@ -117,8 +123,12 @@ public class WaveSpawner : MonoBehaviour
         {
             int count = enemiesPerWave[wave];
             bool isExtra = wave >= baseWaves;
-            Debug.Log($"Oleada {wave + 1}{(isExtra ? " (EXTRA)" : "")} → {count} enemigos");
+            Debug.Log($"Iniciando Oleada {wave + 1}{(isExtra ? " (EXTRA)" : "")} → {count} enemigos");
 
+            enemiesInCurrentWave = count;
+            enemiesDefeatedInCurrentWave = 0;
+
+            // Spawnear enemigos de esta oleada
             for (int i = 0; i < count; i++)
             {
                 Vector3 pos = GetRandomSpawnPosition();
@@ -130,15 +140,33 @@ public class WaveSpawner : MonoBehaviour
                 }
 
                 yield return new WaitForSeconds(spawnDelay);
+
                 factory.Create("Enemy", pos);
-                yield return new WaitForSeconds(0.6f);
+
+                yield return new WaitForSeconds(0.6f);   // pequeño delay entre spawns dentro de la misma oleada
             }
 
-            if (wave < enemiesPerWave.Count - 1)
+            // Si está activado el modo "esperar limpieza de oleada"
+            if (waitForWaveClear)
+            {
+                Debug.Log($"[Wave {wave + 1}] Esperando a que se derroten los {count} enemigos...");
+
+                // Esperamos hasta que todos los enemigos de ESTA oleada hayan muerto
+                yield return new WaitUntil(() => enemiesDefeatedInCurrentWave >= enemiesInCurrentWave);
+
+                Debug.Log($"[Wave {wave + 1}] ¡Oleada limpia! Esperando {timeBetweenWaves}s antes de la siguiente...");
+
                 yield return new WaitForSeconds(timeBetweenWaves);
+            }
+            else
+            {
+                // Modo original: solo espera entre oleadas sin importar si siguen vivos
+                if (wave < enemiesPerWave.Count - 1)
+                    yield return new WaitForSeconds(timeBetweenWaves);
+            }
         }
 
         allWavesCompleted = true;
-        Debug.Log("¡Oleadas completadas! (Demo lista para victoria)");
+        Debug.Log("¡Todas las oleadas han sido lanzadas! (esperando limpieza final si corresponde)");
     }
 }

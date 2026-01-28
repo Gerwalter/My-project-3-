@@ -6,6 +6,7 @@ public class PauseManager : MonoBehaviour
 {
     public GameObject pauseMenuUI; // Asigna el menú de pausa en el Inspector
     public GameObject OptionsMenuUI; // Asigna el menú de pausa en el Inspector
+    public PlayerCombat PlayerCombat;
     public bool isPaused = false;
     public bool isOptions = false;
     public bool canPause = true; // Variable para controlar si se puede pausar
@@ -27,6 +28,7 @@ public class PauseManager : MonoBehaviour
         pauseMenuUI.SetActive(false);
         OptionsMenuUI.SetActive(false);
         isOptions = false;
+
     }
 
     void Update()
@@ -45,6 +47,11 @@ public class PauseManager : MonoBehaviour
         isPaused = !isPaused;
         Time.timeScale = isPaused ? 0 : 1;
         pauseMenuUI.SetActive(isPaused);
+        if (PlayerCombat != null) 
+        {
+            PlayerCombat.CanAttack = !isPaused;
+            PlayerCombat.CanCombo = !isPaused;
+        }
     }
     public void ToggleOptions()
     {
