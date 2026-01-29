@@ -2669,17 +2669,17 @@ MonoBehaviour:
   anim: {fileID: 3353439412863764815}
   Mat: {fileID: 2100000, guid: 73bdb2720caa19c44b712d4fae37e5b8, type: 2}
   flashDuration: 0.2
-  detectionRadius: 3
-  attackRange: 1.26
+  attackSlotType: 0
+  detectionRadius: 3.12
+  attackRange: 1.63
+  detectionRadiusMelee: 3.12
+  attackRangeMelee: 1.63
+  detectionRadiusShooter: 12
+  attackRangeShooter: 10
   attackCooldown: 3
   playerLayer:
     serializedVersion: 2
     m_Bits: 264
-  hasAttackSlot: 0
-  attackSlotType: 0
-  recoverTimer: 0
-  awareTimer: 0.3
-  currentState: 0
 --- !u!136 &7846588538153680346
 CapsuleCollider:
   m_ObjectHideFlags: 0

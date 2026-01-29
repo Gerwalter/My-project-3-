@@ -5,8 +5,22 @@ public class Enemy : EnemyHealth
     public override void Start()
     {
         base.Start();
-        // EnemyManager.Instance.RegisterEnemy(this);
 
+        // EnemyManager.Instance.RegisterEnemy(this);
+        if (slotType == AttackSlotType.Shooter)
+        {
+            detectionRadius = detectionRadiusShooter;
+            print(slotType);
+            attackRange = attackRangeShooter;
+            attackCooldown = 2.2f; // opcional: shooters suelen atacar más lento
+        }
+        else if (slotType == AttackSlotType.Melee)
+        {
+            detectionRadius = detectionRadiusMelee;
+            attackRange = attackRangeMelee;
+            print(slotType);
+            // attackCooldown se mantiene o se puede ajustar también
+        }
     }
 
     public static System.Action OnEnemyDefeated;
@@ -24,19 +38,32 @@ public class Enemy : EnemyHealth
         EnemyManager.Instance.UnregisterEnemy(this);
         OnEnemyDefeated?.Invoke();
         base.Die();
+
     }
 
     [Header("Enemy Settings")]
     public float detectionRadius = 5f;
     public float attackRange = 2f;
+
+    [Header("Enemy Settings - General")]
+    public float detectionRadiusMelee = 8f;    // más lejos para melee porque se acerca
+    public float attackRangeMelee = 2.2f;
+
+    public float detectionRadiusShooter = 12f;  // más lejos porque dispara a distancia
+    public float attackRangeShooter = 10f;
+
+    [SerializeField] private float attackTimer = 0f;
     public float attackCooldown = 1.5f;
     public LayerMask playerLayer;
 
-    private float attackTimer = 0f;
     private Transform targetPlayer;
     [SerializeField] private bool hasAttackSlot = false;
-    [Header("Attack Type")]
-    public AttackSlotType attackSlotType = AttackSlotType.Melee;
+    public AttackSlotType slotType { get; private set; }
+
+    public void SetAttackSlot(AttackSlotType type)
+    {
+        slotType = type;
+    }
     void Update()
     {
         switch (currentState)
@@ -68,7 +95,7 @@ public class Enemy : EnemyHealth
         }
     }
 
-  [SerializeField]  float recoverTimer;
+    float recoverTimer;
 
     void UpdateRecovering()
     {
@@ -85,7 +112,7 @@ public class Enemy : EnemyHealth
             ChangeState(EnemyStates.Aware);
         }
     }
-    [SerializeField] float awareTimer;
+    float awareTimer;
 
     void UpdateAware()
     {
@@ -105,30 +132,45 @@ public class Enemy : EnemyHealth
             ChangeState(EnemyStates.WaitingForAttack);
         }
     }
+    /* void UpdateWaitingForAttack()
+     {
+         if (EnemyManager.Instance == null) return;
+         if (targetPlayer == null) return;
+
+         float distance = Vector3.Distance(transform.position, targetPlayer.position);
+
+         // Distancia distinta según tipo
+         if (attackSlotType == AttackSlotType.Melee && distance > attackRange)
+             return;
+
+         if (attackSlotType == AttackSlotType.Shooter && distance < attackRange)
+             return;
+
+         if (!hasAttackSlot && EnemyManager.Instance.CanRequestSlot(attackSlotType))
+         {
+             if (EnemyManager.Instance.RequestSlot(attackSlotType))
+             {
+                 hasAttackSlot = true;
+                 ChangeState(EnemyStates.Attacking);
+             }
+         }
+     }*/
     void UpdateWaitingForAttack()
     {
-        if (EnemyManager.Instance == null) return;
         if (targetPlayer == null) return;
 
         float distance = Vector3.Distance(transform.position, targetPlayer.position);
+        if (distance > attackRange + 0.2f) return;
 
-        // Distancia distinta según tipo
-        if (attackSlotType == AttackSlotType.Melee && distance > attackRange)
-            return;
-
-        if (attackSlotType == AttackSlotType.Shooter && distance < attackRange)
-            return;
-
-        if (!hasAttackSlot && EnemyManager.Instance.CanRequestSlot(attackSlotType))
+        if (!hasAttackSlot && EnemyManager.Instance.CanRequestAttack())
         {
-            if (EnemyManager.Instance.RequestSlot(attackSlotType))
+            if (EnemyManager.Instance.RequestAttackSlot())
             {
                 hasAttackSlot = true;
                 ChangeState(EnemyStates.Attacking);
             }
         }
     }
-
 
     void UpdateAttacking()
     {
@@ -156,7 +198,7 @@ public class Enemy : EnemyHealth
         targetPlayer = null;
         return false;
     }
-    [SerializeField] private EnemyStates currentState;
+    private EnemyStates currentState;
     public EnemyStates CurrentState => currentState;
     public Transform GetTargetPlayer() => targetPlayer;
     private void ChangeState(EnemyStates newState)
@@ -173,11 +215,9 @@ public class Enemy : EnemyHealth
         switch (state)
         {
             case EnemyStates.Idle:
-                print(state);
                 break;
 
             case EnemyStates.Aware:
-                print(state);
                 awareTimer = 0.5f;
                 break;
 
@@ -185,11 +225,9 @@ public class Enemy : EnemyHealth
                 break;
 
             case EnemyStates.WaitingForAttack:
-                print(state);
                 break;
 
-            case EnemyStates.Attacking:
-
+            case EnemyStates.Attacking:                
                 attackTimer = attackCooldown;
 
                 if (attackSlotType == AttackSlotType.Melee)

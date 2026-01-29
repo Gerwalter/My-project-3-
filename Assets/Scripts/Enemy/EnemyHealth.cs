@@ -92,10 +92,12 @@ public class EnemyHealth : Health, IEnemy
         Despawn();
     }
 
-    public void Spawn(Vector3 position)
+    public AttackSlotType attackSlotType;
+    public void Spawn(Vector3 position, AttackSlotType slotType)
     {
-        gameObject.SetActive(true);
         transform.position = position;
+        attackSlotType = slotType;
+        gameObject.SetActive(true);
     }
 
     public void Despawn()

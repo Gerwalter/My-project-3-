@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPool<T> : IObjectPool where T : MonoBehaviour, IEnemy
+public class ObjectPool<T> : IEnemyPool where T : MonoBehaviour, IEnemy
 {
     private readonly Queue<T> pool = new Queue<T>();
     private readonly T prefab;
@@ -26,7 +26,7 @@ public class ObjectPool<T> : IObjectPool where T : MonoBehaviour, IEnemy
         }
     }
 
-    public IEnemy Get(Vector3 position)
+    public IEnemy Get(Vector3 position, AttackSlotType slotType)
     {
         T obj;
         if (pool.Count > 0)
@@ -34,7 +34,7 @@ public class ObjectPool<T> : IObjectPool where T : MonoBehaviour, IEnemy
         else
             obj = GameObject.Instantiate(prefab, parent);
 
-        obj.Spawn(position);
+        obj.Spawn(position, slotType);
         return obj;
     }
 

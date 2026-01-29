@@ -116,7 +116,30 @@ public class WaveSpawner : MonoBehaviour
             FindObjectOfType<BattleEnd>()?.OnBattleWon();
         }
     }
+    private AttackSlotType GetSlotTypeForWave()
+    {
+        //               Melee   Shooter  Heavy   Grab
+        int[] pesos = { 40, 40, 15, 5 };
+        // total = 100 (o cualquier número, no importa que sume 100)
 
+        int total = 0;
+        foreach (int p in pesos) total += p;
+
+        int randomValue = Random.Range(0, total);
+
+        int suma = 0;
+        for (int i = 0; i < pesos.Length; i++)
+        {
+            suma += pesos[i];
+            if (randomValue < suma)
+            {
+                return (AttackSlotType)i;
+            }
+        }
+
+        // Por seguridad (nunca debería llegar aquí)
+        return AttackSlotType.Melee;
+    }
     IEnumerator SpawnWaves(List<int> enemiesPerWave)
     {
         for (int wave = 0; wave < enemiesPerWave.Count; wave++)
@@ -141,7 +164,8 @@ public class WaveSpawner : MonoBehaviour
 
                 yield return new WaitForSeconds(spawnDelay);
 
-                factory.Create("Enemy", pos);
+                AttackSlotType slotType = GetSlotTypeForWave();
+                factory.Create("Enemy", pos, slotType);
 
                 yield return new WaitForSeconds(0.6f);   // pequeño delay entre spawns dentro de la misma oleada
             }
